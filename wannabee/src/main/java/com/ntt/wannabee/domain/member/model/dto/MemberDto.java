@@ -1,7 +1,7 @@
-package com.ntt.wannabee.domain.member.dto;
+package com.ntt.wannabee.domain.member.model.dto;
 
-import com.ntt.wannabee.domain.member.entity.MemberRole;
-import com.ntt.wannabee.domain.member.entity.SocialProvider;
+import com.ntt.wannabee.domain.member.model.vo.MemberRole;
+import com.ntt.wannabee.domain.member.model.vo.SocialProvider;
 
 import lombok.Getter;
 import lombok.Setter;

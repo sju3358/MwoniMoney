@@ -1,6 +1,9 @@
 package com.ntt.wannabee.domain.member.entity;
 
-import com.ntt.wannabee.domain.member.dto.ChildDto;
+import com.ntt.wannabee.domain.member.model.dto.ChildDto;
+import com.ntt.wannabee.domain.member.model.vo.MemberRole;
+import com.ntt.wannabee.domain.member.model.vo.SmallAccount;
+import com.ntt.wannabee.domain.member.model.vo.SocialProvider;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.ntt.wannabee.domain.member.dto;
+package com.ntt.wannabee.domain.member.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
-package com.ntt.wannabee.domain.member.dto;
+package com.ntt.wannabee.domain.member.model.dto;
 
-import com.ntt.wannabee.domain.member.entity.SmallAccount;
+import com.ntt.wannabee.domain.member.model.vo.SmallAccount;
 
 import lombok.Getter;
 import lombok.Setter;
