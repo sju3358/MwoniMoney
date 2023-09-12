@@ -2,7 +2,9 @@ package com.ntt.wannabee.domain.member.entity;
 
 import java.util.UUID;
 
-import com.ntt.wannabee.domain.member.dto.MemberDto;
+import com.ntt.wannabee.domain.member.model.dto.MemberDto;
+import com.ntt.wannabee.domain.member.model.vo.MemberRole;
+import com.ntt.wannabee.domain.member.model.vo.SocialProvider;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

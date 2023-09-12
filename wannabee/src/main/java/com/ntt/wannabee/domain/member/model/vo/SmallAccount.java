@@ -1,4 +1,4 @@
-package com.ntt.wannabee.domain.member.entity;
+package com.ntt.wannabee.domain.member.model.vo;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
