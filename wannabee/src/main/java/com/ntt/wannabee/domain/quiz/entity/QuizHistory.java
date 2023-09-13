@@ -38,8 +38,8 @@ public class QuizHistory extends CommonEntity {
 	private Member member;
 
 	@Builder
-	public QuizHistory(QuizHistoryKey quizHistoryKey, byte selectAnswer, Quiz quiz, Member member) {
-		this.quizHistoryKey = quizHistoryKey;
+	public QuizHistory(Long quizIdx, String memberUUID, byte selectAnswer, Quiz quiz, Member member) {
+		this.quizHistoryKey = new QuizHistoryKey(quizIdx, memberUUID);
 		this.selectAnswer = selectAnswer;
 		this.quiz = quiz;
 		this.member = member;
