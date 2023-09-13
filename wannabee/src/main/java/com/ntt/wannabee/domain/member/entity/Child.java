@@ -1,47 +1,43 @@
 package com.ntt.wannabee.domain.member.entity;
 
-import com.ntt.wannabee.domain.member.dto.ChildDto;
+import com.ntt.wannabee.domain.member.model.dto.ChildDto;
+import com.ntt.wannabee.domain.member.model.vo.SmallAccount;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
+@SuperBuilder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Child extends Member {
 
-	private String birthday;
-
+	@Column(name = "member_credit_score")
 	private byte creditScore;
 
 	@Embedded
 	private SmallAccount smallAccount;
 
-	@Builder
-	public Child(Byte status, MemberRole memberRole, String name, String nickname, SocialProvider socialProvider,
-		String socialId, String birthday, byte creditScore, SmallAccount smallAccount) {
-		super(status, memberRole, name, nickname, socialProvider, socialId);
-		this.birthday = birthday;
-		this.creditScore = creditScore;
-		this.smallAccount = smallAccount;
-	}
-
 	public ChildDto convertToDto() {
+
 		return ChildDto.builder()
 			.idx(this.getIdx())
 			.uuid(this.getUuid())
 			.status(this.getStatus())
 			.name(this.getName())
 			.nickname(this.getNickname())
-			.memberRole(this.getMemberRole())
+			.birthday(this.getBirthday())
 			.socialProvider(this.getSocialProvider())
 			.socialId(this.getSocialId())
-			.birthday(this.birthday)
+			.memberRole(this.getMemberRole())
 			.creditScore(this.creditScore)
+			.smallAccount(smallAccount.createVo())
 			.build();
 	}
+
 }
