@@ -9,7 +9,7 @@ public class QuizHistoryDto {
 
 	private Long quizIdx;
 
-	private String memberUUID;
+	private Long memberIdx;
 
 	private byte selectAnswer;
 }
