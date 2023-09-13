@@ -33,7 +33,7 @@ public class BalanceGameHistory extends CommonEntity {
 	@JoinColumn(name = "balance_idx")
 	private BalanceGame balanceGame;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_uuid")
 	private Member member;
 
