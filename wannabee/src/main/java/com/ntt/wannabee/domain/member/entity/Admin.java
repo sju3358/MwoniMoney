@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Admin extends Member {
-	
+
 	public AdminDto convertToDto() {
 		return AdminDto.builder()
 			.idx(this.getIdx())

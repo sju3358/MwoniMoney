@@ -52,7 +52,7 @@ public class Member {
 
 	@Column(name = "member_social_id")
 	private String socialId;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "member_role")
 	private MemberRole memberRole;
@@ -70,7 +70,7 @@ public class Member {
 		this.socialId = socialId;
 		this.memberRole = memberRole;
 	}
-
+	
 	public MemberDto convertToDto() {
 		return MemberDto.builder()
 			.idx(this.idx)
