@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class ChildrenDto {
 
-	private String parentUUID;
-	private String childUUID;
+	private Long parentIdx;
+	private Long childUIdx;
 }
