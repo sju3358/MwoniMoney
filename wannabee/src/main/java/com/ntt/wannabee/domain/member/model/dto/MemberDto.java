@@ -23,7 +23,7 @@ public class MemberDto {
 	private String birthday;
 
 	private SocialProvider socialProvider;
-
+	
 	private String socialId;
 
 	private MemberRole memberRole;

@@ -20,7 +20,7 @@ public class Child extends Member {
 
 	@Embedded
 	private SmallAccount smallAccount;
-	
+
 	public ChildDto convertToDto() {
 
 		return ChildDto.builder()
