@@ -7,8 +7,6 @@ services:
       context: ./wannabee
       args:
         SERVER_MODE: prod
-    ports:
-      - 8080:8080
   # frontend:
   #   container_name: frontend
   #   build:
