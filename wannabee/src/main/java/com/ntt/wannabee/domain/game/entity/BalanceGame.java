@@ -25,7 +25,7 @@ public class BalanceGame {
 
 	@Column(name = "balance_question")
 	private String question;
-	
+
 	@Column(name = "balance_answer1")
 	private String answer1;
 

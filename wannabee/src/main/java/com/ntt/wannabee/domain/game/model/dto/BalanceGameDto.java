@@ -8,7 +8,7 @@ import lombok.Data;
 public class BalanceGameDto {
 
 	Long idx;
-	
+
 	String question;
 
 	String answer1;
