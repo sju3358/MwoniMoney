@@ -6,4 +6,5 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 public class AdminDto extends MemberDto {
+	
 }
