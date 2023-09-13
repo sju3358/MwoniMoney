@@ -1,27 +1,23 @@
 package com.ntt.wannabee.domain.member.entity;
 
-import com.ntt.wannabee.domain.member.dto.ParentDto;
+import com.ntt.wannabee.domain.member.model.dto.ParentDto;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
+@Entity
+@SuperBuilder
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Parent extends Member {
 
-	private String birthday;
-
-	@Builder
-	public Parent(Byte status, MemberRole memberRole, String name, String nickname, SocialProvider socialProvider,
-		String socialId, String birthday) {
-		super(status, memberRole, name, nickname, socialProvider, socialId);
-		this.birthday = birthday;
-	}
-
+	@Column(name = "member_quiz_reward")
+	private int quizReward;
+	
 	public ParentDto convertToDto() {
 		return ParentDto.builder()
 			.idx(this.getIdx())
@@ -29,10 +25,11 @@ public class Parent extends Member {
 			.status(this.getStatus())
 			.name(this.getName())
 			.nickname(this.getNickname())
-			.memberRole(this.getMemberRole())
+			.birthday(this.getBirthday())
 			.socialProvider(this.getSocialProvider())
 			.socialId(this.getSocialId())
-			.birthday(this.birthday)
+			.memberRole(this.getMemberRole())
+			.quizReward(this.quizReward)
 			.build();
 	}
 }
