@@ -3,6 +3,7 @@ package com.ntt.wannabee.domain.member.entity;
 import com.ntt.wannabee.domain.member.model.dto.MemberDto;
 import com.ntt.wannabee.domain.member.model.vo.MemberRole;
 import com.ntt.wannabee.domain.member.model.vo.SocialProvider;
+import com.ntt.wannabee.global.common.entity.CommonEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,7 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "member")
-public class Member {
+public class Member extends CommonEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,7 +71,7 @@ public class Member {
 		this.socialId = socialId;
 		this.memberRole = memberRole;
 	}
-	
+
 	public MemberDto convertToDto() {
 		return MemberDto.builder()
 			.idx(this.idx)
