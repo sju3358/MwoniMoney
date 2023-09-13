@@ -7,5 +7,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class ParentDto extends MemberDto {
 
-	private String birthday;
+	private int quizReward;
+	
 }

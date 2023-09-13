@@ -1,11 +1,11 @@
 package com.ntt.wannabee.domain.member.entity;
 
-import java.util.UUID;
-
 import com.ntt.wannabee.domain.member.model.dto.MemberDto;
 import com.ntt.wannabee.domain.member.model.vo.MemberRole;
 import com.ntt.wannabee.domain.member.model.vo.SocialProvider;
+import com.ntt.wannabee.global.common.entity.CommonEntity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -25,38 +25,51 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "member")
-public class Member {
+public class Member extends CommonEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "member_idx")
 	private Long idx;
 
+	@Column(name = "member_uuid")
 	private String uuid;
 
+	@Column(name = "member_status")
 	private byte status;
 
+	@Column(name = "member_name")
 	private String name;
 
+	@Column(name = "member_nickname")
 	private String nickname;
 
-	@Enumerated(EnumType.STRING)
-	private MemberRole memberRole;
+	@Column(name = "member_birthday")
+	private String birthday;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "member_social_provider")
 	private SocialProvider socialProvider;
 
+	@Column(name = "member_social_id")
 	private String socialId;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "member_role")
+	private MemberRole memberRole;
+
 	@Builder
-	public Member(Byte status, MemberRole memberRole, String name, String nickname, SocialProvider socialProvider,
-		String socialId) {
-		this.uuid = UUID.randomUUID().toString();
+	public Member(String uuid, byte status, String name, String nickname, String birthday,
+		SocialProvider socialProvider,
+		String socialId, MemberRole memberRole) {
+		this.uuid = uuid;
 		this.status = status;
-		this.memberRole = memberRole;
-		this.socialProvider = socialProvider;
-		this.socialId = socialId;
 		this.name = name;
 		this.nickname = nickname;
+		this.birthday = birthday;
+		this.socialProvider = socialProvider;
+		this.socialId = socialId;
+		this.memberRole = memberRole;
 	}
 
 	public MemberDto convertToDto() {
@@ -66,9 +79,10 @@ public class Member {
 			.status(this.status)
 			.name(this.name)
 			.nickname(this.nickname)
-			.memberRole(this.memberRole)
+			.birthday(this.birthday)
 			.socialProvider(this.socialProvider)
 			.socialId(this.socialId)
+			.memberRole(this.memberRole)
 			.build();
 	}
 }

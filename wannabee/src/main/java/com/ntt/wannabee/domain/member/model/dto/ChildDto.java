@@ -9,9 +9,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class ChildDto extends MemberDto {
 
-	private String birthday;
-
 	private byte creditScore;
-
+	
 	private SmallAccount smallAccount;
+
 }
