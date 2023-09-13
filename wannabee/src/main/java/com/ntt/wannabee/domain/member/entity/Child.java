@@ -3,6 +3,7 @@ package com.ntt.wannabee.domain.member.entity;
 import com.ntt.wannabee.domain.member.model.dto.ChildDto;
 import com.ntt.wannabee.domain.member.model.vo.SmallAccount;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;
@@ -16,6 +17,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Child extends Member {
 
+	@Column(name = "member_credit_score")
 	private byte creditScore;
 
 	@Embedded
