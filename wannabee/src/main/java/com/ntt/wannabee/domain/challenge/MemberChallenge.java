@@ -1,15 +1,15 @@
-package com.ntt.wannabee.domain.member.entity.challenge;
+package com.ntt.wannabee.domain.challenge;
 
 import java.time.LocalDateTime;
 
-import com.ntt.wannabee.domain.member.entity.BaseEntity;
+import com.ntt.wannabee.global.common.entity.CommonEntity;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Builder;
 
-public class MemberChallenge extends BaseEntity {
+public class MemberChallenge extends CommonEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer memberChallengeIdx;

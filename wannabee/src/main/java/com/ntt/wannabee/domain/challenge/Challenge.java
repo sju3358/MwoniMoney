@@ -1,4 +1,4 @@
-package com.ntt.wannabee.domain.member.entity.challenge;
+package com.ntt.wannabee.domain.challenge;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
