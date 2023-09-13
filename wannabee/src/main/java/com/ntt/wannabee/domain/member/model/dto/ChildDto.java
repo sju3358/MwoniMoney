@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 public class ChildDto extends MemberDto {
 
 	private byte creditScore;
-
+	
 	private SmallAccount smallAccount;
 
 }

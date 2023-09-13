@@ -22,7 +22,7 @@ public class Child extends Member {
 	private SmallAccount smallAccount;
 
 	public ChildDto convertToDto() {
-		
+
 		return ChildDto.builder()
 			.idx(this.getIdx())
 			.uuid(this.getUuid())

@@ -25,7 +25,7 @@ public class MemberDto {
 	private SocialProvider socialProvider;
 
 	private String socialId;
-
+	
 	private MemberRole memberRole;
 
 }
