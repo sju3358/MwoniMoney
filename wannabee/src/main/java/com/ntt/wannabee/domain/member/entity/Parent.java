@@ -17,7 +17,7 @@ public class Parent extends Member {
 
 	@Column(name = "member_quiz_reward")
 	private int quizReward;
-
+	
 	public ParentDto convertToDto() {
 		return ParentDto.builder()
 			.idx(this.getIdx())

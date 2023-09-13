@@ -52,7 +52,7 @@ public class Member {
 
 	@Column(name = "member_social_id")
 	private String socialId;
-
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "member_role")
 	private MemberRole memberRole;

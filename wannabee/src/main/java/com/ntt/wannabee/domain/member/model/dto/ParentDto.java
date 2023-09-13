@@ -8,5 +8,5 @@ import lombok.experimental.SuperBuilder;
 public class ParentDto extends MemberDto {
 
 	private int quizReward;
-	
+
 }
