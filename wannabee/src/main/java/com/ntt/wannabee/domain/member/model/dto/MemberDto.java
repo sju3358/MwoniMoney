@@ -3,12 +3,10 @@ package com.ntt.wannabee.domain.member.model.dto;
 import com.ntt.wannabee.domain.member.model.vo.MemberRole;
 import com.ntt.wannabee.domain.member.model.vo.SocialProvider;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
-@Getter
-@Setter
+@Data
 @SuperBuilder
 public class MemberDto {
 
@@ -22,9 +20,12 @@ public class MemberDto {
 
 	private String nickname;
 
-	private MemberRole memberRole;
+	private String birthday;
 
 	private SocialProvider socialProvider;
 
 	private String socialId;
+
+	private MemberRole memberRole;
+
 }

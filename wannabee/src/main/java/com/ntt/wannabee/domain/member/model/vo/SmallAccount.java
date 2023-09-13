@@ -1,10 +1,10 @@
 package com.ntt.wannabee.domain.member.model.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SmallAccount {
 
 	private int goalMoney;
@@ -12,4 +12,12 @@ public class SmallAccount {
 	private String imageFilename;
 	private byte saveRatio;
 
+	public SmallAccount createVo() {
+		return new SmallAccount(
+			this.getGoalMoney(),
+			this.goalName,
+			this.imageFilename,
+			this.saveRatio
+		);
+	}
 }

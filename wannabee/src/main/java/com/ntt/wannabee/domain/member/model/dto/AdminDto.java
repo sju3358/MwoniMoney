@@ -1,11 +1,10 @@
 package com.ntt.wannabee.domain.member.model.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
-@Getter
-@Setter
+@Data
 @SuperBuilder
 public class AdminDto extends MemberDto {
+
 }
