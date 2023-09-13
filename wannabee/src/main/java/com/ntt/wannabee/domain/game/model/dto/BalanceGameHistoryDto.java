@@ -9,7 +9,7 @@ public class BalanceGameHistoryDto {
 
 	private Long balanceGameIdx;
 
-	private String memberUUID;
+	private Long memberIdx;
 
 	private byte selectAnswer;
 }
