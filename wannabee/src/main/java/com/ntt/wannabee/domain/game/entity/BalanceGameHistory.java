@@ -37,9 +37,16 @@ public class BalanceGameHistory extends CommonEntity {
 	@JoinColumn(name = "member_uuid")
 	private Member member;
 
+	@Column(name = "balance_idx")
+	private Long balanceGameIdx;
+
+	@Column(name = "member_uuid")
+	private String memberUUID;
+
 	@Builder
-	public BalanceGameHistory(BalanceGameHistoryKey key, byte selectAnswer, BalanceGame balanceGame, Member member) {
-		this.balanceGameHistoryKey = key;
+	public BalanceGameHistory(Long balanceGameIdx, String memberUUID, byte selectAnswer, BalanceGame balanceGame,
+		Member member) {
+		this.balanceGameHistoryKey = new BalanceGameHistoryKey(balanceGameIdx, memberUUID);
 		this.selectAnswer = selectAnswer;
 		this.balanceGame = balanceGame;
 		this.member = member;
