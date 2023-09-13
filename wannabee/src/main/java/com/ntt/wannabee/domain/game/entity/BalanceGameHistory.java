@@ -2,6 +2,7 @@ package com.ntt.wannabee.domain.game.entity;
 
 import com.ntt.wannabee.domain.game.model.dto.BalanceGameHistoryDto;
 import com.ntt.wannabee.domain.member.entity.Member;
+import com.ntt.wannabee.global.common.entity.CommonEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "balance_member")
-public class BalanceGameHistory {
+public class BalanceGameHistory extends CommonEntity {
 
 	@EmbeddedId
 	private BalanceGameHistoryKey balanceGameHistoryKey;
