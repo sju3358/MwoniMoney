@@ -28,25 +28,33 @@ public class Member {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "member_idx")
 	private Long idx;
 
+	@Column(name = "member_uuid")
 	private String uuid;
 
+	@Column(name = "member_status")
 	private byte status;
 
+	@Column(name = "member_name")
 	private String name;
 
+	@Column(name = "member_nickname")
 	private String nickname;
 
 	@Column(name = "member_birthday")
 	private String birthday;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "member_social_provider")
 	private SocialProvider socialProvider;
 
+	@Column(name = "member_social_id")
 	private String socialId;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "member_role")
 	private MemberRole memberRole;
 
 	@Builder

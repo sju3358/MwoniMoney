@@ -2,6 +2,7 @@ package com.ntt.wannabee.domain.member.entity;
 
 import com.ntt.wannabee.domain.member.model.dto.ParentDto;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Parent extends Member {
 
+	@Column(name = "member_quiz_reward")
 	private int quizReward;
 
 	public ParentDto convertToDto() {
