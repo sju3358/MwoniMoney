@@ -2,6 +2,7 @@ package com.ntt.wannabee.domain.quiz.entity;
 
 import com.ntt.wannabee.domain.member.entity.Member;
 import com.ntt.wannabee.domain.quiz.model.dto.QuizHistoryDto;
+import com.ntt.wannabee.global.common.entity.CommonEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "quiz_member")
-public class QuizHistory {
+public class QuizHistory extends CommonEntity {
 
 	@EmbeddedId
 	private QuizHistoryKey quizHistoryKey;
