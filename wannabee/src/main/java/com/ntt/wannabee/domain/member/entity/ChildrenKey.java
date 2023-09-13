@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChildrenKey implements Serializable {
 
-	@Column(name = "member_uuid")
-	private String parentUUID;
+	@Column(name = "parent_idx")
+	private Long parentIdx;
 
-	@Column(name = "member_uuid")
-	private String childUUID;
+	@Column(name = "children_idx")
+	private Long childIdx;
 
 }

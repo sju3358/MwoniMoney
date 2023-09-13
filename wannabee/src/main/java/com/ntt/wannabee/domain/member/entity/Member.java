@@ -1,5 +1,7 @@
 package com.ntt.wannabee.domain.member.entity;
 
+import java.util.UUID;
+
 import com.ntt.wannabee.domain.member.model.dto.MemberDto;
 import com.ntt.wannabee.domain.member.model.vo.MemberRole;
 import com.ntt.wannabee.domain.member.model.vo.SocialProvider;
@@ -59,10 +61,10 @@ public class Member extends CommonEntity {
 	private MemberRole memberRole;
 
 	@Builder
-	public Member(String uuid, byte status, String name, String nickname, String birthday,
+	public Member(byte status, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
 		String socialId, MemberRole memberRole) {
-		this.uuid = uuid;
+		this.uuid = UUID.randomUUID().toString();
 		this.status = status;
 		this.name = name;
 		this.nickname = nickname;
