@@ -23,14 +23,14 @@ public class Children {
 	private ChildrenKey childrenKey;
 
 	@Builder
-	public Children(String parentUUID, String childUUID) {
-		this.childrenKey = new ChildrenKey(parentUUID, childUUID);
+	public Children(Long parentIdx, Long childrenIdx) {
+		this.childrenKey = new ChildrenKey(parentIdx, childrenIdx);
 	}
 
 	public ChildrenDto convertToDto() {
 		return ChildrenDto.builder()
-			.parentUUID(this.childrenKey.getParentUUID())
-			.childUUID(this.childrenKey.getChildUUID())
+			.parentIdx(this.childrenKey.getParentIdx())
+			.childUIdx(this.childrenKey.getChildIdx())
 			.build();
 	}
 }
