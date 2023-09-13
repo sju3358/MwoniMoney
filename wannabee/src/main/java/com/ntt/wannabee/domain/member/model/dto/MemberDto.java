@@ -20,9 +20,12 @@ public class MemberDto {
 
 	private String nickname;
 
-	private MemberRole memberRole;
+	private String birthday;
 
 	private SocialProvider socialProvider;
-
+	
 	private String socialId;
+
+	private MemberRole memberRole;
+
 }
