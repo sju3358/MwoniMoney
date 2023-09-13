@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ./wannabee
+      args:
+        SERVER_MODE: prod
+  # frontend:
+  #   container_name: frontend
+  #   build:
+  #     context: ./frontend-web
+  #   depends_on:
+  #     - backend
+  nginx:
+    restart: always
+    container_name: nginx
+    build: 
+      context: ./nginx
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - "80:80"
+      - "443:443"
