@@ -38,9 +38,9 @@ public class BalanceGameHistory extends CommonEntity {
 	private Member member;
 
 	@Builder
-	public BalanceGameHistory(Long balanceGameIdx, String memberUUID, byte selectAnswer, BalanceGame balanceGame,
+	public BalanceGameHistory(Long balanceGameIdx, Long memberIdx, byte selectAnswer, BalanceGame balanceGame,
 		Member member) {
-		this.balanceGameHistoryKey = new BalanceGameHistoryKey(balanceGameIdx, memberUUID);
+		this.balanceGameHistoryKey = new BalanceGameHistoryKey(balanceGameIdx, memberIdx);
 		this.selectAnswer = selectAnswer;
 		this.balanceGame = balanceGame;
 		this.member = member;
@@ -49,7 +49,7 @@ public class BalanceGameHistory extends CommonEntity {
 	public BalanceGameHistoryDto convertToDto() {
 		return BalanceGameHistoryDto.builder()
 			.balanceGameIdx(this.balanceGameHistoryKey.getBalanceGameIdx())
-			.memberUUID(this.balanceGameHistoryKey.getMemberUUID())
+			.memberIdx(this.balanceGameHistoryKey.getMemberIdx())
 			.selectAnswer(this.selectAnswer)
 			.build();
 	}
