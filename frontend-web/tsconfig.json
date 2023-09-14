@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5", // 트랜스파일할 자바스크립트 버전.
-    "lib": ["es5", "es6", "es7", "es8", "esnext"], // 몇 버전까지의 JS를 사용할지 작성.
+    "lib": ["es5", "es6", "es7", "es8", "esnext", "dom"], // 몇 버전까지의 JS를 사용할지 작성.
     "allowJs": true, // JS파일들 TS에서 import해서 쓸 수 있게 해줌.
     "skipLibCheck": true, // 선언파일의 형식 검사를 스킵. -> 정확성은 떨어지지만 그만큼 시간을 절약.
     "esModuleInterop": true, // export default가 없는 라이브러리도 * as없이 import 가능.
@@ -11,7 +11,7 @@
     "module": "esnext", // 어떤 import 문법을 적용할건지.
     "moduleResolution": "node", // import가 무엇을 참조하는지 확인.
     "resolveJsonModule": true, // 정적으로 json가져오기.
-    "jsx": "react-jsx" // tsx파일을 어떻게 jsx파일로 변환할 건지 결정.
+    "jsx": "react" // tsx파일을 어떻게 jsx파일로 변환할 건지 결정.
   },
   "include": ["src"], // 컴파일대상 포함.
   "exclude": ["node_modules"] // 컴파일대상 제외.
