@@ -15,4 +15,5 @@ public class BalanceGameDto {
 
 	String answer2;
 
+	char active;
 }
