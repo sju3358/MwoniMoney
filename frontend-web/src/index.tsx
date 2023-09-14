@@ -1,14 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom'; // 수정
-import App from './App'; // App 컴포넌트를 import
-
-
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import App from './App';
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById('root')
 );
+
 root.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </React.StrictMode>
 );

@@ -24,12 +24,12 @@ public class ChattingApi {
 	private final ChattingService chattingService;
 
 	@GetMapping(value = "/balances/{balanceGameIdx}/chatting", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-	public Flux<Chat> getAllChatLog(@PathVariable Long balanceGameIdx) {
+	public Flux<Chat> getChattingHistoryRequest(@PathVariable Long balanceGameIdx) {
 		return chattingService.getBalanceGameChattingHistory(balanceGameIdx);
 	}
 
 	@PostMapping("/balances/{balanceGameIdx}/chatting")
-	public Mono<Chat> setMsg(
+	public Mono<Chat> postChatRequest(
 		@CookieValue("memberUUID") String memberUUID,
 		@PathVariable Long balanceGameIdx,
 		@RequestBody Chat chat) {
