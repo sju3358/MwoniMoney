@@ -2,19 +2,21 @@ package com.ntt.wannabee.domain.game.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ntt.wannabee.domain.game.entity.BalanceGame;
-import com.ntt.wannabee.domain.game.exception.BalanceGameNotFoundException;
 import com.ntt.wannabee.domain.game.model.dto.BalanceGameDto;
 import com.ntt.wannabee.domain.game.repository.BalanceGameRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 @Transactional(readOnly = true)
 public class BalanceGameService {
 
@@ -24,7 +26,7 @@ public class BalanceGameService {
 		List<BalanceGame> balanceGameEntityList = balanceGameRepository.findAll();
 
 		if (balanceGameEntityList.isEmpty() == true) {
-			throw new BalanceGameNotFoundException();
+			throw new NoSuchElementException();
 		}
 
 		List<BalanceGameDto> balanceGames = new ArrayList<>();
@@ -42,7 +44,7 @@ public class BalanceGameService {
 
 	public BalanceGameDto getBalanceGameInfo(Long balanceGameIdx) {
 		BalanceGame balanceGameEntity = balanceGameRepository.findBalanceGameByIdx(balanceGameIdx)
-			.orElseThrow(() -> new BalanceGameNotFoundException());
+			.orElseThrow(() -> new NoSuchElementException());
 
 		return balanceGameEntity.convertToDto();
 	}
@@ -61,7 +63,7 @@ public class BalanceGameService {
 	@Transactional
 	public void editBalanceGame(BalanceGameDto balanceGameDto) {
 		BalanceGame balanceGameEntity = balanceGameRepository.findBalanceGameByIdx(balanceGameDto.getIdx())
-			.orElseThrow(() -> new BalanceGameNotFoundException());
+			.orElseThrow(() -> new NoSuchElementException());
 
 		balanceGameEntity.updateBalanceGame(balanceGameDto.getQuestion(), balanceGameDto.getAnswer1(),
 			balanceGameDto.getAnswer2());
@@ -70,7 +72,7 @@ public class BalanceGameService {
 	@Transactional
 	public void closeBalanceGame(Long balanceGameIdx) {
 		BalanceGame balanceGameEntity = balanceGameRepository.findBalanceGameByIdx(balanceGameIdx)
-			.orElseThrow(() -> new BalanceGameNotFoundException());
+			.orElseThrow(() -> new NoSuchElementException());
 
 		balanceGameEntity.deactivate();
 	}
@@ -78,7 +80,7 @@ public class BalanceGameService {
 	@Transactional
 	public void removeBalanceGame(Long balanceGameIdx) {
 		BalanceGame balanceGameEntity = balanceGameRepository.findBalanceGameByIdx(balanceGameIdx)
-			.orElseThrow(() -> new BalanceGameNotFoundException());
+			.orElseThrow(() -> new NoSuchElementException());
 
 		balanceGameRepository.delete(balanceGameEntity);
 	}
