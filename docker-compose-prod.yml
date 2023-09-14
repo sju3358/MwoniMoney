@@ -13,6 +13,8 @@ services:
       context: ./frontend-web
     depends_on:
       - backend
+    ports:
+      - 3000:3000
   nginx:
     restart: always
     container_name: nginx
@@ -22,5 +24,5 @@ services:
       - backend
       - frontend
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
