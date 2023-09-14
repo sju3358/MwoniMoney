@@ -1,12 +1,12 @@
 version: "3"
 
 services:
-  backend:
-    container_name: backend
-    build:
-      context: ./backend
-      args:
-        SERVER_MODE: prod
+  # backend:
+  #   container_name: backend
+  #   build:
+  #     context: ./backend
+  #     args:
+  #       SERVER_MODE: prod
   # frontend:
   #   container_name: frontend
   #   build:
@@ -18,7 +18,7 @@ services:
     container_name: nginx
     image : nginx:latest
     depends_on:
-      - backend
+      # - backend
       # - frontend
     ports:
       - "80:80"
