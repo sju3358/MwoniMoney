@@ -34,12 +34,12 @@ public class QuizHistory extends CommonEntity {
 	private Quiz quiz;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_uuid")
+	@JoinColumn(name = "member_idx")
 	private Member member;
 
 	@Builder
-	public QuizHistory(Long quizIdx, String memberUUID, byte selectAnswer, Quiz quiz, Member member) {
-		this.quizHistoryKey = new QuizHistoryKey(quizIdx, memberUUID);
+	public QuizHistory(Long quizIdx, Long memberIdx, byte selectAnswer, Quiz quiz, Member member) {
+		this.quizHistoryKey = new QuizHistoryKey(quizIdx, memberIdx);
 		this.selectAnswer = selectAnswer;
 		this.quiz = quiz;
 		this.member = member;
@@ -48,7 +48,7 @@ public class QuizHistory extends CommonEntity {
 	public QuizHistoryDto convertToDto() {
 		return QuizHistoryDto.builder()
 			.quizIdx(this.quizHistoryKey.getQuizIdx())
-			.memberUUID(this.quizHistoryKey.getMemberUUID())
+			.memberIdx(this.quizHistoryKey.getMemberIdx())
 			.selectAnswer(this.selectAnswer)
 			.build();
 	}
