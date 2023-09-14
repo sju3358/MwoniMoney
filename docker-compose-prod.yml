@@ -10,16 +10,16 @@ services:
   frontend:
     container_name: frontend
     build:
-      context: ./frontend
+      context: ./frontend-web
     depends_on:
       - backend
   nginx:
-    restart: always
     container_name: nginx
-    image : nginx:latest
+    build: 
+      context: ./nginx
     depends_on:
       - backend
       - frontend
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
