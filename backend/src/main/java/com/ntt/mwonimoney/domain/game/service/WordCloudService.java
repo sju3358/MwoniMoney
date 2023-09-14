@@ -1,35 +1,16 @@
 package com.ntt.mwonimoney.domain.game.service;
 
-import java.time.LocalDateTime;
-
 import org.springframework.stereotype.Service;
 
-import com.ntt.mwonimoney.domain.game.entity.Chat;
 import com.ntt.mwonimoney.domain.game.entity.Word;
-import com.ntt.mwonimoney.domain.game.repository.WordCloudRepository;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 @Service
-@RequiredArgsConstructor
-@Slf4j
-public class WordCloudService {
+public interface WordCloudService {
 
-	private final WordCloudRepository wordCloudRepository;
+	Flux<Word> getWordCloudData(Long balanceGameIdx);
 
-	public Flux<Word> getWordCloudData(Long balanceGameIdx) {
-		return wordCloudRepository.mFindByBalanceGameIdx(balanceGameIdx)
-			.subscribeOn(Schedulers.boundedElastic());
-	}
-
-	public Mono<Word> addWord(Word word, Long balanceGameIdx) {
-
-		word.setBalanceGameIdx(balanceGameIdx);
-
-		return wordCloudRepository.save(word);
-	}
+	Mono<Word> addWord(Word word, Long balanceGameIdx);
 }
