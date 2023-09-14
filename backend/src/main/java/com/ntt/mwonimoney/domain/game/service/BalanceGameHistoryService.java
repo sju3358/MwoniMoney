@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ntt.mwonimoney.domain.game.entity.BalanceGameHistory;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameHistoryDto;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 public class BalanceGameHistoryService {
 
 	private final BalanceGameHistoryRepository balanceGameHistoryRepository;
