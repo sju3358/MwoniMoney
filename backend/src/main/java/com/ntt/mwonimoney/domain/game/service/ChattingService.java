@@ -1,37 +1,15 @@
 package com.ntt.mwonimoney.domain.game.service;
 
-import java.time.LocalDateTime;
-
 import org.springframework.stereotype.Service;
 
 import com.ntt.mwonimoney.domain.game.entity.Chat;
-import com.ntt.mwonimoney.domain.game.repository.ChattingRepository;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 @Service
-@RequiredArgsConstructor
-@Slf4j
-public class ChattingService {
+public interface ChattingService {
+	Flux<Chat> getBalanceGameChattingHistory(Long balanceGameIdx);
 
-	private final ChattingRepository chattingRepository;
-
-	public Flux<Chat> getBalanceGameChattingHistory(Long balanceGameIdx) {
-		return chattingRepository.mFindByBalanceGameIdx(balanceGameIdx)
-			.subscribeOn(Schedulers.boundedElastic());
-	}
-
-	public Mono<Chat> addChat(Chat chat, String memberUUID, Long balanceGameIdx) {
-
-		chat.setSenderUUID(memberUUID);
-		chat.setBalanceGameIdx(balanceGameIdx);
-		chat.setCreatedTime(LocalDateTime.now());
-
-		return chattingRepository.save(chat);
-	}
-
+	Mono<Chat> addChat(Chat chat, String memberUUID, Long balanceGameIdx);
 }

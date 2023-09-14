@@ -1,7 +1,6 @@
 package com.ntt.mwonimoney.domain.game.api;
 
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,9 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ntt.mwonimoney.domain.game.entity.Chat;
 import com.ntt.mwonimoney.domain.game.entity.Word;
-import com.ntt.mwonimoney.domain.game.service.ChattingService;
 import com.ntt.mwonimoney.domain.game.service.WordCloudService;
 
 import lombok.RequiredArgsConstructor;
