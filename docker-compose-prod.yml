@@ -4,7 +4,7 @@ services:
   backend:
     container_name: backend
     build:
-      context: ./wannabee
+      context: ./backend
       args:
         SERVER_MODE: prod
   # frontend:
@@ -14,10 +14,9 @@ services:
   #   depends_on:
   #     - backend
   nginx:
-    restart: always
+    # restart: always
     container_name: nginx
-    build: 
-      context: ./nginx
+    image : nginx:latest
     depends_on:
       - backend
       # - frontend
