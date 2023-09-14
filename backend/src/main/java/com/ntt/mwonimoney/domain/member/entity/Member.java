@@ -21,13 +21,15 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "member")
-public class Member extends CommonEntity {
+public abstract class Member extends CommonEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,8 +62,8 @@ public class Member extends CommonEntity {
 	@Column(name = "member_role")
 	private MemberRole memberRole;
 
-	@Builder
-	public Member(byte status, String name, String nickname, String birthday,
+
+	protected Member(byte status, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
 		String socialId, MemberRole memberRole) {
 		this.uuid = UUID.randomUUID().toString();
@@ -72,19 +74,5 @@ public class Member extends CommonEntity {
 		this.socialProvider = socialProvider;
 		this.socialId = socialId;
 		this.memberRole = memberRole;
-	}
-
-	public MemberDto convertToDto() {
-		return MemberDto.builder()
-			.idx(this.idx)
-			.uuid(this.uuid)
-			.status(this.status)
-			.name(this.name)
-			.nickname(this.nickname)
-			.birthday(this.birthday)
-			.socialProvider(this.socialProvider)
-			.socialId(this.socialId)
-			.memberRole(this.memberRole)
-			.build();
 	}
 }
