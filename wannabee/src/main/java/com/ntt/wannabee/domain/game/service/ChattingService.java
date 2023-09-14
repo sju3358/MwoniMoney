@@ -1,23 +1,35 @@
 package com.ntt.wannabee.domain.game.service;
 
+import java.time.LocalDateTime;
+
+import org.springframework.stereotype.Service;
+
+import com.ntt.wannabee.domain.game.entity.Chat;
+import com.ntt.wannabee.domain.game.repository.ChattingRepository;
+
+import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
+
 @Service
 @RequiredArgsConstructor
 public class ChattingService {
 
-	private final ChatRepository chatRepository;
-	private final MemberRecordService memberRecordService;
+	private final ChattingRepository chattingRepository;
 
-	public Flux<Chat> getChatLog(Long bubble_number) {
-		return chatRepository.mFindByBubbleNumber(bubble_number)
+	public Flux<Chat> getBalanceGameChattingHistory(Long balanceGameIdx) {
+		return chattingRepository.mFindByBalanceGameIdx(balanceGameIdx)
 			.subscribeOn(Schedulers.boundedElastic());
 	}
 
-	public Mono<Chat> insertChat(Chat chat, Long member_number) {
-		chat.setSender(member_number);
-		chat.setCreatedAt(LocalDateTime.now());
-		chat.setLevel(memberRecordService.getMemberLevel(member_number));
+	public Mono<Chat> addChat(Chat chat, String memberUUID, Long balanceGameIdx) {
 
-		return chatRepository.save(chat);
+		chat.setSenderUUID(memberUUID);
+		chat.setBalanceGameIdx(balanceGameIdx);
+		chat.setCreatedTime(LocalDateTime.now());
+
+		return chattingRepository.save(chat);
 	}
 
 }
