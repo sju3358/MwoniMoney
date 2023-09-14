@@ -2,6 +2,8 @@ package com.ntt.mwonimoney.domain.game.service;
 
 import java.time.LocalDateTime;
 
+import org.springframework.stereotype.Service;
+
 import com.ntt.mwonimoney.domain.game.entity.Chat;
 import com.ntt.mwonimoney.domain.game.repository.ChattingRepository;
 
@@ -11,6 +13,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+@Service
 @RequiredArgsConstructor
 @Slf4j
 public class ChattingServiceImpl implements ChattingService {
