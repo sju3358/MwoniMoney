@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ntt.mwonimoney.domain.game.entity.BalanceGameHistory;
@@ -14,7 +13,6 @@ import com.ntt.mwonimoney.domain.game.repository.BalanceGameHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Service
 @RequiredArgsConstructor
 @Slf4j
 @Transactional(readOnly = true)
