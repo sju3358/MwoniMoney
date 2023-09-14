@@ -32,11 +32,25 @@ public class BalanceGame {
 	@Column(name = "balance_answer2")
 	private String answer2;
 
+	@Column(name = "balance_active")
+	private char active;
+
+	public void updateBalanceGame(String question, String answer1, String answer2) {
+		this.question = question;
+		this.answer1 = answer1;
+		this.answer2 = answer2;
+	}
+
+	public void deactivate() {
+		this.active = 'N';
+	}
+
 	@Builder
 	public BalanceGame(String question, String answer1, String answer2) {
 		this.question = question;
 		this.answer1 = answer1;
 		this.answer2 = answer2;
+		this.active = 'Y';
 	}
 
 	public BalanceGameDto convertToDto() {
@@ -45,6 +59,7 @@ public class BalanceGame {
 			.question(this.question)
 			.answer1(this.answer1)
 			.answer2(this.answer2)
+			.active(this.active)
 			.build();
 	}
 
