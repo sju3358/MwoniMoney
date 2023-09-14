@@ -8,12 +8,14 @@ import com.ntt.mwonimoney.domain.game.entity.Chat;
 import com.ntt.mwonimoney.domain.game.repository.ChattingRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ChattingService {
 
 	private final ChattingRepository chattingRepository;
