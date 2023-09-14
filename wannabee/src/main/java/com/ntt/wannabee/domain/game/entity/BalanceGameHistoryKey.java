@@ -17,7 +17,7 @@ public class BalanceGameHistoryKey implements Serializable {
 
 	@Column(name = "balance_idx")
 	private Long balanceGameIdx;
-	
-	@Column(name = "member_uuid")
-	private String memberUUID;
+
+	@Column(name = "member_idx")
+	private Long memberIdx;
 }
