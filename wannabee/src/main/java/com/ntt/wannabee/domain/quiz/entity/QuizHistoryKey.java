@@ -18,6 +18,6 @@ public class QuizHistoryKey implements Serializable {
 	@Column(name = "quiz_idx")
 	private Long quizIdx;
 
-	@Column(name = "member_uuid")
-	private String memberUUID;
+	@Column(name = "member_idx")
+	private Long memberIdx;
 }
