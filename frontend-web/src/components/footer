@@ -1,0 +1,7 @@
+import styled from "styled-components";
+import React, { ReactNode } from "react";
+
+function Footer() {
+  return;
+}
+export default Footer;
