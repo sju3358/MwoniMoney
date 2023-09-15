@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ntt.mwonimoney.domain.game.entity.BalanceGame;
 import com.ntt.mwonimoney.domain.game.entity.BalanceGameHistory;
+import com.ntt.mwonimoney.domain.game.entity.BalanceGameHistoryKey;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameHistoryDto;
 import com.ntt.mwonimoney.domain.game.repository.BalanceGameHistoryRepository;
 import com.ntt.mwonimoney.domain.game.repository.BalanceGameRepository;
@@ -45,20 +46,32 @@ public class BalanceGameHistoryServiceImpl implements BalanceGameHistoryService 
 
 	@Override
 	@Transactional
-	public void selectBalanceGame(Long balanceGameIdx, Long memberIdx, byte selectAnswer) {
+	public void selectBalanceGameAnswer(Long balanceGameIdx, Long memberIdx, byte selectAnswer) {
 
-		BalanceGame balanceGame = balanceGameRepository.findBalanceGameByIdx(balanceGameIdx)
-			.orElseThrow(() -> new NoSuchElementException("밸런스게임이 존재하지 않습니다."));
+		try {
 
-		Member member = memberRepository.findMemberByIdx(memberIdx)
-			.orElseThrow(() -> new NoSuchElementException("회원이 존재하지 않습니다."));
+			BalanceGameHistoryKey key = new BalanceGameHistoryKey(balanceGameIdx, memberIdx);
+			BalanceGameHistory balanceGameHistory =
+				balanceGameHistoryRepository.findBalanceGameHistoryByBalanceGameHistoryKey(key)
+					.orElseThrow(() -> new NoSuchElementException());
 
-		BalanceGameHistory balanceGameHistory = BalanceGameHistory.builder()
-			.balanceGame(balanceGame)
-			.member(member)
-			.selectAnswer(selectAnswer)
-			.build();
+			balanceGameHistory.changeSelect(selectAnswer);
 
-		balanceGameHistoryRepository.save(balanceGameHistory);
+		} catch (NoSuchElementException e) {
+
+			BalanceGame balanceGame = balanceGameRepository.findBalanceGameByIdx(balanceGameIdx)
+				.orElseThrow(() -> new NoSuchElementException("밸런스게임이 존재하지 않습니다."));
+
+			Member member = memberRepository.findMemberByIdx(memberIdx)
+				.orElseThrow(() -> new NoSuchElementException("회원이 존재하지 않습니다."));
+
+			BalanceGameHistory balanceGameHistory = BalanceGameHistory.builder()
+				.balanceGame(balanceGame)
+				.member(member)
+				.selectAnswer(selectAnswer)
+				.build();
+
+			balanceGameHistoryRepository.save(balanceGameHistory);
+		}
 	}
 }
