@@ -1,11 +1,11 @@
 package com.ntt.mwonimoney.domain.game.service;
 
-import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameHistoryDto;
-
 import java.util.List;
 
-public interface BalanceGameHistoryService {
-    List<BalanceGameHistoryDto> getUserBalanceGameHistories(Long memberIdx);
+import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameHistoryDto;
 
-    void selectBalanceGame(Long memberIdx, byte selectAnswer);
+public interface BalanceGameHistoryService {
+	List<BalanceGameHistoryDto> getUserBalanceGameHistories(Long memberIdx);
+
+	void selectBalanceGame(Long balanceGameIdx, Long memberUUID, byte selectAnswer);
 }
