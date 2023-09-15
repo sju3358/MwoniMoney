@@ -37,10 +37,13 @@ public class BalanceGameHistory extends CommonEntity {
 	@JoinColumn(name = "member_idx")
 	private Member member;
 
+	public void changeSelect(byte selectAnswer) {
+		this.selectAnswer = selectAnswer;
+	}
+
 	@Builder
-	public BalanceGameHistory(Long balanceGameIdx, Long memberIdx, byte selectAnswer, BalanceGame balanceGame,
-		Member member) {
-		this.balanceGameHistoryKey = new BalanceGameHistoryKey(balanceGameIdx, memberIdx);
+	public BalanceGameHistory(byte selectAnswer, BalanceGame balanceGame, Member member) {
+		this.balanceGameHistoryKey = new BalanceGameHistoryKey(balanceGame.getIdx(), member.getIdx());
 		this.selectAnswer = selectAnswer;
 		this.balanceGame = balanceGame;
 		this.member = member;

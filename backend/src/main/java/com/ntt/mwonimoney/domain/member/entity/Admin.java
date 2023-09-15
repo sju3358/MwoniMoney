@@ -2,7 +2,6 @@ package com.ntt.mwonimoney.domain.member.entity;
 
 import com.ntt.mwonimoney.domain.member.model.dto.AdminDto;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
-import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 
 import jakarta.persistence.Entity;
@@ -10,7 +9,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
@@ -18,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 public class Admin extends Member {
 
 	@Builder
-	public Admin(byte status, String name, String nickname, SocialProvider socialProvider, String socialId){
+	public Admin(byte status, String name, String nickname, SocialProvider socialProvider, String socialId) {
 
 		super(status, name, nickname, "", socialProvider, socialId, MemberRole.ADMIN);
 
