@@ -18,10 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional(readOnly = true)
-public class BalanceGameServiceImpl {
+public class BalanceGameServiceImpl implements BalanceGameService {
 
 	private final BalanceGameRepository balanceGameRepository;
 
+	@Override
 	public List<BalanceGameDto> getBalanceGames() {
 		List<BalanceGame> balanceGameEntityList = balanceGameRepository.findAll();
 
