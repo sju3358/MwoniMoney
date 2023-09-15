@@ -12,7 +12,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
@@ -28,7 +27,7 @@ public class Child extends Member {
 	@Builder
 	public Child(byte status, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
-		String socialId, byte creditScore, SmallAccount smallAccount){
+		String socialId, byte creditScore, SmallAccount smallAccount) {
 		super(status, name, nickname, birthday, socialProvider, socialId, MemberRole.CHILD);
 		this.creditScore = creditScore;
 		this.smallAccount = smallAccount;
