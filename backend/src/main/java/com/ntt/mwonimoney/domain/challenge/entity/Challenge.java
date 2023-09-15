@@ -1,9 +1,15 @@
-package com.ntt.mwonimoney.domain.challenge;
+package com.ntt.mwonimoney.domain.challenge.entity;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Entity
+@NoArgsConstructor
+@Getter
 public class Challenge {
 	@Id
 	@GeneratedValue
