@@ -1,11 +1,11 @@
 import { createGlobalStyle } from "styled-components";
 import { reset } from "styled-reset";
-import background from "../../public/images/StartPage/background.jpg";
+import background from "../assests/image/background.png";
 
-export default createGlobalStyle`
+export const GlobalStyles = createGlobalStyle`
     ${reset}
     body{
-        font-family: "Font_test"; 
+        // font-family: "Font_test"; 
         position: absolute;
         margin:0;
         padding:0;
@@ -13,7 +13,8 @@ export default createGlobalStyle`
         left: 0;
         width: 100%;
         height: 100%;
-        background: url(${background});
+        background-Image: url(${background});
+        // background-color:yellow;
         background-size: cover;
     }
 `;
