@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import { reset } from "styled-reset";
-// import background from "../assest/image/background.jpg";
+import background from "../../public/images/StartPage/background.jpg";
 
 export default createGlobalStyle`
     ${reset}
@@ -13,7 +13,7 @@ export default createGlobalStyle`
         left: 0;
         width: 100%;
         height: 100%;
-        // background: url(${background});
+        background: url(${background});
         background-size: cover;
     }
 `;
