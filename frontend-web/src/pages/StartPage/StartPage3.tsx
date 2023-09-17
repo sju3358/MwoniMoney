@@ -5,7 +5,7 @@ const Background = styled.div`
   /* 로고 이미지 스타일 설정 */
   width: 100vw; /* 화면 너비에 맞게 컨테이너 크기 설정 */
   height: 100vh; /* 화면 높이에 맞게 컨테이너 크기 설정 */
-  background-image: url(${process.env.PUBLIC_URL}/images/StartPage1/background1.png);
+  background-image: url(${process.env.PUBLIC_URL}/images/StartPage1/background3.png);
   background-size: 100% 100%;
   background-repeat: no-repeat; /* 이미지 반복 제거 */
 `;
