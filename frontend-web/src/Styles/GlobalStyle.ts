@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import { reset } from "styled-reset";
+// import background from "../assests/image/background.png";
 import background from "../assests/image/background.png";
 
 export const GlobalStyles = createGlobalStyle`
@@ -14,7 +15,6 @@ export const GlobalStyles = createGlobalStyle`
         width: 100%;
         height: 100%;
         background-Image: url(${background});
-        // background-color:yellow;
         background-size: cover;
     }
 `;
