@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import { reset } from "styled-reset";
-// import background from "../assest/image/background.jpg";
+import background from "../assest/image/background.jpg";
 
 export default createGlobalStyle`
     ${reset}
