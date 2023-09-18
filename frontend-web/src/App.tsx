@@ -20,19 +20,22 @@ function App() {
     <>
       <GlobalStyles />
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/MainPage" element={<MainPage />} />
-        <Route path="/StartPage1" element={<StartPage1 />} />
-        <Route path="/StartPage2" element={<StartPage2 />} />
-        <Route path="/StartPage3" element={<StartPage3 />} />
-        <Route path="/StartPage4" element={<StartPage4 />} />
-        <Route path="/StartPage5" element={<StartPage5 />} />
-        <Route path="/ChallengeMainParent" element={<ChallengeMainParent />} />
+  <Route path="/" element={<Main />} />
+  <Route path="/MainPage" element={<MainPage />} />
+  <Route path="/StartPage1" element={<StartPage1 />} />
+  <Route path="/StartPage2" element={<StartPage2 />} />
+  <Route path="/StartPage3" element={<StartPage3 />} />
+  <Route path="/StartPage4" element={<StartPage4 />} />
+  <Route path="/StartPage5" element={<StartPage5 />} />
+  <Route path="/ChallengeMainParent" element={<ChallengeMainParent />} />
+  
+  {/* Layout 컴포넌트가 중첩 라우트를 포함하도록 수정 */}
+  <Route path="/" element={<Layout />}>
+    {/* MoneyPage 컴포넌트도 중첩 라우트로 추가 */}
+    <Route path="MoneyPage" element={<MoneyPage />} />
+  </Route>
+</Routes>
 
-        <Route element={<Layout/>}>
-          <Route path="/MoneyPage" element={<MoneyPage />} />
-        </Route>
-      </Routes>
     </>
   );
 }
