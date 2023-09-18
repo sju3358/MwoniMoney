@@ -10,6 +10,10 @@ import StartPage3 from "../src/pages/StartPage/StartPage3";
 import StartPage4 from "../src/pages/StartPage/StartPage4";
 import StartPage5 from "../src/pages/StartPage/StartPage5";
 import MoneyPage from "../src/pages/Common/MoneyPage";
+import Layout from "./components/layout";
+
+
+// 다른 컴포넌트 import...
 
 function App() {
   return (
@@ -24,7 +28,10 @@ function App() {
         <Route path="/StartPage4" element={<StartPage4 />} />
         <Route path="/StartPage5" element={<StartPage5 />} />
         <Route path="/ChallengeMainParent" element={<ChallengeMainParent />} />
-        <Route path="/MoneyPage" element={<MoneyPage />} />
+
+        <Route element={<Layout/>}>
+          <Route path="/MoneyPage" element={<MoneyPage />} />
+        </Route>
       </Routes>
     </>
   );
