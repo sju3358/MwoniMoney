@@ -1,7 +1,10 @@
 package com.ntt.mwonimoney.domain.challenge.api;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ntt.mwonimoney.domain.challenge.api.request.ChallengeRequestDto;
+import com.ntt.mwonimoney.domain.challenge.api.request.MemberChallengeRequestDto;
+import com.ntt.mwonimoney.domain.challenge.api.response.MemberChallengeResponseDto;
 import com.ntt.mwonimoney.domain.challenge.service.ChallengeService;
 import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
 import com.ntt.mwonimoney.domain.member.service.MemberService;
@@ -87,18 +92,18 @@ public class ChallengeApi {
 
 	//공통
 	//챌린지 조회
-	// @GetMapping("/")
-	// public List<MemberChallengeResponseDto> SelectMemberChallenge(@CookieValue("memberUUID") String memberUUID,
-	// 	MemberChallengeRequestDto memberChallengeRequestDto) {
-	// 	Long memberIdx;
-	// 	if (memberChallengeRequestDto.getExtramemberUuid() == "none") {
-	// 		//자식일때
-	// 		memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
-	// 	} else {
-	// 		memberIdx = memberAuthService.getMemberAuthInfo(memberChallengeRequestDto.getExtramemberUuid())
-	// 			.getMemberIdx();
-	// 	}
-	//
-	// 	return challengeService.selectMemberChallenge(memberChallengeRequestDto, memberIdx);
-	// }
+	@GetMapping("/")
+	public List<MemberChallengeResponseDto> SelectMemberChallenge(@CookieValue("memberUUID") String memberUUID,
+		MemberChallengeRequestDto memberChallengeRequestDto) {
+		Long memberIdx;
+		if (memberChallengeRequestDto.getExtramemberUuid().equals("none")) {
+			//자식일때
+			memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
+		} else {
+			memberIdx = memberAuthService.getMemberAuthInfo(memberChallengeRequestDto.getExtramemberUuid())
+				.getMemberIdx();
+		}
+
+		return challengeService.selectMemberChallenge(memberChallengeRequestDto, memberIdx);
+	}
 }
