@@ -11,7 +11,6 @@ import StartPage4 from "../src/pages/StartPage/StartPage4";
 import StartPage5 from "../src/pages/StartPage/StartPage5";
 import MoneyPage from "../src/pages/Common/MoneyPage";
 
-
 function App() {
   return (
     <>
