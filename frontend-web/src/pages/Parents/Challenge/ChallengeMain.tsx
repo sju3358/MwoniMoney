@@ -1,12 +1,10 @@
+// ChallengeMainParent.tsx
+
 import React from "react";
-import Footer from "../../../components/footer";
+import Layout from "../../../components/layout";
 
 function ChallengeMainParent() {
-  return (
-    <div>
-      <Footer />
-    </div>
-  );
+  return <div></div>;
 }
 
 export default ChallengeMainParent;
