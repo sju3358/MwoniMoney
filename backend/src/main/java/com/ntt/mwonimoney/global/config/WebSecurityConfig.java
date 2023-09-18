@@ -15,6 +15,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.ntt.mwonimoney.domain.jwt.TokenAccessDeniedHandler;
 import com.ntt.mwonimoney.domain.oauth.exception.RestAuthenticationEntryPoint;
 import com.ntt.mwonimoney.domain.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
+import com.ntt.mwonimoney.domain.oauth.service.CustomOAuth2UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 public class WebSecurityConfig {
 
 	private final TokenAccessDeniedHandler tokenAccessDeniedHandler;
+	private final CustomOAuth2UserService customOAuth2UserService;
 	private static final String[] GET_LIST = {"/api/oauth2/authorization", "/api/login/oauth2/code/**", "/api/logout"};
 	private static final String[] POST_LIST = {"/api/logout"};
 
@@ -49,7 +51,12 @@ public class WebSecurityConfig {
 			.oauth2Login()
 			.authorizationEndpoint()
 			.baseUri("/api/oauth2/authorization")
-			.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository());
+			.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
+			.and()
+			.redirectionEndpoint()
+			.baseUri("/api/login/oauth2/code/*").and()
+			.userInfoEndpoint()
+			.userService(customOAuth2UserService);
 
 		return httpSecurity.build();
 	}
