@@ -18,7 +18,7 @@ const FooterBody = styled.div`
 `;
 
 interface FooterBoxProps {
-  backgroundImage: string;
+  backgroundimage: string;
 }
 
 const FooterBox = styled.div`
@@ -35,7 +35,7 @@ const FooterimgBox = styled.div<FooterBoxProps>`
   // border: 1px solid black;
   width: 75%;
   height: 75%;
-  background-image: url(${(props) => props.backgroundImage});
+  background-image: url(${(props) => props.backgroundimage});
   background-size: 100% 100%;
 `;
 
@@ -43,19 +43,19 @@ function Footer() {
   return (
     <FooterBody>
       <FooterBox>
-        <FooterimgBox backgroundImage={FooterHome} />
+        <FooterimgBox backgroundimage={FooterHome} />
       </FooterBox>
       <FooterBox>
-        <FooterimgBox backgroundImage={FooterChart} />
+        <FooterimgBox backgroundimage={FooterChart} />
       </FooterBox>
       <FooterBox>
-        <FooterimgBox backgroundImage={FooterChallenge} />
+        <FooterimgBox backgroundimage={FooterChallenge} />
       </FooterBox>
       <FooterBox>
-        <FooterimgBox backgroundImage={FooterBank} />
+        <FooterimgBox backgroundimage={FooterBank} />
       </FooterBox>
       <FooterBox>
-        <FooterimgBox backgroundImage={FooterSetting} />
+        <FooterimgBox backgroundimage={FooterSetting} />
       </FooterBox>
     </FooterBody>
   );
