@@ -25,7 +25,6 @@ const FooterBox = styled.div<FooterBoxProps>`
   // border: 1px solid black;
   width: 20%;
   height: 100%;
-  // background-color: yellow;
   background-image: url(${(props) => props.backgroundImage});
   background-size: 100% 100%;
   cursor: pointer;
