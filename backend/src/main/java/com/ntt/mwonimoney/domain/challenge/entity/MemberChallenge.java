@@ -63,4 +63,7 @@ public class MemberChallenge extends CommonEntity {
 		this.status = status;
 	}
 
+	public void update(Integer status) {
+		this.status = status;
+	}
 }
