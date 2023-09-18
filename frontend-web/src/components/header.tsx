@@ -32,10 +32,6 @@ const Logo = styled.div`
   background-size: 100% 100%;
 `;
 
-{
-  /* 헤더 자녀 이름 부분 */
-}
-
 interface profileBoxProps {
   name: string;
 }
