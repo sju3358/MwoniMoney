@@ -21,23 +21,42 @@ interface FooterBoxProps {
   backgroundImage: string;
 }
 
-const FooterBox = styled.div<FooterBoxProps>`
+const FooterBox = styled.div`
   // border: 1px solid black;
   width: 20%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const FooterimgBox = styled.div<FooterBoxProps>`
+  // border: 1px solid black;
+  width: 75%;
+  height: 75%;
   background-image: url(${(props) => props.backgroundImage});
   background-size: 100% 100%;
-  cursor: pointer;
 `;
 
 function Footer() {
   return (
     <FooterBody>
-      <FooterBox backgroundImage={FooterHome} />
-      <FooterBox backgroundImage={FooterChart} />
-      <FooterBox backgroundImage={FooterChallenge} />
-      <FooterBox backgroundImage={FooterBank} />
-      <FooterBox backgroundImage={FooterSetting} />
+      <FooterBox>
+        <FooterimgBox backgroundImage={FooterHome} />
+      </FooterBox>
+      <FooterBox>
+        <FooterimgBox backgroundImage={FooterChart} />
+      </FooterBox>
+      <FooterBox>
+        <FooterimgBox backgroundImage={FooterChallenge} />
+      </FooterBox>
+      <FooterBox>
+        <FooterimgBox backgroundImage={FooterBank} />
+      </FooterBox>
+      <FooterBox>
+        <FooterimgBox backgroundImage={FooterSetting} />
+      </FooterBox>
     </FooterBody>
   );
 }
