@@ -1,5 +1,6 @@
 package com.ntt.mwonimoney.domain.challenge.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,6 @@ public interface MemberChallengeRepository extends JpaRepository<MemberChallenge
 	//memberidx로 조회하기
 	@Query("select c from MemberChallenge c where c.member.idx = :memberIdx")
 	List<MemberChallenge> findByMemberIdQuery(Long memberIdx);
+
+	List<MemberChallenge> findByEndTimeBeforeAndStatus(LocalDateTime localDateTime, Integer status);
 }
