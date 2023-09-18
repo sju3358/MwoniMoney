@@ -1,11 +1,15 @@
 package com.ntt.mwonimoney.domain.challenge.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ntt.mwonimoney.domain.challenge.api.request.ChallengeRequestDto;
+import com.ntt.mwonimoney.domain.challenge.api.request.MemberChallengeRequestDto;
 import com.ntt.mwonimoney.domain.challenge.api.response.MemberChallengeResponseDto;
 import com.ntt.mwonimoney.domain.challenge.entity.Challenge;
 import com.ntt.mwonimoney.domain.challenge.entity.MemberChallenge;
@@ -164,22 +168,22 @@ public class ChallengeService {
 
 	//공통
 	//챌린지 모두 조회
-	// public List<MemberChallengeResponseDto> selectMemberChallenge(MemberChallengeRequestDto memberChallengeRequestDto,
-	// 	Long memberIdx) {
-	// 	List<MemberChallenge> memberChallengeList = new ArrayList<>();
-	// 	if (memberChallengeRequestDto.getStatus() != 5) {
-	// 		//member를 이용하니까 fetch join을 사용해서 member랑 조인하고, memberid가 같은거랑 status가 같은 것을 찾는다.
-	// 		memberChallengeList = memberChallengeRepository.findbyStatusandIdx(
-	// 			memberChallengeRequestDto.getStatus());
-	//
-	// 	} else {
-	// 		//status가 5이면 전체 조회
-	// 		memberChallengeList = memberChallengeRepository.findByMember(Long memberIdx);
-	// 	}
-	//
-	// 	return memberChallengeList.stream()
-	// 		.map(MemberChallengeResponseDto::new)
-	// 		.collect(Collectors.toList());
-	// }
+	public List<MemberChallengeResponseDto> selectMemberChallenge(MemberChallengeRequestDto memberChallengeRequestDto,
+		Long memberIdx) {
+		List<MemberChallenge> memberChallengeList = new ArrayList<>();
+		if (memberChallengeRequestDto.getStatus() != 5) {
+			//member를 이용하니까 fetch join을 사용해서 member랑 조인하고, memberid가 같은거랑 status가 같은 것을 찾는다.
+			memberChallengeList = memberChallengeRepository.findbyStatusandIdx(
+				memberChallengeRequestDto.getStatus(), memberIdx);
+
+		} else {
+			//status가 5이면 전체 조회
+			memberChallengeList = memberChallengeRepository.findByMemberIdQuery(memberIdx);
+		}
+
+		return memberChallengeList.stream()
+			.map(MemberChallengeResponseDto::new)
+			.collect(Collectors.toList());
+	}
 
 }
