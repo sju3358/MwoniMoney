@@ -1,5 +1,4 @@
 import React from "react";
-import Footer from "../../components/footer";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -8,9 +7,8 @@ const Container = styled.div`
   height: 100vh; /* 화면 높이에 맞게 컨테이너 크기 설정 */
   display: flex;
   flex-direction: column;
-  border: solid;
+  border: solid 7px;
 `;
-
 
 const BlockContainer = styled.div`
   width: 100vw;
@@ -21,8 +19,10 @@ const BlockContainer = styled.div`
 function MoneyPage() {
   return (
     <Container>
-      <BlockContainer>asdf</BlockContainer>
-
+      <BlockContainer>1</BlockContainer>
+      <BlockContainer>1</BlockContainer>
+      <BlockContainer>2</BlockContainer>
+      <BlockContainer>3</BlockContainer>
       <BlockContainer>asdf</BlockContainer>
     </Container>
   );
