@@ -4,12 +4,11 @@ import React from "react";
 import Main from "./Main";
 import ChallengeMainParent from "./pages/Parents/Challenge/ChallengeMain";
 import MainPage from "../src/pages/MainPage";
-import StartPage1 from "../src/pages/StartPage/StartPage1"
-import StartPage2 from "../src/pages/StartPage/StartPage2"
-import StartPage3 from "../src/pages/StartPage/StartPage3"
-import StartPage4 from "../src/pages/StartPage/StartPage4"
-import StartPage5 from "../src/pages/StartPage/StartPage5"
-import { GlobalStyles } from "./Styles/GlobalStyle";
+import StartPage1 from "../src/pages/StartPage/StartPage1";
+import StartPage2 from "../src/pages/StartPage/StartPage2";
+import StartPage3 from "../src/pages/StartPage/StartPage3";
+import StartPage4 from "../src/pages/StartPage/StartPage4";
+import StartPage5 from "../src/pages/StartPage/StartPage5";
 
 function App() {
   return (
