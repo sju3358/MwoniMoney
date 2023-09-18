@@ -29,7 +29,7 @@ public class MemberAuthServiceImpl implements MemberAuthService {
 			memberAuthDto.getMemberRefreshToken());
 		memberAuthRepository.save(memberAuth);
 	}
-	
+
 	public void Logout(String memberUUID) {
 		MemberAuth memberAuth = memberAuthRepository.findMemberAuthByMemberUUID(memberUUID)
 			.orElseThrow(() -> new NoSuchElementException());
