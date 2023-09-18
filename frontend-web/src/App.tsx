@@ -9,6 +9,8 @@ import StartPage2 from "../src/pages/StartPage/StartPage2";
 import StartPage3 from "../src/pages/StartPage/StartPage3";
 import StartPage4 from "../src/pages/StartPage/StartPage4";
 import StartPage5 from "../src/pages/StartPage/StartPage5";
+import MoneyPage from "../src/pages/Common/MoneyPage";
+
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
         <Route path="/StartPage4" element={<StartPage4 />} />
         <Route path="/StartPage5" element={<StartPage5 />} />
         <Route path="/ChallengeMainParent" element={<ChallengeMainParent />} />
+        <Route path="/MoneyPage" element={<MoneyPage />} />
       </Routes>
     </>
   );
