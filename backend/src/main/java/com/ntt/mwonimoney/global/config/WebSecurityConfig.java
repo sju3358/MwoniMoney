@@ -14,6 +14,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.ntt.mwonimoney.domain.jwt.TokenAccessDeniedHandler;
 import com.ntt.mwonimoney.domain.oauth.exception.RestAuthenticationEntryPoint;
+import com.ntt.mwonimoney.domain.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 public class WebSecurityConfig {
 
 	private final TokenAccessDeniedHandler tokenAccessDeniedHandler;
-	private static final String[] All_list = {};
 	private static final String[] GET_LIST = {"/api/oauth2/authorization", "/api/login/oauth2/code/**", "/api/logout"};
 	private static final String[] POST_LIST = {"/api/logout"};
 
@@ -42,12 +42,14 @@ public class WebSecurityConfig {
 				.permitAll()
 				.requestMatchers(HttpMethod.POST, POST_LIST)
 				.permitAll()
-				.requestMatchers(All_list)
-				.permitAll()
 				.requestMatchers("/**")
 				.hasAnyRole("PARENT", "CHILD")
 				.anyRequest()
-				.authenticated());
+				.authenticated())
+			.oauth2Login()
+			.authorizationEndpoint()
+			.baseUri("/api/oauth2/authorization")
+			.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository());
 
 		return httpSecurity.build();
 	}
@@ -63,5 +65,10 @@ public class WebSecurityConfig {
 		corsConfiguration.setAllowCredentials(true);
 		source.registerCorsConfiguration("/**", corsConfiguration);
 		return source;
+	}
+
+	@Bean
+	public OAuth2AuthorizationRequestBasedOnCookieRepository oAuth2AuthorizationRequestBasedOnCookieRepository() {
+		return new OAuth2AuthorizationRequestBasedOnCookieRepository();
 	}
 }
