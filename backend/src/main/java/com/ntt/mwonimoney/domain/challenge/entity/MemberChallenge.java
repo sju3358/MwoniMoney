@@ -24,7 +24,7 @@ public class MemberChallenge extends CommonEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_challenge_idx")
-	private Integer memberChallengeIdx;
+	private Long memberChallengeIdx;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "challenge_idx")
@@ -38,21 +38,29 @@ public class MemberChallenge extends CommonEntity {
 	private String memo;
 
 	@Column(name = "challenge_reward")
-	private int reward;
+	private Integer reward;
 
 	@Column(name = "challenge_status")
-	private int status;
+	private Integer status;
 
 	@Column(name = "challenge_end_time")
 	private LocalDateTime endTime;
 
 	//생성자
 	@Builder
-	public MemberChallenge(String memo, int reward, int status, LocalDateTime endTime) {
+	public MemberChallenge(Long memberChallengeIdx, Challenge challenge, Member member, String memo, int reward,
+		int status, LocalDateTime endTime) {
+		this.memberChallengeIdx = memberChallengeIdx;
+		this.challenge = challenge;
+		this.member = member;
 		this.memo = memo;
 		this.reward = reward;
 		this.status = status;
 		this.endTime = endTime;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 }
