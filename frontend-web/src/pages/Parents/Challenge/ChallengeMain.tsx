@@ -3,12 +3,7 @@ import Header from "../../../components/header";
 import Footer from "../../../components/footer";
 
 function ChallengeMainParent() {
-  return (
-    <div>
-      <Header />
-      <Footer />
-    </div>
-  );
+  return <div></div>;
 }
 
 export default ChallengeMainParent;
