@@ -11,7 +11,6 @@ import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.entity.Parent;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
-import com.ntt.mwonimoney.domain.oauth.exception.OAuthProviderMissMatchException;
 import com.ntt.mwonimoney.domain.oauth.info.OAuth2MemberInfo;
 import com.ntt.mwonimoney.domain.oauth.info.OAuth2UserInfoFactory;
 import com.ntt.mwonimoney.domain.oauth.model.vo.MemberPrincipal;
@@ -24,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
-	private static final String ALREADY_SIGNED_UP_SOCIAL = "already_signed_up_social";
 	private final MemberRepository memberRepository;
 
 	@Override
@@ -34,7 +32,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		try {
 			return this.process(userRequest, user);
 		} catch (Exception ex) {
-			log.error("CustomOAuth2UserService loadUser Error: {} ", ex.getMessage());
+			log.error("CustomOAuth2UserService loadUser Error", ex.getMessage());
 			throw new InternalAuthenticationServiceException(ex.getMessage(), ex.getCause());
 		}
 	}
@@ -49,11 +47,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		Member savedMember = memberRepository.findMemberBySocialId(userInfo.getId())
 			.orElseGet(() -> createMember(userInfo, socialProvider));
 
-		if (socialProvider != savedMember.getSocialProvider()) {
-			log.error("CustomOAuth2UserService process Error: 다른 소셜에서 가입된 이메일 입니다. 해당 소셜 로그인을 이용해 주세요.");
-			throw new OAuthProviderMissMatchException(ALREADY_SIGNED_UP_SOCIAL);
-		}
-
 		return MemberPrincipal.create(savedMember, user.getAttributes());
 	}
 
@@ -61,6 +54,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		Member member = Parent.builder()
 			.socialId(userInfo.getId())
 			.name(userInfo.getName())
+			.nickname(userInfo.getName())
+			.birthday(userInfo.getBirthday())
 			.socialProvider(socialProvider)
 			.status((byte)1)
 			.build();

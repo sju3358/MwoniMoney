@@ -19,6 +19,6 @@ public abstract class OAuth2MemberInfo {
 
 	public abstract String getName();
 
-	public abstract LocalDate getBirthday();
+	public abstract String getBirthday();
 
 }

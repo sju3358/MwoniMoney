@@ -28,8 +28,8 @@ public class KakaoOAuth2MemberInfo extends OAuth2MemberInfo {
 	}
 
 	@Override
-	public LocalDate getBirthday() {
+	public String getBirthday() {
 		Map<String, Object> account = (Map<String, Object>)attributes.get("kakao_account");
-		return (LocalDate)account.get("birthDay");
+		return (String)account.get("birthDay");
 	}
 }
