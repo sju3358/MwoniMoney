@@ -43,7 +43,7 @@ const Chart = styled.div`
 const Text = styled.div`
   color: #292929;
   font-family: Inter;
-  font-size: 24px;
+  font-size: 5vw;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -68,7 +68,7 @@ const Block1 = styled.div`
   background: var(--status-good, #B9DEB3);
   border: solid;
   box-sizing: border-box;
-  padding: 5% 10%;
+  padding: 4% 7%;
 `;
 
 const Block2 = styled.div`
@@ -79,6 +79,7 @@ const Block2 = styled.div`
   background: var(--status-bad, #FFA27E);
   border: solid;
   box-sizing: border-box;
+  padding: 4% 7%;
 `;
 
 const BlockTextBox1 = styled.div`
@@ -86,19 +87,15 @@ const BlockTextBox1 = styled.div`
   height: 50%;
   display: flex;
   flex-direction: column;
-
 `;
 
 const BlockText = styled.div`
-  color: var(--text, #333);
-  font-family: Rubik;
-  font-size: 16px;
+  color: #292929;
+  font-family: Inter;
+  font-size: 3.5vw;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 700;
   line-height: normal;
-  letter-spacing: -0.2px;
-  border: solid;
-  box-sizing: border-box;
 `;
 
 const ContextContainer = styled.div`
@@ -108,16 +105,46 @@ const ContextContainer = styled.div`
   flex-direction: column;
   border: solid;
   box-sizing: border-box;
-  padding: 5% 10%;
+  padding: 3% 10%;
+  border-radius: 5px;
 `;
 
-const ContextContainerIn1 = styled.div`
+const ContextContainerIn = styled.div`
   border-radius: 5px;
-  background: #FFF;
   width: 100%;
   height: 100%;
+  border: solid;
+  box-sizing: border-box;
+  padding: 2% 10%;
 `;
 
+const CostText = styled.div`
+  color: #000;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+`;
+
+const CostCategoryContainer = styled.div`
+  color: #000;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+`;
+
+const CostCategory = styled.div`
+  color: var(--text-color-active, #292929);
+  text-align: center;
+  font-family: Inter;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+`;
 
 function MoneyPage() {
   return (
@@ -135,18 +162,25 @@ function MoneyPage() {
       <BlockContainer>
         <Block1>
           <BlockTextBox1>
-            <BlockText>ㅁㄴㅇㄹ</BlockText>
+            <BlockText>수입</BlockText>
           </BlockTextBox1>
-          <BlockTextBox1>asdf</BlockTextBox1>
+          <BlockTextBox1>
+            <BlockText>+ 100, 000원</BlockText>
+          </BlockTextBox1>
         </Block1>
         <Block2>
-
+        <BlockTextBox1>
+            <BlockText>지출</BlockText>
+          </BlockTextBox1>
+          <BlockTextBox1>
+            <BlockText>- 100, 000원</BlockText>
+          </BlockTextBox1>
         </Block2>
       </BlockContainer>
       <ContextContainer>
-        <ContextContainerIn1>
-          
-        </ContextContainerIn1>
+        <ContextContainerIn>
+          <CostText>지출내역</CostText>
+        </ContextContainerIn>
       </ContextContainer>
     </Container>
   );
