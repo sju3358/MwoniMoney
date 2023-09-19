@@ -22,7 +22,7 @@ public class GoogleOAuth2MemberInfo extends OAuth2MemberInfo {
 	}
 
 	@Override
-	public LocalDate getBirthday() {
-		return (LocalDate)attributes.get("birthDay");
+	public String getBirthday() {
+		return (String)attributes.get("birthDay");
 	}
 }

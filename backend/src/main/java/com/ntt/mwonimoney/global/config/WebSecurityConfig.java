@@ -13,6 +13,9 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.ntt.mwonimoney.domain.jwt.TokenAccessDeniedHandler;
+import com.ntt.mwonimoney.domain.oauth.exception.RestAuthenticationEntryPoint;
+import com.ntt.mwonimoney.domain.oauth.handler.OAuth2AuthenticationFailureHandler;
+import com.ntt.mwonimoney.domain.oauth.handler.OAuth2AuthenticationSuccessHandler;
 import com.ntt.mwonimoney.domain.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.ntt.mwonimoney.domain.oauth.service.CustomOAuth2UserService;
 
@@ -55,7 +58,11 @@ public class WebSecurityConfig {
 			.redirectionEndpoint()
 			.baseUri("/api/login/oauth2/code/*").and()
 			.userInfoEndpoint()
-			.userService(customOAuth2UserService);
+			.userService(customOAuth2UserService)
+			.and()
+			.successHandler(oAuth2AuthenticationSuccessHandler())
+			.failureHandler(oAuth2AuthenticationFailureHandler())
+			.permitAll();
 
 		return httpSecurity.build();
 	}
@@ -76,5 +83,15 @@ public class WebSecurityConfig {
 	@Bean
 	public OAuth2AuthorizationRequestBasedOnCookieRepository oAuth2AuthorizationRequestBasedOnCookieRepository() {
 		return new OAuth2AuthorizationRequestBasedOnCookieRepository();
+	}
+
+	@Bean
+	public OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
+		return new OAuth2AuthenticationSuccessHandler(oAuth2AuthorizationRequestBasedOnCookieRepository(), jwtTokenProvider, redisTemplate, userRepository);
+	}
+
+	@Bean
+	public OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler() {
+		return new OAuth2AuthenticationFailureHandler(oAuth2AuthorizationRequestBasedOnCookieRepository());
 	}
 }
