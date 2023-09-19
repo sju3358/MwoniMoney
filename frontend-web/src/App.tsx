@@ -10,6 +10,7 @@ import StartPage4 from "../src/pages/Common/StartPage/StartPage4";
 import StartPage5 from "../src/pages/Common/StartPage/StartPage5";
 import MoneyPage from "../src/pages/Common/MoneyPage";
 import Main from "./pages/Main";
+import Success from "./modal/Quiz/Success";
 // 다른 컴포넌트 import...
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/StartPage3" element={<StartPage3 />} />
         <Route path="/StartPage4" element={<StartPage4 />} />
         <Route path="/StartPage5" element={<StartPage5 />} />
+        <Route path="/Success" element={<Success />} />
 
         {/* Layout 컴포넌트가 중첩 라우트를 포함하도록 수정 */}
         <Route path="/" element={<Layout />}>

@@ -175,15 +175,6 @@ const CostCategoryText = styled.div`
 `;
 
 
-const CostCategory = styled.div`
-  color: var(--text-color-active, #292929);
-  text-align: center;
-  font-family: Inter;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-`;
 
 function MoneyPage() {
   return (
