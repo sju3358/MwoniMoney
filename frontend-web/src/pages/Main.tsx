@@ -12,8 +12,8 @@ import {
 } from "../components/Parents/Main";
 import Allowance from "../components/Common/Allowance";
 import SpacialAllowance from "../components/Common/SpacialAllowance";
-import { WhiteBox } from "../components/Common/WhiteBox";
 import Qr from "../components/Common/Qr";
+import Money from "../assests/image/Money.png";
 
 function Main() {
   const childName = "지현"; // api연결시 자녀1 이름으로 매핑
@@ -28,7 +28,12 @@ function Main() {
           <Text>받고 있어요!</Text>
         </TextMentBox>
         <TextEmojiBox>
-          <Emoji />
+          <Emoji
+            // url={process.env.PUBLIC_URL + "/images/Money.png"}
+            url={`${Money}`}
+            width="80%"
+            height="80%"
+          />
         </TextEmojiBox>
       </TextContainer>
       <AllowanveContainer height="60%">
