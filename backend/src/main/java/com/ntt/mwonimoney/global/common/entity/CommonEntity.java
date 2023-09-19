@@ -16,6 +16,6 @@ import lombok.Getter;
 public abstract class CommonEntity {
 
 	@CreatedDate
-	@Column(name = "create_time")
+	@Column(name = "create_time", updatable = false)
 	private LocalDateTime createTime;
 }
