@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import FooterHome from "../assests/image/FooterHome.png";
-import FooterChart from "../assests/image/FooterChart.png";
-import FooterChallenge from "../assests/image/FooterChallenge.png";
-import FooterBank from "../assests/image/FooterBank.png";
-import FooterSetting from "../assests/image/FooterSetting.png";
+import FooterHome from "../../assests/image/FooterHome.png";
+import FooterChart from "../../assests/image/FooterChart.png";
+import FooterChallenge from "../../assests/image/FooterChallenge.png";
+import FooterBank from "../../assests/image/FooterBank.png";
+import FooterSetting from "../../assests/image/FooterSetting.png";
 
 const FooterBody = styled.div`
   position: fixed;
