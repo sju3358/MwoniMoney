@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Money from "../../assests/image/Money.png";
 
 export const MainContainer = styled.div`
   // border: 1px solid black;
@@ -7,6 +6,7 @@ export const MainContainer = styled.div`
   height: 100%;
   box-sizing: border-box;
   overflow: auto;
+  overflow-x: hidden; /* 가로 스크롤 제거 */
 `;
 
 export const ChildrenList = styled.div`
@@ -60,12 +60,19 @@ export const TextEmojiBox = styled.div`
   align-items: center;
 `;
 
-export const Emoji = styled.div`
+interface EmogiProps {
+  url: string;
+  // size: string;
+  width: string;
+  height: string;
+}
+
+export const Emoji = styled.div<EmogiProps>`
   // border: 1px solid red;
-  width: 80%;
-  height: 80%;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   box-sizing: border-box;
-  background-image: url(${Money});
+  background-image: url(${(props) => props.url});
   background-size: 100% 100%;
 `;
 
