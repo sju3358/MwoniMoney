@@ -11,11 +11,9 @@ import StartPage4 from "../src/pages/Common/StartPage/StartPage4";
 import StartPage5 from "../src/pages/Common/StartPage/StartPage5";
 import MoneyPage from "../src/pages/Common/MoneyPage";
 import Challenge from "../src/pages/Challenge";
-import Main from "./pages/Main";
 import Success from "./modal/Quiz/Success";
 import Bank from "./pages/Bank";
 import MyPage from "./pages/MyPage";
-
 
 // 다른 컴포넌트 import...
 
@@ -42,7 +40,6 @@ function App() {
 
           <Route path="Bank" element={<Bank />} />
           <Route path="MyPage" element={<MyPage />} />
-
         </Route>
       </Routes>
     </>
