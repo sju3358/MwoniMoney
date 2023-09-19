@@ -2,34 +2,37 @@ import React from "react";
 import {
   AllowanveContainer,
   ChildrenList,
-  Emoji,
   MainContainer,
   QrContainer,
   Text,
   TextContainer,
-  TextEmojiBox,
+  PigBox,
   TextMentBox,
-} from "../components/Parents/MyPage";
+  PigContainer,
+  PigBigText,
+  PigSmallText,
+  Emoji,
+  PigRowBox,
+  PigBoxBox,
+  InTextContainer1,
+  InTextContainer2
+} from "../components/Parents/Bank";
 import Allowance from "../components/Common/Allowance";
 import SpacialAllowance from "../components/Common/SpacialAllowance";
-import { WhiteBox } from "../components/Common/WhiteBox";
 import Qr from "../components/Common/Qr";
 
-function Main() {
-  const name = "이지현"; // api연결시 자녀1 이름으로 매핑
+function Bank() {
+  const childName = "지현"; // api연결시 자녀1 이름으로 매핑
   const childAllowance = 100000;
   return (
     <MainContainer>
       <TextContainer>
         <TextMentBox>
-          <Text>{name}님</Text>
-          <Text>안녕하세요!</Text>
+          <Text>현재 {childName}는</Text>
+          <Text>{childAllowance}원의 부채가 있어요! </Text>
         </TextMentBox>
-        <TextEmojiBox>
-          <Emoji />
-        </TextEmojiBox>
       </TextContainer>
-      <AllowanveContainer height="80%">
+      <AllowanveContainer height="60%">
         <Allowance />
       </AllowanveContainer>
       <AllowanveContainer height="50%">
@@ -42,4 +45,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default Bank;
