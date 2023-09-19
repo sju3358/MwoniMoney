@@ -12,6 +12,8 @@ import MoneyPage from "../src/pages/Common/MoneyPage";
 import Main from "./pages/Main";
 import Success from "./modal/Quiz/Success";
 import Bank from "./pages/Bank";
+import MyPage from "./pages/MyPage";
+
 
 // 다른 컴포넌트 import...
 
@@ -34,6 +36,7 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="MoneyPage" element={<MoneyPage />} />
           <Route path="Bank" element={<Bank />} />
+          <Route path="MyPage" element={<MyPage />} />
         </Route>
       </Routes>
     </>
