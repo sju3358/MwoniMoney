@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const QuizParent = styled.div`
   //퀴즈 스타일 설정
-  //가장 밖
+  //가장 밖 
   width: 300px;
   height: 300px;
   border: solid 1px black;

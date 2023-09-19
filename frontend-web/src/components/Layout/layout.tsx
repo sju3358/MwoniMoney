@@ -1,18 +1,11 @@
 import React from "react";
-import Footer from "./footer";
-import Header from "./header";
-import { Outlet } from "react-router-dom";
+import ChildrenLayout from "./childrenLayout";
+import ParentsLayout from "./parentsLayout";
 
 function Layout() {
-  return (
-    <>
-      <Header />
-      <div style={{ height: "80vh", paddingTop: "10vh" }}>
-        <Outlet />
-      </div>
-      <Footer />
-    </>
-  );
+  //number = 1 : 부모 , number = 0 : 자식 
+  const role: number = 0;
+  return <>{role === 1 ? <ParentsLayout /> : <ChildrenLayout />}</>;
 }
 
 export default Layout;
