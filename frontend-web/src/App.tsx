@@ -11,6 +11,8 @@ import StartPage5 from "../src/pages/Common/StartPage/StartPage5";
 import MoneyPage from "../src/pages/Common/MoneyPage";
 import Main from "./pages/Main";
 import Success from "./modal/Quiz/Success";
+import Bank from "./pages/Bank";
+
 // 다른 컴포넌트 import...
 
 function App() {
@@ -31,6 +33,7 @@ function App() {
           {/* MoneyPage 컴포넌트도 중첩 라우트로 추가 */}
           <Route path="/" element={<Main />} />
           <Route path="MoneyPage" element={<MoneyPage />} />
+          <Route path="Bank" element={<Bank />} />
         </Route>
       </Routes>
     </>
