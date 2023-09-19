@@ -9,8 +9,11 @@ import {
   TextContainer,
   TextEmojiBox,
   TextMentBox,
-  WhiteBox,
 } from "../components/Parents/Main";
+import Allowance from "../components/Common/Allowance";
+import SpacialAllowance from "../components/Common/SpacialAllowance";
+import { WhiteBox } from "../components/Common/WhiteBox";
+import Qr from "../components/Common/Qr";
 
 function Main() {
   const childName = "지현"; // api연결시 자녀1 이름으로 매핑
@@ -28,14 +31,14 @@ function Main() {
           <Emoji />
         </TextEmojiBox>
       </TextContainer>
-      <AllowanveContainer>
-        <WhiteBox />
+      <AllowanveContainer height="60%">
+        <Allowance />
       </AllowanveContainer>
-      <AllowanveContainer>
-        <WhiteBox />
+      <AllowanveContainer height="50%">
+        <SpacialAllowance />
       </AllowanveContainer>
       <QrContainer>
-        <WhiteBox />
+        <Qr />
       </QrContainer>
     </MainContainer>
   );
