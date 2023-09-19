@@ -50,6 +50,7 @@ public class Child extends Member {
 			.socialId(this.getSocialId())
 			.memberRole(this.getMemberRole())
 			.creditScore(this.creditScore)
+			.quizReward(this.quizReward)
 			.smallAccount(smallAccount.createVo())
 			.build();
 	}
