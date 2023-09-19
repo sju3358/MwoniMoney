@@ -14,6 +14,56 @@ pipeline {
                 sh 'echo "git clone완료"'
             }
         }
+
+        stage('Docker Delete') {
+            steps {
+                script {
+                    try{
+                        sh 'echo "Docker Delete Start"'
+                        // 컨테이너 존재 시 삭제
+                        sh "docker stop ${CONTAINER_NAME}"
+                        sh "docker rm -f ${CONTAINER_NAME}"
+                    }catch (Exception e){
+                        echo "Docker container ${CONTAINER_NAME} does not exist. skip"
+                    }
+                    try{
+                        // 이미지 존재 시 삭제
+                        sh "docker image rm ${IMAGE_NAME}"
+                    }catch (Exception e){
+                        echo "Docker image ${IMAGE_NAME} does not exist. skip"
+                    }
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    // 현재 디렉토리의 파일 및 디렉토리 목록 출력
+                    sh 'ls'
+                    dir('admin') {
+                        // 변경된 디렉토리에서 명령어 실행
+                        sh 'ls'
+                        sh 'echo "Hello from the changed directory"'
+                        // de
+                        sh "docker build -t ${IMAGE_NAME} -f Dockerfile ."
+                        
+                        sh "docker images"
+
+                        sh 'echo "images build 성공!"'
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh "docker run -d --name ${CONTAINER_NAME} -p 8000:8000 ${IMAGE_NAME}"
+                sh "docker ps"
+            }
+        }
+
+
     }
 
 }
