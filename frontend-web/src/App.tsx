@@ -2,7 +2,7 @@ import { GlobalStyles } from "./Styles/GlobalStyle";
 import { Routes, Route } from "react-router-dom";
 import React from "react";
 import Main from "./Main";
-import Layout from "./components/layout";
+import Layout from "./components/Layout/layout";
 import MainPage from "../src/pages/MainPage";
 import StartPage1 from "../src/pages/StartPage/StartPage1";
 import StartPage2 from "../src/pages/StartPage/StartPage2";
