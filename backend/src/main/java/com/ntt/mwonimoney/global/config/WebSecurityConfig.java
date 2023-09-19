@@ -13,7 +13,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.ntt.mwonimoney.domain.jwt.TokenAccessDeniedHandler;
-import com.ntt.mwonimoney.domain.oauth.exception.RestAuthenticationEntryPoint;
 import com.ntt.mwonimoney.domain.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.ntt.mwonimoney.domain.oauth.service.CustomOAuth2UserService;
 
