@@ -1,8 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 import Money from "../../assests/image/Money.png";
 
-const MainContainer = styled.div`
+export const MainContainer = styled.div`
   border: 1px solid black;
   width: 100%;
   height: 100%;
@@ -10,7 +9,7 @@ const MainContainer = styled.div`
   overflow: auto;
 `;
 
-const ChildrenList = styled.div`
+export const ChildrenList = styled.div`
   border: 1px solid black;
   width: 100%;
   height: 15%;
@@ -21,14 +20,14 @@ const ChildrenList = styled.div`
   /* Text 넣는 칸 */
 }
 
-const TextContainer = styled.div`
+export const TextContainer = styled.div`
   border: 1px solid black;
   width: 100%;
   height: 25%;
   box-sizing: border-box;
   display: flex;
 `;
-const TextMentBox = styled.div`
+export const TextMentBox = styled.div`
   // border: 1px solid red;
   width: 80%;
   height: 100%;
@@ -39,7 +38,7 @@ const TextMentBox = styled.div`
   // align-items: baseline;
 `;
 
-const Text = styled.div`
+export const Text = styled.div`
   // border: 1px solid blue;
   color: #292929;
   font-family: Inter;
@@ -50,7 +49,7 @@ const Text = styled.div`
   margin-left: 5%;
 `;
 
-const TextEmojiBox = styled.div`
+export const TextEmojiBox = styled.div`
   // border: 1px solid red;
   width: 20%;
   height: 100%;
@@ -60,7 +59,7 @@ const TextEmojiBox = styled.div`
   align-items: center;
 `;
 
-const Emoji = styled.div`
+export const Emoji = styled.div`
   // border: 1px solid red;
   width: 80%;
   height: 80%;
@@ -73,7 +72,7 @@ const Emoji = styled.div`
   /* 정기용돈 넣는 칸 */
 }
 
-const AllowanveContainer = styled.div`
+export const AllowanveContainer = styled.div`
   border: 1px solid black;
   width: 100%;
   height: 50%;
@@ -83,7 +82,7 @@ const AllowanveContainer = styled.div`
   align-items: center;
 `;
 
-const WhiteBox = styled.div`
+export const WhiteBox = styled.div`
   // border: 1px solid black;
   border-radius: 8px;
   width: 90%;
@@ -99,7 +98,7 @@ const WhiteBox = styled.div`
   /* QR 넣는 칸 */
 }
 
-const QrContainer = styled.div`
+export const QrContainer = styled.div`
   border: 1px solid black;
   width: 100%;
   height: 30%;
@@ -108,34 +107,3 @@ const QrContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-function ParentsMain() {
-  const childName = "지현"; // api연결시 자녀1 이름으로 매핑
-  const childAllowance = 100000;
-  return (
-    <MainContainer>
-      <ChildrenList />
-      <TextContainer>
-        <TextMentBox>
-          <Text>현재 {childName}는</Text>
-          <Text>매달 {childAllowance}원을 </Text>
-          <Text>받고 있어요!</Text>
-        </TextMentBox>
-        <TextEmojiBox>
-          <Emoji />
-        </TextEmojiBox>
-      </TextContainer>
-      <AllowanveContainer>
-        <WhiteBox />
-      </AllowanveContainer>
-      <AllowanveContainer>
-        <WhiteBox />
-      </AllowanveContainer>
-      <QrContainer>
-        <WhiteBox />
-      </QrContainer>
-    </MainContainer>
-  );
-}
-
-export default ParentsMain;
