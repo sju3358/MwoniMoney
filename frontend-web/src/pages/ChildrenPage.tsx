@@ -43,7 +43,7 @@ function ChildrenPage() {
           <Emoji url={`${Coin}`} width="80%" height="80%" />
         </TextEmojiBox>
       </TextContainer>
-      <BalanceContainer height="40%">
+      <BalanceContainer height="50%">
         <Balance />
       </BalanceContainer>
       <QuizContainer height="auto">
