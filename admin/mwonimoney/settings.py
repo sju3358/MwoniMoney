@@ -24,9 +24,10 @@ SECRET_KEY = mySECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
-ALLOWED_HOSTS = ["j9b310.p.ssafy.io"]
-CSRF_TRUSTED_ORIGINS = ['https://j9b310.p.ssafy.io']
+ALLOWED_HOSTS = ["j9b310.p.ssafy.io", "127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = ["https://j9b310.p.ssafy.io", "https://127.0.0.1"]
 
 # Application definition
 
@@ -116,15 +117,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-# STATIC_URL = '/static/'
-# # STATIC_DIR = os.path.join(BASE_DIR,'static')
-# # STATICFILES_DIRS = [
-# #     STATIC_DIR,
-# # ]
-
-# STATIC_ROOT = os.path.join(BASE_DIR,'static')
-
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
