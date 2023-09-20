@@ -13,7 +13,7 @@ export const GlobalStyles = createGlobalStyle`
         left: 0;
         width: 100%;
         height: 100%;
-        background-Image: url(${background});
+        background-image: url(${background});
         background-size: cover;
     }
 `;
