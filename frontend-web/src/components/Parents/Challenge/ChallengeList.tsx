@@ -15,7 +15,7 @@ export const ChallengeListContainer = styled.div`
   margin-top: 5%;
 `;
 
-const ListComponent = styled.div`
+export const ListComponent = styled.div`
   // border: 1px solid red;
   background-color: #ffffff;
   width: 90%;
@@ -27,7 +27,7 @@ const ListComponent = styled.div`
   margin-bottom: 5%;
 `;
 
-const ListTitle = styled.div`
+export const ListTitle = styled.div`
   // border: 1px solid black;
   width: 100%;
   height: 50%;
@@ -36,7 +36,7 @@ const ListTitle = styled.div`
   margin-left: 3%;
 `;
 
-const Title = styled.div`
+export const Title = styled.div`
   // border: 1px solid black;
   width: 40%;
   height: 100%;
@@ -46,7 +46,7 @@ const Title = styled.div`
   font-weight: bold;
   font-size: 1.5em;
 `;
-const CategoryTag = styled.div`
+export const CategoryTag = styled.div`
   // border: 1px solid black;
   width: 20%;
   height: 100%;
@@ -54,7 +54,7 @@ const CategoryTag = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const DeadLine = styled.div`
+export const DeadLine = styled.div`
   // border: 1px solid black;
   width: 40%;
   height: 100%;
@@ -64,7 +64,7 @@ const DeadLine = styled.div`
   padding-right: 10%;
 `;
 
-const ListBtn = styled.div`
+export const ListBtn = styled.div`
   // border: 1px solid black;
   width: 100%;
   height: 50%;
