@@ -2,7 +2,6 @@ package com.ntt.mwonimoney.domain.member.entity;
 
 import java.util.UUID;
 
-import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 import com.ntt.mwonimoney.global.common.entity.CommonEntity;
@@ -18,11 +17,8 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-
 
 @Entity
 @Getter
@@ -61,7 +57,6 @@ public abstract class Member extends CommonEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "member_role")
 	private MemberRole memberRole;
-
 
 	protected Member(byte status, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
