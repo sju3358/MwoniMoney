@@ -7,7 +7,14 @@ function ParentsLayout() {
   return (
     <>
       <Header />
-      <div style={{ height: "80vh", paddingTop: "10vh" }}>
+      <div
+        style={{
+          height: "80vh",
+          paddingTop: "10vh",
+          overflowX: "hidden",
+          overflowY: "auto",
+        }}
+      >
         <Outlet />
       </div>
       <Footer />

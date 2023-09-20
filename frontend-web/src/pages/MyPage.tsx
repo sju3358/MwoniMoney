@@ -1,7 +1,6 @@
 import React from "react";
 import {
   AllowanveContainer,
-  ChildrenList,
   Emoji,
   MainContainer,
   QrContainer,
@@ -12,12 +11,10 @@ import {
 } from "../components/Parents/MyPage";
 import Allowance from "../components/Common/Allowance";
 import SpacialAllowance from "../components/Common/SpacialAllowance";
-import { WhiteBox } from "../components/Common/WhiteBox";
 import Qr from "../components/Common/Qr";
 
 function Main() {
   const name = "이지현"; // api연결시 자녀1 이름으로 매핑
-  const childAllowance = 100000;
   return (
     <MainContainer>
       <TextContainer>
