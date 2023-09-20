@@ -86,7 +86,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 			hasAuthority(authorities, MemberRole.PARENT.name()) ? MemberRole.PARENT : MemberRole.CHILD;
 
 		Member bySocialId = memberRepository.findMemberBySocialId(socialId).orElseThrow();
-		Token tokenInfo = jwtTokenProvider.createToken(String.valueOf(bySocialId.getUuid()), socialId,
+		Token tokenInfo = jwtTokenProvider.createToken(bySocialId.getUuid(), socialId,
 			memberRole.name());
 
 		redisTemplate.opsForValue()
