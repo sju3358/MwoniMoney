@@ -2,17 +2,22 @@ package com.ntt.mwonimoney.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.ntt.mwonimoney.domain.jwt.JwtAuthenticationFilter;
+import com.ntt.mwonimoney.domain.jwt.JwtTokenProvider;
 import com.ntt.mwonimoney.domain.jwt.TokenAccessDeniedHandler;
+import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
 import com.ntt.mwonimoney.domain.oauth.exception.RestAuthenticationEntryPoint;
 import com.ntt.mwonimoney.domain.oauth.handler.OAuth2AuthenticationFailureHandler;
 import com.ntt.mwonimoney.domain.oauth.handler.OAuth2AuthenticationSuccessHandler;
@@ -30,8 +35,10 @@ public class WebSecurityConfig {
 
 	private final TokenAccessDeniedHandler tokenAccessDeniedHandler;
 	private final CustomOAuth2UserService customOAuth2UserService;
-	private static final String[] GET_LIST = {"/api/oauth2/authorization", "/api/login/oauth2/code/**", "/api/logout"};
-	private static final String[] POST_LIST = {"/api/logout"};
+	private final JwtTokenProvider jwtTokenProvider;
+	private final RedisTemplate<String, String> redisTemplate;
+	private final MemberRepository memberRepository;
+	private static final String[] GET_LIST = {"/api/oauth2/authorization", "/api/login/oauth2/code/**"};
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -43,8 +50,6 @@ public class WebSecurityConfig {
 				.accessDeniedHandler(tokenAccessDeniedHandler))
 			.sessionManagement(c -> c.sessionCreationPolicy((SessionCreationPolicy.STATELESS)))
 			.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, GET_LIST)
-				.permitAll()
-				.requestMatchers(HttpMethod.POST, POST_LIST)
 				.permitAll()
 				.requestMatchers("/**")
 				.hasAnyRole("PARENT", "CHILD")
@@ -62,7 +67,10 @@ public class WebSecurityConfig {
 			.and()
 			.successHandler(oAuth2AuthenticationSuccessHandler())
 			.failureHandler(oAuth2AuthenticationFailureHandler())
-			.permitAll();
+			.permitAll()
+			.and()
+			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate, memberRepository),
+				UsernamePasswordAuthenticationFilter.class);
 
 		return httpSecurity.build();
 	}
@@ -87,7 +95,8 @@ public class WebSecurityConfig {
 
 	@Bean
 	public OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
-		return new OAuth2AuthenticationSuccessHandler(oAuth2AuthorizationRequestBasedOnCookieRepository(), jwtTokenProvider, redisTemplate, userRepository);
+		return new OAuth2AuthenticationSuccessHandler(oAuth2AuthorizationRequestBasedOnCookieRepository(),
+			jwtTokenProvider, redisTemplate, memberRepository);
 	}
 
 	@Bean
