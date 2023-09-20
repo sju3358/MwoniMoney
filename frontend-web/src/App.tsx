@@ -12,7 +12,7 @@ import StartPage5 from "../src/pages/Common/StartPage/StartPage5";
 import MoneyPage from "../src/pages/Common/MoneyPage";
 import Challenge from "../src/pages/Challenge";
 import Success from "./modal/Quiz/Success";
-import Bank from "./pages/Bank";
+import Bank from "../src/pages/Bank";
 import MyPage from "./pages/MyPage";
 
 // 다른 컴포넌트 import...

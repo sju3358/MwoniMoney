@@ -1,47 +1,36 @@
 import React from "react";
-import {
-  AllowanveContainer,
-  ChildrenList,
-  MainContainer,
-  QrContainer,
-  Text,
-  TextContainer,
-  PigBox,
-  TextMentBox,
-  PigContainer,
-  PigBigText,
-  PigSmallText,
-  Emoji,
-  PigRowBox,
-  PigBoxBox,
-  InTextContainer1,
-  InTextContainer2
-} from "../components/Parents/Bank";
-import Allowance from "../components/Common/Allowance";
-import SpacialAllowance from "../components/Common/SpacialAllowance";
-import Qr from "../components/Common/Qr";
+import { Container } from "../components/Parents/Bank/Bank";
+import { TextBox } from "../components/Common/AboutText";
+import GoGoalMoney from "../components/Parents/Bank/GoGoalMoney";
 
 function Bank() {
-  const childName = "지현"; // api연결시 자녀1 이름으로 매핑
-  const childAllowance = 100000;
+  const childName = "지현";
+  const debt = 100000;
   return (
-    <MainContainer>
-      <TextContainer>
-        <TextMentBox>
-          <Text>현재 {childName}는</Text>
-          <Text>{childAllowance}원의 부채가 있어요! </Text>
-        </TextMentBox>
-      </TextContainer>
-      <AllowanveContainer height="60%">
-        <Allowance />
-      </AllowanveContainer>
-      <AllowanveContainer height="50%">
-        <SpacialAllowance />
-      </AllowanveContainer>
-      <QrContainer>
-        <Qr />
-      </QrContainer>
-    </MainContainer>
+    <>
+      {/* Title */}
+      <Container height="15%" flexDirection="column">
+        <TextBox>현재 {childName}이는</TextBox>
+        <TextBox>{debt}만큼의 부채가 있어요!</TextBox>
+      </Container>
+
+      {/* GoGoalMoney */}
+      <Container height="20%">
+        <GoGoalMoney />
+      </Container>
+
+      {/* GraphContainer */}
+      <Container height="40%"></Container>
+
+      {/* CardContainer */}
+      <Container height="15%"></Container>
+
+      {/* CategoryContainer */}
+      <Container height="10%"></Container>
+
+      {/* LoanListContainer */}
+      <Container height="40%"></Container>
+    </>
   );
 }
 
