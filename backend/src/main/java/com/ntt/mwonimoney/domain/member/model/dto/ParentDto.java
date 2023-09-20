@@ -8,7 +8,5 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class ParentDto extends MemberDto {
-
-	private int quizReward;
 	
 }
