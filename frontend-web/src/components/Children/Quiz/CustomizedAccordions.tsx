@@ -68,7 +68,7 @@ const ChatGptBtn = styledd.div`
 
 //------------------------------------------------------------
 export default function CustomizedAccordions() {
-  const [expanded, setExpanded] = React.useState<string | false>("panel1");
+  const [expanded, setExpanded] = React.useState<string | false>("panel");
   //초기값은 panel1
 
   const handleChange =

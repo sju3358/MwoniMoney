@@ -46,7 +46,7 @@ function ChildrenPage() {
       <BalanceContainer height="40%">
         <Balance />
       </BalanceContainer>
-      <QuizContainer height="30%">
+      <QuizContainer height="40%">
         <Quiz />
       </QuizContainer>
       <ChallengeContainer height="60%">
