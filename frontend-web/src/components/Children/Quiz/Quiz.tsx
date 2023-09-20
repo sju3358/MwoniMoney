@@ -140,13 +140,20 @@ const ExampleBox = styled.div`
 `;
 const ExampleNumber = styled.span`
   font-size: 0.75rem;
-  padding-right: 5%;
+  padding-right: 2%;
 `;
 
 const ExampleText = styled.div`
   font-size: 0.75rem;
-  padding: 5% 0% 0% 5%;
 `;
+const ExampleBtn = styled.button`
+  border: 0;
+  background-color: transparent;
+  &:hover {
+    background-color: #fbd56e;
+  }
+`;
+
 //img (화살표, O,x답)
 interface ImgProps {
   width: string;
@@ -173,6 +180,63 @@ export default function Quiz() {
   };
   const quiztype: number = 0; //4지선다 : 0, 2지선다 : 1
 
+  const dummydata = [
+    {
+      id: 1,
+      title:
+        " 소비자가 의도치 않게 물건을 사거나 이용료를 결제하게끔 서비스를 교묘하게 디자인하는 것을 뜻 하는 말은?",
+      ex1: "그린백",
+      ex2: "다크패턴",
+      ex3: "레몬마켓",
+      ex4: "화이트리스트",
+      ans: 1,
+      type: 0,
+    },
+    {
+      id: 2,
+      title: " 문제2",
+      ex1: "O",
+      ex2: "X",
+      ex3: null,
+      ex4: null,
+      ans: "O",
+      type: 1,
+    },
+    {
+      id: 3,
+      title: "문제3",
+      ex1: "보기1",
+      ex2: "보기2",
+      ex3: "답",
+      ex4: "보기4",
+      ans: 3,
+      type: 0,
+    },
+    {
+      id: 4,
+      title: "문제4",
+      ex1: "보기1",
+      ex2: "보기2",
+      ex3: "보기3",
+      ex4: "답",
+      ans: 3,
+      type: 0,
+    },
+    {
+      id: 5,
+      title: " 문제5",
+      ex1: "보기1",
+      ex2: "답",
+      ex3: "보기3",
+      ex4: "보기4",
+      ans: 2,
+      type: 0,
+    },
+  ];
+  // count가 1개씩 올라가면, setQuiz를 바꾼다. 
+  const [count, setCount] = useState(0);
+  const [quiz, setQuiz] = useState("");
+  
   return (
     <QuizParent>
       <Text fontsize="1.25" padding="5% 0% 0% 5%" fontcolor="black">
@@ -212,23 +276,29 @@ export default function Quiz() {
             <ExampleContainer>
               {quiztype === 0 ? (
                 <ExampleBox>
-                  <ExampleText>
-                    <ExampleNumber>1</ExampleNumber>그린백
-                  </ExampleText>
-                  <ExampleText>
-                    <ExampleNumber>2</ExampleNumber>다크패턴
-                  </ExampleText>
-                  <ExampleText>
-                    <ExampleNumber>3</ExampleNumber>레몬마켓
-                  </ExampleText>
-                  <ExampleText>
-                    <ExampleNumber>4</ExampleNumber>화이트리스트
-                  </ExampleText>
+                  <ExampleBtn>
+                    <ExampleText>
+                      <ExampleNumber>1</ExampleNumber>그린백
+                    </ExampleText>
+                  </ExampleBtn>
+                  <ExampleBtn>
+                    <ExampleText>
+                      <ExampleNumber>2</ExampleNumber>다크패턴
+                    </ExampleText>
+                  </ExampleBtn>
+                  <ExampleBtn>
+                    <ExampleText>
+                      <ExampleNumber>3</ExampleNumber>레몬마켓
+                    </ExampleText>
+                  </ExampleBtn>
+                  <ExampleBtn>
+                    <ExampleText>
+                      <ExampleNumber>4</ExampleNumber>화이트리스트
+                    </ExampleText>
+                  </ExampleBtn>
                 </ExampleBox>
               ) : (
                 <>
-                  {/* <div>dkdk</div>
-                  <div>하하하</div> */}
                   <ImgBox>
                     <Img src={`${O}`} width="10%" height="10%" />
                     <Img src={`${X}`} width="10%" height="10%" />
