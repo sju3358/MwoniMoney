@@ -47,7 +47,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		Member savedMember = memberRepository.findMemberBySocialId(userInfo.getId())
 			.orElseGet(() -> createMember(userInfo, socialProvider));
 
-		return MemberPrincipal.create(savedMember, user.getAttributes());
+		return MemberPrincipal.create(savedMember, user.getAttributes(), savedMember.getMemberRole());
 	}
 
 	private Member createMember(OAuth2MemberInfo userInfo, SocialProvider socialProvider) {
