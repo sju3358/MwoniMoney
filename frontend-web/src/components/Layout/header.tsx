@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import headerLogo from "../assests/image/HeaderLogo.png";
-import headerArrow from "../assests/image/HeaderArrow.png";
+import headerLogo from "../../assests/image/HeaderLogo.png";
+import headerArrow from "../../assests/image/HeaderArrow.png";
 
 const HeaderBody = styled.div`
   // border: 1px solid black;
@@ -31,10 +31,6 @@ const Logo = styled.div`
   background-image: url(${headerLogo});
   background-size: 100% 100%;
 `;
-
-{
-  /* 헤더 자녀 이름 부분 */
-}
 
 interface profileBoxProps {
   name: string;
