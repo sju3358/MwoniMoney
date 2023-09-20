@@ -3,8 +3,8 @@ import ChildrenLayout from "./childrenLayout";
 import ParentsLayout from "./parentsLayout";
 
 function Layout() {
-  //number = 1 : 부모 , number = 0 : 자식 
-  const role: number = 0;
+  //number = 1 : 부모 , number = 0 : 자식
+  const role: number = 1;
   return <>{role === 1 ? <ParentsLayout /> : <ChildrenLayout />}</>;
 }
 
