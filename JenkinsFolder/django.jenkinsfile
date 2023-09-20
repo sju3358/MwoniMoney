@@ -51,6 +51,10 @@ pipeline {
                         sh "docker images"
 
                         sh 'echo "images build 성공!"'
+                        
+                        dir('static'){
+                            sh 'ls'
+                        }
                     }
                 }
             }
