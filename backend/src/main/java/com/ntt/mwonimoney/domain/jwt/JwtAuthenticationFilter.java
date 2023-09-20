@@ -86,7 +86,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			} else {
 				Member member = memberRepository.findMemberBySocialId(userSocialId).orElseThrow();
 
-				Token tokenInfo = jwtTokenProvider.createToken(String.valueOf(member.getUuid()), userSocialId,
+				Token tokenInfo = jwtTokenProvider.createToken(member.getUuid(), userSocialId,
 					member.getMemberRole().name());
 
 				redisTemplate.opsForValue().getOperations().delete("RT" + userSocialId);
