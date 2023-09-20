@@ -13,7 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 	@Override
-	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+	public void commence(HttpServletRequest request, HttpServletResponse response,
+		AuthenticationException authException) throws IOException, ServletException {
 		// log.info("Responding with unauthorized error. Message := {}", authException.getMessage());
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getLocalizedMessage());
 	}

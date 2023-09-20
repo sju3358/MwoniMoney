@@ -30,8 +30,8 @@ public class Child extends Member {
 	@Builder
 	public Child(byte status, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
-		String socialId, byte creditScore, int quizReward, SmallAccount smallAccount) {
-		super(status, name, nickname, birthday, socialProvider, socialId, MemberRole.CHILD);
+		String socialId, String email, byte creditScore, int quizReward, SmallAccount smallAccount) {
+		super(status, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD);
 		this.creditScore = creditScore;
 		this.quizReward = quizReward;
 		this.smallAccount = smallAccount;
