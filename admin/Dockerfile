@@ -16,7 +16,6 @@ RUN  pip install --no-cache-dir -r requirements.txt
 # Run migrations during the build process
 RUN python manage.py makemigrations
 RUN python manage.py migrate
-RUN python manage.py collectstatic
 
 # 컨테이너 실행 명령어 설정
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
