@@ -25,8 +25,8 @@ SECRET_KEY = mySECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://j9b310.p.ssafy.io"]
-CSRF_TRUSTED_ORIGINS = ['https://j9b310.p.ssafy.io']
+ALLOWED_HOSTS = ["j9b310.p.ssafy.io"]
+CSRF_TRUSTED_ORIGINS = ['j9b310.p.ssafy.io']
 
 # Application definition
 
