@@ -26,7 +26,7 @@ SECRET_KEY = mySECRET_KEY
 DEBUG = True
 
 ALLOWED_HOSTS = ["j9b310.p.ssafy.io"]
-CSRF_TRUSTED_ORIGINS = ['j9b310.p.ssafy.io']
+CSRF_TRUSTED_ORIGINS = ['https://j9b310.p.ssafy.io']
 
 # Application definition
 
