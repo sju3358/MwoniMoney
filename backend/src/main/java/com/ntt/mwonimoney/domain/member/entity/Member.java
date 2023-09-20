@@ -54,13 +54,16 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "member_social_id")
 	private String socialId;
 
+	@Column(name = "email")
+	private String email;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "member_role")
 	private MemberRole memberRole;
 
 	protected Member(byte status, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
-		String socialId, MemberRole memberRole) {
+		String socialId, String email, MemberRole memberRole) {
 		this.uuid = UUID.randomUUID().toString();
 		this.status = status;
 		this.name = name;
@@ -68,6 +71,7 @@ public abstract class Member extends CommonEntity {
 		this.birthday = birthday;
 		this.socialProvider = socialProvider;
 		this.socialId = socialId;
+		this.email = email;
 		this.memberRole = memberRole;
 	}
 }

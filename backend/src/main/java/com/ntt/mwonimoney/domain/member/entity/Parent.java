@@ -17,8 +17,8 @@ public class Parent extends Member {
 
 	@Builder
 	public Parent(byte status, String name, String nickname, String birthday, SocialProvider socialProvider,
-		String socialId) {
-		super(status, name, nickname, birthday, socialProvider, socialId, MemberRole.PARENT);
+		String socialId, String email) {
+		super(status, name, nickname, birthday, socialProvider, socialId, email, MemberRole.PARENT);
 	}
 
 	public ParentDto convertToDto() {
