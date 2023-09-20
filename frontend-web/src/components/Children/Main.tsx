@@ -16,7 +16,7 @@ export const MainContainer = styled.div`
 export const TextContainer = styled.div`
   border: 1px solid black;
   width: 100%;
-  height: 25%;
+  height: 30%;
   box-sizing: border-box;
   display: flex;
   padding: 5%;
@@ -32,36 +32,24 @@ export const TextMentBox = styled.div`
   justify-content: center;
   // align-items: baseline;
 `;
-
-export const Text = styled.div`
+interface TextProps {
+  color?: string | null;
+  fontfamily?: string | null;
+  fontsize?: string | null;
+  fontstyle?: string | null;
+  fontweight?: string | null;
+  margin?: string | null;
+  padding?: string | null;
+}
+export const Text = styled.div<TextProps>`
   // border: 1px solid blue;
-  color: #292929;
-  font-family: Inter;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  margin-left: 5%;
-`;
-export const Text_GR = styled.div`
-  // border: 1px solid blue;
-  color: #747476;
-  font-family: Inter;
-  font-size: 0.625rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  margin-left: 5%;
-`;
-export const TextBold_SP = styled.span`
-  // border: 1px solid blue;
-  color: #292929;
-  font-family: Inter;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  margin-left: 5%;
+  color: ${(props) => (props.color ? props.color : "black")};
+  font-family: ${(props) => (props.fontfamily ? props.fontfamily : "Inter")};
+  font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
+  font-style: ${(props) => (props.fontstyle ? props.fontstyle : "normal")};
+  font-weight: ${(props) => (props.fontweight ? props.fontweight : "400")};
+  margin: ${(props) => (props.margin ? props.margin : "0%")};
+  padding: ${(props) => (props.padding ? props.padding : "0%")};
 `;
 
 export const TextEmojiBox = styled.div`
