@@ -104,10 +104,6 @@ export const BalanceContainer = styled.div<BalanceProps>`
   height: ${(props) => props.height};
   box-sizing: border-box;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 5%;
-  //
 `;
 
 {
@@ -126,8 +122,6 @@ export const QuizContainer = styled.div<QuizProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5%;
-  //
 `;
 
 {
@@ -146,6 +140,4 @@ export const ChallengeContainer = styled.div<ChallengeProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5%;
-  //
 `;
