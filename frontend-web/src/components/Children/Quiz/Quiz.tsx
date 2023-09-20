@@ -14,11 +14,9 @@ import Correct from "../../../assests/image/quiz/Correct.png";
 import Error from "../../../assests/image/quiz/Error.png";
 
 const QuizParent = styled.div`
-  //퀴즈 스타일 설정
-  //가장 밖
+  // border: solid 1px black;
   width: 100%;
   height: 100%;
-  border: solid 1px black;
   // background-color: tomato;
 `;
 
@@ -93,15 +91,23 @@ const AnswerResult = styled.div`
 const QuizBody = styled.div``;
 
 interface TextProps {
-  fontsize: string;
-  fontcolor: string; // 'String' -> 'string'
-  padding: string;
+  fontcolor?: string | null;
+  fontfamily?: string | null;
+  fontsize?: string | null;
+  fontstyle?: string | null;
+  fontweight?: string | null;
+  margin?: string | null;
+  padding?: string | null;
 }
 
 const Text = styled.div<TextProps>`
-  font-size: ${(props) => props.fontsize};
-  color: ${(props) => props.fontcolor};
-  padding: ${(props) => props.padding};
+  color: ${(props) => (props.fontcolor ? props.fontcolor : "black")};
+  font-family: ${(props) => (props.fontfamily ? props.fontfamily : "Inter")};
+  font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
+  font-style: ${(props) => (props.fontstyle ? props.fontstyle : "normal")};
+  font-weight: ${(props) => (props.fontweight ? props.fontweight : "400")};
+  margin: ${(props) => (props.margin ? props.margin : "0%")};
+  padding: ${(props) => (props.padding ? props.padding : "0%")};
   line-height: 1.2rem;
 `;
 
@@ -233,21 +239,26 @@ export default function Quiz() {
       type: 0,
     },
   ];
-  // count가 1개씩 올라가면, setQuiz를 바꾼다. 
+  // count가 1개씩 올라가면, setQuiz를 바꾼다.
   const [count, setCount] = useState(0);
   const [quiz, setQuiz] = useState("");
-  
+
   return (
     <QuizParent>
-      <Text fontsize="1.25" padding="5% 0% 0% 5%" fontcolor="black">
+      <Text
+        fontsize="1.25rem"
+        padding="5% 0% 3% 5%"
+        fontcolor="black"
+        fontweight="700"
+      >
         오늘의 퀴즈
       </Text>
       <TextContainer>
         <TextMentBox>
-          <Text fontsize="0.625rem" padding="5% 0% 0% 0%" fontcolor="#747476">
+          <Text fontsize="0.625rem" padding="2% 0% 0% 0%" fontcolor="#747476">
             퀴즈를 맞추면
           </Text>
-          <Text fontsize="0.625rem" padding="5% 0% 0% 0%" fontcolor="#747476">
+          <Text fontsize="0.625rem" padding="1% 0% 0% 0%" fontcolor="#747476">
             용돈을 더 받을 수 있어요!
           </Text>
         </TextMentBox>
