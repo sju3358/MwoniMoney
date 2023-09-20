@@ -1,12 +1,12 @@
 package com.ntt.mwonimoney.domain.oauth.handler;
 
+import static com.ntt.mwonimoney.domain.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository.*;
+
 import java.io.IOException;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-
-import static com.ntt.mwonimoney.domain.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository.*;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -18,6 +18,8 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.ntt.mwonimoney.domain.jwt.JwtTokenProvider;
+import com.ntt.mwonimoney.domain.jwt.Token;
 import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
@@ -62,7 +64,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 	protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication) {
 		Optional<String> redirectUri = CookieUtil.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
-		                                         .map(Cookie::getValue);
+			.map(Cookie::getValue);
 
 		if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
 			log.error("determineTargetUrl - redirectUri : {} , 인증을 진행할 수 없습니다.", redirectUri);
@@ -72,32 +74,33 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 		String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 		OAuth2AuthenticationToken authToken = (OAuth2AuthenticationToken)authentication;
-		SocialProvider socialProvider = SocialProvider.valueOf(authToken.getAuthorizedClientRegistrationId().toUpperCase());
+		SocialProvider socialProvider = SocialProvider.valueOf(
+			authToken.getAuthorizedClientRegistrationId().toUpperCase());
 
 		OidcUser user = ((OidcUser)authentication.getPrincipal());
 		OAuth2MemberInfo memberInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(socialProvider, user.getAttributes());
 		Collection<? extends GrantedAuthority> authorities = ((OidcUser)authentication.getPrincipal()).getAuthorities();
 
 		String socialId = memberInfo.getId();
-		SocialProvider roleType =
+		MemberRole memberRole =
 			hasAuthority(authorities, MemberRole.PARENT.name()) ? MemberRole.PARENT : MemberRole.CHILD;
 
 		Member bySocialId = memberRepository.findMemberBySocialId(socialId).orElseThrow();
-		Token tokenInfo = jwtTokenProvider.createToken(String.valueOf(bySocialId.getUserId()), socialId,
-			roleType.name());
+		Token tokenInfo = jwtTokenProvider.createToken(String.valueOf(bySocialId.getUuid()), socialId,
+			memberRole.name());
 
 		redisTemplate.opsForValue()
-		             .set("RT" + socialId, tokenInfo.getRefreshToken(), tokenInfo.getExpireTime(),
-			             TimeUnit.MILLISECONDS);
+			.set("RT" + socialId, tokenInfo.getRefreshToken(), tokenInfo.getExpireTime(),
+				TimeUnit.MILLISECONDS);
 
 		CookieUtil.deleteCookie(request, response, REFRESH_TOKEN);
 		CookieUtil.addCookie(response, REFRESH_TOKEN, tokenInfo.getRefreshToken(),
 			JwtTokenProvider.getRefreshTokenExpireTimeCookie());
 
 		return UriComponentsBuilder.fromUriString(targetUrl)
-		                           .queryParam("accessToken", tokenInfo.getAccessToken())
-		                           .build()
-		                           .toUriString();
+			.queryParam("accessToken", tokenInfo.getAccessToken())
+			.build()
+			.toUriString();
 	}
 
 	protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {
