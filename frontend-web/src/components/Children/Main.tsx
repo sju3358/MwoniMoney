@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const MainContainer = styled.div`
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -14,7 +14,7 @@ export const MainContainer = styled.div`
 }
 
 export const TextContainer = styled.div`
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 100%;
   height: 30%;
   box-sizing: border-box;
@@ -87,7 +87,7 @@ interface BalanceProps {
 }
 
 export const BalanceContainer = styled.div<BalanceProps>`
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 100%;
   height: ${(props) => props.height};
   box-sizing: border-box;
@@ -103,7 +103,7 @@ interface QuizProps {
 }
 
 export const QuizContainer = styled.div<QuizProps>`
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 100%;
   height: ${(props) => props.height};
   box-sizing: border-box;
@@ -121,7 +121,7 @@ interface ChallengeProps {
 }
 
 export const ChallengeContainer = styled.div<ChallengeProps>`
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 100%;
   height: ${(props) => props.height};
   box-sizing: border-box;
