@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Switch from "@mui/material/Switch";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {
   Emoji,
   MainContainer,
@@ -78,7 +79,7 @@ function Main() {
           >
             <TextBox fontSize="1.5em">이름</TextBox>
             <TextBox
-              height="0%"
+              height="30%"
               fontSize="1em"
               fontWeight="normal"
               style={{
@@ -92,7 +93,7 @@ function Main() {
           <HalfBox width="70%" height="30%">
             <TextBox fontSize="1.5em">생년월일</TextBox>
             <TextBox
-              height="0%"
+              height="30%"
               fontSize="1em"
               fontWeight="normal"
               style={{
@@ -106,12 +107,13 @@ function Main() {
           <HalfBox width="70%" height="30%">
             <TextBox fontSize="1.5em">계좌</TextBox>
             <TextBox
-              height="0%"
+              height="30%"
               fontSize="1em"
               fontWeight="normal"
               style={{
                 marginTop: "10px", // 상단 여백 추가
                 color: "var(--text-color-unactive, #969696)",
+                textDecoration: "underline underline", // 밑줄을 두 번 그리기
               }}
             >
               이지현
@@ -190,6 +192,15 @@ function Main() {
                 onChange={handleChange}
                 color="primary"
               />
+            </TextBox>
+            <TextBox
+              fontSize="1.5em"
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              FAQ <ArrowForwardIcon />{" "}
             </TextBox>
           </HalfBox>
         </WhiteBox1>
