@@ -29,6 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["j9b310.p.ssafy.io", "127.0.0.1"]
 CSRF_TRUSTED_ORIGINS = ["https://j9b310.p.ssafy.io", "https://127.0.0.1"]
 
+
 # Application definition
 
 INSTALLED_APPS = [
