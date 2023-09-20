@@ -35,18 +35,18 @@ public class MemberPrincipal implements OAuth2User, UserDetails, OidcUser {
 	private final Collection<GrantedAuthority> authorities;
 	private Map<String, Object> attributes;
 
-	public static MemberPrincipal create(Member member) {
+	public static MemberPrincipal create(Member member, MemberRole memberRole) {
 		return new MemberPrincipal(member.getSocialId(),
-			member.getEmail(),
+			member.getUuid(),
 			member.getName(),
-			member.getPassword(),
-			member.getProviderType(),
-			RoleType.ROLE_USER,
-			Collections.singletonList(new SimpleGrantedAuthority(RoleType.ROLE_USER.name())));
+			member.getEmail(),
+			member.getSocialProvider(),
+			memberRole,
+			Collections.singletonList(new SimpleGrantedAuthority(memberRole.name())));
 	}
 
-	public static MemberPrincipal create(Member member, Map<String, Object> attributes) {
-		MemberPrincipal memberPrincipal = create(member);
+	public static MemberPrincipal create(Member member, Map<String, Object> attributes, MemberRole memberRole) {
+		MemberPrincipal memberPrincipal = create(member, memberRole);
 		memberPrincipal.setAttributes(attributes);
 
 		return memberPrincipal;
@@ -58,7 +58,7 @@ public class MemberPrincipal implements OAuth2User, UserDetails, OidcUser {
 	}
 
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
+	public Collection<GrantedAuthority> getAuthorities() {
 		return authorities;
 	}
 
