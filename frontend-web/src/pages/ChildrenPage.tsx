@@ -2,8 +2,6 @@ import React from "react";
 import {
   MainContainer,
   Text,
-  TextBold_SP,
-  Text_GR,
   TextContainer,
   TextEmojiBox,
   TextMentBox,
@@ -28,22 +26,47 @@ function ChildrenPage() {
     <MainContainer>
       <TextContainer>
         <TextMentBox>
-          <Text>현재</Text>
-          <Text>
-            <TextBold_SP>{asset}</TextBold_SP>을 가지고 있고
+          <Text margin="0% 0% 0% 5%" padding="0% 0% 5% 0%">
+            현재
           </Text>
-          <Text>
-            <TextBold_SP>{debt}</TextBold_SP>의 빚을 가지고
+          <Text margin="0% 0% 0% 5%" padding="0% 0% 5% 0%">
+            <Text as="span" fontweight="700">
+              {asset}
+            </Text>
+            을 가지고 있고
           </Text>
-          <Text>있어요!</Text>
-          <Text_GR>퀴즈를 맞추거나</Text_GR>
-          <Text_GR>챌린지에 도전해서 용돈을 얻어보세요!</Text_GR>
+          <Text margin="0% 0% 0% 5%" padding="0% 0% 5% 0%">
+            <Text as="span" fontweight="700">
+              {debt}
+            </Text>
+            의 빚을 가지고
+          </Text>
+          <Text margin="0% 0% 0% 5%" padding="0% 0% 5% 0%">
+            있어요!
+          </Text>
+
+          <Text
+            color="#747476"
+            fontsize="0.625rem"
+            margin="0% 0% 0% 5%"
+            padding="0% 0% 3% 0%"
+          >
+            퀴즈를 맞추거나
+          </Text>
+          <Text
+            color="#747476"
+            fontsize="0.625rem"
+            margin="0% 0% 0% 5%"
+            padding="0% 0% 3% 0%"
+          >
+            챌린지에 도전해서 용돈을 얻어보세요!
+          </Text>
         </TextMentBox>
         <TextEmojiBox>
           <Emoji url={`${Coin}`} width="80%" height="80%" />
         </TextEmojiBox>
       </TextContainer>
-      <BalanceContainer height="40%">
+      <BalanceContainer height="50%">
         <Balance />
       </BalanceContainer>
       <QuizContainer height="auto">

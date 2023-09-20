@@ -2,6 +2,11 @@ import React from "react";
 import { Container } from "../components/Parents/Bank/Bank";
 import { TextBox } from "../components/Common/AboutText";
 import GoGoalMoney from "../components/Parents/Bank/GoGoalMoney";
+import BankGraph from "../components/Parents/Bank/BankGraph";
+import Card from "../components/Parents/Bank/Card";
+import CategoryTag from "../components/Common/AboutCategory";
+import ChallengeAdd from "../components/Parents/Challenge/ChallengeAdd";
+import LoanList from "../components/Parents/Bank/LoanList";
 
 function Bank() {
   const childName = "지현";
@@ -20,16 +25,35 @@ function Bank() {
       </Container>
 
       {/* GraphContainer */}
-      <Container height="40%"></Container>
+      <Container height="55%">
+        <BankGraph />
+      </Container>
 
       {/* CardContainer */}
-      <Container height="15%"></Container>
+      <Card />
 
       {/* CategoryContainer */}
-      <Container height="10%"></Container>
+      <Container height="10%">
+        <CategoryTag content1="모두" content2="대출중" content3="제안대기" />
+      </Container>
 
       {/* LoanListContainer */}
-      <Container height="40%"></Container>
+      {/* <div
+        style={{
+          width: "100vw",
+          height: "60vh",
+          border: "1px solid red",
+          overflowX: "hidden", // 가로 스크롤을 숨김
+          overflowY: "auto", // 세로 스크롤을 필요한 경우 표시
+        }}
+      > */}
+      <Container height="100%" flexDirection="column">
+        <ChallengeAdd />
+        <LoanList />
+        <LoanList />
+        <LoanList />
+      </Container>
+      {/* </div> */}
     </>
   );
 }
