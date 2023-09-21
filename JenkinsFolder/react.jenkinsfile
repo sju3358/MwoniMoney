@@ -1,0 +1,70 @@
+pipeline {
+    agent any
+    
+    environment {
+        CONTAINER_NAME = "mwonimoney-front-container"
+        IMAGE_NAME = "mwonimoney-front-image"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                //Jenkins의 SCM (소스 코드 관리) 플러그인을 사용하여 Git 저장소로부터 소스 코드를 가져오는 역할
+                checkout scm
+                sh 'echo "git clone완료"'
+                sh 'echo "현재 디렉토리 경로"'
+                sh 'pwd'
+            }
+        }
+
+        stage('Docker Delete') {
+            steps {
+                script {
+                    try{
+                        sh 'echo "Docker Delete Start"'
+                        // 컨테이너 존재 시 삭제
+                        sh "docker stop ${CONTAINER_NAME}"
+                        sh "docker rm -f ${CONTAINER_NAME}"
+                    }catch (Exception e){
+                        echo "Docker container ${CONTAINER_NAME} does not exist. skip"
+                    }
+                    try{
+                        // 이미지 존재 시 삭제
+                        sh "docker image rm ${IMAGE_NAME}"
+                    }catch (Exception e){
+                        echo "Docker image ${IMAGE_NAME} does not exist. skip"
+                    }
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    // 현재 디렉토리의 파일 및 디렉토리 목록 출력
+                    sh 'ls'
+                    dir('frontend-web') {
+                        // 변경된 디렉토리에서 명령어 실행
+                        sh 'ls'
+                        sh 'echo "Hello from the changed directory"'
+                        // de
+                        sh "docker build -t ${IMAGE_NAME} -f Dockerfile ."
+                        
+                        sh "docker images"
+
+                        sh 'echo "images build 성공!"'
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh "docker run -d --name ${CONTAINER_NAME} -p 3000:3000 ${IMAGE_NAME}"
+                sh "docker ps"
+            }
+        }
+        
+    }
+}
+
