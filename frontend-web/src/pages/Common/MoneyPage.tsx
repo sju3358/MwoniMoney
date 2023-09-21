@@ -39,7 +39,6 @@ const Chart = styled.div`
   height: 100%;
 `;
 
-
 const Text = styled.div`
   color: #292929;
   font-family: Inter;
@@ -61,22 +60,22 @@ const BlockContainer = styled.div`
 `;
 
 const Block1 = styled.div`
-  width: 45%;
+  flex: 1; /* 두 블록의 너비를 동적으로 조절 */
   height: 100%;
   flex-shrink: 0;
   border-radius: 8px;
-  background: var(--status-good, #B9DEB3);
+  background: var(--status-good, #b9deb3);
   border: solid;
   box-sizing: border-box;
   padding: 4% 7%;
 `;
 
 const Block2 = styled.div`
-  width: 45%;
+  flex: 1; /* 두 블록의 너비를 동적으로 조절 */
   height: 100%;
   flex-shrink: 0;
   border-radius: 8px;
-  background: var(--status-bad, #FFA27E);
+  background: var(--status-bad, #ffa27e);
   border: solid;
   box-sizing: border-box;
   padding: 4% 7%;
@@ -101,8 +100,6 @@ const BlockText = styled.div`
 const ContextContainer = styled.div`
   width: 100%;
   height: 50%;
-  display: flex;
-  flex-direction: column;
   border: solid;
   box-sizing: border-box;
   padding: 3% 10%;
@@ -113,9 +110,13 @@ const ContextContainerIn = styled.div`
   border-radius: 5px;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
   border: solid;
   box-sizing: border-box;
   padding: 2% 10%;
+  border-radius: 5px;
+  background: #fff;
 `;
 
 const CostText = styled.div`
@@ -125,22 +126,58 @@ const CostText = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  border: solid;
+  box-sizing: border-box;
+`;
+
+const CostTextBox = styled.div`
+  width: 100%;
+  height: 20%;
+  padding: 5% 5%;
+  border: solid;
+  box-sizing: border-box;
+`;
+
+const ContentBox = styled.div`
+  width: 100%;
+  height: 80%;
+  padding: 5% 5%;
+  border: solid;
+  box-sizing: border-box;
+`;
+
+const ContentBoxBox = styled.div`
+  width: 100%;
+  height: ;
 `;
 
 const CostCategoryContainer = styled.div`
-  color: #000;
-  font-family: Inter;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
-const CostCategory = styled.div`
+const CostCategoryBox1 = styled.div`
+  border-radius: 12px;
+  background: #495057;
+`;
+
+const CostCategoryBox2 = styled.div`
+  border-radius: 12px;
+  background: #b9deb3;
+`;
+
+const CostCategoryBox3 = styled.div`
+  border-radius: 12px;
+  background: #ffa27e;
+`;
+
+const CostCategoryText = styled.div`
   color: var(--text-color-active, #292929);
   text-align: center;
   font-family: Inter;
-  font-size: 10px;
+  font-size: 0.8em; /* 원하는 크기의 픽셀 값으로 변경 */
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -156,7 +193,7 @@ function MoneyPage() {
           <Text>확인해보세요!</Text>
         </InTextContainer1>
         <InTextContainer2>
-          <Chart/>
+          <Chart />
         </InTextContainer2>
       </TextContainer>
       <BlockContainer>
@@ -169,7 +206,7 @@ function MoneyPage() {
           </BlockTextBox1>
         </Block1>
         <Block2>
-        <BlockTextBox1>
+          <BlockTextBox1>
             <BlockText>지출</BlockText>
           </BlockTextBox1>
           <BlockTextBox1>
@@ -179,7 +216,21 @@ function MoneyPage() {
       </BlockContainer>
       <ContextContainer>
         <ContextContainerIn>
-          <CostText>지출내역</CostText>
+          <CostTextBox>
+            <CostText>지출내역</CostText>
+            <CostCategoryContainer>
+              <CostCategoryBox1>
+                <CostCategoryText>전체</CostCategoryText>
+              </CostCategoryBox1>
+              <CostCategoryBox2>
+                <CostCategoryText>수익</CostCategoryText>
+              </CostCategoryBox2>
+              <CostCategoryBox3>
+                <CostCategoryText>지출</CostCategoryText>
+              </CostCategoryBox3>
+            </CostCategoryContainer>
+          </CostTextBox>
+          <ContentBox>asdf</ContentBox>
         </ContextContainerIn>
       </ContextContainer>
     </Container>

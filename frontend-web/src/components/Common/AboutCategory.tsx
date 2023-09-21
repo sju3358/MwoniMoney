@@ -1,0 +1,54 @@
+import React from "react";
+import styled from "styled-components";
+
+const CategoryContainer = styled.div`
+  // border: 1px solid black;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-left: 5%;
+`;
+
+interface CategoryProps {
+  backColor: string;
+  width?: string;
+  height?: string;
+}
+
+export const Category = styled.div<CategoryProps>`
+  width: ${(props) => (props.width ? props.width : "20%")};
+  height: ${(props) => (props.height ? props.height : "60%")};
+  // border: 1px solid red;
+  border-top-left-radius: 20% 40%;
+  border-top-right-radius: 20% 40%;
+  border-bottom-left-radius: 20% 40%;
+  border-bottom-right-radius: 20% 40%;
+  background-color: ${(props) => props.backColor};
+  margin-right: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+`;
+
+interface CategoryTagProps {
+  content1: string;
+  content2: string;
+  content3: string;
+}
+
+function CategoryTag(props: CategoryTagProps) {
+  const { content1, content2, content3 } = props;
+  return (
+    <CategoryContainer>
+      <Category backColor="#ffffff">{content1}</Category>
+      <Category backColor="#fcdf92">{content2}</Category>
+      <Category backColor="#d1d1d1">{content3}</Category>
+    </CategoryContainer>
+  );
+}
+
+export default CategoryTag;
