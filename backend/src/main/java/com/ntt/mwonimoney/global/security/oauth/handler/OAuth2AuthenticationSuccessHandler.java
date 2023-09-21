@@ -1,6 +1,4 @@
-package com.ntt.mwonimoney.domain.oauth.handler;
-
-import static com.ntt.mwonimoney.domain.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository.*;
+package com.ntt.mwonimoney.global.security.oauth.handler;
 
 import java.io.IOException;
 import java.net.URI;
@@ -18,16 +16,16 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.ntt.mwonimoney.domain.jwt.JwtTokenProvider;
-import com.ntt.mwonimoney.domain.jwt.Token;
 import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
-import com.ntt.mwonimoney.domain.oauth.info.OAuth2MemberInfo;
-import com.ntt.mwonimoney.domain.oauth.info.OAuth2UserInfoFactory;
-import com.ntt.mwonimoney.domain.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
-import com.ntt.mwonimoney.domain.oauth.util.CookieUtil;
+import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
+import com.ntt.mwonimoney.global.security.jwt.Token;
+import com.ntt.mwonimoney.global.security.oauth.info.OAuth2MemberInfo;
+import com.ntt.mwonimoney.global.security.oauth.info.OAuth2UserInfoFactory;
+import com.ntt.mwonimoney.global.security.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
+import com.ntt.mwonimoney.global.security.oauth.util.CookieUtil;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -63,7 +61,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 	protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication) {
-		Optional<String> redirectUri = CookieUtil.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
+		Optional<String> redirectUri = CookieUtil.getCookie(request,
+				OAuth2AuthorizationRequestBasedOnCookieRepository.REDIRECT_URI_PARAM_COOKIE_NAME)
 			.map(Cookie::getValue);
 
 		if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
@@ -93,8 +92,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 			.set("RT" + socialId, tokenInfo.getRefreshToken(), tokenInfo.getExpireTime(),
 				TimeUnit.MILLISECONDS);
 
-		CookieUtil.deleteCookie(request, response, REFRESH_TOKEN);
-		CookieUtil.addCookie(response, REFRESH_TOKEN, tokenInfo.getRefreshToken(),
+		CookieUtil.deleteCookie(request, response, OAuth2AuthorizationRequestBasedOnCookieRepository.REFRESH_TOKEN);
+		CookieUtil.addCookie(response, OAuth2AuthorizationRequestBasedOnCookieRepository.REFRESH_TOKEN,
+			tokenInfo.getRefreshToken(),
 			JwtTokenProvider.getRefreshTokenExpireTimeCookie());
 
 		return UriComponentsBuilder.fromUriString(targetUrl)

@@ -13,7 +13,7 @@ const CategoryContainer = styled.div`
 `;
 
 interface CategoryProps {
-  backColor: string;
+  backcolor: string;
   width?: string;
   height?: string;
 }
@@ -26,7 +26,7 @@ export const Category = styled.div<CategoryProps>`
   border-top-right-radius: 20% 40%;
   border-bottom-left-radius: 20% 40%;
   border-bottom-right-radius: 20% 40%;
-  background-color: ${(props) => props.backColor};
+  background-color: ${(props) => props.backcolor};
   margin-right: 5%;
   display: flex;
   justify-content: center;
@@ -44,9 +44,9 @@ function CategoryTag(props: CategoryTagProps) {
   const { content1, content2, content3 } = props;
   return (
     <CategoryContainer>
-      <Category backColor="#ffffff">{content1}</Category>
-      <Category backColor="#fcdf92">{content2}</Category>
-      <Category backColor="#d1d1d1">{content3}</Category>
+      <Category backcolor="#ffffff">{content1}</Category>
+      <Category backcolor="#fcdf92">{content2}</Category>
+      <Category backcolor="#d1d1d1">{content3}</Category>
     </CategoryContainer>
   );
 }

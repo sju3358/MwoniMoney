@@ -1,4 +1,4 @@
-package com.ntt.mwonimoney.domain.oauth.util;
+package com.ntt.mwonimoney.global.security.oauth.util;
 
 import java.util.Base64;
 import java.util.Optional;
