@@ -17,7 +17,7 @@ pipeline {
                 script {
                     dir('backend') {
                         sh 'chmod +x gradlew'
-                        sh './gradlew clean build'
+                        // sh './gradlew clean build'
                         sh 'ls -al ./build'
                         sh './gradlew build --stacktrace'
                     }
