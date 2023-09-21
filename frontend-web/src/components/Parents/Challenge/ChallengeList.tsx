@@ -74,7 +74,7 @@ export const ListBtn = styled.div`
 `;
 
 interface BtnProps {
-  backColor: string;
+  backcolor: string;
 }
 
 const ChallengeBtn = styled.div<BtnProps>`
@@ -85,7 +85,7 @@ const ChallengeBtn = styled.div<BtnProps>`
   align-items: center;
   justify-content: space-around;
   font-weight: bold;
-  background-color: ${(props) => props.backColor};
+  background-color: ${(props) => props.backcolor};
 `;
 
 function ChallengeList() {
@@ -95,15 +95,15 @@ function ChallengeList() {
       <ListTitle>
         <Title>{ChallengeTitle}</Title>
         <CategoryTag>
-          <Category backColor="#fcdf92" width="80%">
+          <Category backcolor="#fcdf92" width="80%">
             진행중
           </Category>
         </CategoryTag>
         <DeadLine> ~2023/10/07</DeadLine>
       </ListTitle>
       <ListBtn>
-        <ChallengeBtn backColor="#fbd56e">완료</ChallengeBtn>
-        <ChallengeBtn backColor="#f4f4f4">삭제</ChallengeBtn>
+        <ChallengeBtn backcolor="#fbd56e">완료</ChallengeBtn>
+        <ChallengeBtn backcolor="#f4f4f4">삭제</ChallengeBtn>
       </ListBtn>
     </ListComponent>
   );
