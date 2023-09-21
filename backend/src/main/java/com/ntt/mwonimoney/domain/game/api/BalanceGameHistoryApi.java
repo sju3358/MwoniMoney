@@ -25,7 +25,7 @@ public class BalanceGameHistoryApi {
 	private final MemberAuthService memberAuthService;
 
 	@GetMapping("/balances/{balanceIdx}/answer")
-	public ResponseEntity<BalanceGameAnswerResponse> selectBalanceGameAnswer(
+	public ResponseEntity selectBalanceGameAnswer(
 		@CookieValue("memberUUID") String memberUUID,
 		@PathVariable Long balanceIdx,
 		@RequestBody BalanceGameAnswerRequest request) {
@@ -34,12 +34,7 @@ public class BalanceGameHistoryApi {
 
 		balanceGameHistoryService.selectBalanceGameAnswer(balanceIdx, memberIdx, request.getSelectAnswer());
 
-		BalanceGameAnswerResponse response = BalanceGameAnswerResponse.builder()
-			.selectAnswer(request.getSelectAnswer())
-			.build();
-
-		return ResponseEntity.ok()
-			.body(response);
+		return ResponseEntity.ok().build();
 	}
 
 }

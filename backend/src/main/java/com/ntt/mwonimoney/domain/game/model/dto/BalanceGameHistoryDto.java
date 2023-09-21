@@ -11,5 +11,7 @@ public class BalanceGameHistoryDto {
 
 	private Long memberIdx;
 
-	private byte selectAnswer;
+	private int selectAnswer;
+
+
 }
