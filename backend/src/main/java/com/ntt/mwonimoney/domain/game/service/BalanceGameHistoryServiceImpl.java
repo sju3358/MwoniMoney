@@ -11,8 +11,6 @@ import com.ntt.mwonimoney.domain.game.entity.BalanceGame;
 import com.ntt.mwonimoney.domain.game.entity.BalanceGameHistory;
 import com.ntt.mwonimoney.domain.game.entity.BalanceGameHistoryKey;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameHistoryDto;
-import com.ntt.mwonimoney.domain.game.repository.BalanceGameHistoryRepository;
-import com.ntt.mwonimoney.domain.game.repository.BalanceGameRepository;
 import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
 
