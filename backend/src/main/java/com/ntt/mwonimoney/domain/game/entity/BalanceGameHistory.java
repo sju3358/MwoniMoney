@@ -2,6 +2,7 @@ package com.ntt.mwonimoney.domain.game.entity;
 
 import com.ntt.mwonimoney.domain.game.exception.GameDeactivateException;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameHistoryDto;
+import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameAnswer;
 import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameStatus;
 import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.global.common.entity.CommonEntity;
@@ -9,6 +10,8 @@ import com.ntt.mwonimoney.global.common.entity.CommonEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -28,8 +31,9 @@ public class BalanceGameHistory extends CommonEntity {
 	@EmbeddedId
 	private BalanceGameHistoryKey balanceGameHistoryKey;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "selectAnswer")
-	private int selectAnswer;
+	private BalanceGameAnswer selectAnswer;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "balance_idx")
@@ -39,14 +43,14 @@ public class BalanceGameHistory extends CommonEntity {
 	@JoinColumn(name = "member_idx")
 	private Member member;
 
-	public void changeSelect(byte selectAnswer) {
-		if(this.balanceGame.getStatus().equals(BalanceGameStatus.END))
+	public void changeSelect(BalanceGameAnswer selectAnswer) {
+		if(this.balanceGame.getBalanceGameStatus().equals(BalanceGameStatus.END))
 			throw new GameDeactivateException("밸런스게임이 이미 종료되었습니다");
 		this.selectAnswer = selectAnswer;
 	}
 
 	@Builder
-	public BalanceGameHistory(int selectAnswer, BalanceGame balanceGame, Member member) {
+	public BalanceGameHistory(BalanceGameAnswer selectAnswer, BalanceGame balanceGame, Member member) {
 		this.balanceGameHistoryKey = new BalanceGameHistoryKey(balanceGame.getIdx(), member.getIdx());
 		this.selectAnswer = selectAnswer;
 		this.balanceGame = balanceGame;

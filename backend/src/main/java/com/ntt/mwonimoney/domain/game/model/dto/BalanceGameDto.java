@@ -13,13 +13,13 @@ public class BalanceGameDto {
 
 	String question;
 
-	String answer1;
+	String leftAnswer;
 
-	String answer2;
+	String rightAnswer;
 
-	BalanceGameStatus status;
+	BalanceGameStatus balanceGameStatus;
 
-	private int countOfAnswer1;
+	private int countOfLeftAnswer;
 
-	private int countOfAnswer2;
+	private int countOfRightAnswer;
 }

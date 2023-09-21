@@ -33,49 +33,43 @@ public class BalanceGame {
 	@Column(name = "balance_question")
 	private String question;
 
-	@Column(name = "balance_answer1")
-	private String answer1;
+	@Column(name = "balance_left_answer")
+	private String leftAnswer;
 
-	@Column(name = "balance_answer2")
-	private String answer2;
+	@Column(name = "balance_right_answer")
+	private String rightAnswer;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "balance_active")
-	private BalanceGameStatus status;
+	@Column(name = "balance_status")
+	private BalanceGameStatus balanceGameStatus;
 
 	@CreatedDate
 	@Column(name = "create_time", updatable = false)
 	private LocalDateTime createTime;
 
-	public void editBalanceGame(String question, String answer1, String answer2) {
-		this.question = question;
-		this.answer1 = answer1;
-		this.answer2 = answer2;
-	}
-
 	public void endBalanceGame(){
-		this.status = BalanceGameStatus.END;
+		this.balanceGameStatus = BalanceGameStatus.END;
 	}
 	public void runBalanceGame() {
-		this.status = BalanceGameStatus.RUNNING;
+		this.balanceGameStatus = BalanceGameStatus.RUNNING;
 	}
 
 
 
 	@Builder
-	public BalanceGame(String question, String answer1, String answer2) {
+	public BalanceGame(String question, String leftAnswer, String rightAnswer) {
 		this.question = question;
-		this.answer1 = answer1;
-		this.answer2 = answer2;
-		this.status = BalanceGameStatus.WAIT;
+		this.leftAnswer = leftAnswer;
+		this.rightAnswer = rightAnswer;
+		this.balanceGameStatus = BalanceGameStatus.WAIT;
 	}
 
 	public BalanceGameDto convertToDto() {
 		return BalanceGameDto.builder()
 			.idx(this.idx)
 			.question(this.question)
-			.answer1(this.answer1)
-			.answer2(this.answer2)
+			.leftAnswer(this.leftAnswer)
+			.rightAnswer(this.rightAnswer)
 			.build();
 	}
 

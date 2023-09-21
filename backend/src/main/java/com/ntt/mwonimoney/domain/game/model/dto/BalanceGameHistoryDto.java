@@ -1,5 +1,7 @@
 package com.ntt.mwonimoney.domain.game.model.dto;
 
+import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameAnswer;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,7 +13,7 @@ public class BalanceGameHistoryDto {
 
 	private Long memberIdx;
 
-	private int selectAnswer;
+	private BalanceGameAnswer selectAnswer;
 
 
 }

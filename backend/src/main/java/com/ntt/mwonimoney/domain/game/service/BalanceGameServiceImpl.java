@@ -51,10 +51,8 @@ public class BalanceGameServiceImpl implements BalanceGameService {
 
 	public BalanceGameDto getTodayBalanceGame() {
 
-		BalanceGame balanceGameEntity = balanceGameRepository.findFirstByStatusOrderByCreateTime(BalanceGameStatus.RUNNING)
+		return balanceGameRepository.findTodayBalanceGameDto()
 			.orElseThrow(() -> new NoSuchElementException("오늘의 밸런스게임이 존재하지 않습니다."));
-
-		return balanceGameEntity.convertToDto();
 	}
 
 	public BalanceGameDto getBalanceGameInfo(Long balanceGameIdx) {
