@@ -39,7 +39,6 @@ const Chart = styled.div`
   height: 100%;
 `;
 
-
 const Text = styled.div`
   color: #292929;
   font-family: Inter;
@@ -65,7 +64,7 @@ const Block1 = styled.div`
   height: 100%;
   flex-shrink: 0;
   border-radius: 8px;
-  background: var(--status-good, #B9DEB3);
+  background: var(--status-good, #b9deb3);
   border: solid;
   box-sizing: border-box;
   padding: 4% 7%;
@@ -76,12 +75,11 @@ const Block2 = styled.div`
   height: 100%;
   flex-shrink: 0;
   border-radius: 8px;
-  background: var(--status-bad, #FFA27E);
+  background: var(--status-bad, #ffa27e);
   border: solid;
   box-sizing: border-box;
   padding: 4% 7%;
 `;
-
 
 const BlockTextBox1 = styled.div`
   width: 100%;
@@ -118,7 +116,7 @@ const ContextContainerIn = styled.div`
   box-sizing: border-box;
   padding: 2% 10%;
   border-radius: 5px;
-  background: #FFF;
+  background: #fff;
 `;
 
 const CostText = styled.div`
@@ -140,28 +138,39 @@ const CostTextBox = styled.div`
   box-sizing: border-box;
 `;
 
+const ContentBox = styled.div`
+  width: 100%;
+  height: 80%;
+  padding: 5% 5%;
+  border: solid;
+  box-sizing: border-box;
+`;
+
+const ContentBoxBox = styled.div`
+  width: 100%;
+  height: ;
+`;
+
 const CostCategoryContainer = styled.div`
   width: 50%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between
+  justify-content: space-between;
 `;
 
 const CostCategoryBox1 = styled.div`
   border-radius: 12px;
   background: #495057;
-
 `;
 
 const CostCategoryBox2 = styled.div`
   border-radius: 12px;
-  background: #B9DEB3;
-
+  background: #b9deb3;
 `;
 
 const CostCategoryBox3 = styled.div`
   border-radius: 12px;
-  background: #FFA27E;
+  background: #ffa27e;
 `;
 
 const CostCategoryText = styled.div`
@@ -174,8 +183,6 @@ const CostCategoryText = styled.div`
   line-height: normal;
 `;
 
-
-
 function MoneyPage() {
   return (
     <Container>
@@ -186,7 +193,7 @@ function MoneyPage() {
           <Text>확인해보세요!</Text>
         </InTextContainer1>
         <InTextContainer2>
-          <Chart/>
+          <Chart />
         </InTextContainer2>
       </TextContainer>
       <BlockContainer>
@@ -199,7 +206,7 @@ function MoneyPage() {
           </BlockTextBox1>
         </Block1>
         <Block2>
-        <BlockTextBox1>
+          <BlockTextBox1>
             <BlockText>지출</BlockText>
           </BlockTextBox1>
           <BlockTextBox1>
@@ -210,21 +217,20 @@ function MoneyPage() {
       <ContextContainer>
         <ContextContainerIn>
           <CostTextBox>
-          <CostText>
-            지출내역
-          </CostText>
-          <CostCategoryContainer>
-            <CostCategoryBox1>
-              <CostCategoryText>전체</CostCategoryText>
-            </CostCategoryBox1>
-            <CostCategoryBox2>
-              <CostCategoryText>수익</CostCategoryText>
-            </CostCategoryBox2>
-            <CostCategoryBox3>
-              <CostCategoryText>지출</CostCategoryText>
-            </CostCategoryBox3>
-          </CostCategoryContainer>
+            <CostText>지출내역</CostText>
+            <CostCategoryContainer>
+              <CostCategoryBox1>
+                <CostCategoryText>전체</CostCategoryText>
+              </CostCategoryBox1>
+              <CostCategoryBox2>
+                <CostCategoryText>수익</CostCategoryText>
+              </CostCategoryBox2>
+              <CostCategoryBox3>
+                <CostCategoryText>지출</CostCategoryText>
+              </CostCategoryBox3>
+            </CostCategoryContainer>
           </CostTextBox>
+          <ContentBox>asdf</ContentBox>
         </ContextContainerIn>
       </ContextContainer>
     </Container>
