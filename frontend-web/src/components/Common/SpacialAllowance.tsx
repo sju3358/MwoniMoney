@@ -5,9 +5,8 @@ import AllowanceCategory from "./AllowanceCategory";
 import AllowanceText from "./AllowanceText";
 import AllowanceInput from "./AllowanceInput";
 
-{
-  /*input 상자 */
-}
+/*input 상자 */
+
 const InputContainer = styled.div`
   // border: 1px solid black;
   box-sizing: border-box;
@@ -19,9 +18,8 @@ const InputContainer = styled.div`
   align-items: center;
 `;
 
-{
-  /*Btn 상자 */
-}
+/*Btn 상자 */
+
 const BtnContainer = styled.div`
   // border: 1px solid black;
   width: 100%;

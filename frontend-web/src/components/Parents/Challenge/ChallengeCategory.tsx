@@ -13,7 +13,7 @@ const CategoryContainer = styled.div`
 `;
 
 interface CategoryProps {
-  backColor: string;
+  backcolor: string;
   width: string;
 }
 
@@ -24,7 +24,7 @@ export const Category = styled.div<CategoryProps>`
   border-top-right-radius: 20% 40%;
   border-bottom-left-radius: 20% 40%;
   border-bottom-right-radius: 20% 40%;
-  background-color: ${(props) => props.backColor};
+  background-color: ${(props) => props.backcolor};
   margin-right: 5%;
   display: flex;
   justify-content: center;
@@ -35,13 +35,13 @@ export const Category = styled.div<CategoryProps>`
 function ChallengeCategory() {
   return (
     <CategoryContainer>
-      <Category backColor="#ffffff" width="20%">
+      <Category backcolor="#ffffff" width="20%">
         모두
       </Category>
-      <Category backColor="#fcdf92" width="20%">
+      <Category backcolor="#fcdf92" width="20%">
         진행중
       </Category>
-      <Category backColor="#d1d1d1" width="20%">
+      <Category backcolor="#d1d1d1" width="20%">
         제안대기
       </Category>
     </CategoryContainer>

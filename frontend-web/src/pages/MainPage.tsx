@@ -12,7 +12,8 @@ const Logo = styled.div`
   /* 로고 이미지 스타일 설정 */
   width: 61.67%;
   height: 30.44%;
-  background-image: url(${process.env.PUBLIC_URL}/images/StartPage/mainlogo.png);
+  background-image: url(${process.env
+    .PUBLIC_URL}/images/StartPage/mainlogo.png);
   background-size: 100% 100%;
   position: absolute;
   left: 19.31vw;
@@ -23,7 +24,8 @@ const KaKaoLogin = styled.div`
   /* 카카오 로그인 이미지 스타일 설정 */
   width: 84.72%;
   height: 7.81%;
-  background-image: url(${process.env.PUBLIC_URL}/images/StartPage/KaKaoLogin.png);
+  background-image: url(${process.env
+    .PUBLIC_URL}/images/StartPage/KaKaoLogin.png);
   background-size: 100% 100%;
   position: absolute;
   left: 7.78%;
@@ -35,7 +37,8 @@ const GoogleLogin = styled.div`
   /* 구글 로그인 이미지 스타일 설정 */
   width: 84.72%;
   height: 7.81%;
-  background-image: url(${process.env.PUBLIC_URL}/images/StartPage/GoogleLogin.png);
+  background-image: url(${process.env
+    .PUBLIC_URL}/images/StartPage/GoogleLogin.png);
   background-size: 100% 100%;
   position: absolute;
   left: 7.78%;
@@ -59,61 +62,64 @@ function MyComponent() {
   const KakaoLogin = () => {
     const CLIENT_ID = `${process.env.REACT_APP_REST_API_KEY}`;
     const REDIRECT_URI = `${process.env.REACT_APP_REDIRECT_URL}`;
-    const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`
+    const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
-    return(
-        <img
-            alt="카카오 로그인"
-            src="image/kakaoLogin.png"
-            width="255"
-            height="35"
-            style={{margin: '0px 24px 16px 24px'}}
-            onClick={() => window.location.href = kakaoURL}
-        />
-    )
-}
+    return (
+      <img
+        alt="카카오 로그인"
+        src="image/kakaoLogin.png"
+        width="255"
+        height="35"
+        style={{ margin: "0px 24px 16px 24px" }}
+        onClick={() => (window.location.href = kakaoURL)}
+      />
+    );
+  };
 
-
-const KakaoCallback = () => {
+  const KakaoCallback = () => {
     useEffect(() => {
-        const params= new URL(document.location.toString()).searchParams;
-        const code = params.get('code');
-        const grantType = "authorization_code";
-        const REST_API_KEY = `${process.env.REACT_APP_REST_API_KEY}`;
-        const REDIRECT_URI = `${process.env.REACT_APP_REDIRECT_URL}`;
+      const params = new URL(document.location.toString()).searchParams;
+      const code = params.get("code");
+      const grantType = "authorization_code";
+      const REST_API_KEY = `${process.env.REACT_APP_REST_API_KEY}`;
+      const REDIRECT_URI = `${process.env.REACT_APP_REDIRECT_URL}`;
 
-        axios.post(
-            `https://kauth.kakao.com/oauth/token?grant_type=${grantType}&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&code=${code}`,
-            {},
-            { headers: { "Content-type": "application/x-www-form-urlencoded;charset=utf-8" } }
+      axios
+        .post(
+          `https://kauth.kakao.com/oauth/token?grant_type=${grantType}&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&code=${code}`,
+          {},
+          {
+            headers: {
+              "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+            },
+          }
         )
         .then((res: any) => {
-            console.log(res);
-            const { access_token } = res.data;
-            axios.post(
-                `https://kapi.kakao.com/v2/user/me`,
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${access_token}`,
-                        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-                    }
-                }
+          console.log(res);
+          const { access_token } = res.data;
+          axios
+            .post(
+              `https://kapi.kakao.com/v2/user/me`,
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${access_token}`,
+                  "Content-type":
+                    "application/x-www-form-urlencoded;charset=utf-8",
+                },
+              }
             )
             .then((res: any) => {
-                console.log('2번쨰', res);
-            })
+              console.log("2번쨰", res);
+            });
         })
         .catch((Error: any) => {
-            console.log(Error)
-        })
-    }, [])
-    
-    return(
-        <>
-        </>
-    )
-}
+          console.log(Error);
+        });
+    }, []);
+
+    return <></>;
+  };
 
   return (
     <Container>
