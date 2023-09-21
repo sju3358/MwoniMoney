@@ -12,7 +12,7 @@ import {
 } from "../components/Children/Main";
 
 //컴포넌트
-import Balance from "../components/Children/Balance";
+import BalanceCompo from "../components/Children/BalanceCompo";
 import Quiz from "../components/Children/Quiz/Quiz";
 import Challenge from "../components/Children/Challenge";
 
@@ -67,7 +67,7 @@ function ChildrenPage() {
         </TextEmojiBox>
       </TextContainer>
       <BalanceContainer height="50%">
-        <Balance />
+        <BalanceCompo />
       </BalanceContainer>
       <QuizContainer height="auto">
         <Quiz />
