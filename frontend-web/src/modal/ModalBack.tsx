@@ -59,7 +59,7 @@ export const ModalBtn = styled.div`
 interface ModalProps {
   modal_start_text: string;
   modal_title: string;
-  modal_content: string;
+  modal_content: React.ReactNode;
   modal_btn: string;
 }
 
