@@ -61,6 +61,9 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "member_role")
 	private MemberRole memberRole;
 
+	@Column(name = "FCMToken", length = 300)
+	private String FirebaseToken;
+
 	protected Member(byte status, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
 		String socialId, String email, MemberRole memberRole) {
@@ -73,5 +76,9 @@ public abstract class Member extends CommonEntity {
 		this.socialId = socialId;
 		this.email = email;
 		this.memberRole = memberRole;
+	}
+
+	public void updateFCMToken(String firebaseToken) {
+		this.FirebaseToken = firebaseToken;
 	}
 }
