@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-{
-  /*category 상자 */
-}
+/*category 상자 */
+
 const CategoryContainer = styled.div`
   // border: 1px solid black;
   box-sizing: border-box;
