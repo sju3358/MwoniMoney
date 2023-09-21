@@ -1,6 +1,5 @@
-package com.ntt.mwonimoney.domain.oauth.info;
+package com.ntt.mwonimoney.global.security.oauth.info;
 
-import java.time.LocalDate;
 import java.util.Map;
 
 public abstract class OAuth2MemberInfo {

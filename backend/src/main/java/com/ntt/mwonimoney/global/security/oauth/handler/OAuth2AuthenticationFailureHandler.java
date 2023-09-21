@@ -1,4 +1,4 @@
-package com.ntt.mwonimoney.domain.oauth.handler;
+package com.ntt.mwonimoney.global.security.oauth.handler;
 
 import java.io.IOException;
 
@@ -7,8 +7,8 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.ntt.mwonimoney.domain.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
-import com.ntt.mwonimoney.domain.oauth.util.CookieUtil;
+import com.ntt.mwonimoney.global.security.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
+import com.ntt.mwonimoney.global.security.oauth.util.CookieUtil;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;

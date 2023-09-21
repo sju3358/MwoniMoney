@@ -14,15 +14,15 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.ntt.mwonimoney.domain.jwt.JwtAuthenticationFilter;
-import com.ntt.mwonimoney.domain.jwt.JwtTokenProvider;
-import com.ntt.mwonimoney.domain.jwt.TokenAccessDeniedHandler;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
-import com.ntt.mwonimoney.domain.oauth.exception.RestAuthenticationEntryPoint;
-import com.ntt.mwonimoney.domain.oauth.handler.OAuth2AuthenticationFailureHandler;
-import com.ntt.mwonimoney.domain.oauth.handler.OAuth2AuthenticationSuccessHandler;
-import com.ntt.mwonimoney.domain.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
-import com.ntt.mwonimoney.domain.oauth.service.CustomOAuth2UserService;
+import com.ntt.mwonimoney.global.security.jwt.JwtAuthenticationFilter;
+import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
+import com.ntt.mwonimoney.global.security.jwt.TokenAccessDeniedHandler;
+import com.ntt.mwonimoney.global.security.oauth.exception.RestAuthenticationEntryPoint;
+import com.ntt.mwonimoney.global.security.oauth.handler.OAuth2AuthenticationFailureHandler;
+import com.ntt.mwonimoney.global.security.oauth.handler.OAuth2AuthenticationSuccessHandler;
+import com.ntt.mwonimoney.global.security.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
+import com.ntt.mwonimoney.global.security.oauth.service.CustomOAuth2UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

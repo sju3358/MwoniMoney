@@ -1,4 +1,4 @@
-package com.ntt.mwonimoney.domain.jwt;
+package com.ntt.mwonimoney.global.security.jwt;
 
 import java.security.Key;
 import java.util.Arrays;

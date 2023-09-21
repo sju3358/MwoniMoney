@@ -1,10 +1,10 @@
-package com.ntt.mwonimoney.domain.oauth.repository;
+package com.ntt.mwonimoney.global.security.oauth.repository;
 
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 
 import com.nimbusds.oauth2.sdk.util.StringUtils;
-import com.ntt.mwonimoney.domain.oauth.util.CookieUtil;
+import com.ntt.mwonimoney.global.security.oauth.util.CookieUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
