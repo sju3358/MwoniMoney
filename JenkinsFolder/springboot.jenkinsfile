@@ -8,36 +8,18 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                //Jenkins의 SCM (소스 코드 관리) 플러그인을 사용하여 Git 저장소로부터 소스 코드를 가져오는 역할
                 checkout scm
-                sh 'echo "git clone완료"'
-                sh 'echo "현재 디렉토리 경로"'
-                sh 'pwd'
             }
         }
 
         stage('Build') {
             steps {
                 script {
-                    // 현재 디렉토리의 파일 및 디렉토리 목록 출력
-                    sh 'ls'
                     dir('backend') {
-                        // 변경된 디렉토리에서 명령어 실행
-                        sh 'ls'
-                        sh 'echo "Hello from the changed directory"'
                         sh 'chmod +x gradlew'
-                        sh './gradlew clean build'
+                        sh './gradlew --debug clean build'
                         sh 'ls -al ./build'
                         sh './gradlew build --stacktrace'
-                        // de
-                        sh "docker build -t ${IMAGE_NAME} -f Dockerfile ."
-                        
-                        sh "docker images"
-
-                        sh 'echo "images build 성공!"'
-                        
-
-
                     }
                 }
 
@@ -49,7 +31,6 @@ pipeline {
                 script {
                     try{
                         sh 'echo "Docker Delete Start"'
-                        // 컨테이너 존재 시 삭제
                         sh "docker stop ${CONTAINER_NAME}"
                         sh "docker rm -f ${CONTAINER_NAME}"
                     }catch (Exception e){
@@ -65,6 +46,18 @@ pipeline {
             }
         }
 
+        stage('Dockerizing'){
+            steps{
+                dir('backend'){
+                    // de
+                    sh "docker build -t ${IMAGE_NAME} -f Dockerfile ."
+                    
+                    sh "docker images"
+
+                    sh 'echo "images build 성공!"'
+                }                
+            }
+        }
 
         stage('Deploy') {
             steps {
