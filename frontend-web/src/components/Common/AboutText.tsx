@@ -31,6 +31,7 @@ interface TextProps {
   fontweight?: string | null;
   margin?: string | null;
   padding?: string | null;
+  textalign?: string | null;
 }
 export const Text = styled.div<TextProps>`
   // border: 1px solid blue;
@@ -41,4 +42,5 @@ export const Text = styled.div<TextProps>`
   font-weight: ${(props) => (props.fontweight ? props.fontweight : "400")};
   margin: ${(props) => (props.margin ? props.margin : "0%")};
   padding: ${(props) => (props.padding ? props.padding : "0%")};
+  text-align: ${(props) => (props.textalign ? props.textalign : "")};
 `;
