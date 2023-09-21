@@ -8,7 +8,7 @@ import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameDto;
 
 public interface BalanceGameService {
 
-	Slice<BalanceGameDto> getBalanceGames(BalanceGameListRequest request);
+	Slice getBalanceGames(BalanceGameListRequest request);
 
 	BalanceGameDto getTodayBalanceGame();
 

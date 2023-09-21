@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ntt.mwonimoney.domain.game.api.request.BalanceGameListRequest;
 import com.ntt.mwonimoney.domain.game.entity.BalanceGame;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameDto;
+import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameListDto;
 import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameStatus;
 import com.ntt.mwonimoney.domain.game.repository.BalanceGameRepository;
 
@@ -30,7 +31,7 @@ public class BalanceGameServiceImpl implements BalanceGameService {
 	private final BalanceGameRepository balanceGameRepository;
 
 	@Override
-	public Slice<BalanceGameDto> getBalanceGames(BalanceGameListRequest request) {
+	public Slice<BalanceGameListDto> getBalanceGames(BalanceGameListRequest request) {
 
 		Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), Sort.by("create_time").descending());
 
@@ -40,13 +41,17 @@ public class BalanceGameServiceImpl implements BalanceGameService {
 			throw new NoSuchElementException("밸런스 게임이 존재하지 않습니다.");
 		}
 
-		List<BalanceGameDto> balanceGames = new ArrayList<>();
+		List<BalanceGameListDto> balanceGameList = new ArrayList<>();
 
 		for (BalanceGame balanceGameEntity : balanceGameEntities) {
-			balanceGames.add(balanceGameEntity.convertToDto());
+			balanceGameList.add(
+				BalanceGameListDto.builder()
+					.idx(balanceGameEntity.getIdx())
+					.question(balanceGameEntity.getQuestion())
+					.build());
 		}
 
-		return new SliceImpl<>(balanceGames, balanceGameEntities.getPageable(), balanceGameEntities.hasNext());
+		return new SliceImpl<>(balanceGameList, balanceGameEntities.getPageable(), balanceGameEntities.hasNext());
 	}
 
 	public BalanceGameDto getTodayBalanceGame() {

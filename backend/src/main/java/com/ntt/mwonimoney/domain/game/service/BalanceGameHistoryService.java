@@ -6,7 +6,7 @@ import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameHistoryDto;
 import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameAnswer;
 
 public interface BalanceGameHistoryService {
-	List<BalanceGameHistoryDto> getUserBalanceGameHistories(Long memberIdx);
+	List getUserBalanceGameHistories(Long memberIdx);
 
 	void selectBalanceGameAnswer(Long balanceGameIdx, Long MemberIdx, BalanceGameAnswer selectAnswer);
 
