@@ -1,5 +1,5 @@
 import * as React from "react";
-import ModalBody from "../ModalBack";
+import ModalBody from "../ModalBtn1";
 import ChallengeList from "../../components/Parents/Challenge/ChallengeList";
 import styled from "styled-components";
 import Success from "../../assests/image/Success.png";
@@ -95,9 +95,15 @@ export default function BasicModal() {
     <div>
       <ModalBody
         modal_start_text="모달띄우는 버튼에 적을 말"
+<<<<<<< frontend-web/src/modal/Quiz/Success.tsx
+        modal_title="모달 제목"
+        modal_content={<ChallengeList />} /**테그 넣는 방법*/
+        modal_btn="모달 닫는 버튼"
+=======
         modal_title=""
         modal_content={<Main />}
         modal_btn="보상받기"
+>>>>>>> frontend-web/src/modal/Quiz/Success.tsx
       />
     </div>
   );
