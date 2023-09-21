@@ -8,13 +8,13 @@ function Card() {
   const interest = 129000;
   return (
     <Container height="15%" justifyContent="space-around">
-      <WhiteBox1 width="45%" backColor="#b79df5" flexDirection="column">
+      <WhiteBox1 width="45%" backcolor="#b79df5" flexDirection="column">
         <TextBox fontSize="1.2em">원금</TextBox>
         <TextBox fontSize="1em" fontWeight="normal">
           {principal}
         </TextBox>
       </WhiteBox1>
-      <WhiteBox1 width="45%" backColor="#fbd56e" flexDirection="column">
+      <WhiteBox1 width="45%" backcolor="#fbd56e" flexDirection="column">
         <TextBox fontSize="1.2em">이자</TextBox>
         <TextBox fontSize="1em" fontWeight="normal">
           {interest}

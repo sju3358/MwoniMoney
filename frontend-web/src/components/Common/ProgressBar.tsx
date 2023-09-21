@@ -4,7 +4,7 @@ import styled from "styled-components";
 interface BarProps {
   width?: string;
   height?: string;
-  backColor?: string;
+  backcolor?: string;
 }
 
 const BackBar = styled.div<BarProps>`
@@ -12,7 +12,7 @@ const BackBar = styled.div<BarProps>`
   width: ${(props) => (props.width ? props.width : "90%")};
   height: ${(props) => (props.height ? props.height : "80%")};
   background-color: ${(props) =>
-    props.backColor ? props.backColor : "#f4f4f4"};
+    props.backcolor ? props.backcolor : "#f4f4f4"};
   border-radius: 30px;
 `;
 
@@ -23,7 +23,7 @@ const FrontBar = styled.div<BarProps>`
   width: ${(props) => (props.width ? props.width : "30%")};
   height: ${(props) => (props.height ? props.height : "80%")};
   background-color: ${(props) =>
-    props.backColor ? props.backColor : "#fbd56e"};
+    props.backcolor ? props.backcolor : "#fbd56e"};
   z-index: 1; /* 다른 요소들 위에 표시 */
   border-radius: 30px;
 80`;
