@@ -25,6 +25,10 @@ pipeline {
                         // 변경된 디렉토리에서 명령어 실행
                         sh 'ls'
                         sh 'echo "Hello from the changed directory"'
+                        sh 'chmod +x gradlew'
+                        sh './gradlew clean build'
+                        sh 'ls -al ./build'
+                        sh './gradlew build --stacktrace'
                         // de
                         sh "docker build -t ${IMAGE_NAME} -f Dockerfile ."
                         
@@ -33,10 +37,7 @@ pipeline {
                         sh 'echo "images build 성공!"'
                         
 
-                        sh 'chmod +x gradlew'
-                        sh './gradlew clean build'
-                        sh 'ls -al ./build'
-                        sh './gradlew build --stacktrace'
+
                     }
                 }
 
