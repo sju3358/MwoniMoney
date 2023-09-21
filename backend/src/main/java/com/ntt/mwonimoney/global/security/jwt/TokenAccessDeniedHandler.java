@@ -1,4 +1,4 @@
-package com.ntt.mwonimoney.domain.jwt;
+package com.ntt.mwonimoney.global.security.jwt;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;

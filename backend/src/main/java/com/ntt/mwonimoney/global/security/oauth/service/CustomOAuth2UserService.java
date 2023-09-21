@@ -1,4 +1,4 @@
-package com.ntt.mwonimoney.domain.oauth.service;
+package com.ntt.mwonimoney.global.security.oauth.service;
 
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -11,9 +11,9 @@ import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.entity.Parent;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
-import com.ntt.mwonimoney.domain.oauth.info.OAuth2MemberInfo;
-import com.ntt.mwonimoney.domain.oauth.info.OAuth2UserInfoFactory;
-import com.ntt.mwonimoney.domain.oauth.model.vo.MemberPrincipal;
+import com.ntt.mwonimoney.global.security.oauth.info.OAuth2MemberInfo;
+import com.ntt.mwonimoney.global.security.oauth.info.OAuth2UserInfoFactory;
+import com.ntt.mwonimoney.global.security.oauth.model.vo.MemberPrincipal;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

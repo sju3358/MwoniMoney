@@ -1,4 +1,4 @@
-package com.ntt.mwonimoney.domain.oauth.model.vo;
+package com.ntt.mwonimoney.global.security.oauth.model.vo;
 
 import java.util.Collection;
 import java.util.Collections;

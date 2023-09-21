@@ -1,8 +1,8 @@
-package com.ntt.mwonimoney.domain.oauth.info.inpl;
+package com.ntt.mwonimoney.global.security.oauth.info.inpl;
 
 import java.util.Map;
 
-import com.ntt.mwonimoney.domain.oauth.info.OAuth2MemberInfo;
+import com.ntt.mwonimoney.global.security.oauth.info.OAuth2MemberInfo;
 
 public class KakaoOAuth2MemberInfo extends OAuth2MemberInfo {
 
