@@ -1,4 +1,4 @@
-package com.ntt.mwonimoney.domain.oauth.exception;
+package com.ntt.mwonimoney.global.security.oauth.exception;
 
 import java.io.IOException;
 

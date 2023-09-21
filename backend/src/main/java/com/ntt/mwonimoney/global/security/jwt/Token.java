@@ -1,4 +1,4 @@
-package com.ntt.mwonimoney.domain.jwt;
+package com.ntt.mwonimoney.global.security.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,4 @@
-package com.ntt.mwonimoney.domain.jwt;
-
-import static com.ntt.mwonimoney.domain.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository.*;
+package com.ntt.mwonimoney.global.security.jwt;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -15,7 +13,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
-import com.ntt.mwonimoney.domain.oauth.util.CookieUtil;
+import com.ntt.mwonimoney.global.security.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
+import com.ntt.mwonimoney.global.security.oauth.util.CookieUtil;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -55,7 +54,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		}
 
 		if (Objects.equals(validateResult, "isExpired")) {
-			Optional<String> cookie = CookieUtil.getCookie(request, REFRESH_TOKEN).map(Cookie::getValue);
+			Optional<String> cookie = CookieUtil.getCookie(request,
+				OAuth2AuthorizationRequestBasedOnCookieRepository.REFRESH_TOKEN).map(Cookie::getValue);
 
 			// 쿠키에 리프레시 토큰이 없음. => 로그아웃
 			if (cookie.isEmpty()) {
@@ -94,8 +94,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 					.set("RT" + userSocialId, tokenInfo.getRefreshToken(), tokenInfo.getExpireTime(),
 						TimeUnit.MILLISECONDS);
 
-				CookieUtil.deleteCookie(request, response, REFRESH_TOKEN);
-				CookieUtil.addCookie(response, REFRESH_TOKEN, tokenInfo.getRefreshToken(),
+				CookieUtil.deleteCookie(request, response,
+					OAuth2AuthorizationRequestBasedOnCookieRepository.REFRESH_TOKEN);
+				CookieUtil.addCookie(response, OAuth2AuthorizationRequestBasedOnCookieRepository.REFRESH_TOKEN,
+					tokenInfo.getRefreshToken(),
 					JwtTokenProvider.getRefreshTokenExpireTimeCookie());
 				response.setHeader("x-access-token", tokenInfo.getAccessToken());
 
