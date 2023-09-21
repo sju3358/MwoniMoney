@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-{
-  /*글 상자 */
-}
+/*글 상자 */
 
 const TextContainer = styled.div`
   // border: 1px solid black;
