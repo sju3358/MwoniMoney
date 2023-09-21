@@ -1,6 +1,5 @@
 package com.ntt.mwonimoney.domain.oauth.info.inpl;
 
-import java.time.LocalDate;
 import java.util.Map;
 
 import com.ntt.mwonimoney.domain.oauth.info.OAuth2MemberInfo;
