@@ -16,27 +16,6 @@ pipeline {
             }
         }
 
-        stage('Docker Delete') {
-            steps {
-                script {
-                    try{
-                        sh 'echo "Docker Delete Start"'
-                        // 컨테이너 존재 시 삭제
-                        sh "docker stop ${CONTAINER_NAME}"
-                        sh "docker rm -f ${CONTAINER_NAME}"
-                    }catch (Exception e){
-                        echo "Docker container ${CONTAINER_NAME} does not exist. skip"
-                    }
-                    try{
-                        // 이미지 존재 시 삭제
-                        sh "docker image rm ${IMAGE_NAME}"
-                    }catch (Exception e){
-                        echo "Docker image ${IMAGE_NAME} does not exist. skip"
-                    }
-                }
-            }
-        }
-
         stage('Build') {
             steps {
                 script {
@@ -58,12 +37,33 @@ pipeline {
                         sh './gradlew clean build'
                         sh 'ls -al ./build'
                         sh './gradlew build --stacktrace'
-                    
                     }
                 }
 
             }
         }
+
+        stage('Docker Delete') {
+            steps {
+                script {
+                    try{
+                        sh 'echo "Docker Delete Start"'
+                        // 컨테이너 존재 시 삭제
+                        sh "docker stop ${CONTAINER_NAME}"
+                        sh "docker rm -f ${CONTAINER_NAME}"
+                    }catch (Exception e){
+                        echo "Docker container ${CONTAINER_NAME} does not exist. skip"
+                    }
+                    try{
+                        // 이미지 존재 시 삭제
+                        sh "docker image rm ${IMAGE_NAME}"
+                    }catch (Exception e){
+                        echo "Docker image ${IMAGE_NAME} does not exist. skip"
+                    }
+                }
+            }
+        }
+
 
         stage('Deploy') {
             steps {
