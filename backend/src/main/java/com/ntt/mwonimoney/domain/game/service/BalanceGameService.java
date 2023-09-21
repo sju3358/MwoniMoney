@@ -3,15 +3,14 @@ package com.ntt.mwonimoney.domain.game.service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
+import com.ntt.mwonimoney.domain.game.api.request.BalanceGameListRequest;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameDto;
 
 public interface BalanceGameService {
 
-	Slice<BalanceGameDto> getBalanceGames(Pageable pageable);
+	Slice<BalanceGameDto> getBalanceGames(BalanceGameListRequest request);
 
-	// public BalanceGameDto getTodayBalanceGame() {
-	//
-	// }
+	BalanceGameDto getTodayBalanceGame();
 
 	BalanceGameDto getBalanceGameInfo(Long balanceGameIdx);
 }

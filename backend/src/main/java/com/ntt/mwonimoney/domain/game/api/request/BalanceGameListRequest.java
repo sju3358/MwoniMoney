@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class BalanceGameListRequest {
-	int size;
-	int
+
+	private int page;
+	private int size;
 }

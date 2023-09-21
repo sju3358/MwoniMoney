@@ -1,6 +1,8 @@
 package com.ntt.mwonimoney.domain.game.entity;
 
+import com.ntt.mwonimoney.domain.game.exception.GameDeactivateException;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameHistoryDto;
+import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameStatus;
 import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.global.common.entity.CommonEntity;
 
@@ -27,7 +29,7 @@ public class BalanceGameHistory extends CommonEntity {
 	private BalanceGameHistoryKey balanceGameHistoryKey;
 
 	@Column(name = "selectAnswer")
-	private byte selectAnswer;
+	private int selectAnswer;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "balance_idx")
@@ -38,11 +40,13 @@ public class BalanceGameHistory extends CommonEntity {
 	private Member member;
 
 	public void changeSelect(byte selectAnswer) {
+		if(this.balanceGame.getStatus().equals(BalanceGameStatus.END))
+			throw new GameDeactivateException("밸런스게임이 이미 종료되었습니다");
 		this.selectAnswer = selectAnswer;
 	}
 
 	@Builder
-	public BalanceGameHistory(byte selectAnswer, BalanceGame balanceGame, Member member) {
+	public BalanceGameHistory(int selectAnswer, BalanceGame balanceGame, Member member) {
 		this.balanceGameHistoryKey = new BalanceGameHistoryKey(balanceGame.getIdx(), member.getIdx());
 		this.selectAnswer = selectAnswer;
 		this.balanceGame = balanceGame;
