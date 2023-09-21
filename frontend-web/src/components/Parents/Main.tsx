@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import Money from "../../assests/image/Money.png";
 
 export const MainContainer = styled.div`
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
   overflow: auto;
+  overflow-x: hidden; /* 가로 스크롤 제거 */
 `;
 
 export const ChildrenList = styled.div`
@@ -21,11 +21,12 @@ export const ChildrenList = styled.div`
 }
 
 export const TextContainer = styled.div`
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 100%;
   height: 25%;
   box-sizing: border-box;
   display: flex;
+  padding: 5%;
 `;
 export const TextMentBox = styled.div`
   // border: 1px solid red;
@@ -59,51 +60,53 @@ export const TextEmojiBox = styled.div`
   align-items: center;
 `;
 
-export const Emoji = styled.div`
+interface EmogiProps {
+  url: string;
+  // size: string;
+  width: string;
+  height: string;
+}
+
+export const Emoji = styled.div<EmogiProps>`
   // border: 1px solid red;
-  width: 80%;
-  height: 80%;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   box-sizing: border-box;
-  background-image: url(${Money});
+  background-image: url(${(props) => props.url});
   background-size: 100% 100%;
 `;
 
 {
-  /* 정기용돈 넣는 칸 */
+  /* 용돈 넣는 칸 */
 }
 
-export const AllowanveContainer = styled.div`
-  border: 1px solid black;
+interface AllowanceProps {
+  height: string; // 'String' -> 'string'
+}
+
+export const AllowanveContainer = styled.div<AllowanceProps>`
+  // border: 1px solid black;
   width: 100%;
-  height: 50%;
+  height: ${(props) => props.height};
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 5%;
+  //
 `;
-
-export const WhiteBox = styled.div`
-  // border: 1px solid black;
-  border-radius: 8px;
-  width: 90%;
-  height: 90%;
-  background-color: #ffffff;
-`;
-
-{
-  /* 특별용돈 넣는 칸 */
-}
 
 {
   /* QR 넣는 칸 */
 }
 
 export const QrContainer = styled.div`
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 100%;
-  height: 30%;
+  height: 35%;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 5%;
 `;
