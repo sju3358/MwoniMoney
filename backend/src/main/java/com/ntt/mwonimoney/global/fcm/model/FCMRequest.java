@@ -1,11 +1,11 @@
-package com.ntt.mwonimoney.domain.fcm.model;
+package com.ntt.mwonimoney.global.fcm.model;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
-public class FCMRequestDto {
+public class FCMRequest {
 	Long memberIdx;
 	String title;
 	String content;
