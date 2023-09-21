@@ -6,6 +6,8 @@ import Modal from "@mui/material/Modal";
 interface ModalBackPops {
   height?: string;
 }
+
+/**모달 위치 고정을 위한 Container */
 export const ModalContainer = styled.div`
   position: relative;
   width: 100vw;
@@ -14,6 +16,7 @@ export const ModalContainer = styled.div`
   left: 8px;
 `;
 
+/**실질적 모달 몸통, 높이 커스텀 가능 */
 export const ModalBack = styled.div<ModalBackPops>`
   position: absolute;
   top: 15%;
@@ -22,10 +25,11 @@ export const ModalBack = styled.div<ModalBackPops>`
   width: 80%;
   height: ${(props) => (props.height ? props.height : "50%")};
   background-color: #ffffff;
-  padding: 4px; /* p 대신 padding을 사용하세요 */
-  box-shadow: 0 0 24px rgba(0, 0, 0, 0.1); /* box-shadow의 형식이 잘못되었습니다. */
+  padding: 4px;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.1);
 `;
 
+/**모달 헤더, 푸터 기능 */
 export const ModalTopBottom = styled.div`
   // border: 1px solid black;
   width: 100%;
@@ -37,6 +41,7 @@ export const ModalTopBottom = styled.div`
   font-weight: bold;
 `;
 
+/**모달 내용 자리 - 테그 함수 들어갈 수 있도록 수정 */
 export const ModalContent = styled.div`
   // border: 1px solid black;
   padding-top:3%
@@ -45,6 +50,7 @@ export const ModalContent = styled.div`
   overflow: auto;
 `;
 
+/**모달 닫기 버튼 */
 export const ModalBtn = styled.div`
   // border: 1px solid black;
   width: 60%;
@@ -59,7 +65,7 @@ export const ModalBtn = styled.div`
 interface ModalProps {
   modal_start_text: string;
   modal_title: string;
-  modal_content: string;
+  modal_content: React.ReactNode;
   modal_btn: string;
 }
 
