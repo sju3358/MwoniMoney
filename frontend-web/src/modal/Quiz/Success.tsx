@@ -1,6 +1,4 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
 import ModalBody from "../ModalBack";
 
 export default function BasicModal() {
