@@ -5,7 +5,7 @@ COPY . .
 RUN ./gradlew build
 
 # Step 2: Package the application
-FROM openjdk:17-jre
+FROM openjdk:17-jdk
 WORKDIR /app
 COPY --from=builder /app/build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
