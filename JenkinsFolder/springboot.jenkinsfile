@@ -17,14 +17,13 @@ pipeline {
                 script {
                     dir('backend') {
                         sh 'chmod +x gradlew'
-                        // sh './gradlew clean build'
-                        sh './gradlew build --stacktrace'
+                        sh './gradlew clean build'
                         sh 'ls -al ./build'
                     }
                 }
-
             }
         }
+
 
         stage('Docker Delete') {
             steps {
