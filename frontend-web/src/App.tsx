@@ -35,9 +35,7 @@ function App() {
           {/* MoneyPage 컴포넌트도 중첩 라우트로 추가 */}
           <Route path="/" element={<Main />} />
           <Route path="MoneyPage" element={<MoneyPage />} />
-
           <Route path="Challenge" element={<Challenge />} />
-
           <Route path="Bank" element={<Bank />} />
           <Route path="MyPage" element={<MyPage />} />
         </Route>
