@@ -17,7 +17,7 @@ function LoanList() {
             {title}
           </TextBox>
           <CategoryTag>
-            <Category backColor="#fcdf92" width="90%" height="90%">
+            <Category backcolor="#fcdf92" width="90%" height="90%">
               대출중
             </Category>
           </CategoryTag>
