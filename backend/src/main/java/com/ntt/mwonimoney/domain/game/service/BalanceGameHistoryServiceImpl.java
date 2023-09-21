@@ -11,6 +11,7 @@ import com.ntt.mwonimoney.domain.game.entity.BalanceGame;
 import com.ntt.mwonimoney.domain.game.entity.BalanceGameHistory;
 import com.ntt.mwonimoney.domain.game.entity.BalanceGameHistoryKey;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameHistoryDto;
+import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameAnswer;
 import com.ntt.mwonimoney.domain.game.repository.BalanceGameHistoryRepository;
 import com.ntt.mwonimoney.domain.game.repository.BalanceGameRepository;
 import com.ntt.mwonimoney.domain.member.entity.Member;
@@ -47,7 +48,7 @@ public class BalanceGameHistoryServiceImpl implements BalanceGameHistoryService 
 
 	@Override
 	@Transactional
-	public void selectBalanceGameAnswer(Long balanceGameIdx, Long memberIdx, byte selectAnswer) {
+	public void selectBalanceGameAnswer(Long balanceGameIdx, Long memberIdx, BalanceGameAnswer selectAnswer) {
 
 		try {
 
