@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ntt.mwonimoney.domain.game.api.request.BalanceGameAnswerRequest;
-import com.ntt.mwonimoney.domain.game.api.request.BalanceGameAnswerResponse;
 import com.ntt.mwonimoney.domain.game.service.BalanceGameHistoryService;
 import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
 

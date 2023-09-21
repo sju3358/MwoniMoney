@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,20 +26,21 @@ public class BalanceGameServiceImpl implements BalanceGameService {
 	private final BalanceGameRepository balanceGameRepository;
 
 	@Override
-	public List<BalanceGameDto> getBalanceGames() {
-		List<BalanceGame> balanceGameEntityList = balanceGameRepository.findAll();
+	public Slice<BalanceGameDto> getBalanceGames(Pageable pageable) {
 
-		if (balanceGameEntityList.isEmpty() == true) {
+		Slice<BalanceGame> balanceGameEntities = balanceGameRepository.findBalanceGamesBy(pageable);
+
+		if (balanceGameEntities.isEmpty() == true) {
 			throw new NoSuchElementException();
 		}
 
 		List<BalanceGameDto> balanceGames = new ArrayList<>();
 
-		for (BalanceGame balanceGameEntity : balanceGameEntityList) {
+		for (BalanceGame balanceGameEntity : balanceGameEntities) {
 			balanceGames.add(balanceGameEntity.convertToDto());
 		}
 
-		return balanceGames;
+		return new SliceImpl<>(balanceGames, balanceGameEntities.getPageable(), balanceGameEntities.hasNext());
 	}
 
 	// public BalanceGameDto getTodayBalanceGame() {
@@ -48,42 +52,6 @@ public class BalanceGameServiceImpl implements BalanceGameService {
 			.orElseThrow(() -> new NoSuchElementException());
 
 		return balanceGameEntity.convertToDto();
-	}
-
-	@Transactional
-	public void addBalanceGame(BalanceGameDto balanceGameDto) {
-		BalanceGame balanceGame = BalanceGame.builder()
-			.question(balanceGameDto.getQuestion())
-			.answer1(balanceGameDto.getAnswer1())
-			.answer2(balanceGameDto.getAnswer2())
-			.build();
-
-		balanceGameRepository.save(balanceGame);
-	}
-
-	@Transactional
-	public void editBalanceGame(BalanceGameDto balanceGameDto) {
-		BalanceGame balanceGameEntity = balanceGameRepository.findBalanceGameByIdx(balanceGameDto.getIdx())
-			.orElseThrow(() -> new NoSuchElementException());
-
-		balanceGameEntity.updateBalanceGame(balanceGameDto.getQuestion(), balanceGameDto.getAnswer1(),
-			balanceGameDto.getAnswer2());
-	}
-
-	@Transactional
-	public void closeBalanceGame(Long balanceGameIdx) {
-		BalanceGame balanceGameEntity = balanceGameRepository.findBalanceGameByIdx(balanceGameIdx)
-			.orElseThrow(() -> new NoSuchElementException());
-
-		balanceGameEntity.deactivate();
-	}
-
-	@Transactional
-	public void removeBalanceGame(Long balanceGameIdx) {
-		BalanceGame balanceGameEntity = balanceGameRepository.findBalanceGameByIdx(balanceGameIdx)
-			.orElseThrow(() -> new NoSuchElementException());
-
-		balanceGameRepository.delete(balanceGameEntity);
 	}
 
 }

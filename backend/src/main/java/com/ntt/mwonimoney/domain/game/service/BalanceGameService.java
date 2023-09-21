@@ -1,30 +1,17 @@
 package com.ntt.mwonimoney.domain.game.service;
 
-import java.util.List;
-
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameDto;
 
 public interface BalanceGameService {
 
-	List<BalanceGameDto> getBalanceGames();
+	Slice<BalanceGameDto> getBalanceGames(Pageable pageable);
 
 	// public BalanceGameDto getTodayBalanceGame() {
 	//
 	// }
 
 	BalanceGameDto getBalanceGameInfo(Long balanceGameIdx);
-
-	@Transactional
-	void addBalanceGame(BalanceGameDto balanceGameDto);
-
-	@Transactional
-	void editBalanceGame(BalanceGameDto balanceGameDto);
-
-	@Transactional
-	void closeBalanceGame(Long balanceGameIdx);
-
-	@Transactional
-	void removeBalanceGame(Long balanceGameIdx);
 }
