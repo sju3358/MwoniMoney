@@ -52,16 +52,16 @@ pipeline {
                         sh "docker images"
 
                         sh 'echo "images build 성공!"'
+                        
+
+                        sh 'chmod +x gradlew'
+                        sh './gradlew clean build'
+                        sh 'ls -al ./build'
+                        sh './gradlew build --stacktrace'
                     
                     }
                 }
-                dir('Backend/NangPaDaePa') {
-                    sh 'chmod +x gradlew'
-                    sh './gradlew clean build'
-                    // 디버깅
-                    sh 'ls -al ./build'
-                    sh './gradlew build --stacktrace'
-                }
+
             }
         }
 
