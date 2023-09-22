@@ -27,7 +27,7 @@ public class SchedulerService {
 		// 그 챌린지에 대해 endDate + 1이 now()와 같을 때,
 		// update를 한다.
 		List<MemberChallenge>
-			expirationChallengeList = memberChallengeRepository.findByEndDateBeforeAndStatus(
+			expirationChallengeList = memberChallengeRepository.findByEndTimeBeforeAndStatus(
 			now.atStartOfDay(), 0);
 
 		for (MemberChallenge memberChallenge :

@@ -17,5 +17,5 @@ public interface MemberChallengeRepository extends JpaRepository<MemberChallenge
 	@Query("select c from MemberChallenge c where c.member.idx = :memberIdx")
 	List<MemberChallenge> findByMemberIdQuery(Long memberIdx);
 
-	List<MemberChallenge> findByEndDateBeforeAndStatus(LocalDateTime localDateTime, Integer status);
+	List<MemberChallenge> findByEndTimeBeforeAndStatus(LocalDateTime localDateTime, Integer status);
 }
