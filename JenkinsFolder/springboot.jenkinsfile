@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+
+    environment {
+        CONTAINER_NAME = "mwonimoney-back-container"
+        IMAGE_NAME = "mwonimoney-back-image"
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Docker Delete') {
+            steps {
+                script {
+                    try{
+                        sh 'echo "Docker Delete Start"'
+                        sh "docker stop ${CONTAINER_NAME}"
+                        sh "docker rm -f ${CONTAINER_NAME}"
+                    }catch (Exception e){
+                        echo "Docker container ${CONTAINER_NAME} does not exist. skip"
+                    }
+                    try{
+                        // 이미지 존재 시 삭제
+                        sh "docker image rm ${IMAGE_NAME}"
+                    }catch (Exception e){
+                        echo "Docker image ${IMAGE_NAME} does not exist. skip"
+                    }
+                }
+            }
+        }
+
+        stage('Dockerizing'){
+            steps{
+                dir('backend'){
+                    // de
+                    sh "docker build -t ${IMAGE_NAME} -f Dockerfile ."
+                    
+                    sh "docker images"
+
+                    sh 'echo "images build 성공!"'
+                }                
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    dir('backend') {
+                        sh 'chmod +x gradlew'
+                        sh './gradlew clean build'
+                        sh 'ls -al ./build'
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh "docker run --name ${CONTAINER_NAME} -d -p 8080:8080 ${IMAGE_NAME}"
+                sh "docker ps"
+
+            }
+        }
+    }
+}
