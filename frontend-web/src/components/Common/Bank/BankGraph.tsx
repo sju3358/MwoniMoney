@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { WhiteBox1 } from "../../Common/AboutWhilteContainer";
-import { TextBox } from "../../Common/AboutText";
-import { Container } from "./Bank";
+import { WhiteBox1 } from "../About/AboutWhilteContainer";
+import { TextBox } from "../About/AboutText";
+import { Container } from "../About/AboutContainer";
 
 interface LoanImpoProps {
   title: string;

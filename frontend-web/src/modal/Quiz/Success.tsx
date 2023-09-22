@@ -1,7 +1,7 @@
 import * as React from "react";
 import ModalBody from "../ModalBtn1";
-import ChallengeList from "../../components/Parents/Challenge/ChallengeList";
 import styled from "styled-components";
+import { EmogiBox } from "../../components/Common/About/AboutEmogi";
 import Success from "../../assests/image/Success.png";
 
 const ModalContainer = styled.div`
@@ -32,10 +32,6 @@ const Container = styled.div<ContainerProps>`
 
 const ContentContainer = styled.div`
   margin: 10px 0; /* 여백을 추가하려면 여기에서 조절하세요 */
-  background-image: url(${Success}); /* Success 이미지 경로 설정 */
-  background-size: contain; /* 이미지가 컨테이너에 맞게 들어가도록 설정 */
-  background-repeat: no-repeat; /* 이미지 반복 방지 */
-  background-position: center center; /* 이미지를 가운데 정렬 */
   width: 100%;
   height: 50%;
   display: flex;
@@ -77,7 +73,9 @@ function Main() {
   return (
     <ModalContainer>
       <Container height="60%">
-        <ContentContainer></ContentContainer>
+        <ContentContainer>
+          <EmogiBox backImg={Success} width="50%" height="100%"></EmogiBox>
+        </ContentContainer>
       </Container>
       <Container height="40%">
         <BigText>5문제 중에 4문제나 맞혔어요!</BigText>

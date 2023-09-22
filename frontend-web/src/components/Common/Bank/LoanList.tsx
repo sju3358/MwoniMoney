@@ -1,11 +1,11 @@
 import React from "react";
-import { WhiteBox1 } from "../../Common/AboutWhilteContainer";
-import { Container } from "./Bank";
+import { WhiteBox1 } from "../About/AboutWhilteContainer";
+import { Container } from "../About/AboutContainer";
 import { ListTitle, CategoryTag, DeadLine } from "../Challenge/ChallengeList";
-import { Category } from "../../Common/AboutCategory";
-import { TextBox } from "../../Common/AboutText";
-import Button from "../../Common/Button";
-import ProgressBar from "../../Common/ProgressBar";
+import { Category } from "../About/AboutCategory";
+import { TextBox } from "../About/AboutText";
+import Button from "../About/AboutButton";
+import ProgressBar from "./ProgressBar";
 
 function LoanList() {
   const title = "돈 빌려주세요";

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ntt.mwonimoney.domain.game.api.request.BalanceGameAnswerRequest;
-import com.ntt.mwonimoney.domain.game.api.request.BalanceGameAnswerResponse;
 import com.ntt.mwonimoney.domain.game.service.BalanceGameHistoryService;
 import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
 
@@ -26,7 +25,7 @@ public class BalanceGameHistoryApi {
 	private final MemberAuthService memberAuthService;
 
 	@GetMapping("/balances/{balanceIdx}/answer")
-	public ResponseEntity<BalanceGameAnswerResponse> selectBalanceGameAnswer(
+	public ResponseEntity selectBalanceGameAnswer(
 		@CookieValue("memberUUID") String memberUUID,
 		@PathVariable Long balanceIdx,
 		@RequestBody BalanceGameAnswerRequest request) {
@@ -35,12 +34,7 @@ public class BalanceGameHistoryApi {
 
 		balanceGameHistoryService.selectBalanceGameAnswer(balanceIdx, memberIdx, request.getSelectAnswer());
 
-		BalanceGameAnswerResponse response = BalanceGameAnswerResponse.builder()
-			.selectAnswer(request.getSelectAnswer())
-			.build();
-
-		return ResponseEntity.ok()
-			.body(response);
+		return ResponseEntity.ok().build();
 	}
 
 }
