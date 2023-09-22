@@ -12,19 +12,6 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                script {
-                    dir('backend') {
-                        sh 'chmod +x gradlew'
-                        sh './gradlew clean build'
-                        sh 'ls -al ./build'
-                    }
-                }
-            }
-        }
-
-
         stage('Docker Delete') {
             steps {
                 script {
@@ -55,6 +42,18 @@ pipeline {
 
                     sh 'echo "images build 성공!"'
                 }                
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    dir('backend') {
+                        sh 'chmod +x gradlew'
+                        sh './gradlew clean build'
+                        sh 'ls -al ./build'
+                    }
+                }
             }
         }
 

@@ -1,5 +1,7 @@
 package com.ntt.mwonimoney.domain.game.model.dto;
 
+import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameStatus;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,9 +13,13 @@ public class BalanceGameDto {
 
 	String question;
 
-	String answer1;
+	String leftAnswer;
 
-	String answer2;
+	String rightAnswer;
 
-	char active;
+	BalanceGameStatus balanceGameStatus;
+
+	private int countOfLeftAnswer;
+
+	private int countOfRightAnswer;
 }

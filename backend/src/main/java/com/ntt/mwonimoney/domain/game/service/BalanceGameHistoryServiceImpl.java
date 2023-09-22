@@ -11,6 +11,7 @@ import com.ntt.mwonimoney.domain.game.entity.BalanceGame;
 import com.ntt.mwonimoney.domain.game.entity.BalanceGameHistory;
 import com.ntt.mwonimoney.domain.game.entity.BalanceGameHistoryKey;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameHistoryDto;
+import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameAnswer;
 import com.ntt.mwonimoney.domain.game.repository.BalanceGameHistoryRepository;
 import com.ntt.mwonimoney.domain.game.repository.BalanceGameRepository;
 import com.ntt.mwonimoney.domain.member.entity.Member;
@@ -32,25 +33,27 @@ public class BalanceGameHistoryServiceImpl implements BalanceGameHistoryService 
 	@Override
 	public List<BalanceGameHistoryDto> getUserBalanceGameHistories(Long memberIdx) {
 
-		List<BalanceGameHistory> balanceGameHistoryEntities =
-			balanceGameHistoryRepository.findBalanceGameHistoriesByBAndBalanceGameHistoryKey_MemberIdx(memberIdx)
-				.orElseThrow(() -> new NoSuchElementException("벨런스 게임 참여 기록이 없습니다."));
+		final List<BalanceGameHistory> historiesEntity = balanceGameHistoryRepository.findHistoryByMemberIdx(memberIdx);
 
-		List<BalanceGameHistoryDto> balanceGameHistories = new ArrayList<>();
-		for (BalanceGameHistory balanceGameHistoryEntity : balanceGameHistoryEntities) {
-			balanceGameHistories.add(balanceGameHistoryEntity.convertToDto());
+		if(historiesEntity.isEmpty() == true)
+			throw new NoSuchElementException("밸런스 게임 참여기록이 없습니다.");
+
+		List<BalanceGameHistoryDto> historiesDto = new ArrayList<>();
+		for (BalanceGameHistory historyEntity : historiesEntity) {
+			historiesDto.add(historyEntity.convertToDto());
 		}
 
-		return balanceGameHistories;
+		return historiesDto;
 	}
 
 	@Override
 	@Transactional
-	public void selectBalanceGameAnswer(Long balanceGameIdx, Long memberIdx, byte selectAnswer) {
+	public void selectBalanceGameAnswer(Long balanceGameIdx, Long memberIdx, BalanceGameAnswer selectAnswer) {
 
 		try {
 
 			BalanceGameHistoryKey key = new BalanceGameHistoryKey(balanceGameIdx, memberIdx);
+
 			BalanceGameHistory balanceGameHistory =
 				balanceGameHistoryRepository.findBalanceGameHistoryByBalanceGameHistoryKey(key)
 					.orElseThrow(() -> new NoSuchElementException());
