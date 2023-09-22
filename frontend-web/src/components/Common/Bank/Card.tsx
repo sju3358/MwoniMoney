@@ -1,7 +1,7 @@
 import React from "react";
-import { Container } from "../../Parents/Bank/Bank";
-import { WhiteBox1 } from "../../Common/AboutWhilteContainer";
-import { TextBox } from "../../Common/AboutText";
+import { Container } from "../About/AboutContainer";
+import { WhiteBox1 } from "../About/AboutWhilteContainer";
+import { TextBox } from "../About/AboutText";
 
 function Card() {
   const principal = 100000;

@@ -1,6 +1,5 @@
 import * as React from "react";
 import ModalBody from "../ModalBtn1";
-import ChallengeList from "../../components/Parents/Challenge/ChallengeList";
 import styled from "styled-components";
 import Success from "../../assests/image/Success.png";
 

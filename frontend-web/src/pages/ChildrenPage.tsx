@@ -9,11 +9,11 @@ import {
   BalanceContainer,
   QuizContainer,
   ChallengeContainer,
-} from "../components/Children/Main";
+} from "../components/Common/Main/Main";
 
 //컴포넌트
-import BalanceCompo from "../components/Children/BalanceCompo";
-import Quiz from "../components/Children/Quiz/Quiz";
+import BalanceCompo from "../components/Common/Balance/BalanceCompo";
+import Quiz from "../components/Common/Quiz/Quiz";
 import Challenge from "../components/Children/Challenge";
 
 //이미지

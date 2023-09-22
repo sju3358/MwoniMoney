@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { MainContainer } from "../../components/Parents/Main";
+import { MainContainer } from "../Common/Main/MainStyle";
 import ChallengeList, {
   ChallengeListContainer,
-} from "../../components/Parents/Challenge/ChallengeList";
-import { Text } from "../Common/AboutText";
+} from "../Common/Challenge/ChallengeList";
+import { Text } from "../Common/About/AboutText";
 
 /**
  *
