@@ -109,9 +109,19 @@ function GoalMoney() {
           </>
         )}
       </Container>
-      <Container height="40%" justifycontent="center" alignitems="center">
+      <Container height="80%" justifycontent="center" alignitems="center">
         <WhiteBox>
-          <Container flexdirection="column" justifycontent="space-between">
+          <Container
+            height="95%"
+            flexdirection="column"
+            justifycontent="space-between"
+          >
+            <Text fontsize="1.125rem" fontweight="700" padding="5% 0% 0% 5%">
+              세부내용
+            </Text>
+            <Container width="100%" height="100%">
+              그래프
+            </Container>
             <Text fontsize="1.125rem" fontweight="700" padding="5% 0% 0% 5%">
               현재까지 모은 금액
             </Text>
