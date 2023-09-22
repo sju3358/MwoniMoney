@@ -3,8 +3,8 @@ spring:
     mongodb:
       host: j9b310.p.ssafy.io
       port: 27017
-      authentication-database: chat,word
+      authentication-database: mwonimoney
       username: ssafy-b310
       password: j9b310p_kplyjc
-      database: chat,word
+      database: mwonimoney
       uri: mongodb://ssafy-b310:j9b310p_kplyjc@ j9b310p_kplyjc/?authMechanism=DEFAULT
