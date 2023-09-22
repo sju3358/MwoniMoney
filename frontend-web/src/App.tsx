@@ -15,6 +15,7 @@ import Success from "./modal/Quiz/Success";
 import Bank from "../src/pages/Bank";
 import MyPage from "./pages/MyPage";
 import Balance from "./pages/Balance";
+import GoalMoney from "./pages/GoalMoney";
 
 // 다른 컴포넌트 import...
 
@@ -40,6 +41,7 @@ function App() {
           <Route path="Bank" element={<Bank />} />
           <Route path="MyPage" element={<MyPage />} />
           <Route path="Balance" element={<Balance />} />
+          <Route path="GoalMoney" element={<GoalMoney />} />
         </Route>
       </Routes>
     </>
