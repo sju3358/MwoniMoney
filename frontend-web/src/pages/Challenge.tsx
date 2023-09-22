@@ -1,25 +1,11 @@
 import React from "react";
-import { MainContainer } from "../components/Parents/Main";
-import ChallengeTitle from "../components/Parents/Challenge/ChallengeTitle";
-import ChallengeCategory from "../components/Parents/Challenge/ChallengeCategory";
-import ChallengeAdd from "../components/Parents/Challenge/ChallengeAdd";
-import ChallengeList, {
-  ChallengeListContainer,
-} from "../components/Parents/Challenge/ChallengeList";
+import ChallengeParents from "../components/Parents/Challenge";
+import ChallengeChild from "../components/Children/Challenge";
 
 function Challenge() {
-  return (
-    <MainContainer>
-      <ChallengeTitle />
-      <ChallengeCategory />
-      <ChallengeAdd />
-      <ChallengeListContainer>
-        <ChallengeList />
-        <ChallengeList />
-        <ChallengeList />
-      </ChallengeListContainer>
-    </MainContainer>
-  );
+  //number = 1 : 부모 , number = 0 : 자식
+  const role: number = 0;
+  return <>{role === 1 ? <ChallengeParents /> : <ChallengeChild />}</>;
 }
 
 export default Challenge;

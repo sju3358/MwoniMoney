@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { WhiteBox } from "./WhiteBox";
-import QrEmogi from "../../assests/image/QR.png";
+import { WhiteBox } from "../About/WhiteBox";
+import QrEmogi from "../../../assests/image/QR.png";
 
 const RowTextContainer = styled.div`
   // border: 1px solid black;
