@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://j9b310.p.ssafy.io:50000/wannabedb
+    username: wannabe
+    password: i9b310p_kplyjc
