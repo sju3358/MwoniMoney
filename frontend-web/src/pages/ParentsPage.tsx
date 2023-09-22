@@ -9,10 +9,10 @@ import {
   TextContainer,
   TextEmojiBox,
   TextMentBox,
-} from "../components/Parents/Main";
-import Allowance from "../components/Common/Allowance";
-import SpacialAllowance from "../components/Common/SpacialAllowance";
-import Qr from "../components/Common/Qr";
+} from "../components/Common/Main/MainStyle";
+import Allowance from "../components/Common/Main/Allowance";
+import SpacialAllowance from "../components/Common/Main/SpacialAllowance";
+import Qr from "../components/Common/Main/Qr";
 import Money from "../assests/image/Money.png";
 import RegistChild from "../modal/ChildCreate";
 import ModalBody1 from "../modal/ModalBtn2";
