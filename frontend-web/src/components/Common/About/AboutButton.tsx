@@ -8,7 +8,7 @@ interface BtnProps {
   fontSize?: string;
 }
 
-const Btn = styled.div<BtnProps>`
+export const Btn = styled.div<BtnProps>`
   display: flex;
   justify-content: center;
   align-items: center;
