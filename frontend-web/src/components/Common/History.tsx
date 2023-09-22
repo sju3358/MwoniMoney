@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React from "react";
-import { Img, ImgBox } from "./AboutEmogi";
-import { Text } from "./AboutText";
+import { Img, ImgBox } from "./About/AboutEmogi";
+import { Text } from "./About/AboutText";
 import MoneyBag from "../../assests/image/main/MoneyBag.png";
 
 interface EmogiBoxProps {

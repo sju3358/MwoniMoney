@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-import { WhiteBox } from "../components/Common/AboutWhilteContainer";
-import { Img, ImgBox } from "../components/Common/AboutEmogi";
-import { Text } from "../components/Common/AboutText";
+import { WhiteBox } from "../components/Common/About/AboutWhilteContainer";
+import { Img, ImgBox } from "../components/Common/About/AboutEmogi";
+import { Text } from "../components/Common/About/AboutText";
 
 import RigthArrow from "../assests/image/main/RightArrow.png";
 import Item from "../assests/image/Item.png";
-import { Btn } from "../components/Common/Button";
+import { Btn } from "../components/Common/About/AboutButton";
 import History from "../components/Common/History";
 
 const MainContainer = styled.div`
