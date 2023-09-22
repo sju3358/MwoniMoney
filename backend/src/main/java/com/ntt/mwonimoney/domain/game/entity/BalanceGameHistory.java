@@ -25,14 +25,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "history")
+@Table(name = "balance_member")
 public class BalanceGameHistory extends CommonEntity {
 
 	@EmbeddedId
 	private BalanceGameHistoryKey balanceGameHistoryKey;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "history_selectAnswer")
+	@Column(name = "selectAnswer")
 	private BalanceGameAnswer selectAnswer;
 
 	@ManyToOne(fetch = FetchType.LAZY)
