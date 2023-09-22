@@ -32,7 +32,7 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "member_idx")
 	private Long idx;
 
-	@Column(name = "member_uuid")
+	@Column(name = "member_uuid", unique = true)
 	private String uuid;
 
 	@Column(name = "member_status")
@@ -51,7 +51,7 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "member_social_provider")
 	private SocialProvider socialProvider;
 
-	@Column(name = "member_social_id")
+	@Column(name = "member_social_id", unique = true)
 	private String socialId;
 
 	@Column(name = "member_email")

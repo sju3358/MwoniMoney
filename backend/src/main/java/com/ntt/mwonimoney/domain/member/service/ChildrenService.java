@@ -2,17 +2,16 @@ package com.ntt.mwonimoney.domain.member.service;
 
 import java.util.List;
 
-import com.ntt.mwonimoney.domain.member.entity.Child;
 import com.ntt.mwonimoney.domain.member.model.dto.ChildDto;
 
 public interface ChildrenService {
 
-	void addParent(Long parentIdx, Long childIdx);
+	void addParent(String parentUUID, String childUUID);
 
-	List<ChildDto> getChildren(Long parentIdx);
+	List<ChildDto> getChildren(String parentUUID);
 
-	ChildDto getChildInfo(Long parentIdx, Long childIdx);
+	ChildDto getChildInfo(String parentUUID, String childUUID);
 
-	void removeChild(Long parentIdx, Long childIdx);
+	void removeChild(String parentUUID, String childUUID);
 
 }
