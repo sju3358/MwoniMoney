@@ -4,11 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ntt.mwonimoney.domain.game.api.request.BalanceGameListRequest;
 import com.ntt.mwonimoney.domain.game.entity.BalanceGame;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameDto;
+import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameListDto;
+import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameStatus;
 import com.ntt.mwonimoney.domain.game.repository.BalanceGameRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,67 +31,39 @@ public class BalanceGameServiceImpl implements BalanceGameService {
 	private final BalanceGameRepository balanceGameRepository;
 
 	@Override
-	public List<BalanceGameDto> getBalanceGames() {
-		List<BalanceGame> balanceGameEntityList = balanceGameRepository.findAll();
+	public Slice<BalanceGameListDto> getBalanceGames(BalanceGameListRequest request) {
 
-		if (balanceGameEntityList.isEmpty() == true) {
-			throw new NoSuchElementException();
+		Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), Sort.by("create_time").descending());
+
+		Slice<BalanceGame> balanceGameEntities = balanceGameRepository.findBalanceGamesBy(pageable);
+
+		if (balanceGameEntities.isEmpty() == true) {
+			throw new NoSuchElementException("밸런스 게임이 존재하지 않습니다.");
 		}
 
-		List<BalanceGameDto> balanceGames = new ArrayList<>();
+		List<BalanceGameListDto> balanceGameList = new ArrayList<>();
 
-		for (BalanceGame balanceGameEntity : balanceGameEntityList) {
-			balanceGames.add(balanceGameEntity.convertToDto());
+		for (BalanceGame balanceGameEntity : balanceGameEntities) {
+			balanceGameList.add(
+				BalanceGameListDto.builder()
+					.idx(balanceGameEntity.getIdx())
+					.question(balanceGameEntity.getQuestion())
+					.build());
 		}
 
-		return balanceGames;
+		return new SliceImpl<>(balanceGameList, balanceGameEntities.getPageable(), balanceGameEntities.hasNext());
 	}
 
-	// public BalanceGameDto getTodayBalanceGame() {
-	//
-	// }
+	public BalanceGameDto getTodayBalanceGame() {
+
+		return balanceGameRepository.findTodayBalanceGameDto()
+			.orElseThrow(() -> new NoSuchElementException("오늘의 밸런스게임이 존재하지 않습니다."));
+	}
 
 	public BalanceGameDto getBalanceGameInfo(Long balanceGameIdx) {
-		BalanceGame balanceGameEntity = balanceGameRepository.findBalanceGameByIdx(balanceGameIdx)
-			.orElseThrow(() -> new NoSuchElementException());
 
-		return balanceGameEntity.convertToDto();
-	}
-
-	@Transactional
-	public void addBalanceGame(BalanceGameDto balanceGameDto) {
-		BalanceGame balanceGame = BalanceGame.builder()
-			.question(balanceGameDto.getQuestion())
-			.answer1(balanceGameDto.getAnswer1())
-			.answer2(balanceGameDto.getAnswer2())
-			.build();
-
-		balanceGameRepository.save(balanceGame);
-	}
-
-	@Transactional
-	public void editBalanceGame(BalanceGameDto balanceGameDto) {
-		BalanceGame balanceGameEntity = balanceGameRepository.findBalanceGameByIdx(balanceGameDto.getIdx())
-			.orElseThrow(() -> new NoSuchElementException());
-
-		balanceGameEntity.updateBalanceGame(balanceGameDto.getQuestion(), balanceGameDto.getAnswer1(),
-			balanceGameDto.getAnswer2());
-	}
-
-	@Transactional
-	public void closeBalanceGame(Long balanceGameIdx) {
-		BalanceGame balanceGameEntity = balanceGameRepository.findBalanceGameByIdx(balanceGameIdx)
-			.orElseThrow(() -> new NoSuchElementException());
-
-		balanceGameEntity.deactivate();
-	}
-
-	@Transactional
-	public void removeBalanceGame(Long balanceGameIdx) {
-		BalanceGame balanceGameEntity = balanceGameRepository.findBalanceGameByIdx(balanceGameIdx)
-			.orElseThrow(() -> new NoSuchElementException());
-
-		balanceGameRepository.delete(balanceGameEntity);
+		return balanceGameRepository.findBalanceGameDtoByIdx(balanceGameIdx)
+			.orElseThrow(() -> new NoSuchElementException("해당 idx의 밸런스게임이 존재하지 않습니다."));
 	}
 
 }

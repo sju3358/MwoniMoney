@@ -1,5 +1,7 @@
 package com.ntt.mwonimoney.domain.game.api.request;
 
+import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameAnswer;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,5 +9,5 @@ import lombok.Data;
 @Builder
 public class BalanceGameAnswerRequest {
 
-	private byte selectAnswer;
+	private BalanceGameAnswer selectAnswer;
 }
