@@ -9,6 +9,6 @@ COPY package.json package-lock.json ./
 RUN npm install --force
 
 COPY . /usr/src/app
-RUN npm run start
+RUN npm start
 
 EXPOSE 3000
