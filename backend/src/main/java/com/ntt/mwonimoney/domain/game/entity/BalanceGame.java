@@ -1,9 +1,16 @@
 package com.ntt.mwonimoney.domain.game.entity;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.CreatedDate;
+
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameDto;
+import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,40 +33,43 @@ public class BalanceGame {
 	@Column(name = "balance_question")
 	private String question;
 
-	@Column(name = "balance_answer1")
-	private String answer1;
+	@Column(name = "balance_left_answer")
+	private String leftAnswer;
 
-	@Column(name = "balance_answer2")
-	private String answer2;
+	@Column(name = "balance_right_answer")
+	private String rightAnswer;
 
-	@Column(name = "balance_active")
-	private char active;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "balance_status")
+	private BalanceGameStatus balanceGameStatus;
 
-	public void updateBalanceGame(String question, String answer1, String answer2) {
-		this.question = question;
-		this.answer1 = answer1;
-		this.answer2 = answer2;
+	@CreatedDate
+	@Column(name = "create_time", updatable = false)
+	private LocalDateTime createTime;
+
+	public void endBalanceGame(){
+		this.balanceGameStatus = BalanceGameStatus.END;
+	}
+	public void runBalanceGame() {
+		this.balanceGameStatus = BalanceGameStatus.RUNNING;
 	}
 
-	public void deactivate() {
-		this.active = 'N';
-	}
+
 
 	@Builder
-	public BalanceGame(String question, String answer1, String answer2) {
+	public BalanceGame(String question, String leftAnswer, String rightAnswer) {
 		this.question = question;
-		this.answer1 = answer1;
-		this.answer2 = answer2;
-		this.active = 'Y';
+		this.leftAnswer = leftAnswer;
+		this.rightAnswer = rightAnswer;
+		this.balanceGameStatus = BalanceGameStatus.WAIT;
 	}
 
 	public BalanceGameDto convertToDto() {
 		return BalanceGameDto.builder()
 			.idx(this.idx)
 			.question(this.question)
-			.answer1(this.answer1)
-			.answer2(this.answer2)
-			.active(this.active)
+			.leftAnswer(this.leftAnswer)
+			.rightAnswer(this.rightAnswer)
 			.build();
 	}
 

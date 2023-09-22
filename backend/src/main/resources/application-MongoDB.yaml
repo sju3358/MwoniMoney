@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    mongodb:
+      host: j9b310.p.ssafy.io
+      port: 27017
+      username: ssafy-b310
+      password: j9b310p_kplyjc
+      database: mwonimoney
+      uri: mongodb://ssafy-b310:j9b310p_kplyjc@j9b310.p.ssafy.io:27017/?authMechanism=SCRAM-SHA-1

@@ -1,109 +1,65 @@
-import styled from "styled-components";
-import Money from "../../assests/image/Money.png";
+import React from "react";
+import ModalBody1 from "../../modal/ModalBtn2";
+import { Money } from "@mui/icons-material";
+import RegistChild from "../../modal/ChildCreate";
+import Allowance from "../Common/Main/Allowance";
+import {
+  MainContainer,
+  TextContainer,
+  TextMentBox,
+  TextEmojiBox,
+  Emoji,
+} from "../Common/Main/Main";
+import {
+  ChildrenList,
+  AllowanveContainer,
+  QrContainer,
+  Text,
+} from "../Common/Main/MainStyle";
+import Qr from "../Common/Main/Qr";
+import SpacialAllowance from "../Common/Main/SpacialAllowance";
 
-export const MainContainer = styled.div`
-  border: 1px solid black;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  overflow: auto;
-`;
-
-export const ChildrenList = styled.div`
-  border: 1px solid black;
-  width: 100%;
-  height: 15%;
-  box-sizing: border-box;
-`;
-
-{
-  /* Text 넣는 칸 */
+function ParentsPage() {
+  const childName = "지현"; // api연결시 자녀1 이름으로 매핑
+  const childAllowance = 100000;
+  return (
+    <MainContainer>
+      <ChildrenList>
+        <ModalBody1
+          modal_start_text="자녀추가"
+          modal_title="자녀 등록하기"
+          modal_content={<RegistChild />} /**테그 넣는 방법*/
+          modal_btn1="생성"
+          modal_btn2="취소"
+          btn_justify="space-around"
+        />
+      </ChildrenList>
+      <TextContainer>
+        <TextMentBox>
+          <Text>현재 {childName}는</Text>
+          <Text>매달 {childAllowance}원을 </Text>
+          <Text>받고 있어요!</Text>
+        </TextMentBox>
+        <TextEmojiBox>
+          <Emoji
+            // url={process.env.PUBLIC_URL + "/images/Money.png"}
+            url={`${Money}`}
+            width="80%"
+            height="80%"
+          />
+        </TextEmojiBox>
+      </TextContainer>
+      <AllowanveContainer height="60%">
+        <Allowance />
+      </AllowanveContainer>
+      <AllowanveContainer height="50%">
+        <SpacialAllowance />
+      </AllowanveContainer>
+      <QrContainer>
+        <Qr />
+      </QrContainer>
+    </MainContainer>
+  );
 }
 
-export const TextContainer = styled.div`
-  border: 1px solid black;
-  width: 100%;
-  height: 25%;
-  box-sizing: border-box;
-  display: flex;
-`;
-export const TextMentBox = styled.div`
-  // border: 1px solid red;
-  width: 80%;
-  height: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  // align-items: baseline;
-`;
-
-export const Text = styled.div`
-  // border: 1px solid blue;
-  color: #292929;
-  font-family: Inter;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  margin-left: 5%;
-`;
-
-export const TextEmojiBox = styled.div`
-  // border: 1px solid red;
-  width: 20%;
-  height: 100%;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const Emoji = styled.div`
-  // border: 1px solid red;
-  width: 80%;
-  height: 80%;
-  box-sizing: border-box;
-  background-image: url(${Money});
-  background-size: 100% 100%;
-`;
-
-{
-  /* 정기용돈 넣는 칸 */
-}
-
-export const AllowanveContainer = styled.div`
-  border: 1px solid black;
-  width: 100%;
-  height: 50%;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const WhiteBox = styled.div`
-  // border: 1px solid black;
-  border-radius: 8px;
-  width: 90%;
-  height: 90%;
-  background-color: #ffffff;
-`;
-
-{
-  /* 특별용돈 넣는 칸 */
-}
-
-{
-  /* QR 넣는 칸 */
-}
-
-export const QrContainer = styled.div`
-  border: 1px solid black;
-  width: 100%;
-  height: 30%;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+export default ParentsPage;
