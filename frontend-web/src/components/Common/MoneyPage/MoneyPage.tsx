@@ -7,6 +7,8 @@ import { Category } from "../About/AboutCategory";
 import { WhiteBox1 } from "../About/AboutWhilteContainer";
 import AboutCard from "../About/AboutCard";
 import MoneyTable from "./MoneyTable";
+import Income from "../../../assests/image/MoneyPage/MoneyBag.png";
+import Outcome from "../../../assests/image/MoneyPage/Cart.png";
 
 function MoneyPage() {
   const child = "민재";
@@ -59,8 +61,25 @@ function MoneyPage() {
             <Category backcolor="#b9deb3">수익</Category>
             <Category backcolor="#ffa27e">지출</Category>
           </Container>
-          <Container height="70%">
-            <MoneyTable />
+          <Container height="70%" flexDirection="column">
+            <MoneyTable
+              emogi={`${Income}`}
+              expense_detail="지출내역"
+              expense_date="지출날짜"
+              spending={100000}
+            />
+            <MoneyTable
+              emogi={`${Income}`}
+              expense_detail="지출내역"
+              expense_date="지출날짜"
+              spending={100000}
+            />
+            <MoneyTable
+              emogi={`${Income}`}
+              expense_detail="지출내역"
+              expense_date="지출날짜"
+              spending={100000}
+            />
           </Container>
         </WhiteBox1>
       </Container>

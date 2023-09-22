@@ -8,10 +8,11 @@ interface TextBoxProps {
   fontWeight?: string | number;
   marginL?: string;
   flexDirection?: string;
+  fontcolor?: string | undefined;
 }
 
 export const TextBox = styled.div<TextBoxProps>`
-  border: 1px solid black;
+  // border: 1px solid black;
   box-sizing: border-box;
   display: flex;
   flex-direction: ${(props) =>
@@ -24,6 +25,7 @@ export const TextBox = styled.div<TextBoxProps>`
   height: ${(props) => (props.height ? props.height : "50%")};
   font-size: ${(props) => (props.fontSize ? props.fontSize : "1.7em")};
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : "bold")};
+  color: ${(props) => props.fontcolor};
 `;
 
 interface TextProps {
