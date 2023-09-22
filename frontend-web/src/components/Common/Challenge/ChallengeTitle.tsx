@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Emoji } from "../Main";
+import { Emoji } from "../Main/MainStyle";
 import Vitory from "../../../assests/image/Victory.png";
 
 const TitleContainer = styled.div`

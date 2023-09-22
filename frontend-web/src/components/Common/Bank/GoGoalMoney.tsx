@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { WhiteBox1 } from "../../Common/AboutWhilteContainer";
-import { TextBox } from "../../Common/AboutText";
-import { EmogiBox } from "../../Common//AboutEmogi";
+import { WhiteBox1 } from "../About/AboutWhilteContainer";
+import { TextBox } from "../About/AboutText";
+import { EmogiBox } from "../About/AboutEmogi";
 import Pig from "../../../assests/image/Pig.png";
 
 interface HalfBoxProps {

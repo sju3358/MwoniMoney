@@ -9,10 +9,10 @@ import {
   TextContainer,
   TextEmojiBox,
   TextMentBox,
-} from "../components/Parents/MyPage";
+} from "../components/Common/MyPage/MyPage";
 
-import { WhiteBox1 } from "../components/Common/AboutWhilteContainer";
-import { TextBox } from "../components/Common/AboutText";
+import { WhiteBox1 } from "../components/Common/About/AboutWhilteContainer";
+import { TextBox } from "../components/Common/About/AboutText";
 
 interface ContainerProps {
   height: string;
