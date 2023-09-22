@@ -16,7 +16,8 @@ import Bank from "./components/Parents/Bank";
 import MyPage from "./pages/MyPage";
 import Balance from "./pages/Balance";
 import ChildCreate from "./modal/ChildCreate";
-import ChallengeCreate from "./modal/ChallengeCreate";
+import ChallengeCreate from "./modal/Challenge/ChallengeCreate";
+import News from "./modal/Quiz/News";
 
 // 다른 컴포넌트 import...
 
@@ -34,6 +35,7 @@ function App() {
         <Route path="/Success" element={<Success />} />
         <Route path="ChildCreate" element={<ChildCreate />} />
         <Route path="ChallengeCreate" element={<ChallengeCreate />} />
+        <Route path="News" element={<News />} />
 
         {/* Layout 컴포넌트가 중첩 라우트를 포함하도록 수정 */}
         <Route path="/" element={<Layout />}>

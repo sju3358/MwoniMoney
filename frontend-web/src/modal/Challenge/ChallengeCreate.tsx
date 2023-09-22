@@ -1,5 +1,5 @@
 import * as React from "react";
-import ModalBody from "../modal/ModalBtn2";
+import ModalBody from "../ModalBtn2";
 import styled from "styled-components";
 
 export const ContentBox = styled.div`
