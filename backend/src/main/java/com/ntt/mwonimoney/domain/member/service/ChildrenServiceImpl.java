@@ -30,18 +30,18 @@ public class ChildrenServiceImpl implements ChildrenService {
 
 	@Override
 	@Transactional
-	public void addParent(Long parentIdx, Long childIdx) {
-		Member parent = memberRepository.findMemberByIdx(parentIdx)
-			.orElseThrow(() ->new NoSuchElementException("부모님 회원이 존재하지 않습니다."));
+	public void addParent(String parentUUID, String childUUID) {
+		Member parent = memberRepository.findMemberByUuid(parentUUID)
+			.orElseThrow(() -> new NoSuchElementException("부모님 회원이 존재하지 않습니다."));
 
-		Member child = memberRepository.findMemberByIdx(childIdx)
-			.orElseThrow(()->new NoSuchElementException("자식 회원이 존재하지 않습니다."));
+		Member child = memberRepository.findMemberByUuid(childUUID)
+			.orElseThrow(() -> new NoSuchElementException("자식 회원이 존재하지 않습니다."));
 
 		Children children = Children.builder()
 			.parent((Parent)parent)
 			.child((Child)child)
-			.parentIdx(parent.getIdx())
-			.childrenIdx(child.getIdx())
+			.parentUUID(parent.getUuid())
+			.childUUID(child.getUuid())
 			.build();
 
 		childrenRepository.save(children);
@@ -49,33 +49,33 @@ public class ChildrenServiceImpl implements ChildrenService {
 	}
 
 	@Override
-	public List<ChildDto> getChildren(Long parentIdx) {
-		List<Child> childrenEntity = childrenRepository.findChildrenByChildrenKey_ParentIdx(parentIdx);
+	public List<ChildDto> getChildren(String parentUUID) {
+		List<Child> childrenEntity = childrenRepository.findChildren(parentUUID);
 
 		List<ChildDto> children = new ArrayList<>();
 
-		if(children.isEmpty() == true)
+		if (children.isEmpty() == true)
 			throw new NoSuchElementException("자식들이 존재하지 않습니다");
 
-		for(Child childEntity : childrenEntity)
+		for (Child childEntity : childrenEntity)
 			children.add(childEntity.convertToDto());
 
 		return children;
 	}
 
 	@Override
-	public ChildDto getChildInfo(Long parentIdx, Long childIdx) {
-		ChildDto child = childrenRepository.findChild(parentIdx,childIdx)
-			.orElseThrow(()->new NoSuchElementException("자식 정보가 존재하지 않습니다"));
+	public ChildDto getChildInfo(String parentUUID, String childUUID) {
+		Child child = childrenRepository.findChild(parentUUID, childUUID)
+			.orElseThrow(() -> new NoSuchElementException("자식 정보가 존재하지 않습니다"));
 
-		return child;
+		return child.convertToDto();
 	}
 
 	@Override
 	@Transactional
-	public void removeChild(Long parentIdx, Long childIdx) {
+	public void removeChild(String parentUUID, String childUUID) {
 
-		Children children = childrenRepository.findChildrenByChildrenKey(new ChildrenKey(parentIdx,childIdx))
+		Children children = childrenRepository.findChildrenByChildrenKey(new ChildrenKey(parentUUID, childUUID))
 			.orElseThrow(() -> new NoSuchElementException("해당 부모 아이 관계가 존재하지 않습니다"));
 
 		childrenRepository.delete(children);
