@@ -5,7 +5,8 @@ import lombok.Data;
 
 @Data
 @Builder
-public class BalanceGameAnswerResponse {
+public class BalanceGameListRequest {
 
-	private byte selectAnswer;
+	private int page;
+	private int size;
 }
