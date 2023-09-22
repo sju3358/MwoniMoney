@@ -1,131 +1,78 @@
-import styled from "styled-components";
+import { Quiz } from "@mui/icons-material";
+import React from "react";
+import BalanceCompo from "../Common/Balance/BalanceCompo";
+import {
+  MainContainer,
+  TextContainer,
+  TextMentBox,
+  TextEmojiBox,
+  Emoji,
+  BalanceContainer,
+  QuizContainer,
+  ChallengeContainer,
+  Text,
+} from "../Common/Main/Main";
+import Challenge from "./Challenge";
+import Coin from "../assests/image/main/Coin.png";
 
-export const MainContainer = styled.div`
-  // border: 1px solid black;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  overflow: auto;
-  overflow-x: hidden; /* 가로 스크롤 제거 */
-`;
+function ChildrenPage() {
+  const asset = "100,000원";
+  const debt = "10,000원";
+  return (
+    <MainContainer>
+      <TextContainer>
+        <TextMentBox>
+          <Text margin="0% 0% 0% 5%" padding="0% 0% 5% 0%">
+            현재
+          </Text>
+          <Text margin="0% 0% 0% 5%" padding="0% 0% 5% 0%">
+            <Text as="span" fontweight="700">
+              {asset}
+            </Text>
+            을 가지고 있고
+          </Text>
+          <Text margin="0% 0% 0% 5%" padding="0% 0% 5% 0%">
+            <Text as="span" fontweight="700">
+              {debt}
+            </Text>
+            의 빚을 가지고
+          </Text>
+          <Text margin="0% 0% 0% 5%" padding="0% 0% 5% 0%">
+            있어요!
+          </Text>
 
-{
-  /* Text 넣는 칸 */
+          <Text
+            color="#747476"
+            fontsize="0.625rem"
+            margin="0% 0% 0% 5%"
+            padding="0% 0% 3% 0%"
+          >
+            퀴즈를 맞추거나
+          </Text>
+          <Text
+            color="#747476"
+            fontsize="0.625rem"
+            margin="0% 0% 0% 5%"
+            padding="0% 0% 3% 0%"
+          >
+            챌린지에 도전해서 용돈을 얻어보세요!
+          </Text>
+        </TextMentBox>
+        <TextEmojiBox>
+          <Emoji url={`${Coin}`} width="80%" height="80%" />
+        </TextEmojiBox>
+      </TextContainer>
+      <BalanceContainer height="50%">
+        <BalanceCompo />
+      </BalanceContainer>
+      <QuizContainer height="auto">
+        <Quiz />
+      </QuizContainer>
+      <ChallengeContainer height="60%">
+        <Challenge />
+      </ChallengeContainer>
+    </MainContainer>
+  );
 }
 
-export const TextContainer = styled.div`
-  // border: 1px solid black;
-  width: 100%;
-  height: 30%;
-  box-sizing: border-box;
-  display: flex;
-  padding: 5%;
-`;
-
-export const TextMentBox = styled.div`
-  // border: 1px solid red;
-  width: 80%;
-  height: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  // align-items: baseline;
-`;
-interface TextProps {
-  color?: string | null;
-  fontfamily?: string | null;
-  fontsize?: string | null;
-  fontstyle?: string | null;
-  fontweight?: string | null;
-  margin?: string | null;
-  padding?: string | null;
-}
-export const Text = styled.div<TextProps>`
-  // border: 1px solid blue;
-  color: ${(props) => (props.color ? props.color : "black")};
-  font-family: ${(props) => (props.fontfamily ? props.fontfamily : "Inter")};
-  font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
-  font-style: ${(props) => (props.fontstyle ? props.fontstyle : "normal")};
-  font-weight: ${(props) => (props.fontweight ? props.fontweight : "400")};
-  margin: ${(props) => (props.margin ? props.margin : "0%")};
-  padding: ${(props) => (props.padding ? props.padding : "0%")};
-`;
-
-export const TextEmojiBox = styled.div`
-  // border: 1px solid red;
-  width: 20%;
-  height: 100%;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-interface EmogiProps {
-  url: string;
-  // size: string;
-  width: string;
-  height: string;
-}
-
-export const Emoji = styled.div<EmogiProps>`
-  // border: 1px solid red;
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  box-sizing: border-box;
-  background-image: url(${(props) => props.url});
-  background-size: 100% 100%;
-`;
-
-{
-  /* 밸런스 게임 칸 */
-}
-
-interface BalanceProps {
-  height: string; // 'String' -> 'string'
-}
-
-export const BalanceContainer = styled.div<BalanceProps>`
-  // border: 1px solid black;
-  width: 100%;
-  height: ${(props) => props.height};
-  box-sizing: border-box;
-  display: flex;
-`;
-
-{
-  /* 퀴즈 칸 */
-}
-
-interface QuizProps {
-  height: string; // 'String' -> 'string'
-}
-
-export const QuizContainer = styled.div<QuizProps>`
-  // border: 1px solid black;
-  width: 100%;
-  height: ${(props) => props.height};
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-{
-  /* 챌린지 칸 */
-}
-
-interface ChallengeProps {
-  height: string; // 'String' -> 'string'
-}
-
-export const ChallengeContainer = styled.div<ChallengeProps>`
-  // border: 1px solid black;
-  width: 100%;
-  height: ${(props) => props.height};
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+export default ChildrenPage;

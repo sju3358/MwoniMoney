@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import Newspaper from "../../assests/image/main/Newspaper.png";
-import LeftArrow from "../../assests/image/main/LeftArrow.png";
+import Newspaper from "../../../assests/image/main/Newspaper.png";
+import LeftArrow from "../../../assests/image/main/LeftArrow.png";
 import { Link } from "react-router-dom";
-import { WhiteBox } from "../Common/AboutWhilteContainer";
+import { WhiteBox } from "../About/AboutWhilteContainer";
 
 /**
  *

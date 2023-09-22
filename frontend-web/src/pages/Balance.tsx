@@ -4,13 +4,13 @@ import {
   MainContainer,
   TextContainer,
   BalanceContainer,
-} from "../components/Children/Main";
+} from "../components/Common/Main/Main";
 
-import BalanceCompo from "../components/Children/BalanceCompo";
+import BalanceCompo from "../components/Common/Balance/BalanceCompo";
 import styled from "styled-components";
-import { Text } from "../components/Common/AboutText";
-import { WhiteBox } from "../components/Common/AboutWhilteContainer";
-import { Img } from "../components/Common/AboutEmogi";
+import { Text } from "../components/Common/About/AboutText";
+import { WhiteBox } from "../components/Common/About/AboutWhilteContainer";
+import { Img } from "../components/Common/About/AboutEmogi";
 //이미지
 import LeftArrow from "../assests/image/main/LeftArrow.png";
 import Chat from "../assests/image/main/Chat.png";
@@ -40,7 +40,6 @@ function Balance() {
       <BalanceContainer height="40%">
         <BalanceCompo showText={false} showImg={false} />
       </BalanceContainer>
-
       <ListContainer>
         <WhiteBox margin="0% 0% 5% 0%" padding="0%">
           <TextContainer style={{ justifyContent: "space-between" }}>

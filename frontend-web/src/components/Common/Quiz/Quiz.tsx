@@ -1,7 +1,7 @@
 import CustomizedAccordions from "./CustomizedAccordions";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { WhiteBox } from "../../Common/WhiteBox";
+import { WhiteBox } from "../About/WhiteBox";
 
 //이미지
 import Pencil from "../../../assests/image/main/Pencil.png";
