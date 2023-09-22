@@ -40,7 +40,6 @@ function Balance() {
       <BalanceContainer height="40%">
         <BalanceCompo showText={false} showImg={false} />
       </BalanceContainer>
-
       <ListContainer>
         <WhiteBox margin="0% 0% 5% 0%" padding="0%">
           <TextContainer style={{ justifyContent: "space-between" }}>
