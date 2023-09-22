@@ -1,0 +1,5 @@
+spring:
+  data:
+    redis:
+      host: j9b310.p.ssafy.io
+      port: 6379
