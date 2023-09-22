@@ -6,6 +6,8 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,9 +24,19 @@ public class Children {
 	@EmbeddedId
 	private ChildrenKey childrenKey;
 
+	@OneToOne
+	@JoinColumn(name = "parent_idx")
+	private Parent parent;
+
+	@OneToOne
+	@JoinColumn(name = "childIdx")
+	private Child child;
+
 	@Builder
-	public Children(Long parentIdx, Long childrenIdx) {
+	public Children(Long parentIdx, Long childrenIdx, Parent parent, Child child) {
 		this.childrenKey = new ChildrenKey(parentIdx, childrenIdx);
+		this.parent = parent;
+		this.child = child;
 	}
 
 	public ChildrenDto convertToDto() {

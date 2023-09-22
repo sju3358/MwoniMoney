@@ -1,13 +1,18 @@
 package com.ntt.mwonimoney.domain.member.service;
 
+import java.util.List;
+
+import com.ntt.mwonimoney.domain.member.entity.Child;
+import com.ntt.mwonimoney.domain.member.model.dto.ChildDto;
+
 public interface ChildrenService {
 
 	void addParent(Long parentIdx, Long childIdx);
 
-	void getChildren(Long parentIdx);
+	List<ChildDto> getChildren(Long parentIdx);
 
-	void getChildInfo(Long childIdx);
+	ChildDto getChildInfo(Long parentIdx, Long childIdx);
 
-	void removeChild(Long childIdx);
+	void removeChild(Long parentIdx, Long childIdx);
 
 }
