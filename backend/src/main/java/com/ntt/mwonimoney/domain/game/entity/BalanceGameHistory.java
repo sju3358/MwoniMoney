@@ -25,14 +25,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "balance_member")
+@Table(name = "history")
 public class BalanceGameHistory extends CommonEntity {
 
 	@EmbeddedId
 	private BalanceGameHistoryKey balanceGameHistoryKey;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "selectAnswer")
+	@Column(name = "history_selectAnswer")
 	private BalanceGameAnswer selectAnswer;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -44,7 +44,7 @@ public class BalanceGameHistory extends CommonEntity {
 	private Member member;
 
 	public void changeSelect(BalanceGameAnswer selectAnswer) {
-		if(this.balanceGame.getBalanceGameStatus().equals(BalanceGameStatus.END))
+		if (this.balanceGame.getBalanceGameStatus().equals(BalanceGameStatus.END))
 			throw new GameDeactivateException("밸런스게임이 이미 종료되었습니다");
 		this.selectAnswer = selectAnswer;
 	}
