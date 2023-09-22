@@ -36,7 +36,7 @@ public abstract class Member extends CommonEntity {
 	private String uuid;
 
 	@Column(name = "member_status")
-	private byte status;
+	private int status;
 
 	@Column(name = "member_name")
 	private String name;
@@ -54,7 +54,7 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "member_social_id")
 	private String socialId;
 
-	@Column(name = "email")
+	@Column(name = "member_email")
 	private String email;
 
 	@Enumerated(EnumType.STRING)
@@ -62,9 +62,9 @@ public abstract class Member extends CommonEntity {
 	private MemberRole memberRole;
 
 	@Column(name = "FCMToken", length = 300)
-	private String FirebaseToken;
+	private String FCMToken;
 
-	protected Member(byte status, String name, String nickname, String birthday,
+	protected Member(int status, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
 		String socialId, String email, MemberRole memberRole) {
 		this.uuid = UUID.randomUUID().toString();
@@ -78,7 +78,7 @@ public abstract class Member extends CommonEntity {
 		this.memberRole = memberRole;
 	}
 
-	public void updateFCMToken(String firebaseToken) {
-		this.FirebaseToken = firebaseToken;
+	public void updateFCMToken(String FCMToken) {
+		this.FCMToken = FCMToken;
 	}
 }
