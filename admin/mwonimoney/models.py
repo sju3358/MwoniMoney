@@ -23,7 +23,7 @@ class Balance(models.Model):
 
     class Meta:
         db_table = 'balance'
-        # managed = False
+        managed = False
 
 
 class Challenge(models.Model):
@@ -36,7 +36,7 @@ class Challenge(models.Model):
 
     class Meta:
         db_table = 'challenge'
-        # managed = False
+        managed = False
 
 class Quiz(models.Model):
     quiz_idx = models.AutoField(primary_key=True)
@@ -53,4 +53,4 @@ class Quiz(models.Model):
 
     class Meta:
         db_table = 'quiz'
-        # managed = False
+        managed = False
