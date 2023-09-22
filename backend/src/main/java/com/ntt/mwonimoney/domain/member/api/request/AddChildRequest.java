@@ -1,4 +1,4 @@
-package com.ntt.mwonimoney.domain.member.api;
+package com.ntt.mwonimoney.domain.member.api.request;
 
 import lombok.Data;
 

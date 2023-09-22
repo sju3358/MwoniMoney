@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ntt.mwonimoney.domain.member.api.request.AddChildRequest;
 import com.ntt.mwonimoney.domain.member.model.dto.ChildDto;
 import com.ntt.mwonimoney.domain.member.service.ChildrenService;
 
