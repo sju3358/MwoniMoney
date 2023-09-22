@@ -16,6 +16,9 @@ interface CategoryProps {
   backcolor: string;
   width?: string;
   height?: string;
+  marginR?: string;
+  marginL?: string;
+  justify?: string;
 }
 
 export const Category = styled.div<CategoryProps>`
@@ -27,9 +30,10 @@ export const Category = styled.div<CategoryProps>`
   border-bottom-left-radius: 20% 40%;
   border-bottom-right-radius: 20% 40%;
   background-color: ${(props) => props.backcolor};
-  margin-right: 5%;
+  margin-right: ${(props) => (props.marginR ? props.marginR : "5%")};
+  margin-left: ${(props) => (props.marginL ? props.marginL : "5%")};
   display: flex;
-  justify-content: center;
+  justify-content: ${(props) => (props.justify ? props.justify : "center")};
   align-items: center;
   font-weight: bold;
 `;
