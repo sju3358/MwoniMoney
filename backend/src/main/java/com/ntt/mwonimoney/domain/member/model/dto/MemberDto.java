@@ -4,7 +4,6 @@ import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 @Data
@@ -16,7 +15,7 @@ public abstract class MemberDto {
 
 	private String uuid;
 
-	private byte status;
+	private int status;
 
 	private String name;
 
@@ -25,7 +24,7 @@ public abstract class MemberDto {
 	private String birthday;
 
 	private SocialProvider socialProvider;
-	
+
 	private String socialId;
 
 	private MemberRole memberRole;

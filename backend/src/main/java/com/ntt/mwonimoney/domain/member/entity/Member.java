@@ -36,7 +36,7 @@ public abstract class Member extends CommonEntity {
 	private String uuid;
 
 	@Column(name = "member_status")
-	private byte status;
+	private int status;
 
 	@Column(name = "member_name")
 	private String name;
@@ -64,7 +64,7 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "FCMToken", length = 300)
 	private String FCMToken;
 
-	protected Member(byte status, String name, String nickname, String birthday,
+	protected Member(int status, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
 		String socialId, String email, MemberRole memberRole) {
 		this.uuid = UUID.randomUUID().toString();
