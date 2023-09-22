@@ -7,12 +7,15 @@ interface TextBoxProps {
   fontSize?: string;
   fontWeight?: string | number;
   marginL?: string;
+  flexDirection?: string;
 }
 
 export const TextBox = styled.div<TextBoxProps>`
-  // border: 1px solid black;
+  border: 1px solid black;
   box-sizing: border-box;
   display: flex;
+  flex-direction: ${(props) =>
+    props.flexDirection ? props.flexDirection : "start"};
   justify-content: ${(props) =>
     props.justifyContent ? props.justifyContent : "start"};
   align-items: center;
@@ -34,7 +37,7 @@ interface TextProps {
   textalign?: string | null;
 }
 export const Text = styled.div<TextProps>`
-  // border: 1px solid blue;
+  border: 1px solid blue;
   color: ${(props) => (props.color ? props.color : "black")};
   font-family: ${(props) => (props.fontfamily ? props.fontfamily : "Inter")};
   font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
