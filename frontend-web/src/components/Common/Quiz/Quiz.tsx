@@ -1,4 +1,3 @@
-import CustomizedAccordions from "./CustomizedAccordions";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { WhiteBox } from "../About/WhiteBox";
