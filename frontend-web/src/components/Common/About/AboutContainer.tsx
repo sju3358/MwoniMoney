@@ -5,7 +5,9 @@ interface ContainerProps {
   height: string;
   flexDirection?: string;
   justifyContent?: string;
-  overflow?: string | undefined; // overflow의 타입을 명시적으로 지정
+  overflow?: string | undefined;
+  radius?: string | undefined;
+  backcolor?: string | undefined;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -19,5 +21,7 @@ export const Container = styled.div<ContainerProps>`
   justify-content: ${(props) =>
     props.justifyContent ? props.justifyContent : "center"};
   align-items: center;
-  overflow: ${(props) => props.overflow}; // 기본값을 설정하지 않음
+  overflow: ${(props) => props.overflow};
+  border-radius: ${(props) => props.radius};
+  background-color: ${(props) => props.backcolor};
 `;

@@ -20,6 +20,7 @@ import ChildCreate from "./modal/ChildCreate";
 import ChallengeCreate from "./modal/Challenge/ChallengeCreate";
 import News from "./modal/Quiz/News";
 import LoanProposal from "./modal/LoanProposal";
+import Faq from "./pages/Faq";
 
 // 다른 컴포넌트 import...
 
@@ -50,6 +51,7 @@ function App() {
           <Route path="MyPage" element={<MyPage />} />
           <Route path="Balance" element={<Balance />} />
           <Route path="GoalMoney" element={<GoalMoney />} />
+          <Route path="Faq" element={<Faq />} />
         </Route>
       </Routes>
     </>
