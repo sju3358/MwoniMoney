@@ -7,7 +7,7 @@ COPY package.json .
 COPY package-lock.json .
 RUN npm install --force
 COPY . .
-RUN npm run build
+RUN npm build
 
 # # React 개발 서버를 실행
 CMD ["npm", "start"]
