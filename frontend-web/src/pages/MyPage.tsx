@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Switch from "@mui/material/Switch";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+
 import {
   Emoji,
   MainContainer,
@@ -13,6 +13,9 @@ import {
 
 import { WhiteBox1 } from "../components/Common/About/AboutWhilteContainer";
 import { TextBox } from "../components/Common/About/AboutText";
+import { Link } from "react-router-dom";
+import { Img } from "../components/Common/About/AboutEmogi";
+import LeftArrow from "../assests/image/main/LeftArrow.png";
 
 interface ContainerProps {
   height: string;
@@ -37,20 +40,38 @@ interface HalfBoxProps {
 }
 
 const HalfBox = styled.div<HalfBoxProps>`
-  border: 1px solid black;
+  // border: 1px solid black;
   box-sizing: border-box;
-  width: ${(props) => (props.width ? props.width : "50%")};
+  width: ${(props) => (props.width ? props.width : "85%")};
   height: ${(props) => (props.height ? props.height : "100%")};
 `;
 
-function Main() {
-  const [checked, setChecked] = useState(false);
+//알림
+interface CheckedSettings {
+  challengeChecked: boolean;
+  balanceChecked: boolean;
+  savingChecked: boolean;
+  allowanceChecked: boolean;
+}
 
-  const handleChange = () => {
-    setChecked((prevChecked: boolean) => !prevChecked);
+function Mypage() {
+  const [checked, setChecked] = useState<CheckedSettings>({
+    challengeChecked: false,
+    balanceChecked: false,
+    savingChecked: false,
+    allowanceChecked: false,
+  });
+
+  const handleChange = (settingName: keyof CheckedSettings) => () => {
+    setChecked((prevSettings) => ({
+      ...prevSettings,
+      [settingName]: !prevSettings[settingName],
+    }));
   };
 
+  const account = "000-000-0000";
   const name = "이지현"; // api연결시 자녀1 이름으로 매핑
+  const birth = "00.01.01";
   return (
     <MainContainer>
       <TextContainer>
@@ -62,6 +83,31 @@ function Main() {
           <Emoji />
         </TextEmojiBox>
       </TextContainer>
+      <Container height="30%">
+        <WhiteBox1
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <HalfBox height="100%">
+            <TextBox fontSize="1.5em">계좌</TextBox>
+            <TextBox
+              height="30%"
+              fontSize="1em"
+              fontWeight="normal"
+              style={{
+                marginTop: "10px", // 상단 여백 추가
+                color: "var(--text-color-unactive, #969696)",
+                borderBottom: "1px solid black",
+                paddingLeft: "5%",
+              }}
+            >
+              {account}
+            </TextBox>
+          </HalfBox>
+        </WhiteBox1>
+      </Container>
       <Container height="50%">
         <WhiteBox1
           style={{
@@ -70,8 +116,7 @@ function Main() {
           }}
         >
           <HalfBox
-            width="70%"
-            height="30%"
+            height="90%"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -85,12 +130,12 @@ function Main() {
               style={{
                 marginTop: "10px", // 상단 여백 추가
                 color: "var(--text-color-unactive, #969696)",
+                borderBottom: "1px solid black",
+                paddingLeft: "5%",
               }}
             >
-              이지현
+              {name}
             </TextBox>
-          </HalfBox>
-          <HalfBox width="70%" height="30%">
             <TextBox fontSize="1.5em">생년월일</TextBox>
             <TextBox
               height="30%"
@@ -99,32 +144,21 @@ function Main() {
               style={{
                 marginTop: "10px", // 상단 여백 추가
                 color: "var(--text-color-unactive, #969696)",
+                borderBottom: "1px solid black",
+                paddingLeft: "5%",
               }}
             >
-              이지현
-            </TextBox>
-          </HalfBox>
-          <HalfBox width="70%" height="30%">
-            <TextBox fontSize="1.5em">계좌</TextBox>
-            <TextBox
-              height="30%"
-              fontSize="1em"
-              fontWeight="normal"
-              style={{
-                marginTop: "10px", // 상단 여백 추가
-                color: "var(--text-color-unactive, #969696)",
-                textDecoration: "underline underline", // 밑줄을 두 번 그리기
-              }}
-            >
-              이지현
+              {birth}
             </TextBox>
           </HalfBox>
         </WhiteBox1>
       </Container>
-      <Container height="80%">
+      <Container height="50%">
         <WhiteBox1>
-          <HalfBox width="90%" height="50%">
-            <TextBox fontSize="1.5em">알림설정</TextBox>
+          <HalfBox width="90%" height="90%">
+            <TextBox height="30%" fontSize="1.5em">
+              알림설정
+            </TextBox>
             <TextBox
               height="20%"
               fontSize="1em"
@@ -135,10 +169,10 @@ function Main() {
                 alignItems: "center",
               }}
             >
-              이지현
+              챌린지 알림
               <Switch
-                checked={checked}
-                onChange={handleChange}
+                checked={checked.challengeChecked}
+                onChange={handleChange("challengeChecked")}
                 color="primary"
               />
             </TextBox>
@@ -152,10 +186,10 @@ function Main() {
                 alignItems: "center",
               }}
             >
-              이지현
+              밸런스게임 알림
               <Switch
-                checked={checked}
-                onChange={handleChange}
+                checked={checked.balanceChecked}
+                onChange={handleChange("balanceChecked")}
                 color="primary"
               />
             </TextBox>
@@ -169,10 +203,10 @@ function Main() {
                 alignItems: "center",
               }}
             >
-              이지현
+              짜금통 알림
               <Switch
-                checked={checked}
-                onChange={handleChange}
+                checked={checked.savingChecked}
+                onChange={handleChange("savingChecked")}
                 color="primary"
               />
             </TextBox>
@@ -186,27 +220,48 @@ function Main() {
                 alignItems: "center",
               }}
             >
-              이지현
+              정기 용돈
               <Switch
-                checked={checked}
-                onChange={handleChange}
+                checked={checked.allowanceChecked}
+                onChange={handleChange("allowanceChecked")}
                 color="primary"
               />
-            </TextBox>
-            <TextBox
-              fontSize="1.5em"
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              FAQ <ArrowForwardIcon />{" "}
             </TextBox>
           </HalfBox>
+        </WhiteBox1>
+      </Container>
+      <Container
+        height="10%"
+        style={{
+          margin: "5% 0% 5% 0%",
+        }}
+      >
+        <WhiteBox1
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <TextBox
+            fontSize="1.5em"
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            FAQ
+          </TextBox>
+          <Link
+            to="/Faq"
+            style={{
+              paddingRight: "5%",
+            }}
+          >
+            <Img src={LeftArrow} />
+          </Link>
         </WhiteBox1>
       </Container>
     </MainContainer>
   );
 }
 
-export default Main;
+export default Mypage;
