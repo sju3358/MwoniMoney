@@ -53,7 +53,7 @@ function ProgressBar(props: ProgressBarProps) {
         width={front_width}
         height={front_height}
         backcolor={front_color}
-      />
+      ></FrontBar>
     </BackBar>
   );
 }
