@@ -22,6 +22,7 @@ import News from "./modal/Quiz/News";
 import LoanProposal from "./modal/LoanProposal";
 import Faq from "./pages/Faq";
 import GoalCreate from "./components/Children/GoalCreate";
+import ProgressModal from "./modal/ProgressModal";
 
 // 다른 컴포넌트 import...
 
@@ -42,6 +43,7 @@ function App() {
         <Route path="News" element={<News />} />
         <Route path="LoanProposal" element={<LoanProposal />} />
         <Route path="GoalCreate" element={<GoalCreate />} />
+        <Route path="ProgressModal" element={<ProgressModal />} />
 
         {/* Layout 컴포넌트가 중첩 라우트를 포함하도록 수정 */}
         <Route path="/" element={<Layout />}>
