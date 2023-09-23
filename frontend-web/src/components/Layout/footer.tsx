@@ -1,12 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import FooterHome from "../../assests/image/FooterHome.png";
-import FooterChart from "../../assests/image/FooterChart.png";
-import FooterChallenge from "../../assests/image/FooterChallenge.png";
-import FooterBank from "../../assests/image/FooterBank.png";
-import FooterSetting from "../../assests/image/FooterSetting.png";
+import FooterChild from "./footerChild";
 
-const FooterBody = styled.div`
+export const FooterBody = styled.div`
   position: fixed;
   bottom: 0;
   width: 100vw;
@@ -15,13 +11,14 @@ const FooterBody = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  box-sizing: border-box;
 `;
 
 interface FooterBoxProps {
   backgroundimage: string;
 }
 
-const FooterBox = styled.div`
+export const FooterBox = styled.div`
   // border: 1px solid black;
   width: 20%;
   height: 100%;
@@ -31,7 +28,7 @@ const FooterBox = styled.div`
   cursor: pointer;
 `;
 
-const FooterimgBox = styled.div<FooterBoxProps>`
+export const FooterimgBox = styled.div<FooterBoxProps>`
   // border: 1px solid black;
   width: 75%;
   height: 75%;
@@ -40,25 +37,13 @@ const FooterimgBox = styled.div<FooterBoxProps>`
 `;
 
 function Footer() {
-  return (
-    <FooterBody>
-      <FooterBox>
-        <FooterimgBox backgroundimage={FooterHome} />
-      </FooterBox>
-      <FooterBox>
-        <FooterimgBox backgroundimage={FooterChart} />
-      </FooterBox>
-      <FooterBox>
-        <FooterimgBox backgroundimage={FooterChallenge} />
-      </FooterBox>
-      <FooterBox>
-        <FooterimgBox backgroundimage={FooterBank} />
-      </FooterBox>
-      <FooterBox>
-        <FooterimgBox backgroundimage={FooterSetting} />
-      </FooterBox>
-    </FooterBody>
-  );
+  const [value, setValue] = React.useState("recents");
+
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
+
+  return <FooterChild />;
 }
 
 export default Footer;
