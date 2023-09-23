@@ -26,12 +26,34 @@ const FrontBar = styled.div<BarProps>`
     props.backcolor ? props.backcolor : "#fbd56e"};
   z-index: 1; /* 다른 요소들 위에 표시 */
   border-radius: 30px;
-80`;
+`;
 
-function ProgressBar() {
+interface ProgressBarProps {
+  back_width?: string;
+  back_height?: string;
+  front_width?: string;
+  front_height?: string;
+  back_color?: string;
+  front_color?: string;
+}
+
+function ProgressBar(props: ProgressBarProps) {
+  const {
+    back_width,
+    back_height,
+    front_width,
+    front_height,
+    back_color,
+    front_color,
+  } = props;
+
   return (
-    <BackBar>
-      <FrontBar />
+    <BackBar width={back_width} height={back_height} backcolor={back_color}>
+      <FrontBar
+        width={front_width}
+        height={front_height}
+        backcolor={front_color}
+      />
     </BackBar>
   );
 }
