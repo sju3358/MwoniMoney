@@ -2,6 +2,7 @@ import React from "react";
 import Footer from "./footer";
 import Header from "./header";
 import { Outlet } from "react-router-dom";
+import FooterChild from "./footerChild";
 
 function ChildrenLayout() {
   return (
@@ -11,8 +12,9 @@ function ChildrenLayout() {
       <div style={{ height: "80vh", paddingTop: "10vh" }}>
         <Outlet />
       </div>
-      <div>자식 푸터</div>
+
       {/* <Footer /> */}
+      <FooterChild />
     </>
   );
 }
