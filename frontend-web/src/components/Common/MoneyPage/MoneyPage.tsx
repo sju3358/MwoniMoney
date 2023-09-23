@@ -36,7 +36,7 @@ function MoneyPage() {
       {/* 수입지출 카드 */}
       <Container height="20%" justifyContent="space-around">
         <AboutCard
-          width="45%"
+          width="40%"
           title1="수입"
           title2="지출"
           content1={`+ ${inCome}`}
@@ -49,14 +49,14 @@ function MoneyPage() {
         />
       </Container>
       {/* 지출내역 리스트 */}
-      <Container height="55%">
+      <Container height="53%">
         <WhiteBox1 flexDirection="column" height="95%">
           {/* 제목 */}
-          <Container height="15%">
+          <Container height="13%">
             <TextBox height="100%">지출내역</TextBox>
           </Container>
           {/* 카테고리 */}
-          <Container height="15%" justifyContent="start">
+          <Container height="13%" justifyContent="start">
             <Category backcolor="#f4f4f4">전체</Category>
             <Category backcolor="#b9deb3">수익</Category>
             <Category backcolor="#ffa27e">지출</Category>
