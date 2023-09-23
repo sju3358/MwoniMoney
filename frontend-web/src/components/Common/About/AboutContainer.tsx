@@ -5,9 +5,13 @@ interface ContainerProps {
   height: string;
   flexDirection?: string;
   justifyContent?: string;
-  overflow?: string | undefined;
+  overflowx?: string | undefined;
+  overflowy?: string | undefined;
   radius?: string | undefined;
   backcolor?: string | undefined;
+  color?: string | undefined;
+  fontw?: string | undefined;
+  fonts?: string | undefined;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -21,7 +25,11 @@ export const Container = styled.div<ContainerProps>`
   justify-content: ${(props) =>
     props.justifyContent ? props.justifyContent : "center"};
   align-items: center;
-  overflow: ${(props) => props.overflow};
+  overflow-x: ${(props) => (props.overflowx ? props.overflowx : "hidden")};
+  overflow-y: ${(props) => props.overflowy};
   border-radius: ${(props) => props.radius};
   background-color: ${(props) => props.backcolor};
+  color: ${(props) => props.color};
+  font-weight: ${(props) => props.fontw};
+  font-size: ${(props) => props.fonts};
 `;
