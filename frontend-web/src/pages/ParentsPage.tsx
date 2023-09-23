@@ -14,8 +14,9 @@ import Allowance from "../components/Common/Main/Allowance";
 import SpacialAllowance from "../components/Common/Main/SpacialAllowance";
 import Qr from "../components/Common/Main/Qr";
 import Money from "../assests/image/Money.png";
-import RegistChild from "../modal/ChildCreate";
-import ModalBody1 from "../modal/ModalBtn2";
+
+import { Container } from "../components/Common/About/AboutContainer";
+import { ChildCard, AddChild } from "../components/Common/Main/ChildCard";
 
 function ParentsPage() {
   const childName = "지현"; // api연결시 자녀1 이름으로 매핑
@@ -23,14 +24,18 @@ function ParentsPage() {
   return (
     <MainContainer>
       <ChildrenList>
-        <ModalBody1
-          modal_start_text="자녀추가"
-          modal_title="자녀 등록하기"
-          modal_content={<RegistChild />} /**테그 넣는 방법*/
-          modal_btn1="생성"
-          modal_btn2="취소"
-          btn_justify="space-around"
-        />
+        <Container width="33%" height="100%">
+          <ChildCard />
+        </Container>
+        <Container width="33%" height="100%">
+          <ChildCard />
+        </Container>
+        <Container width="33%" height="100%">
+          <ChildCard />
+        </Container>
+        <Container width="33%" height="100%">
+          <AddChild />
+        </Container>
       </ChildrenList>
       <TextContainer>
         <TextMentBox>
