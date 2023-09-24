@@ -14,13 +14,14 @@ import Allowance from "../components/Common/Main/Allowance";
 import SpacialAllowance from "../components/Common/Main/SpacialAllowance";
 import Qr from "../components/Common/Main/Qr";
 import Money from "../assests/image/Money.png";
-
 import { Container } from "../components/Common/About/AboutContainer";
 import { ChildCard, AddChild } from "../components/Common/Main/ChildCard";
+import GoalForMain from "../components/Common/GoalMoney/GoalMoneyForMain";
 
 function ParentsPage() {
   const childName = "지현"; // api연결시 자녀1 이름으로 매핑
   const childAllowance = 100000;
+
   return (
     <MainContainer>
       <ChildrenList>
@@ -57,6 +58,9 @@ function ParentsPage() {
       </AllowanveContainer>
       <AllowanveContainer height="50%">
         <SpacialAllowance />
+      </AllowanveContainer>
+      <AllowanveContainer height="50%">
+        <GoalForMain />
       </AllowanveContainer>
       <QrContainer>
         <Qr />
