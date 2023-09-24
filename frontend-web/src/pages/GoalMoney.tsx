@@ -9,6 +9,8 @@ import RigthArrow from "../assests/image/main/RightArrow.png";
 import Item from "../assests/image/Item.png";
 import { Btn } from "../components/Common/About/AboutButton";
 import History from "../components/Common/History";
+import BankGraph from "../components/Common/Bank/BankGraph";
+import Chart from "../components/Common/About/AboutChart";
 
 const MainContainer = styled.div`
   // border: 1px solid black;
@@ -51,6 +53,7 @@ function GoalMoney() {
   const money = "100,1000";
   const date = "2023.09.13";
   const rate = "0.1";
+  const score = 60;
 
   //number = 1 : 부모 , number = 0 : 자식
   const role: number = 1;
@@ -120,7 +123,7 @@ function GoalMoney() {
               세부내용
             </Text>
             <Container width="100%" height="100%">
-              그래프
+              <Chart value={score} color="#e60eb0" />
             </Container>
             <Text fontsize="1.125rem" fontweight="700" padding="5% 0% 0% 5%">
               현재까지 모은 금액
