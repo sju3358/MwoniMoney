@@ -117,7 +117,7 @@ function BalanceCompo({ showText = true, showImg = true }: BalanceCompoProps) {
   return (
     <BalanceContainer>
       {showText && (
-        <Text_no fontpadding="0% 0% 10% 0%" fontweight="700">
+        <Text_no fontpadding="0% 0% 5% 0%" fontweight="700">
           오늘의 밸런스 게임
         </Text_no>
       )}
@@ -149,7 +149,7 @@ function BalanceCompo({ showText = true, showImg = true }: BalanceCompoProps) {
         </ClickButton>
 
         <Text
-          fontsize="0.75rem"
+          fontsize="0.8rem"
           fontpadding="3%"
           fontweight="700"
           textalign="center"
