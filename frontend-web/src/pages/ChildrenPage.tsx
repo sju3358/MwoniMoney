@@ -44,10 +44,9 @@ function ChildrenPage() {
           <Text margin="0% 0% 0% 5%" padding="0% 0% 5% 0%">
             있어요!
           </Text>
-
           <Text
             color="#747476"
-            fontsize="0.625rem"
+            fontsize="0.7rem"
             margin="0% 0% 0% 5%"
             padding="0% 0% 3% 0%"
           >
@@ -55,7 +54,7 @@ function ChildrenPage() {
           </Text>
           <Text
             color="#747476"
-            fontsize="0.625rem"
+            fontsize="0.7rem"
             margin="0% 0% 0% 5%"
             padding="0% 0% 3% 0%"
           >
