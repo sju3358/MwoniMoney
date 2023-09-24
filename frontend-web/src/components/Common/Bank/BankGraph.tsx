@@ -2,7 +2,7 @@ import React from "react";
 import { WhiteBox1 } from "../About/AboutWhilteContainer";
 import { TextBox } from "../About/AboutText";
 import { Container } from "../About/AboutContainer";
-import Chart from "../About/AboutChart";
+import { Chart } from "../About/AboutChart";
 
 interface LoanImpoProps {
   title: string;

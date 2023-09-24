@@ -1,5 +1,6 @@
 import React from "react";
 import { PieChart } from "@mui/x-charts";
+import { Liquid } from "@ant-design/plots";
 
 interface ChartProps {
   value: number; // Add this line to explicitly type the value prop
@@ -37,4 +38,23 @@ function Chart({ value, color }: any) {
   );
 }
 
-export default Chart;
+interface LiquidProps {
+  percent: number;
+}
+
+const DemoLiquid: React.FC<LiquidProps> = ({ percent }) => {
+  const config = {
+    percent: percent,
+    outline: {
+      border: 4,
+      distance: 8,
+    },
+    wave: {
+      length: 128,
+    },
+  };
+
+  return <Liquid {...config} percent={percent} />;
+};
+
+export { DemoLiquid, Chart };
