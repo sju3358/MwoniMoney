@@ -11,6 +11,7 @@ import LoanList from "../Common/Bank/LoanList";
 function Bank() {
   const childName = "지현";
   const debt = 100000;
+  const score = 50;
   return (
     <>
       {/* Title */}
@@ -26,7 +27,7 @@ function Bank() {
 
       {/* GraphContainer */}
       <Container height="55%">
-        <BankGraph />
+        <BankGraph creditScore={score} color="#5963e6" />
       </Container>
 
       {/* CardContainer */}
