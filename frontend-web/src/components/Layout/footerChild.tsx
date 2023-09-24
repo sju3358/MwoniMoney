@@ -8,6 +8,7 @@ import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import QuizIcon from "@mui/icons-material/Quiz";
 import SettingsIcon from "@mui/icons-material/Settings";
 import BalanceIcon from "@mui/icons-material/Balance";
+import SavingsIcon from "@mui/icons-material/Savings";
 import { FooterBody } from "./footer";
 import { useNavigate } from "react-router-dom";
 
