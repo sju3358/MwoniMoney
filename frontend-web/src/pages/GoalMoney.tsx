@@ -9,7 +9,7 @@ import RigthArrow from "../assests/image/main/RightArrow.png";
 import Item from "../assests/image/Item.png";
 import { Btn } from "../components/Common/About/AboutButton";
 import History from "../components/Common/History";
-import { Chart, DemoLiquid } from "../components/Common/About/AboutChart";
+import { DemoLiquid } from "../components/Common/About/AboutChart";
 
 const MainContainer = styled.div`
   // border: 1px solid black;

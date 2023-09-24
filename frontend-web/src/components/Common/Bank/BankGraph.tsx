@@ -2,7 +2,7 @@ import React from "react";
 import { WhiteBox1 } from "../About/AboutWhilteContainer";
 import { TextBox } from "../About/AboutText";
 import { Container } from "../About/AboutContainer";
-import { Chart } from "../About/AboutChart";
+import { GaugeChart } from "../About/AboutChart";
 
 interface LoanImpoProps {
   title: string;
@@ -38,7 +38,7 @@ function BankGraph({ creditScore, color }: BankGraphProps) {
       <TextBox height="20%">신용등급</TextBox>
       {/*그래프*/}
       <Container height="55%">
-        <Chart value={creditScore} color={color} />
+        <GaugeChart value={50} />
         {/* Pass creditScore as a prop */}
       </Container>
       {/**금리, 신용점수 */}
