@@ -33,6 +33,7 @@ interface BankGraphProps {
 }
 
 function BankGraph({ creditScore, color }: BankGraphProps) {
+  const scroe = 50;
   return (
     <WhiteBox1 flexDirection="column">
       <TextBox height="20%">신용등급</TextBox>
