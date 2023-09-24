@@ -1,9 +1,7 @@
 /**이미지 클릭 모달/!!!!! */
-import { AddChild } from "../components/Common/Main/ChildCard";
 import * as React from "react";
 import styled from "styled-components";
 import Modal from "@mui/material/Modal";
-import { EmogiBox } from "../components/Common/History";
 
 interface ModalBackPops {
   height?: string;
@@ -105,8 +103,6 @@ const ModalBody3: React.FC<ModalProps> = ({
   console.log(open);
   return (
     <>
-      <EmogiBox backImg={`${AddChild}`} onClick={handleOpen} />
-
       <Modal open={open} onClose={handleClose}>
         <ModalContainer>
           <ModalBack>
