@@ -12,6 +12,7 @@ interface ContainerProps {
   color?: string | undefined;
   fontw?: string | undefined;
   fonts?: string | undefined;
+  marginT?: string | undefined;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -32,4 +33,5 @@ export const Container = styled.div<ContainerProps>`
   color: ${(props) => props.color};
   font-weight: ${(props) => props.fontw};
   font-size: ${(props) => props.fonts};
+  margin-top: ${(props) => props.marginT};
 `;
