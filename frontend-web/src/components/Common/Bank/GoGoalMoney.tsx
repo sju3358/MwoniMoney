@@ -4,7 +4,7 @@ import { WhiteBox1 } from "../About/AboutWhilteContainer";
 import { TextBox } from "../About/AboutText";
 import { EmogiBox } from "../About/AboutEmogi";
 import Pig from "../../../assests/image/Pig.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 interface HalfBoxProps {
   width?: string;
@@ -30,8 +30,12 @@ function GoGoalMoney() {
     navigate("/GoalMoney");
   };
   const childName = "지현";
+  const navigate = useNavigate();
+  const GoGoalMoney = () => {
+    navigate("/GoalMoney");
+  };
   return (
-    <WhiteBox1 onClick={GoGoal}>
+    <WhiteBox1 onClick={GoGoalMoney}>
       <HalfBox width="70%" flexDirection="column">
         <TextBox fontSize="2em">짜금통</TextBox>
         <TextBox height="25%" fontSize="1em" fontWeight="normal">

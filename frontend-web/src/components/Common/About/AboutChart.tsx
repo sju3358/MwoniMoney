@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as echarts from "echarts";
+import { Liquid } from "@ant-design/plots";
 
 interface ChartValueProps {
   value: any;
@@ -49,4 +50,23 @@ function GaugeChart({ value }: ChartValueProps) {
   );
 }
 
-export default GaugeChart;
+interface LiquidProps {
+  percent: number;
+}
+
+const DemoLiquid: React.FC<LiquidProps> = ({ percent }) => {
+  const config = {
+    percent: percent,
+    outline: {
+      border: 4,
+      distance: 8,
+    },
+    wave: {
+      length: 128,
+    },
+  };
+
+  return <Liquid {...config} percent={percent} />;
+};
+
+export { DemoLiquid, GaugeChart };
