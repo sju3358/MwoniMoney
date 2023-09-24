@@ -11,6 +11,7 @@ import { Btn } from "../components/Common/About/AboutButton";
 import History from "../components/Common/History";
 import BankGraph from "../components/Common/Bank/BankGraph";
 import Chart from "../components/Common/About/AboutChart";
+import GaugeChart from "../components/Common/About/AboutChart";
 
 const MainContainer = styled.div`
   // border: 1px solid black;
@@ -123,7 +124,7 @@ function GoalMoney() {
               세부내용
             </Text>
             <Container width="100%" height="100%">
-              <Chart value={score} color="#e60eb0" />
+              {/* <GaugeChart /> */}
             </Container>
             <Text fontsize="1.125rem" fontweight="700" padding="5% 0% 0% 5%">
               현재까지 모은 금액

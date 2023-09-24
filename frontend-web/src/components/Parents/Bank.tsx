@@ -12,6 +12,7 @@ function Bank() {
   const childName = "지현";
   const debt = 100000;
   const score = 50;
+
   return (
     <>
       {/* Title */}
