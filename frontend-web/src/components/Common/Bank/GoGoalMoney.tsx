@@ -25,10 +25,6 @@ const HalfBox = styled.div<HalfBoxProps>`
 `;
 
 function GoGoalMoney() {
-  const navigate = useNavigate();
-  const GoGoal = () => {
-    navigate("/GoalMoney");
-  };
   const childName = "지현";
   const navigate = useNavigate();
   const GoGoalMoney = () => {
