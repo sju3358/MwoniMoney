@@ -65,15 +65,14 @@ function Main() {
   );
 }
 
-export default function BasicModal() {
+export default function News() {
   return (
-    <div>
-      <ModalBody
-        modal_start_text="모달띄우는 버튼에 적을 말"
-        modal_title="뉴스"
-        modal_content={<Main />}
-        modal_btn="닫기"
-      />
-    </div>
+    <ModalBody
+      modal_text_color="white"
+      modal_start_text="Click"
+      modal_title="뉴스"
+      modal_content={<Main />}
+      modal_btn="닫기"
+    />
   );
 }

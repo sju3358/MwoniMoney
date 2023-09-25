@@ -4,6 +4,7 @@ import Newspaper from "../../../assests/image/main/Newspaper.png";
 import LeftArrow from "../../../assests/image/main/LeftArrow.png";
 import { Link } from "react-router-dom";
 import { WhiteBox } from "../About/AboutWhilteContainer";
+import News from "../../../modal/Quiz/News";
 
 /**
  *
@@ -95,13 +96,17 @@ const Button = styled.button<ButtonProps>`
   padding: 2% 7% 2% 7%;
 `;
 
-const ClickButton = styled.button`
+const Click = styled.div`
+  width: 20%;
+  height: 15%;
   background-color: #ffa27e;
   border: 0;
-  border-radius: 12px;
+  border-radius: 50px;
   position: relative;
   bottom: 10%;
   left: 50%;
+  display: flex;
+  justify-content: center;
 `;
 interface BalanceCompoProps {
   showText?: boolean;
@@ -137,17 +142,13 @@ function BalanceCompo({ showText = true, showImg = true }: BalanceCompoProps) {
         <ImgBox>
           <Img src={`${Newspaper}`} width="25%" height="25%" />
         </ImgBox>
-        <ClickButton>
-          <Text
-            fontsize="0.625rem"
+        <Click>
+          <News />
+        </Click>
+        {/* fontsize="0.625rem"
             fontcolor="#FFFFFF"
             fontweight="600"
-            textalign="center"
-          >
-            Click
-          </Text>
-        </ClickButton>
-
+            textalign="center" */}
         <Text
           fontsize="0.8rem"
           fontpadding="3%"
