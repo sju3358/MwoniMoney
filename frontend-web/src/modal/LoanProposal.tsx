@@ -40,7 +40,7 @@ export const SelectBox = styled.select`
   text-align: left; /* 텍스트를 왼쪽으로 정렬 */
 `;
 
-function Main() {
+function LoanProposal() {
   const [selectedFrequency, setSelectedFrequency] = React.useState(""); // 첫 번째 SelectBox의 선택한 값
   const [selectedDay, setSelectedDay] = React.useState(""); // 두 번째 SelectBox의 선택한 값
 
@@ -108,15 +108,4 @@ function Main() {
   );
 }
 
-export default function ChallengeCreate() {
-  return (
-    <ModalBody
-      modal_start_text="자녀추가"
-      modal_title="챌린지 만들기"
-      modal_content={<Main />}
-      modal_btn1="생성"
-      modal_btn2="취소"
-      btn_justify="space-around"
-    />
-  );
-}
+export default LoanProposal;
