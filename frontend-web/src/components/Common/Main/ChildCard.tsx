@@ -31,24 +31,30 @@ export const Child = styled.div<ChildProps>`
 
 function AddChild() {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  console.log(open + "33");
+  const handleOpen = (e: any) => {
+    e.preventDefault();
+    setOpen(true);
+    console.log(open + "111");
+  };
   return (
-    // <Child flex="flex" justify="center" align="center" backC="none" line="none">
-    <EmogiBox
-      style={{ marginTop: "3%" }}
-      width="75%"
-      height="91%"
-      backImg={`${AddChildImg}`}
-      onClick={handleOpen}
-    >
+    <>
+      <button
+        onClick={handleOpen}
+        style={{ width: "90%", height: "90%", border: "none", marginTop: "3%" }}
+      >
+        <EmogiBox backImg={AddChildImg} width="100%" height="100%" />
+      </button>
       <ModalBody3
+        useState_open={open}
+        set_open={setOpen}
         modal_title="자녀 등록하기"
         modal_content={<RegistChild />} /**테그 넣는 방법*/
         modal_btn1="생성"
         modal_btn2="취소"
         btn_justify="space-around"
       />
-    </EmogiBox>
+    </>
     // </Child>
   );
 }

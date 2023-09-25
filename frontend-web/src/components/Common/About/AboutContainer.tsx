@@ -13,6 +13,7 @@ interface ContainerProps {
   fontw?: string | undefined;
   fonts?: string | undefined;
   marginT?: string | undefined;
+  align?: string | undefined;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -25,7 +26,7 @@ export const Container = styled.div<ContainerProps>`
     props.flexDirection ? props.flexDirection : "row"};
   justify-content: ${(props) =>
     props.justifyContent ? props.justifyContent : "center"};
-  align-items: center;
+  align-items: ${(props) => (props.align ? props.align : "center")};
   overflow-x: ${(props) => (props.overflowx ? props.overflowx : "hidden")};
   overflow-y: ${(props) => props.overflowy};
   border-radius: ${(props) => props.radius};

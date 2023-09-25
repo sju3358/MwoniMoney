@@ -17,8 +17,7 @@ export const WhiteBox1 = styled.div<WhiteBoxProps>`
   width: ${(props) => (props.width ? props.width : "90%")};
   height: ${(props) => (props.height ? props.height : "80%")};
   display: flex;
-  flex-direction: ${(props) =>
-    props.flexDirection ? props.flexDirection : "row"};
+  flex-direction: ${(props) => props.flexDirection};
   margin-top: ${(props) => (props.marginB ? props.marginB : "0%")};
 `;
 
