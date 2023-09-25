@@ -84,6 +84,8 @@ interface ModalProps {
   content_justify?: string;
   content_align?: string;
   btn_justify?: string;
+  useState_open: boolean;
+  set_open: (val: boolean) => void;
 }
 
 const ModalBody3: React.FC<ModalProps> = ({
@@ -93,33 +95,37 @@ const ModalBody3: React.FC<ModalProps> = ({
   modal_btn2,
   content_justify,
   content_align,
+  useState_open,
+  set_open,
 }) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  console.log(useState_open + "455654");
   const handleClose = () => {
-    setOpen(false);
-    console.log(open);
+    set_open(false);
+    console.log("onclick_Close");
   };
-  console.log(open);
+  console.log(useState_open);
   return (
-    <>
-      <Modal open={open} onClose={handleClose}>
-        <ModalContainer>
-          <ModalBack>
-            <ModalTopBottom>{modal_title}</ModalTopBottom>
-            <ModalContent justify={content_justify} align={content_align}>
-              {modal_content}
-            </ModalContent>
-            <ModalTopBottom justify="space-around">
-              <ModalBtn onClick={handleClose}>{modal_btn1}</ModalBtn>
-              <ModalBtn back_color="#f5f3ed" onClick={handleClose}>
-                {modal_btn2}
-              </ModalBtn>
-            </ModalTopBottom>
-          </ModalBack>
-        </ModalContainer>
-      </Modal>
-    </>
+    <Modal
+      open={useState_open}
+      onClose={() => {
+        set_open(false);
+      }}
+    >
+      <ModalContainer>
+        <ModalBack>
+          <ModalTopBottom>{modal_title}</ModalTopBottom>
+          <ModalContent justify={content_justify} align={content_align}>
+            {modal_content}
+          </ModalContent>
+          <ModalTopBottom justify="space-around">
+            <ModalBtn onClick={handleClose}>{modal_btn1}</ModalBtn>
+            <ModalBtn back_color="#f5f3ed" onClick={handleClose}>
+              {modal_btn2}
+            </ModalBtn>
+          </ModalTopBottom>
+        </ModalBack>
+      </ModalContainer>
+    </Modal>
   );
 };
 

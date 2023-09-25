@@ -1,16 +1,17 @@
 import * as React from "react";
 import ModalBody from "../modal/ModalBtn1";
 import styled from "styled-components";
-import ProgressBar from "../components/Common/Bank/ProgressBar";
+// import ProgressBar from "../components/Common/Bank/ProgressBar";
+import { ProgressBar_V1 } from "../components/Common/Bank/ProgressBar";
 
 const ModalContainer = styled.div`
+  // border: 1px solid black;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   box-sizing: border-box;
 `;
 
@@ -19,13 +20,13 @@ interface ContainerProps {
 }
 
 const Container = styled.div<ContainerProps>`
+  // border: 1px solid black;
   width: 100%;
   height: ${(props) => props.height};
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  border: 1px solid black;
   box-sizing: border-box;
 `;
 
@@ -42,9 +43,9 @@ const ContentContainer = styled.div`
 `;
 
 const ProgressBarContainer = styled.div`
+  // border: 1px solid black;
   width: 100%;
   height: 30%;
-  border: 1px solid black;
   box-sizing: border-box;
   display: flex;
   justify-content: center; /* 수평 가운데 정렬 */
@@ -65,24 +66,34 @@ const BigText = styled.div`
 `;
 
 function Main() {
-  const frontPercent = 50; // 숫자값으로 설정
+  //투표수가 많다고 노란색이 아니라 내가 선택한 쪽이 노란색
+  const myStatus = "1"; //0이면 왼쪽, 1이면 오른쪽
+  const leftCount = "70";
+  const rightCount = "30";
+  const frontPercent: string = (
+    (Number(leftCount) / (Number(leftCount) + Number(rightCount))) *
+    100
+  ).toString();
   const frontWidth = `${frontPercent}%`; // "%"를 붙여주기
-  const backWidth = `calc(100% - ${frontWidth})`; // 100%에서 frontPercent를 뺀 값
-  const backPercent = 100 - frontPercent; // 숫자값으로 설정
+  // const backWidth = `calc(100% - ${frontWidth})`; // 100%에서 frontPercent를 뺀 값
+  // const backPercent = 100 - frontPercent; // 숫자값으로 설정
 
   return (
     <ModalContainer>
       <Container height="80%">
         <ProgressBarContainer>
-          <ProgressBar
+          <ProgressBar_V1
             front_width={frontWidth}
             back_height="50%"
             back_width="80%" // 계산된 값을 전달
             front_height="100%"
-          ></ProgressBar>
+            left_count={leftCount}
+            right_count={rightCount}
+            front_percent={frontPercent}
+            my_status={myStatus}
+          ></ProgressBar_V1>
         </ProgressBarContainer>
-        <BigText>{`${frontPercent}% VS ${backPercent}%`}</BigText>
-        <BigText>Yes VS NO</BigText>
+
         <ContentContainer>
           <BigText>글로벌 기업 ABC가</BigText>
           <BigText>새로운 혁신 제품을 발표하고</BigText>
