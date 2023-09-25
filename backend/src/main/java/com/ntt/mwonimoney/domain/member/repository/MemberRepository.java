@@ -8,4 +8,8 @@ import com.ntt.mwonimoney.domain.member.entity.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 	Optional<Member> findMemberByIdx(Long memberIdx);
+
+	Optional<Member> findMemberByUuid(String memberUUID);
+
+	Optional<Member> findMemberBySocialId(String socialId);
 }
