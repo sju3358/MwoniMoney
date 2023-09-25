@@ -23,6 +23,7 @@ import LoanProposal from "./modal/LoanProposal";
 import Faq from "./pages/Faq";
 import GoalCreate from "./components/Children/GoalCreate";
 import ProgressModal from "./modal/ProgressModal";
+import Fail from "./modal/Quiz/Fail";
 import Qr from "./pages/Qr";
 
 // 다른 컴포넌트 import...
@@ -39,6 +40,7 @@ function App() {
         <Route path="/StartPage4" element={<StartPage4 />} />
         <Route path="/StartPage5" element={<StartPage5 />} />
         <Route path="/Success" element={<Success />} />
+        <Route path="/Fail" element={<Fail />} />
         <Route path="ChildCreate" element={<ChildCreate />} />
         <Route path="ChallengeCreate" element={<ChallengeCreate />} />
         <Route path="News" element={<News />} />
