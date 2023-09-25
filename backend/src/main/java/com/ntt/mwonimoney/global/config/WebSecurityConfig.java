@@ -3,7 +3,6 @@ package com.ntt.mwonimoney.global.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -49,20 +48,21 @@ public class WebSecurityConfig {
 			.exceptionHandling(c -> c.authenticationEntryPoint(new RestAuthenticationEntryPoint())
 				.accessDeniedHandler(tokenAccessDeniedHandler))
 			.sessionManagement(c -> c.sessionCreationPolicy((SessionCreationPolicy.STATELESS)))
-			.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, GET_LIST)
-				.permitAll()
-				.requestMatchers(HttpMethod.POST)
-				.permitAll()
-				.requestMatchers(HttpMethod.DELETE)
-				.permitAll()
-				.requestMatchers(HttpMethod.PUT)
-				.permitAll()
-				.requestMatchers(HttpMethod.PATCH)
-				.permitAll()
-				.requestMatchers("/**")
-				.hasAnyRole("PARENT", "CHILD")
-				.anyRequest()
-				.authenticated())
+			.authorizeHttpRequests(auth -> auth.
+				requestMatchers(/*HttpMethod.GET, GET_LIST*/"/**")
+				.permitAll())
+			// .requestMatchers(HttpMethod.POST)
+			// .permitAll()
+			// .requestMatchers(HttpMethod.DELETE)
+			// .permitAll()
+			// .requestMatchers(HttpMethod.PUT)
+			// .permitAll()
+			// .requestMatchers(HttpMethod.PATCH)
+			// .permitAll()
+			// .requestMatchers("/**")
+			// .hasAnyRole("PARENT", "CHILD")
+			// .anyRequest()
+			// .authenticated())
 			.oauth2Login()
 			.authorizationEndpoint()
 			.baseUri("/api/oauth2/authorization")
