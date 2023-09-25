@@ -6,7 +6,7 @@ spring:
           google:
             client-id: 875956331523-t41sdqqi1uj1esl3u222kogktvtjfmjb.apps.googleusercontent.com
             client-secret: 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
-            redirect-uri: http://localhost:8080/api/login/oauth2/code/google
+            redirect-uri: http://j9b310.p.ssafy.io/api/login/oauth2/code/google
             scope:
               - email
           kakao:
@@ -18,7 +18,7 @@ spring:
               - birthday
             client-name: Kakao
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/api/login/oauth2/code/kakao
+            redirect-uri: http://j9b310.p.ssafy.io/api/login/oauth2/code/kakao
             client-authentication-method: client_secret_post
 
         provider:
