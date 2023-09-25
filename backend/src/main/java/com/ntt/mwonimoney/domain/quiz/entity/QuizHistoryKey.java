@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuizHistoryKey implements Serializable {
 
-	@Column(name = "quiz_idx")
+	@Column(name = "pk_quiz_idx")
 	private Long quizIdx;
 
-	@Column(name = "member_idx")
+	@Column(name = "pk_member_idx")
 	private Long memberIdx;
 }

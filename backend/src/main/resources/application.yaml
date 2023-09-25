@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    include: JPA,MariaDB,MongoDB,Oauth,Redis
+
+
+
+
+
+
+

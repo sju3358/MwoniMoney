@@ -19,17 +19,21 @@ import lombok.NoArgsConstructor;
 public class Child extends Member {
 
 	@Column(name = "member_credit_score")
-	private byte creditScore;
+	private int creditScore;
+
+	@Column(name = "member_quiz_reward")
+	private int quizReward;
 
 	@Embedded
 	private SmallAccount smallAccount;
 
 	@Builder
-	public Child(byte status, String name, String nickname, String birthday,
+	public Child(int status, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
-		String socialId, byte creditScore, SmallAccount smallAccount) {
-		super(status, name, nickname, birthday, socialProvider, socialId, MemberRole.CHILD);
+		String socialId, String email, int creditScore, int quizReward, SmallAccount smallAccount) {
+		super(status, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD);
 		this.creditScore = creditScore;
+		this.quizReward = quizReward;
 		this.smallAccount = smallAccount;
 	}
 
@@ -46,6 +50,7 @@ public class Child extends Member {
 			.socialId(this.getSocialId())
 			.memberRole(this.getMemberRole())
 			.creditScore(this.creditScore)
+			.quizReward(this.quizReward)
 			.smallAccount(smallAccount.createVo())
 			.build();
 	}

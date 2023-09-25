@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BalanceGameHistoryKey implements Serializable {
 
-	@Column(name = "balance_idx")
-	private Long balanceGameIdx;
+	@Column(name = "pk_balance_idx")
+	private Long BalanceGameIdx;
 
-	@Column(name = "member_idx")
+	@Column(name = "pk_member_idx")
 	private Long memberIdx;
 }

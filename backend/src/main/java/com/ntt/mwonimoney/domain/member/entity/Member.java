@@ -2,7 +2,6 @@ package com.ntt.mwonimoney.domain.member.entity;
 
 import java.util.UUID;
 
-import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 import com.ntt.mwonimoney.global.common.entity.CommonEntity;
@@ -18,11 +17,8 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-
 
 @Entity
 @Getter
@@ -36,11 +32,11 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "member_idx")
 	private Long idx;
 
-	@Column(name = "member_uuid")
+	@Column(name = "member_uuid", unique = true)
 	private String uuid;
 
 	@Column(name = "member_status")
-	private byte status;
+	private int status;
 
 	@Column(name = "member_name")
 	private String name;
@@ -55,17 +51,22 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "member_social_provider")
 	private SocialProvider socialProvider;
 
-	@Column(name = "member_social_id")
+	@Column(name = "member_social_id", unique = true)
 	private String socialId;
+
+	@Column(name = "member_email")
+	private String email;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "member_role")
 	private MemberRole memberRole;
 
+	@Column(name = "FCMToken", length = 300)
+	private String FCMToken;
 
-	protected Member(byte status, String name, String nickname, String birthday,
+	protected Member(int status, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
-		String socialId, MemberRole memberRole) {
+		String socialId, String email, MemberRole memberRole) {
 		this.uuid = UUID.randomUUID().toString();
 		this.status = status;
 		this.name = name;
@@ -73,6 +74,11 @@ public abstract class Member extends CommonEntity {
 		this.birthday = birthday;
 		this.socialProvider = socialProvider;
 		this.socialId = socialId;
+		this.email = email;
 		this.memberRole = memberRole;
+	}
+
+	public void updateFCMToken(String FCMToken) {
+		this.FCMToken = FCMToken;
 	}
 }
