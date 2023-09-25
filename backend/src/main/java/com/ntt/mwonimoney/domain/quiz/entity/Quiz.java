@@ -1,6 +1,7 @@
 package com.ntt.mwonimoney.domain.quiz.entity;
 
 import com.ntt.mwonimoney.domain.quiz.model.dto.QuizDto;
+import com.ntt.mwonimoney.global.common.entity.CommonEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "quiz")
-public class Quiz {
+public class Quiz extends CommonEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,10 +41,10 @@ public class Quiz {
 	private String option4;
 
 	@Column(name = "quiz_answer")
-	private String answer;
+	private int answer;
 
 	public Quiz(Long id, String question, String option1, String option2, String option3, String option4,
-		String answer) {
+		int answer) {
 		this.id = id;
 		this.question = question;
 		this.option1 = option1;
