@@ -8,7 +8,6 @@ import { WhiteBox1 } from "../About/AboutWhilteContainer";
 import AboutCard from "../About/AboutCard";
 import MoneyTable from "./MoneyTable";
 import Income from "../../../assests/image/MoneyPage/MoneyBag.png";
-import Outcome from "../../../assests/image/MoneyPage/Cart.png";
 
 function MoneyPage() {
   const child = "민재";
@@ -19,13 +18,13 @@ function MoneyPage() {
       {/* 맨 상단 타이틀 */}
       <Container height="25%">
         <Container width="75%" height="100%" flexDirection="column">
-          <TextBox fontSize="1.4em" height="25%">
+          <TextBox fontSize="1.4em" height="25%" marginL="10%">
             {child}님이
           </TextBox>
-          <TextBox fontSize="1.4em" height="25%">
+          <TextBox fontSize="1.4em" height="25%" marginL="10%">
             현재까지 사용한 금액을
           </TextBox>
-          <TextBox fontSize="1.4em" height="25%">
+          <TextBox fontSize="1.4em" height="25%" marginL="10%">
             확인해보세요!
           </TextBox>
         </Container>
