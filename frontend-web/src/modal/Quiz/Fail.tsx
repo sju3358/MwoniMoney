@@ -95,6 +95,7 @@ export default function BasicModal() {
         modal_title=""
         modal_content={<Main />}
         modal_btn="닫기"
+        color_btn="#F4F4F4"
       />
     </div>
   );
