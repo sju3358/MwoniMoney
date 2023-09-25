@@ -81,9 +81,11 @@ interface ModalProps {
   content_justify?: string;
   content_align?: string;
   color_btn?: string;
+  modal_text_color?: string;
 }
 
 const ModalBody: React.FC<ModalProps> = ({
+  modal_text_color,
   modal_start_text,
   modal_title,
   modal_content,
@@ -101,7 +103,9 @@ const ModalBody: React.FC<ModalProps> = ({
   console.log(open);
   return (
     <>
-      <Button onClick={handleOpen}>{modal_start_text}</Button>
+      <Button style={{ color: `${modal_text_color}` }} onClick={handleOpen}>
+        {modal_start_text}
+      </Button>
       <Modal open={open} onClose={handleClose}>
         <ModalContainer>
           <ModalBack>
