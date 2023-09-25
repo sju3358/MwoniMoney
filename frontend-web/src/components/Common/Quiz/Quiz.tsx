@@ -76,14 +76,18 @@ const QuizContainer = styled.div`
 const QuizHeader = styled.div`
   // border: solid 1px black;
   display: flex;
+  width: 100%;
+  height: 100%;
 `;
 
-const TextBold = styled.span`
+const TextBold = styled.div`
   font-size: 1.25rem;
   padding: 5%;
+  margin-right: 30%;
 `;
 const AnswerResult = styled.div`
-  padding-left: 5%;
+  display: flex;
+  padding-right: 5%;
 `;
 
 //퀴즈 문제
@@ -153,6 +157,7 @@ const ExampleText = styled.div`
 `;
 const ExampleBtn = styled.button`
   border: 0;
+  padding: 2%;
   background-color: transparent;
   &:hover {
     background-color: #fbd56e;
@@ -171,7 +176,10 @@ const Img = styled.img<ImgProps>`
 `;
 const ImgBox = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
+  padding: 2%;
+  align-items: center;
 `;
 
 export default function Quiz() {
@@ -254,10 +262,10 @@ export default function Quiz() {
       </Text>
       <TextContainer>
         <TextMentBox>
-          <Text fontsize="0.625rem" padding="2% 0% 0% 0%" fontcolor="#747476">
+          <Text fontsize="0.7rem" padding="2% 0% 0% 0%" fontcolor="#747476">
             퀴즈를 맞추면
           </Text>
-          <Text fontsize="0.625rem" padding="1% 0% 0% 0%" fontcolor="#747476">
+          <Text fontsize="0.7rem" padding="1% 0% 0% 0%" fontcolor="#747476">
             용돈을 더 받을 수 있어요!
           </Text>
         </TextMentBox>
@@ -270,15 +278,26 @@ export default function Quiz() {
         <QuizHeader>
           <TextBold>Q1.</TextBold>
           <AnswerResult>
-            <Img src={`${None}`} width="20%" height="20%" />
-            <Img src={`${None}`} width="20%" height="20%" />
-            <Img src={`${None}`} width="20%" height="20%" />
-            <Img src={`${None}`} width="20%" height="20%" />
-            <Img src={`${None}`} width="20%" height="20%" />
+            <ImgBox>
+              <Img src={`${None}`} width="100%" height="50%" />
+            </ImgBox>
+
+            <ImgBox>
+              <Img src={`${None}`} width="100%" height="50%" />
+            </ImgBox>
+            <ImgBox>
+              <Img src={`${None}`} width="100%" height="50%" />
+            </ImgBox>
+            <ImgBox>
+              <Img src={`${None}`} width="100%" height="50%" />
+            </ImgBox>
+            <ImgBox>
+              <Img src={`${None}`} width="100%" height="50%" />
+            </ImgBox>
           </AnswerResult>
         </QuizHeader>
         <QuizBody>
-          <Text fontsize="0.625rem" padding="5% 5% 0% 5%" fontcolor="black">
+          <Text fontsize="0.7rem" padding="0% 5% 5% 5%" fontcolor="black">
             소비자가 의도치 않게 물건을 사거나 이용료를 결제하게끔 서비스를
             교묘하게 디자인하는 것을 뜻 하는 말은?
           </Text>
