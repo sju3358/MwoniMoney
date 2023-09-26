@@ -80,7 +80,7 @@ function BalanceCompo({ showText = true, showImg = true }: BalanceCompoProps) {
 
   return (
     <Container height="100%" flexDirection="column">
-      <Container height="10%">
+      <Container height="10%" overflowy="hidden">
         {showText && <TextBox height="100%">오늘의 밸런스 게임</TextBox>}
       </Container>
       <WhiteBox1 height="75%" marginB="5%" flexDirection="column">
