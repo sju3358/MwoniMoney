@@ -8,11 +8,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
+import com.ntt.mwonimoney.global.security.jwt.JwtAuthenticationFilter;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 import com.ntt.mwonimoney.global.security.jwt.TokenAccessDeniedHandler;
 import com.ntt.mwonimoney.global.security.oauth.exception.RestAuthenticationEntryPoint;
@@ -48,27 +50,27 @@ public class WebSecurityConfig {
 				.accessDeniedHandler(tokenAccessDeniedHandler))
 			.sessionManagement(c -> c.sessionCreationPolicy((SessionCreationPolicy.STATELESS)))
 			.authorizeHttpRequests(auth -> auth.requestMatchers(/*HttpMethod.GET, GET_LIST,*/ "/**")
-				.permitAll());
-		// .requestMatchers("/**")
-		// .hasAnyRole("PARENT", "CHILD", "GUEST")
-		// .anyRequest()
-		// .authenticated())
-		// .oauth2Login()
-		// .authorizationEndpoint()
-		// .baseUri("/api/oauth2/authorization")
-		// .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
-		// .and()
-		// .redirectionEndpoint()
-		// .baseUri("/api/login/oauth2/code/*").and()
-		// .userInfoEndpoint()
-		// .userService(customOAuth2UserService)
-		// .and()
-		// .successHandler(oAuth2AuthenticationSuccessHandler())
-		// .failureHandler(oAuth2AuthenticationFailureHandler())
-		// .permitAll()
-		// .and()
-		// .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate, memberRepository),
-		// 	UsernamePasswordAuthenticationFilter.class);
+				.permitAll())
+			// .requestMatchers("/**")
+			// .hasAnyRole("PARENT", "CHILD", "GUEST")
+			// .anyRequest()
+			// .authenticated())
+			.oauth2Login()
+			.authorizationEndpoint()
+			.baseUri("/api/oauth2/authorization")
+			.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
+			.and()
+			.redirectionEndpoint()
+			.baseUri("/api/login/oauth2/code/*").and()
+			.userInfoEndpoint()
+			.userService(customOAuth2UserService)
+			.and()
+			.successHandler(oAuth2AuthenticationSuccessHandler())
+			.failureHandler(oAuth2AuthenticationFailureHandler())
+			.permitAll()
+			.and()
+			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate, memberRepository),
+				UsernamePasswordAuthenticationFilter.class);
 
 		return httpSecurity.build();
 	}
