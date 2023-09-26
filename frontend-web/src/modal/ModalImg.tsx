@@ -129,4 +129,42 @@ const ModalBody3: React.FC<ModalProps> = ({
   );
 };
 
-export default ModalBody3;
+const ModalBody2: React.FC<ModalProps> = ({
+  modal_title,
+  modal_content,
+  modal_btn1,
+  modal_btn2,
+  content_justify,
+  content_align,
+  useState_open,
+  set_open,
+}) => {
+  console.log(useState_open + "455654");
+  const handleClose = () => {
+    set_open(false);
+    console.log("onclick_Close");
+  };
+  console.log(useState_open);
+  return (
+    <Modal
+      open={useState_open}
+      onClose={() => {
+        set_open(false);
+      }}
+    >
+      <ModalContainer>
+        <ModalBack>
+          <ModalTopBottom>{modal_title}</ModalTopBottom>
+          <ModalContent justify={content_justify} align={content_align}>
+            {modal_content}
+          </ModalContent>
+          <ModalTopBottom justify="space-around">
+            <ModalBtn onClick={handleClose}>{modal_btn1}</ModalBtn>
+          </ModalTopBottom>
+        </ModalBack>
+      </ModalContainer>
+    </Modal>
+  );
+};
+
+export { ModalBody2, ModalBody3 };
