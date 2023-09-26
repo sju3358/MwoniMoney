@@ -2,7 +2,6 @@ package com.ntt.mwonimoney.domain.member.entity;
 
 import com.ntt.mwonimoney.domain.member.model.dto.ChildDto;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
-import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 
 import jakarta.persistence.Column;
@@ -29,7 +28,7 @@ public class Child extends Member {
 	@Builder
 	public Child(int status, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
-		String socialId, String email, int creditScore, int quizReward, SmallAccount smallAccount) {
+		String socialId, String email, int creditScore, int quizReward) {
 		super(status, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD);
 		this.creditScore = creditScore;
 		this.quizReward = quizReward;
