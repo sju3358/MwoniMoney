@@ -12,7 +12,7 @@ import StartPage5 from "../src/pages/Common/StartPage/StartPage5";
 import MoneyPage from "../src/pages/Common/MoneyPage";
 import Challenge from "../src/pages/Challenge";
 import Success from "./modal/Quiz/Success";
-import Bank from "./components/Parents/Bank";
+import Bank from "./pages/Bank";
 import MyPage from "./pages/MyPage";
 import Balance from "./pages/Balance";
 import GoalMoney from "./pages/GoalMoney";
