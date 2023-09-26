@@ -98,7 +98,6 @@ function Mypage() {
               fontWeight="normal"
               style={{
                 marginTop: "10px", // 상단 여백 추가
-                color: "var(--text-color-unactive, #969696)",
                 borderBottom: "1px solid black",
                 paddingLeft: "5%",
               }}
@@ -129,7 +128,7 @@ function Mypage() {
               fontWeight="normal"
               style={{
                 marginTop: "10px", // 상단 여백 추가
-                color: "var(--text-color-unactive, #969696)",
+                // color: "var(--text-color-unactive, #969696)",
                 borderBottom: "1px solid black",
                 paddingLeft: "5%",
               }}
@@ -143,7 +142,7 @@ function Mypage() {
               fontWeight="normal"
               style={{
                 marginTop: "10px", // 상단 여백 추가
-                color: "var(--text-color-unactive, #969696)",
+                // color: "var(--text-color-unactive, #969696)",
                 borderBottom: "1px solid black",
                 paddingLeft: "5%",
               }}
