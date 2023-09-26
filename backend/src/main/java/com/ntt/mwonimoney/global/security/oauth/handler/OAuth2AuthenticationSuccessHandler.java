@@ -65,11 +65,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 				OAuth2AuthorizationRequestBasedOnCookieRepository.REDIRECT_URI_PARAM_COOKIE_NAME)
 			.map(Cookie::getValue);
 
-		if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
-			log.error("determineTargetUrl - redirectUri : {} , 인증을 진행할 수 없습니다.", redirectUri);
-			throw new IllegalArgumentException(
-				"Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
-		}
+		// if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
+		// 	log.error("determineTargetUrl - redirectUri : {} , 인증을 진행할 수 없습니다.", redirectUri);
+		// 	throw new IllegalArgumentException(
+		// 		"Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
+		// }
 
 		String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 		OAuth2AuthenticationToken authToken = (OAuth2AuthenticationToken)authentication;
@@ -81,12 +81,20 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 		Collection<? extends GrantedAuthority> authorities = ((OidcUser)authentication.getPrincipal()).getAuthorities();
 
 		String socialId = memberInfo.getId();
-		MemberRole memberRole =
-			hasAuthority(authorities, MemberRole.PARENT.name()) ? MemberRole.PARENT : MemberRole.CHILD;
+		MemberRole memberRole;
+		if (hasAuthority(authorities, MemberRole.PARENT.name())) {
+			memberRole = MemberRole.PARENT;
+		} else if (hasAuthority(authorities, MemberRole.CHILD.name())) {
+			memberRole = MemberRole.CHILD;
+		} else {
+			memberRole = MemberRole.GUEST;
+		}
 
 		Member bySocialId = memberRepository.findMemberBySocialId(socialId).orElseThrow();
 		Token tokenInfo = jwtTokenProvider.createToken(bySocialId.getUuid(), socialId,
 			memberRole.name());
+
+		log.info("successHanlder : " + bySocialId.getUuid());
 
 		redisTemplate.opsForValue()
 			.set("RT" + socialId, tokenInfo.getRefreshToken(), tokenInfo.getExpireTime(),

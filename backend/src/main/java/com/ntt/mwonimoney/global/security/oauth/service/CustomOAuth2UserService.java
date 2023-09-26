@@ -7,8 +7,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import com.ntt.mwonimoney.domain.member.entity.Guest;
 import com.ntt.mwonimoney.domain.member.entity.Member;
-import com.ntt.mwonimoney.domain.member.entity.Parent;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
 import com.ntt.mwonimoney.global.security.oauth.info.OAuth2MemberInfo;
@@ -32,7 +32,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		try {
 			return this.process(userRequest, user);
 		} catch (Exception ex) {
-			log.error("CustomOAuth2UserService loadUser Error", ex.getMessage());
+			log.error("CustomOAuth2UserService loadUser Error {} ", ex.getMessage());
 			throw new InternalAuthenticationServiceException(ex.getMessage(), ex.getCause());
 		}
 	}
@@ -42,20 +42,22 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 			userRequest.getClientRegistration().getRegistrationId().toUpperCase());
 
 		OAuth2MemberInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(socialProvider, user.getAttributes());
-		log.info(userInfo.getId());
+		log.info("before findMember : " + userInfo.getId());
 
 		Member savedMember = memberRepository.findMemberBySocialId(userInfo.getId())
 			.orElseGet(() -> createMember(userInfo, socialProvider));
+		log.info("after findMember : " + savedMember.getSocialId());
 
 		return MemberPrincipal.create(savedMember, user.getAttributes(), savedMember.getMemberRole());
 	}
 
 	private Member createMember(OAuth2MemberInfo userInfo, SocialProvider socialProvider) {
-		Member member = Parent.builder()
+		Member member = Guest.builder()
 			.socialId(userInfo.getId())
 			.name(userInfo.getName())
 			.nickname(userInfo.getName())
-			.birthday(userInfo.getBirthday())
+			.birthday("0000-00-00")
+			.email(userInfo.getEmail())
 			.socialProvider(socialProvider)
 			.status((byte)1)
 			.build();
