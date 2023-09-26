@@ -222,19 +222,14 @@ export default function Quiz() {
   const width = 15;
 
   return (
-    <Container
-      height="100%"
-      flexDirection="column"
-      marginT="5%"
-      overflowy="hidden"
-    >
+    <Container height="100%" flexDirection="column" marginT="5%">
       {/* 퀴즈 타이트 10% */}
-      <Container height="10%">
+      <Container height="10%" overflowy="hidden">
         <TextBox height="100%">오늘의 퀴즈</TextBox>
       </Container>
       {/* 퀴즈 설명 20% */}
       <Container height="20%">
-        <Container width="80%" height="100%" flexDirection="column">
+        <Container width="75%" height="100%" flexDirection="column">
           <TextBox fontSize="0.8em" marginL="25%">
             퀴즈를 맞추면
           </TextBox>
@@ -243,8 +238,8 @@ export default function Quiz() {
           </TextBox>
         </Container>
 
-        <Container width="20%" height="100%">
-          <EmogiBox backImg={`${Pencil}`} width="100%" height="100%" />
+        <Container width="25%" height="100%">
+          <EmogiBox backImg={`${Pencil}`} width="90%" height="100%" />
         </Container>
       </Container>
       {/* 퀴즈 화이트 박스 70% */}
