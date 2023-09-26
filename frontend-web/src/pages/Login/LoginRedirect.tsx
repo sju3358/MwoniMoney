@@ -27,10 +27,10 @@ function KakaoLoginRedirect() {
 
       // 새로운 사용자 정보 객체 생성
       const updatedUserInfo = {
-        ...userInfo,
         userUuid: decodedToken.sub,
-        auth: decodedToken.auth,
       };
+
+      const uuid = decodedToken.sub;
 
       // Recoil 상태 업데이트
       setUserInfo(updatedUserInfo);
