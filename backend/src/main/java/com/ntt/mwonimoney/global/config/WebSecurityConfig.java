@@ -3,19 +3,16 @@ package com.ntt.mwonimoney.global.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
-import com.ntt.mwonimoney.global.security.jwt.JwtAuthenticationFilter;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 import com.ntt.mwonimoney.global.security.jwt.TokenAccessDeniedHandler;
 import com.ntt.mwonimoney.global.security.oauth.exception.RestAuthenticationEntryPoint;
@@ -50,28 +47,28 @@ public class WebSecurityConfig {
 			.exceptionHandling(c -> c.authenticationEntryPoint(new RestAuthenticationEntryPoint())
 				.accessDeniedHandler(tokenAccessDeniedHandler))
 			.sessionManagement(c -> c.sessionCreationPolicy((SessionCreationPolicy.STATELESS)))
-			.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, GET_LIST)
-				.permitAll()
-				.requestMatchers("/**")
-				.hasAnyRole("PARENT", "CHILD", "GUEST")
-				.anyRequest()
-				.authenticated())
-			.oauth2Login()
-			.authorizationEndpoint()
-			.baseUri("/api/oauth2/authorization")
-			.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
-			.and()
-			.redirectionEndpoint()
-			.baseUri("/api/login/oauth2/code/*").and()
-			.userInfoEndpoint()
-			.userService(customOAuth2UserService)
-			.and()
-			.successHandler(oAuth2AuthenticationSuccessHandler())
-			.failureHandler(oAuth2AuthenticationFailureHandler())
-			.permitAll()
-			.and()
-			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate, memberRepository),
-				UsernamePasswordAuthenticationFilter.class);
+			.authorizeHttpRequests(auth -> auth.requestMatchers(/*HttpMethod.GET, GET_LIST,*/ "/**")
+				.permitAll());
+		// .requestMatchers("/**")
+		// .hasAnyRole("PARENT", "CHILD", "GUEST")
+		// .anyRequest()
+		// .authenticated())
+		// .oauth2Login()
+		// .authorizationEndpoint()
+		// .baseUri("/api/oauth2/authorization")
+		// .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
+		// .and()
+		// .redirectionEndpoint()
+		// .baseUri("/api/login/oauth2/code/*").and()
+		// .userInfoEndpoint()
+		// .userService(customOAuth2UserService)
+		// .and()
+		// .successHandler(oAuth2AuthenticationSuccessHandler())
+		// .failureHandler(oAuth2AuthenticationFailureHandler())
+		// .permitAll()
+		// .and()
+		// .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate, memberRepository),
+		// 	UsernamePasswordAuthenticationFilter.class);
 
 		return httpSecurity.build();
 	}
