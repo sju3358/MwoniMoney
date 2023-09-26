@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import QrEmogi from "../../../assests/image/QR.png";
 import { useNavigate } from "react-router-dom";
 import { WhiteBox1 } from "../About/AboutWhilteContainer";
