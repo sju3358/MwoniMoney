@@ -3,7 +3,7 @@ import styled from "styled-components";
 import AddBox from "../../../assests/image/AddBox.png";
 import AddChildImg from "../../../assests/image/AddBox.png";
 import CreateChallenge from "../../../modal/Challenge/ChallengeCreate";
-import ModalBody3 from "../../../modal/ModalImg";
+import {ModalBody3} from "../../../modal/ModalImg";
 import { EmogiBox } from "../History";
 import { Container } from "../About/AboutContainer";
 
