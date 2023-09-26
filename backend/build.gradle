@@ -67,6 +67,9 @@ dependencies {
     // FCM Admin SDK
     implementation 'com.google.firebase:firebase-admin:9.1.1'
 
+    // swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
     //KOMORAN 형태소 분석기
     implementation 'com.github.shin285:KOMORAN:3.3.4'
 }
