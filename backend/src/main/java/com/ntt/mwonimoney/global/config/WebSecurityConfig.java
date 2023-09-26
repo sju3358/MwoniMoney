@@ -39,7 +39,7 @@ public class WebSecurityConfig {
 	private final RedisTemplate<String, String> redisTemplate;
 	private final MemberRepository memberRepository;
 	private static final String[] GET_LIST = {"/api/oauth2/authorization", "/api/login/oauth2/code/**",
-		"/swagger-ui/**", "/v3/api-docs/**"};
+		"/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**"};
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
