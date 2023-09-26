@@ -5,8 +5,6 @@ import {
   TextEmojiBox,
 } from "../components/Common/Main/MainStyle";
 import { Container } from "../components/Common/About/AboutContainer";
-import { WhiteBox1 } from "../components/Common/About/AboutWhilteContainer";
-import { EmogiBox } from "../components/Common/About/AboutEmogi";
 import { TextBox } from "../components/Common/About/AboutText";
 //컴포넌트
 import BalanceCompo, {
@@ -16,7 +14,6 @@ import Quiz from "../components/Common/Quiz/Quiz";
 import Challenge from "../components/Children/Challenge";
 
 //이미지
-import LeftArrow from "../assests/image/main/LeftArrow.png";
 import Coin from "../assests/image/main/Coin.png";
 
 // 함수

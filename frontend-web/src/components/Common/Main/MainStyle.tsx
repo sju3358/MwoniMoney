@@ -26,7 +26,7 @@ export const Text = styled.div`
 
 export const TextEmojiBox = styled.div`
   // border: 1px solid red;
-  width: 20%;
+  width: 30%;
   height: 100%;
   box-sizing: border-box;
   display: flex;
