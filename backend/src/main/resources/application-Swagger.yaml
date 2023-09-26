@@ -8,7 +8,7 @@ springdoc:
     operations-sorter: alpha
     tags-sorter: alpha
     path: /swagger-ui.html
-    disable-swagger-default-url: true
+    disable-swagger-default-url: false
     display-query-params-without-oauth2: true
   paths-to-match:
     - /api/v1/**
