@@ -7,12 +7,17 @@ interface TextBoxProps {
   fontSize?: string;
   fontWeight?: string | number;
   marginL?: string;
+  flexDirection?: string;
+  fontcolor?: string | undefined;
+  marginT?: string | undefined;
 }
 
 export const TextBox = styled.div<TextBoxProps>`
   // border: 1px solid black;
   box-sizing: border-box;
   display: flex;
+  flex-direction: ${(props) =>
+    props.flexDirection ? props.flexDirection : "start"};
   justify-content: ${(props) =>
     props.justifyContent ? props.justifyContent : "start"};
   align-items: center;
@@ -21,17 +26,20 @@ export const TextBox = styled.div<TextBoxProps>`
   height: ${(props) => (props.height ? props.height : "50%")};
   font-size: ${(props) => (props.fontSize ? props.fontSize : "1.7em")};
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : "bold")};
+  color: ${(props) => props.fontcolor};
+  margin-top: ${(props) => props.marginT};
 `;
 
 interface TextProps {
-  color?: string | null;
-  fontfamily?: string | null;
-  fontsize?: string | null;
-  fontstyle?: string | null;
-  fontweight?: string | null;
-  margin?: string | null;
-  padding?: string | null;
-  textalign?: string | null;
+  color?: string;
+  fontfamily?: string;
+  fontsize?: string;
+  fontstyle?: string;
+  fontweight?: string;
+  margin?: string;
+  padding?: string;
+  textalign?: string;
+  marginL?: string | undefined;
 }
 export const Text = styled.div<TextProps>`
   // border: 1px solid blue;
@@ -43,4 +51,5 @@ export const Text = styled.div<TextProps>`
   margin: ${(props) => (props.margin ? props.margin : "0%")};
   padding: ${(props) => (props.padding ? props.padding : "0%")};
   text-align: ${(props) => (props.textalign ? props.textalign : "")};
+  margin-left: ${(props) => (props.marginL ? props.marginL : "7%")};
 `;

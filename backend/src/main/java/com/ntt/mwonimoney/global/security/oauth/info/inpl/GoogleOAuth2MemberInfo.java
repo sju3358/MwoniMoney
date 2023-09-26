@@ -21,7 +21,7 @@ public class GoogleOAuth2MemberInfo extends OAuth2MemberInfo {
 	}
 
 	@Override
-	public String getBirthday() {
-		return (String)attributes.get("birthDay");
+	public String getEmail() {
+		return (String)attributes.get("email");
 	}
 }

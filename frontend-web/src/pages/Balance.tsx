@@ -11,6 +11,11 @@ import styled from "styled-components";
 import { Text } from "../components/Common/About/AboutText";
 import { WhiteBox } from "../components/Common/About/AboutWhilteContainer";
 import { Img } from "../components/Common/About/AboutEmogi";
+
+//모달
+import ProgressModal from "../modal/ProgressModal";
+import IntoBalanceResult from "../components/Common/Main/IntoBalanceResult";
+
 //이미지
 import LeftArrow from "../assests/image/main/LeftArrow.png";
 import Chat from "../assests/image/main/Chat.png";
@@ -40,30 +45,35 @@ function Balance() {
       <BalanceContainer height="40%">
         <BalanceCompo showText={false} showImg={false} />
       </BalanceContainer>
-
       <ListContainer>
         <WhiteBox margin="0% 0% 5% 0%" padding="0%">
-          <TextContainer style={{ justifyContent: "space-between" }}>
+          <TextContainer
+            style={{ justifyContent: "space-between", alignItems: "center" }}
+          >
             <Text color="#C4C4C4" fontsize="0.75rem" padding="0% 0% 0% 5%">
               내일 축구는 누가 이길까요?
             </Text>
-            <Img width="5%" height="5%" padding="0%" src={`${LeftArrow}`} />
+            <IntoBalanceResult />
           </TextContainer>
         </WhiteBox>
         <WhiteBox margin="0% 0% 5% 0%" padding="0%">
-          <TextContainer style={{ justifyContent: "space-between" }}>
+          <TextContainer
+            style={{ justifyContent: "space-between", alignItems: "center" }}
+          >
             <Text color="#C4C4C4" fontsize="0.75rem" padding="0% 0% 0% 5%">
               내일 야구는 누가 이길까요?
             </Text>
-            <Img width="5%" height="5%" padding="0%" src={`${LeftArrow}`} />
+            <IntoBalanceResult />
           </TextContainer>
         </WhiteBox>
         <WhiteBox margin="0% 0% 5% 0%" padding="0%">
-          <TextContainer style={{ justifyContent: "space-between" }}>
+          <TextContainer
+            style={{ justifyContent: "space-between", alignItems: "center" }}
+          >
             <Text color="#C4C4C4" fontsize="0.75rem" padding="0% 0% 0% 5%">
               내일 농구는 누가 이길까요?
             </Text>
-            <Img width="5%" height="5%" padding="0%" src={`${LeftArrow}`} />
+            <IntoBalanceResult />
           </TextContainer>
         </WhiteBox>
       </ListContainer>

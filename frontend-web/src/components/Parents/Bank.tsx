@@ -5,12 +5,14 @@ import GoGoalMoney from "../Common/Bank/GoGoalMoney";
 import BankGraph from "../Common/Bank/BankGraph";
 import Card from "../Common/Bank/Card";
 import CategoryTag from "../Common/About/AboutCategory";
-import ChallengeAdd from "../Common/Challenge/ChallengeAdd";
 import LoanList from "../Common/Bank/LoanList";
+import LoanAdd from "../Common/Bank/LoanAdd";
 
 function Bank() {
   const childName = "지현";
   const debt = 100000;
+  const score = 50;
+
   return (
     <>
       {/* Title */}
@@ -25,8 +27,8 @@ function Bank() {
       </Container>
 
       {/* GraphContainer */}
-      <Container height="55%">
-        <BankGraph />
+      <Container height="55%" overflowy="hidden">
+        <BankGraph creditScore={score} color="#5963e6" />
       </Container>
 
       {/* CardContainer */}
@@ -36,19 +38,9 @@ function Bank() {
       <Container height="10%">
         <CategoryTag content1="모두" content2="대출중" content3="제안대기" />
       </Container>
-
-      {/* LoanListContainer */}
-      {/* <div
-        style={{
-          width: "100vw",
-          height: "60vh",
-          border: "1px solid red",
-          overflowX: "hidden", // 가로 스크롤을 숨김
-          overflowY: "auto", // 세로 스크롤을 필요한 경우 표시
-        }}
-      > */}
+      {/* LoanModal */}
       <Container height="100%" flexDirection="column">
-        <ChallengeAdd />
+        <LoanAdd />
         <LoanList />
         <LoanList />
         <LoanList />

@@ -1,8 +1,8 @@
 import React from "react";
-import styled from "styled-components";
 import { WhiteBox1 } from "../About/AboutWhilteContainer";
 import { TextBox } from "../About/AboutText";
 import { Container } from "../About/AboutContainer";
+import { GaugeChart } from "../About/AboutChart";
 
 interface LoanImpoProps {
   title: string;
@@ -27,12 +27,21 @@ function LoanImpo({ title, content }: LoanImpoProps) {
   );
 }
 
-function BankGraph() {
+interface BankGraphProps {
+  creditScore: any;
+  color: string;
+}
+
+function BankGraph({ creditScore, color }: BankGraphProps) {
+  const scroe = 50;
   return (
     <WhiteBox1 flexDirection="column">
       <TextBox height="20%">신용등급</TextBox>
       {/*그래프*/}
-      <Container height="55%"></Container>
+      <Container height="55%" overflowy="hidden">
+        <GaugeChart value={50} />
+        {/* Pass creditScore as a prop */}
+      </Container>
       {/**금리, 신용점수 */}
       <Container height="25%">
         <LoanImpo title="대출금리" content={1000} />
