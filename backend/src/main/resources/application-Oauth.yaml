@@ -15,7 +15,6 @@ spring:
             scope:
               - profile_nickname
               - account_email
-              - birthday
             client-name: Kakao
             authorization-grant-type: authorization_code
             redirect-uri: http://j9b310.p.ssafy.io/api/login/oauth2/code/kakao
