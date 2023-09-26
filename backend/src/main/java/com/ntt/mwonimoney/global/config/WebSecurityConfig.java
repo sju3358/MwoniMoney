@@ -3,6 +3,7 @@ package com.ntt.mwonimoney.global.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -37,7 +38,8 @@ public class WebSecurityConfig {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final RedisTemplate<String, String> redisTemplate;
 	private final MemberRepository memberRepository;
-	private static final String[] GET_LIST = {"/api/oauth2/authorization", "/api/login/oauth2/code/**"};
+	private static final String[] GET_LIST = {"/api/oauth2/authorization", "/api/login/oauth2/code/**",
+		"/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**", "/api-docs/swagger-config"};
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -48,21 +50,12 @@ public class WebSecurityConfig {
 			.exceptionHandling(c -> c.authenticationEntryPoint(new RestAuthenticationEntryPoint())
 				.accessDeniedHandler(tokenAccessDeniedHandler))
 			.sessionManagement(c -> c.sessionCreationPolicy((SessionCreationPolicy.STATELESS)))
-			.authorizeHttpRequests(auth -> auth.
-				requestMatchers(/*HttpMethod.GET, GET_LIST*/"/**")
-				.permitAll())
-			// .requestMatchers(HttpMethod.POST)
-			// .permitAll()
-			// .requestMatchers(HttpMethod.DELETE)
-			// .permitAll()
-			// .requestMatchers(HttpMethod.PUT)
-			// .permitAll()
-			// .requestMatchers(HttpMethod.PATCH)
-			// .permitAll()
-			// .requestMatchers("/**")
-			// .hasAnyRole("PARENT", "CHILD")
-			// .anyRequest()
-			// .authenticated())
+			.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, GET_LIST)
+				.permitAll()
+				.requestMatchers("/**")
+				.hasAnyRole("PARENT", "CHILD", "GUEST")
+				.anyRequest()
+				.authenticated())
 			.oauth2Login()
 			.authorizationEndpoint()
 			.baseUri("/api/oauth2/authorization")
