@@ -65,7 +65,7 @@ const BigText = styled.div`
   text-align: center; /* 텍스트 가운데 정렬 추가 */
 `;
 
-function Main() {
+export default function balanceResult() {
   //투표수가 많다고 노란색이 아니라 내가 선택한 쪽이 노란색
   const myStatus = "1"; //0이면 왼쪽, 1이면 오른쪽
   const leftCount = "70";
@@ -104,15 +104,13 @@ function Main() {
   );
 }
 
-export default function BasicModal() {
-  return (
-    <div>
-      <ModalBody
-        modal_start_text="모달 띄우는 버튼에 적을 말"
-        modal_title="어느 쪽이 많을까요?"
-        modal_content={<Main />}
-        modal_btn="닫기"
-      />
-    </div>
-  );
-}
+// export default function ProgressModal() {
+//   return (
+//     <ModalBody
+//       modal_start_text="모달 띄우는 버튼에 적을 말"
+//       modal_title="어느 쪽이 많을까요?"
+//       modal_content={<Main />}
+//       modal_btn="닫기"
+//     />
+//   );
+// }
