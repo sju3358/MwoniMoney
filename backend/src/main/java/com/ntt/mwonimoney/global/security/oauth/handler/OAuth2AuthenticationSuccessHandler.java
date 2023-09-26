@@ -94,6 +94,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 		Token tokenInfo = jwtTokenProvider.createToken(bySocialId.getUuid(), socialId,
 			memberRole.name());
 
+		log.info("successHanlder : " + bySocialId.getUuid());
+
 		redisTemplate.opsForValue()
 			.set("RT" + socialId, tokenInfo.getRefreshToken(), tokenInfo.getExpireTime(),
 				TimeUnit.MILLISECONDS);
