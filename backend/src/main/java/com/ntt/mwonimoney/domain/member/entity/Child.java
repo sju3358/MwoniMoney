@@ -5,6 +5,7 @@ import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -25,6 +26,7 @@ public class Child extends Member {
 	private int quizReward;
 
 	@Embedded
+	@Nullable
 	private SmallAccount smallAccount;
 
 	@Builder

@@ -32,10 +32,10 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "member_idx")
 	private Long idx;
 
-	@Column(name = "member_uuid", unique = true)
+	@Column(name = "member_uuid", unique = true, nullable = false)
 	private String uuid;
 
-	@Column(name = "member_status")
+	@Column(name = "member_status", nullable = false)
 	private int status;
 
 	@Column(name = "member_name")

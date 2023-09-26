@@ -1,8 +1,6 @@
 package com.ntt.mwonimoney.domain.member.entity;
 
-import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.model.dto.GuestDto;
-import com.ntt.mwonimoney.domain.member.model.dto.ParentDto;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 
@@ -18,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Guest extends Member {
 
 	@Builder
-	public Guest(byte status, String name, String nickname, String birthday, SocialProvider socialProvider,
+	public Guest(int status, String name, String nickname, String birthday, SocialProvider socialProvider,
 		String socialId, String email) {
 		super(status, name, nickname, birthday, socialProvider, socialId, email, MemberRole.GUEST);
 	}
