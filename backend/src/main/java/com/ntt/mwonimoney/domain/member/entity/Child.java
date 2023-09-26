@@ -6,7 +6,6 @@ import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,8 +23,8 @@ public class Child extends Member {
 	@Column(name = "member_quiz_reward")
 	private int quizReward;
 
-	@Embedded
-	private SmallAccount smallAccount;
+	// @Embedded
+	// private SmallAccount smallAccount;
 
 	@Builder
 	public Child(int status, String name, String nickname, String birthday,
@@ -34,7 +33,7 @@ public class Child extends Member {
 		super(status, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD);
 		this.creditScore = creditScore;
 		this.quizReward = quizReward;
-		this.smallAccount = smallAccount;
+		// this.smallAccount = smallAccount;
 	}
 
 	public ChildDto convertToDto() {
@@ -51,7 +50,7 @@ public class Child extends Member {
 			.memberRole(this.getMemberRole())
 			.creditScore(this.creditScore)
 			.quizReward(this.quizReward)
-			.smallAccount(smallAccount.createVo())
+			// .smallAccount(smallAccount.createVo())
 			.build();
 	}
 
