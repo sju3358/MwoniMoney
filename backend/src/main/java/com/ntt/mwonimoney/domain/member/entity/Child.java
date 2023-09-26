@@ -5,6 +5,7 @@ import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -25,12 +26,13 @@ public class Child extends Member {
 	private int quizReward;
 
 	@Embedded
+	@Nullable
 	private SmallAccount smallAccount;
 
 	@Builder
 	public Child(int status, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
-		String socialId, String email, int creditScore, int quizReward) {
+		String socialId, String email, int creditScore, int quizReward, SmallAccount smallAccount) {
 		super(status, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD);
 		this.creditScore = creditScore;
 		this.quizReward = quizReward;
@@ -51,7 +53,7 @@ public class Child extends Member {
 			.memberRole(this.getMemberRole())
 			.creditScore(this.creditScore)
 			.quizReward(this.quizReward)
-			// .smallAccount(smallAccount.createVo())
+			.smallAccount(smallAccount.createVo())
 			.build();
 	}
 
