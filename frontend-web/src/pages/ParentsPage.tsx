@@ -46,7 +46,7 @@ function ParentsPage() {
           <Text>받고 있어요!</Text>
         </Container>
         <TextEmojiBox>
-          <Emoji url={`${Money}`} width="80%" height="80%" />
+          <Emoji url={`${Money}`} width="80%" height="50%" />
         </TextEmojiBox>
       </Container>
       <Container height="60%">
