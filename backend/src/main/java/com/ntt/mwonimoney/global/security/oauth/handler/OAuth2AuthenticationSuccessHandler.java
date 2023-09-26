@@ -81,8 +81,14 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 		Collection<? extends GrantedAuthority> authorities = ((OidcUser)authentication.getPrincipal()).getAuthorities();
 
 		String socialId = memberInfo.getId();
-		MemberRole memberRole =
-			hasAuthority(authorities, MemberRole.PARENT.name()) ? MemberRole.PARENT : MemberRole.CHILD;
+		MemberRole memberRole;
+		if (hasAuthority(authorities, MemberRole.PARENT.name())) {
+			memberRole = MemberRole.PARENT;
+		} else if (hasAuthority(authorities, MemberRole.CHILD.name())) {
+			memberRole = MemberRole.CHILD;
+		} else {
+			memberRole = MemberRole.GUEST;
+		}
 
 		Member bySocialId = memberRepository.findMemberBySocialId(socialId).orElseThrow();
 		Token tokenInfo = jwtTokenProvider.createToken(bySocialId.getUuid(), socialId,
