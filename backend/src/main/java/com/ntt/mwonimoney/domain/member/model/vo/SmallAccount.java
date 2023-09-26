@@ -12,6 +12,13 @@ public class SmallAccount {
 	private String imageFilename;
 	private byte saveRatio;
 
+	protected SmallAccount() {
+		this.goalMoney = 0;
+		this.goalName = "";
+		this.imageFilename = "";
+		this.saveRatio = 0;
+	}
+
 	public SmallAccount createVo() {
 		return new SmallAccount(
 			this.getGoalMoney(),
