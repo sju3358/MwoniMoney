@@ -5,7 +5,7 @@ import { ListTitle, CategoryTag, DeadLine } from "../Challenge/ChallengeList";
 import { Category } from "../About/AboutCategory";
 import { TextBox } from "../About/AboutText";
 import Button from "../About/AboutButton";
-import ProgressBar from "./ProgressBar";
+import { ProgressBar } from "./ProgressBar";
 
 function LoanList() {
   const title = "돈 빌려주세요";
