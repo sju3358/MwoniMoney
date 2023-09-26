@@ -42,11 +42,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 			userRequest.getClientRegistration().getRegistrationId().toUpperCase());
 
 		OAuth2MemberInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(socialProvider, user.getAttributes());
-		log.info(userInfo.getId());
+		log.info("before findMember : " + userInfo.getId());
 
 		Member savedMember = memberRepository.findMemberBySocialId(userInfo.getId())
 			.orElseGet(() -> createMember(userInfo, socialProvider));
-		log.info(savedMember.getSocialId());
+		log.info("after findMember : " + savedMember.getSocialId());
 
 		return MemberPrincipal.create(savedMember, user.getAttributes(), savedMember.getMemberRole());
 	}
