@@ -19,6 +19,7 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -46,6 +47,7 @@ dependencies {
     // MongoDB
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation('org.springframework.boot:spring-boot-starter-data-mongodb')
     testImplementation 'io.projectreactor:reactor-test'
 
     // AWS (S3 연결용)
@@ -68,6 +70,9 @@ dependencies {
 
     // swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
+    //KOMORAN 형태소 분석기
+    implementation 'com.github.shin285:KOMORAN:3.3.4'
 }
 
 tasks.named('test') {
