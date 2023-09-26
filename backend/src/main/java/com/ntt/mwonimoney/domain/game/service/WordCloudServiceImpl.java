@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ntt.mwonimoney.domain.game.entity.Chat;
 import com.ntt.mwonimoney.domain.game.entity.Word;
+import com.ntt.mwonimoney.domain.game.repository.ReactiveWordCloudRepository;
 import com.ntt.mwonimoney.domain.game.repository.WordCloudRepository;
 
 import kr.co.shineware.nlp.komoran.core.Komoran;
@@ -21,12 +22,13 @@ import reactor.core.scheduler.Schedulers;
 @Slf4j
 public class WordCloudServiceImpl implements WordCloudService {
 
+	private final ReactiveWordCloudRepository reactiveWordCloudRepository;
 	private final WordCloudRepository wordCloudRepository;
 	private final Komoran komoran;
 
 	@Override
 	public Flux<List<Word>> getWordCloudData(Long balanceGameIdx) {
-		return wordCloudRepository.findWordsByBalanceGameIdx(balanceGameIdx)
+		return reactiveWordCloudRepository.findWordsByBalanceGameIdx(balanceGameIdx)
 			.subscribeOn(Schedulers.boundedElastic());
 	}
 
@@ -49,7 +51,7 @@ public class WordCloudServiceImpl implements WordCloudService {
 				words.add(word);
 			}
 		}
-		
-		wordCloudRepository.saveAll(words);
+
+		reactiveWordCloudRepository.saveAll(words);
 	}
 }
