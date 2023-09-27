@@ -9,13 +9,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
-import com.ntt.mwonimoney.global.security.jwt.JwtAuthenticationFilter;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 import com.ntt.mwonimoney.global.security.jwt.TokenAccessDeniedHandler;
 import com.ntt.mwonimoney.global.security.oauth.exception.RestAuthenticationEntryPoint;
@@ -68,10 +66,10 @@ public class WebSecurityConfig {
 			.and()
 			.successHandler(oAuth2AuthenticationSuccessHandler())
 			.failureHandler(oAuth2AuthenticationFailureHandler())
-			.permitAll()
-			.and()
-			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate, memberRepository),
-				UsernamePasswordAuthenticationFilter.class);
+			.permitAll();
+		// .and()
+		// .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate, memberRepository),
+		// 	UsernamePasswordAuthenticationFilter.class);
 
 		return httpSecurity.build();
 	}
