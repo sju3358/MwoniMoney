@@ -1,5 +1,4 @@
 import * as React from "react";
-import ModalBody from "../ModalBtn2";
 import styled from "styled-components";
 
 export const ContentBox = styled.div`
@@ -13,12 +12,17 @@ export const ContentBox = styled.div`
   margin-top: 0%;
 `;
 
-export const InputDiv = styled.div`
+interface InputDivProp {
+  align?: string | undefined;
+}
+
+export const InputDiv = styled.div<InputDivProp>`
+  // border: 1px solid red;
   width: 90%;
   height: 30%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  ${(props) => (props.align ? props.align : "center")};
 `;
 
 export const InputInfo = styled.input`
@@ -40,7 +44,7 @@ export const SelectBox = styled.select`
   text-align: left; /* 텍스트를 왼쪽으로 정렬 */
 `;
 
-function Main() {
+function CreateChallenge() {
   const [selectedOption, setSelectedOption] = React.useState(""); // 선택된 옵션을 저장할 state
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -79,15 +83,4 @@ function Main() {
   );
 }
 
-export default function ChallengeCreate() {
-  return (
-    <ModalBody
-      modal_start_text="자녀추가"
-      modal_title="챌린지 만들기"
-      modal_content={<Main />}
-      modal_btn1="생성"
-      modal_btn2="취소"
-      btn_justify="space-around"
-    />
-  );
-}
+export default CreateChallenge;

@@ -6,6 +6,7 @@ interface WhiteBoxProps {
   flexDirection?: string;
   backcolor?: string;
   marginB?: string;
+  paddingB?: string | undefined;
 }
 
 export const WhiteBox1 = styled.div<WhiteBoxProps>`
@@ -17,9 +18,9 @@ export const WhiteBox1 = styled.div<WhiteBoxProps>`
   width: ${(props) => (props.width ? props.width : "90%")};
   height: ${(props) => (props.height ? props.height : "80%")};
   display: flex;
-  flex-direction: ${(props) =>
-    props.flexDirection ? props.flexDirection : "row"};
+  flex-direction: ${(props) => props.flexDirection};
   margin-top: ${(props) => (props.marginB ? props.marginB : "0%")};
+  padding-top: ${(props) => props.paddingB};
 `;
 
 interface WhiteBoxProps_v1 {

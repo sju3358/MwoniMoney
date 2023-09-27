@@ -11,6 +11,8 @@ import { Btn } from "../components/Common/About/AboutButton";
 import History from "../components/Common/History";
 import { DemoLiquid } from "../components/Common/About/AboutChart";
 
+import { useNavigate } from "react-router-dom";
+
 const MainContainer = styled.div`
   // border: 1px solid black;
   width: 100%;
@@ -58,10 +60,13 @@ function GoalMoney() {
   //number = 1 : 부모 , number = 0 : 자식
   const role: number = 1;
 
+  const navigate = useNavigate();
+
   return (
     <MainContainer>
       <ImgBox justifycontent="flex-start">
         <Img
+          onClick={() => navigate(-1)}
           src={`${RigthArrow}`}
           width="8%"
           height="8%"
