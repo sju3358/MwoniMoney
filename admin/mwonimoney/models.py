@@ -4,7 +4,7 @@ class Balance(models.Model):
     BALANCE_STATUS = (
         ('WAIT', 'WAIT'),
         ('RUNNING', 'RUNNING'),
-        ('END','RUNNING')
+        ('END','END')
     )
 
     idx = models.AutoField(primary_key=True)
