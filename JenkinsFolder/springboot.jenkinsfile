@@ -38,6 +38,9 @@ pipeline {
 
                     sh "echo '파일 구조 확인'"
                     sh "ls"
+                    dir('build'){
+                        sh "ls"
+                    }
                     // de
                     sh "docker build -t ${IMAGE_NAME} -f Dockerfile ."
                     
