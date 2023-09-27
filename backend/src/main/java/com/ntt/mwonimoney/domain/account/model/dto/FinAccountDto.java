@@ -1,4 +1,4 @@
-package com.ntt.mwonimoney.domain.account.dto;
+package com.ntt.mwonimoney.domain.account.model.dto;
 
 import com.ntt.mwonimoney.domain.account.entity.FinAccountStatus;
 import com.ntt.mwonimoney.domain.account.entity.FinAccountType;
