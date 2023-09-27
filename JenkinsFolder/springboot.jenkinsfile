@@ -31,17 +31,7 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
-            steps {
-                script {
-                    dir('backend') {
-                        sh 'chmod +x gradlew'
-                        sh './gradlew clean build'
-                        sh 'ls -al ./build'
-                    }
-                }
-            }
-        }
+
         stage('Dockerizing'){
             steps{
                 dir('backend'){
@@ -61,7 +51,17 @@ pipeline {
             }
         }
 
-
+        stage('Build') {
+            steps {
+                script {
+                    dir('backend') {
+                        sh 'chmod +x gradlew'
+                        sh './gradlew clean build'
+                        sh 'ls -al ./build'
+                    }
+                }
+            }
+        }
 
         stage('Deploy') {
             steps {
