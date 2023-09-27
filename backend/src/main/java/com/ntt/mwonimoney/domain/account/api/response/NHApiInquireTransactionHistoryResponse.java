@@ -5,5 +5,5 @@ public class NHApiInquireTransactionHistoryResponse {
     private CtntDataYnType CtntDataYn;
     private int TotCnt;
     private int Iqtcnt;
-    private List<NHApiTransactionHistory> = new ArrayList<>();
+//    private List<NHApiTransactionHistory> = new ArrayList<>();
 }
