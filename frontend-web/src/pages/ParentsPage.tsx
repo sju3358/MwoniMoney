@@ -1,14 +1,9 @@
 import React from "react";
 import {
-  AllowanveContainer,
-  ChildrenList,
   Emoji,
   MainContainer,
-  QrContainer,
   Text,
-  TextContainer,
   TextEmojiBox,
-  TextMentBox,
 } from "../components/Common/Main/MainStyle";
 import Allowance from "../components/Common/Main/Allowance";
 import SpacialAllowance from "../components/Common/Main/SpacialAllowance";
@@ -24,7 +19,7 @@ function ParentsPage() {
 
   return (
     <MainContainer>
-      <ChildrenList>
+      <Container height="15%">
         <Container width="33%" height="100%">
           <ChildCard />
         </Container>
@@ -37,34 +32,35 @@ function ParentsPage() {
         <Container width="33%" height="100%">
           <AddChild />
         </Container>
-      </ChildrenList>
-      <TextContainer>
-        <TextMentBox>
+      </Container>
+
+      <Container height="25%">
+        <Container
+          height="100%"
+          width="80%"
+          flexDirection="column"
+          align="start"
+        >
           <Text>현재 {childName}는</Text>
           <Text>매달 {childAllowance}원을 </Text>
           <Text>받고 있어요!</Text>
-        </TextMentBox>
+        </Container>
         <TextEmojiBox>
-          <Emoji
-            // url={process.env.PUBLIC_URL + "/images/Money.png"}
-            url={`${Money}`}
-            width="80%"
-            height="80%"
-          />
+          <Emoji url={`${Money}`} width="80%" height="50%" />
         </TextEmojiBox>
-      </TextContainer>
-      <AllowanveContainer height="60%">
+      </Container>
+      <Container height="60%">
         <Allowance />
-      </AllowanveContainer>
-      <AllowanveContainer height="50%">
+      </Container>
+      <Container height="50%">
         <SpacialAllowance />
-      </AllowanveContainer>
-      <AllowanveContainer height="50%">
+      </Container>
+      <Container height="50%">
         <GoalForMain />
-      </AllowanveContainer>
-      <QrContainer>
+      </Container>
+      <Container height="30%">
         <Qr />
-      </QrContainer>
+      </Container>
     </MainContainer>
   );
 }

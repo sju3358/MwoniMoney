@@ -38,7 +38,8 @@ public class WebSecurityConfig {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final RedisTemplate<String, String> redisTemplate;
 	private final MemberRepository memberRepository;
-	private static final String[] GET_LIST = {"/api/oauth2/authorization", "/api/login/oauth2/code/**"};
+	private static final String[] GET_LIST = {"/api/oauth2/authorization", "/api/login/oauth2/code/**",
+		"/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**", "/api-docs/swagger-config"};
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -52,7 +53,7 @@ public class WebSecurityConfig {
 			.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, GET_LIST)
 				.permitAll()
 				.requestMatchers("/**")
-				.hasAnyRole("PARENT", "CHILD")
+				.hasAnyRole("PARENT", "CHILD", "GUEST")
 				.anyRequest()
 				.authenticated())
 			.oauth2Login()
