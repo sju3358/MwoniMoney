@@ -36,7 +36,7 @@ function KakaoLoginRedirect() {
       setUserInfo(updatedUserInfo);
 
       //   // 토큰을 localStorage에 저장 (옵션)
-      //   localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("accessToken", accessToken);
     }
     // 리디렉션 (예: 홈 페이지로)
     window.location.href = `${process.env.REACT_APP_BASE_URL}`; // 홈 페이지 URL로 변경
