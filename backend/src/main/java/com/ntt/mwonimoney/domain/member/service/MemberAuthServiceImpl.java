@@ -30,14 +30,13 @@ public class MemberAuthServiceImpl implements MemberAuthService {
 	@Override
 	@Transactional
 	public void login(MemberAuthDto memberAuthDto) {
-		MemberAuth memberAuth = new MemberAuth(memberAuthDto.getMemberUUID(), memberAuthDto.getMemberIdx(),
-			memberAuthDto.getMemberRefreshToken());
-		try {
-			memberAuthRepository.save(memberAuth);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		MemberAuth memberAuth = MemberAuth.builder()
+			.memberUUID(memberAuthDto.getMemberUUID())
+			.memberIdx(memberAuthDto.getMemberIdx())
+			.memberRefreshToken(memberAuthDto.getMemberRefreshToken())
+			.build();
 
+		memberAuthRepository.save(memberAuth);
 	}
 
 	@Override
