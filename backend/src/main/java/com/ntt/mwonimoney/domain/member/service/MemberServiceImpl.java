@@ -1,11 +1,13 @@
 package com.ntt.mwonimoney.domain.member.service;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ntt.mwonimoney.domain.member.api.request.MemberInfoChangeRequest;
 import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
-import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -16,35 +18,34 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Transactional(readOnly = true)
 public class MemberServiceImpl implements MemberService {
+
 	private final MemberRepository memberRepository;
 
 	@Override
-	public void changeNickname(String newNickName) {
+	public MemberDto getMemberInfo(Long memberIdx) {
+		Member member = memberRepository.findMemberByIdx(memberIdx)
+			.orElseThrow(() -> new NoSuchElementException("멤버정보가 존재하지 않습니다"));
 
+		return member.convertToDto();
 	}
 
 	@Override
-	public void addSmallAccount(SmallAccount smallAccount) {
+	@Transactional
+	public void editMember(MemberInfoChangeRequest request, Long memberIdx) {
 
-	}
+		Member member = memberRepository.findMemberByIdx(memberIdx)
+			.orElseThrow(() -> new NoSuchElementException("멤버정보가 존재하지 않습니다"));
 
-	@Override
-	public void finishSmallAccount(String uuid) {
+		if (request.getMemberRole().isPresent())
+			member.changeMemberRole(request.getMemberRole().get());
 
-	}
+		if (request.getEmail().isPresent())
+			member.changeMemberEmail(request.getEmail().get());
 
-	@Override
-	public void getMemberInfo(String uuid) {
+		if (request.getNickname().isPresent())
+			member.changeMemberNickname(request.getNickname().get());
 
-	}
-
-	@Override
-	public void addMemberInfo(MemberDto memberDto, int role, String memberUuid) {
-		if (role == 1) { // 부모
-			Member member = memberRepository.findMemberByUuid(memberUuid).orElseThrow();
-			
-		} else { // 자녀
-
-		}
+		if (request.getBirthday().isPresent())
+			member.changeMemberBirthday(request.getBirthday().get());
 	}
 }
