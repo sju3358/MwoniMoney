@@ -29,15 +29,20 @@ public class MemberAuthServiceImpl implements MemberAuthService {
 
 	@Override
 	@Transactional
-	public void Login(MemberAuthDto memberAuthDto) {
+	public void login(MemberAuthDto memberAuthDto) {
 		MemberAuth memberAuth = new MemberAuth(memberAuthDto.getMemberUUID(), memberAuthDto.getMemberIdx(),
 			memberAuthDto.getMemberRefreshToken());
-		memberAuthRepository.save(memberAuth);
+		try {
+			memberAuthRepository.save(memberAuth);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override
 	@Transactional
-	public void Logout(String memberUUID) {
+	public void logout(String memberUUID) {
 		MemberAuth memberAuth = memberAuthRepository.findMemberAuthByMemberUUID(memberUUID)
 			.orElseThrow(() -> new NoSuchElementException());
 		memberAuthRepository.delete(memberAuth);
