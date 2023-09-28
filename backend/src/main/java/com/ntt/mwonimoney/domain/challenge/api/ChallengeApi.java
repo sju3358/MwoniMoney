@@ -2,13 +2,13 @@ package com.ntt.mwonimoney.domain.challenge.api;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,8 +17,8 @@ import com.ntt.mwonimoney.domain.challenge.api.request.MemberChallengeRequestDto
 import com.ntt.mwonimoney.domain.challenge.api.response.MemberChallengeResponseDto;
 import com.ntt.mwonimoney.domain.challenge.service.ChallengeService;
 import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
-import com.ntt.mwonimoney.domain.member.service.MemberService;
 import com.ntt.mwonimoney.global.common.entity.BaseResponseDto;
+import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +29,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ChallengeApi {
 
+	private final JwtTokenProvider jwtTokenProvider;
 	private final MemberAuthService memberAuthService;
-	private final MemberService memberService;
+	// private final MemberService memberService;
 
 	private final ChallengeService challengeService;
 
@@ -38,8 +39,11 @@ public class ChallengeApi {
 
 	//부모님이 writechallenge
 	@PostMapping("/")
-	public BaseResponseDto writeChallenge(@CookieValue("memberUUID") String memberUUID,
+	public BaseResponseDto writeChallenge(
+		@RequestHeader("Authorization") String accessToken,
 		@RequestBody ChallengeRequestDto challengeRequestDto) {
+		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+
 		Long parentIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 		Long childIdx = memberAuthService.getMemberAuthInfo(challengeRequestDto.getChildUuid()).getMemberIdx();
 
@@ -49,7 +53,9 @@ public class ChallengeApi {
 	//부모 챌린지 삭제
 	@DeleteMapping("/{memberChallengeIdx}")
 	public BaseResponseDto deleteChallenge(@PathVariable Long memberChallengeIdx,
-		@CookieValue("memberUUID") String memberUUID) {
+		@RequestHeader("Authorization") String accessToken) {
+		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+
 		Long parentIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 		return challengeService.deleteChallenge(parentIdx, memberChallengeIdx);
 	}
@@ -76,8 +82,9 @@ public class ChallengeApi {
 	//자식
 	//자식 챌린지 생성 요청
 	@PostMapping("/propose")
-	public BaseResponseDto ProposeChallenge(@CookieValue("memberUUID") String memberUUID,
+	public BaseResponseDto ProposeChallenge(@RequestHeader("Authorization") String accessToken,
 		@RequestBody ChallengeRequestDto challengeRequestDto) {
+		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 		Long parentIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 		Long childIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
@@ -91,11 +98,12 @@ public class ChallengeApi {
 	}
 
 	//공통
-	//챌린지 조회
+	//부모 자식 챌린지 조회
 	@GetMapping("/")
-	public List<MemberChallengeResponseDto> SelectMemberChallenge(@CookieValue("memberUUID") String memberUUID,
+	public List<MemberChallengeResponseDto> SelectMemberChallenge(@RequestHeader("Authorization") String accessToken,
 		MemberChallengeRequestDto memberChallengeRequestDto) {
 		Long memberIdx;
+		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 		if (memberChallengeRequestDto.getExtramemberUuid().equals("none")) {
 			//자식일때
 			memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
