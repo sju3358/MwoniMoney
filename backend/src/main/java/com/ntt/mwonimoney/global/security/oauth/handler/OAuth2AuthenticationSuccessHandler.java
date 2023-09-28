@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -17,9 +15,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ntt.mwonimoney.domain.member.entity.Member;
+import com.ntt.mwonimoney.domain.member.model.dto.MemberAuthDto;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
+import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 import com.ntt.mwonimoney.global.security.jwt.Token;
 import com.ntt.mwonimoney.global.security.oauth.info.OAuth2MemberInfo;
@@ -40,8 +40,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 	private final OAuth2AuthorizationRequestBasedOnCookieRepository authorizationRequestRepository;
 	private final JwtTokenProvider jwtTokenProvider;
-	private final RedisTemplate<String, String> redisTemplate;
 	private final MemberRepository memberRepository;
+	private final MemberAuthService memberAuthService;
+
 	@Value("${app.oauth2.authorizedRedirectUris}")
 	private String redirectUri;
 
@@ -96,14 +97,17 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 		log.info("successHanlder : " + bySocialId.getUuid());
 
-		redisTemplate.opsForValue()
-			.set("RT" + socialId, tokenInfo.getRefreshToken(), tokenInfo.getExpireTime(),
-				TimeUnit.MILLISECONDS);
-
 		CookieUtil.deleteCookie(request, response, OAuth2AuthorizationRequestBasedOnCookieRepository.REFRESH_TOKEN);
 		CookieUtil.addCookie(response, OAuth2AuthorizationRequestBasedOnCookieRepository.REFRESH_TOKEN,
 			tokenInfo.getRefreshToken(),
 			JwtTokenProvider.getRefreshTokenExpireTimeCookie());
+
+		memberAuthService.login(
+			MemberAuthDto.builder()
+				.memberUUID(bySocialId.getUuid())
+				.memberIdx(bySocialId.getIdx())
+				.memberRefreshToken(tokenInfo.getRefreshToken())
+				.build());
 
 		return UriComponentsBuilder.fromUriString(targetUrl)
 			.queryParam("accessToken", tokenInfo.getAccessToken())
