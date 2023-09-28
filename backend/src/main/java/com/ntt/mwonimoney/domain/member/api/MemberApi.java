@@ -31,12 +31,17 @@ public class MemberApi {
 	public ResponseEntity getMemberInfoRequest(
 		@RequestHeader("Authorization") String accessToken) {
 
+		log.info("[멤버 조회 요청 시작]");
+
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+		log.info("멤버 UUID : ", memberUUID);
 
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
+		log.info("멤버 idx : ", memberIdx);
 
 		MemberDto responseData = memberService.getMemberInfo(memberIdx);
 
+		log.info("[멤버 조회 요청 끝]");
 		return ResponseEntity.ok().body(responseData);
 	}
 
