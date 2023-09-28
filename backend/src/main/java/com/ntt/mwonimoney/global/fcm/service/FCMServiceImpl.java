@@ -38,7 +38,7 @@ public class FCMServiceImpl implements FCMService {
 	}
 
 	public String sendNotificationByToken(FCMRequest fcmRequest) {
-		Optional<Member> member = memberRepository.findMemberByIdx(fcmRequest.getMemberIdx());
+		Optional<Member> member = (Optional<Member>)memberRepository.findMemberByIdx(fcmRequest.getMemberIdx());
 
 		if (member.isPresent()) {
 			if (member.get().getFCMToken() != null) {
