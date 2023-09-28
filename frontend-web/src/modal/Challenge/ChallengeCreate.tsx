@@ -1,6 +1,9 @@
 import * as React from "react";
 import styled from "styled-components";
 
+import { useRecoilState } from "recoil";
+import { newChallengeState } from "../../states/ChallengeState";
+
 export const ContentBox = styled.div`
   width: 100%;
   height: 100%;
@@ -45,10 +48,15 @@ export const SelectBox = styled.select`
 `;
 
 function CreateChallenge() {
+  const [inputValue, setInputValue] = React.useState("");
+
   const [selectedOption, setSelectedOption] = React.useState(""); // 선택된 옵션을 저장할 state
+
+  const [newChallenge, setNewChallenge] = useRecoilState(newChallengeState);
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
+    // setNewChallenge(event.target.value);
   };
 
   return (
