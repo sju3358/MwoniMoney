@@ -98,7 +98,7 @@ public class ChallengeApi {
 	}
 
 	//공통
-	//챌린지 조회
+	//부모 자식 챌린지 조회
 	@GetMapping("/")
 	public List<MemberChallengeResponseDto> SelectMemberChallenge(@RequestHeader("Authorization") String accessToken,
 		MemberChallengeRequestDto memberChallengeRequestDto) {
