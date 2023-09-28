@@ -153,6 +153,6 @@ public class JwtTokenProvider {
 
 		Claims claims = this.parseClaims(jwtToken);
 
-		return claims.get("id").toString();
+		return claims.get("sub").toString();
 	}
 }
