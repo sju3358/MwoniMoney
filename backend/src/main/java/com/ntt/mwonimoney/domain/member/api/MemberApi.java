@@ -27,7 +27,7 @@ public class MemberApi {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final MemberAuthService memberAuthService;
 
-	@GetMapping
+	@GetMapping("/members")
 	public ResponseEntity getMemberInfoRequest(
 		@RequestHeader("Authorization") String accessToken) {
 
@@ -40,7 +40,7 @@ public class MemberApi {
 		return ResponseEntity.ok().body(responseData);
 	}
 
-	@PostMapping
+	@PostMapping("/members")
 	public ResponseEntity editMemberInfoRequest(
 		@RequestHeader("Authorization") String accessToken,
 		@RequestBody MemberInfoChangeRequest request) {
