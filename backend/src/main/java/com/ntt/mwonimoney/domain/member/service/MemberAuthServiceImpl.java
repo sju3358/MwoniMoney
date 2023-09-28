@@ -22,7 +22,7 @@ public class MemberAuthServiceImpl implements MemberAuthService {
 
 	@Override
 	public MemberAuthDto getMemberAuthInfo(String memberUUID) {
-		MemberAuth memberAuth = memberAuthRepository.findMemberAuthByMemberUUID(memberUUID)
+		MemberAuth memberAuth = memberAuthRepository.findById(memberUUID)
 			.orElseThrow(() -> new NoSuchElementException());
 		return memberAuth.convertToDto();
 	}
