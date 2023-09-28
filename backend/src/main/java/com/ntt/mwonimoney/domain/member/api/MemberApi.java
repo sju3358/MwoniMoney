@@ -2,7 +2,7 @@ package com.ntt.mwonimoney.domain.member.api;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +40,7 @@ public class MemberApi {
 		return ResponseEntity.ok().body(responseData);
 	}
 
-	@PostMapping("/members")
+	@PatchMapping("/members")
 	public ResponseEntity editMemberInfoRequest(
 		@RequestHeader("Authorization") String accessToken,
 		@RequestBody MemberInfoChangeRequest request) {
