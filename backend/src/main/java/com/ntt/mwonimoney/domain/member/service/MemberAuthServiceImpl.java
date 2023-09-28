@@ -22,7 +22,7 @@ public class MemberAuthServiceImpl implements MemberAuthService {
 
 	@Override
 	public MemberAuthDto getMemberAuthInfo(String memberUUID) {
-		MemberAuth memberAuth = memberAuthRepository.findMemberAuthByMemberUUID(memberUUID)
+		MemberAuth memberAuth = memberAuthRepository.findById(memberUUID)
 			.orElseThrow(() -> new NoSuchElementException());
 		return memberAuth.convertToDto();
 	}
@@ -30,14 +30,13 @@ public class MemberAuthServiceImpl implements MemberAuthService {
 	@Override
 	@Transactional
 	public void login(MemberAuthDto memberAuthDto) {
-		MemberAuth memberAuth = new MemberAuth(memberAuthDto.getMemberUUID(), memberAuthDto.getMemberIdx(),
-			memberAuthDto.getMemberRefreshToken());
-		try {
-			memberAuthRepository.save(memberAuth);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		MemberAuth memberAuth = MemberAuth.builder()
+			.memberUUID(memberAuthDto.getMemberUUID())
+			.memberIdx(memberAuthDto.getMemberIdx())
+			.memberRefreshToken(memberAuthDto.getMemberRefreshToken())
+			.build();
 
+		memberAuthRepository.save(memberAuth);
 	}
 
 	@Override
