@@ -39,39 +39,39 @@ public class WebSecurityConfig {
 	private final RedisTemplate<String, String> redisTemplate;
 	private final MemberRepository memberRepository;
 	private static final String[] GET_LIST = {"/api/oauth2/authorization", "/api/login/oauth2/code/**",
-		"/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**", "/api-docs/swagger-config"};
+			"/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**", "/api-docs/swagger-config"};
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf(AbstractHttpConfigurer::disable)
-			.httpBasic(AbstractHttpConfigurer::disable)
-			.formLogin(AbstractHttpConfigurer::disable)
-			.cors(c -> c.configurationSource(corsConfigurationSource()))
-			.exceptionHandling(c -> c.authenticationEntryPoint(new RestAuthenticationEntryPoint())
-				.accessDeniedHandler(tokenAccessDeniedHandler))
-			.sessionManagement(c -> c.sessionCreationPolicy((SessionCreationPolicy.STATELESS)))
-			.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, GET_LIST)
-				.permitAll()
-				.requestMatchers("/**")
-				.hasAnyRole("PARENT", "CHILD", "GUEST")
-				.anyRequest()
-				.authenticated())
-			.oauth2Login()
-			.authorizationEndpoint()
-			.baseUri("/api/oauth2/authorization")
-			.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
-			.and()
-			.redirectionEndpoint()
-			.baseUri("/api/login/oauth2/code/*").and()
-			.userInfoEndpoint()
-			.userService(customOAuth2UserService)
-			.and()
-			.successHandler(oAuth2AuthenticationSuccessHandler())
-			.failureHandler(oAuth2AuthenticationFailureHandler())
-			.permitAll()
-			.and()
-			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate, memberRepository),
-				UsernamePasswordAuthenticationFilter.class);
+				.httpBasic(AbstractHttpConfigurer::disable)
+				.formLogin(AbstractHttpConfigurer::disable)
+				.cors(c -> c.configurationSource(corsConfigurationSource()))
+				.exceptionHandling(c -> c.authenticationEntryPoint(new RestAuthenticationEntryPoint())
+						.accessDeniedHandler(tokenAccessDeniedHandler))
+				.sessionManagement(c -> c.sessionCreationPolicy((SessionCreationPolicy.STATELESS)));
+//				.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, GET_LIST)
+//						.permitAll()
+//						.requestMatchers("/**")
+//						.hasAnyRole("PARENT", "CHILD", "GUEST")
+//						.anyRequest()
+//						.authenticated())
+//				.oauth2Login()
+//				.authorizationEndpoint()
+//				.baseUri("/api/oauth2/authorization")
+//				.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
+//				.and()
+//				.redirectionEndpoint()
+//				.baseUri("/api/login/oauth2/code/*").and()
+//				.userInfoEndpoint()
+//				.userService(customOAuth2UserService)
+//				.and()
+//				.successHandler(oAuth2AuthenticationSuccessHandler())
+//				.failureHandler(oAuth2AuthenticationFailureHandler())
+//				.permitAll()
+//				.and()
+//				.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate, memberRepository),
+//						UsernamePasswordAuthenticationFilter.class);
 
 		return httpSecurity.build();
 	}
@@ -97,7 +97,7 @@ public class WebSecurityConfig {
 	@Bean
 	public OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
 		return new OAuth2AuthenticationSuccessHandler(oAuth2AuthorizationRequestBasedOnCookieRepository(),
-			jwtTokenProvider, redisTemplate, memberRepository);
+				jwtTokenProvider, redisTemplate, memberRepository);
 	}
 
 	@Bean
