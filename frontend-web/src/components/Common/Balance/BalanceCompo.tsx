@@ -44,6 +44,7 @@ interface ButtonProps {
   backgroundcolor: string;
   border: string;
 }
+
 const Button = styled.button<ButtonProps>`
   // border: 1px solid black;
   background-color: ${(props) => props.backgroundcolor};
@@ -67,13 +68,22 @@ const Click = styled.div`
   display: flex;
   justify-content: center;
 `;
+
 interface BalanceCompoProps {
   showText?: boolean;
   showImg?: boolean;
+  questionText: string; // Add prop for question text
+  buyText: string; // Add prop for "산다" text
+  notBuyText: string; // Add prop for "안산다" text
 }
 
-function BalanceCompo({ showText = true, showImg = true }: BalanceCompoProps) {
-  const balancequestion = "ABC 기업의 주식을 구매하시겠습니까?";
+function BalanceCompo({
+  showText = true,
+  showImg = true,
+  questionText,
+  buyText,
+  notBuyText,
+}: BalanceCompoProps) {
   const handleClick = () => {
     console.log("버튼이 클릭되었습니다!");
   };
@@ -107,15 +117,15 @@ function BalanceCompo({ showText = true, showImg = true }: BalanceCompoProps) {
             marginL="0%"
             justifyContent="center"
           >
-            {balancequestion}
+            {questionText}
           </TextBox>
         </Container>
         <Container height="20%">
           <Button backgroundcolor="#FBD56E" border="0">
-            산다
+            {buyText}
           </Button>
           <Button backgroundcolor="F4F4F4" border="0">
-            안산다
+            {notBuyText}
           </Button>
         </Container>
       </WhiteBox1>
