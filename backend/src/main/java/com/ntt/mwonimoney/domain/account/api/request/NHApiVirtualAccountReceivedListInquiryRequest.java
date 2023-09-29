@@ -5,17 +5,12 @@ import lombok.Data;
 
 @Data
 @Builder
-public class NHApiInquireTransactionHistoryRequest {
+public class NHApiVirtualAccountReceivedListInquiryRequest {
     private NHApiRequestHeader requestHeader;
-    private BncdType Bncd;
-    private String Acno;
     private String Insymd;
     private String Ineymd;
-    @Builder.Default
-    private TrnsDsncType TrnsDsnc = TrnsDsncType.A;
-    @Builder.Default
-    private LnsqType Lnsq = LnsqType.ASC;
+    private String Vran;
+    private LnsqType lnsqType;
     @Builder.Default
     private int PageNo = 1;
-    private int Dmcnt;
 }
