@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios, { AxiosResponse } from "axios";
+import { api } from "../apis/Api";
 
 import {
   MainContainer,
@@ -12,10 +14,12 @@ import { Text } from "../components/Common/About/AboutText";
 import { WhiteBox } from "../components/Common/About/AboutWhilteContainer";
 import { Img } from "../components/Common/About/AboutEmogi";
 
-//모달
+// 모달
+import ProgressModal from "../modal/ProgressModal";
 import IntoBalanceResult from "../components/Common/Main/IntoBalanceResult";
 
-//이미지
+// 이미지
+import LeftArrow from "../assests/image/main/LeftArrow.png";
 import Chat from "../assests/image/main/Chat.png";
 
 const ListContainer = styled.div`
@@ -37,44 +41,109 @@ const ImgBox = styled.button`
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
 `;
 
+export const getBalance = (props: GetRegisterProps): Promise<AxiosResponse> => {
+  // axios 요청을 보낼 때 Authorization 헤더 설정
+  return api.get("/v1/balances?page=1&size=20", {
+    headers: {
+      Authorization: `Bearer ${props.bearerToken}`,
+    },
+  });
+};
+
+interface GetRegisterProps {
+  bearerToken: string;
+}
+
+interface BalanceDataItem {
+  idx: number;
+  question: string;
+  leftAnswer: string;
+  rightAnswer: string;
+  balanceGameStatus: string;
+  countOfLeftAnswer: number;
+  countOfRightAnswer: number;
+}
+
 function Balance() {
+  const [balanceData, setBalanceData] = useState<BalanceDataItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Make the API call to get balance data
+
+    const accessToken = localStorage.getItem("accessToken") || ""; // Provide an empty string as a default value
+
+    console.log(accessToken);
+
+    getBalance({ bearerToken: accessToken })
+      .then((response) => {
+        console.log("API Response:", response.data); // Log the response data
+        const data: BalanceDataItem[] = response.data.content; // Use 'content' array
+        console.log("Data in setBalanceData:", data); // Log the data before setting it
+        setBalanceData(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error("Error fetching balance data:", error);
+        setIsLoading(false);
+      });
+  }, []);
+
+  // ... 이전 코드 ...
+
+  // ... 이전 코드 ...
+
   return (
     <MainContainer>
-      <BalanceContainer height="40%">
-        <BalanceCompo showText={false} showImg={false} />
-      </BalanceContainer>
-      <ListContainer>
-        <WhiteBox margin="0% 0% 5% 0%" padding="0%">
-          <TextContainer
-            style={{ justifyContent: "space-between", alignItems: "center" }}
-          >
-            <Text color="#C4C4C4" fontsize="0.75rem" padding="0% 0% 0% 5%">
-              내일 축구는 누가 이길까요?
-            </Text>
-            <IntoBalanceResult />
-          </TextContainer>
-        </WhiteBox>
-        <WhiteBox margin="0% 0% 5% 0%" padding="0%">
-          <TextContainer
-            style={{ justifyContent: "space-between", alignItems: "center" }}
-          >
-            <Text color="#C4C4C4" fontsize="0.75rem" padding="0% 0% 0% 5%">
-              내일 야구는 누가 이길까요?
-            </Text>
-            <IntoBalanceResult />
-          </TextContainer>
-        </WhiteBox>
-        <WhiteBox margin="0% 0% 5% 0%" padding="0%">
-          <TextContainer
-            style={{ justifyContent: "space-between", alignItems: "center" }}
-          >
-            <Text color="#C4C4C4" fontsize="0.75rem" padding="0% 0% 0% 5%">
-              내일 농구는 누가 이길까요?
-            </Text>
-            <IntoBalanceResult />
-          </TextContainer>
-        </WhiteBox>
-      </ListContainer>
+      {isLoading ? (
+        // Render loading indicator or message while data is being fetched
+        <ProgressModal />
+      ) : (
+        <>
+          {/* Render items with balanceGameStatus "RUNNING" */}
+          {balanceData
+            .filter((item) => item.balanceGameStatus === "RUNNING")
+            .map((item, index) => (
+              <BalanceContainer key={index} height="40%">
+                <BalanceCompo
+                  showText={true}
+                  showImg={true}
+                  questionText={item.question}
+                  buyText={item.leftAnswer}
+                  notBuyText={item.rightAnswer}
+                />
+              </BalanceContainer>
+            ))}
+
+          {/* Render items with balanceGameStatus "END" */}
+          {balanceData
+            .filter((item) => item.balanceGameStatus === "END")
+            .map((item, index) => (
+              <ListContainer key={index}>
+                <WhiteBox margin="0% 0% 5% 0%" padding="0%">
+                  <TextContainer
+                    style={{
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      color="#C4C4C4"
+                      fontsize="0.75rem"
+                      padding="0% 0% 0% 5%"
+                    >
+                      {item.question}
+                    </Text>
+                    <IntoBalanceResult />
+                  </TextContainer>
+                </WhiteBox>
+              </ListContainer>
+            ))}
+        </>
+      )}
+
+      {/* Other components */}
       <ImgContainer>
         <ImgBox>
           <Img width="100%" height="100%" padding="0%" src={`${Chat}`} />
