@@ -5,10 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class NHApiDrawingTransferRequest {
+public class NHOpenVirtualAccountRequest {
     private NHApiRequestHeader requestHeader;
-    private String FinAcno;
-    private String Tram;
-    private String DractOtlt;
-    private String MractOtlt;
+    private String Dpnm;
 }
