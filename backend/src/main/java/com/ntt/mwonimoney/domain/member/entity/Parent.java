@@ -21,6 +21,7 @@ public class Parent extends Member {
 		super(status, name, nickname, birthday, socialProvider, socialId, email, MemberRole.PARENT);
 	}
 
+	@Override
 	public ParentDto convertToDto() {
 		return ParentDto.builder()
 			.idx(this.getIdx())

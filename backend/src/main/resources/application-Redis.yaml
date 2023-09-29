@@ -1,5 +1,10 @@
 spring:
   data:
     redis:
+      lettuce:
+        pool:
+          max-active: 5
+          max-idle: 5
+          min-idle: 2
       host: j9b310.p.ssafy.io
       port: 6379

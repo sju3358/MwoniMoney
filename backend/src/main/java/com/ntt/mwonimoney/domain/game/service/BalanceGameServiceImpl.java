@@ -8,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +15,6 @@ import com.ntt.mwonimoney.domain.game.api.request.BalanceGameListRequest;
 import com.ntt.mwonimoney.domain.game.entity.BalanceGame;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameDto;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameListDto;
-import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameStatus;
 import com.ntt.mwonimoney.domain.game.repository.BalanceGameRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -33,9 +31,9 @@ public class BalanceGameServiceImpl implements BalanceGameService {
 	@Override
 	public Slice<BalanceGameListDto> getBalanceGames(BalanceGameListRequest request) {
 
-		Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), Sort.by("create_time").descending());
+		Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
 
-		Slice<BalanceGame> balanceGameEntities = balanceGameRepository.findBalanceGamesBy(pageable);
+		Slice<BalanceGame> balanceGameEntities = balanceGameRepository.findSliceGamesBy(pageable);
 
 		if (balanceGameEntities.isEmpty() == true) {
 			throw new NoSuchElementException("밸런스 게임이 존재하지 않습니다.");
