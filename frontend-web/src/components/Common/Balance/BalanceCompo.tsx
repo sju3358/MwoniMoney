@@ -4,6 +4,7 @@ import Newspaper from "../../../assests/image/main/Newspaper.png";
 import LeftArrow from "../../../assests/image/main/LeftArrow.png";
 import { Link } from "react-router-dom";
 import { WhiteBox } from "../About/AboutWhilteContainer";
+import { useNavigate } from "react-router";
 
 /**
  *
@@ -110,9 +111,14 @@ interface BalanceCompoProps {
 
 function BalanceCompo({ showText = true, showImg = true }: BalanceCompoProps) {
   const balancequestion = "ABC 기업의 주식을 구매하시겠습니까?";
+  const navigate = useNavigate();
 
   const handleClick = () => {
     console.log("버튼이 클릭되었습니다!");
+  };
+
+  const GoGoalMoney = () => {
+    navigate("/Balance");
   };
   return (
     <BalanceContainer>
@@ -121,7 +127,7 @@ function BalanceCompo({ showText = true, showImg = true }: BalanceCompoProps) {
           오늘의 밸런스 게임
         </Text_no>
       )}
-      <WhiteBox width="100%">
+      <WhiteBox width="100%" onClick={GoGoalMoney}>
         {showImg && (
           <Link to="/Balance">
             <ImgBox justifycontent="right">
