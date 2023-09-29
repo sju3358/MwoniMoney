@@ -11,8 +11,12 @@ public class NHApiInquireTransactionHistoryRequest {
     private String Acno;
     private String Insymd;
     private String Ineymd;
+    @Builder.Default
     private TrnsDsncType TrnsDsnc = TrnsDsncType.A;
+    @Builder.Default
     private LnsqType Lnsq = LnsqType.ASC;
+    @Builder.Default
     private int PageNo = 1;
+    @Builder.Default
     private int Dmcnt;
 }
