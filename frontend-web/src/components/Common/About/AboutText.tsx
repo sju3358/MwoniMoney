@@ -14,7 +14,7 @@ interface TextBoxProps {
 }
 
 export const TextBox = styled.div<TextBoxProps>`
-  border: 1px solid green;
+  // border: 1px solid green;
   box-sizing: border-box;
   display: flex;
   flex-direction: ${(props) =>
@@ -58,7 +58,7 @@ export const Text = styled.div<TextProps>`
 `;
 
 export const InputBox = styled.input<TextProps>`
-  border: 1px solid orange;
+  // border: 1px solid orange;
   color: ${(props) => (props.color ? props.color : "black")};
   font-family: ${(props) => (props.fontfamily ? props.fontfamily : "Inter")};
   font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
@@ -68,4 +68,6 @@ export const InputBox = styled.input<TextProps>`
   padding: ${(props) => (props.padding ? props.padding : "0%")};
   text-align: ${(props) => (props.textalign ? props.textalign : "")};
   margin-left: ${(props) => (props.marginL ? props.marginL : "7%")};
+  border: none;
+  overflow: hidden;
 `;
