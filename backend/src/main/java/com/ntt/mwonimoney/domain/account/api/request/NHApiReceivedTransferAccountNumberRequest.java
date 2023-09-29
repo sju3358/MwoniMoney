@@ -5,9 +5,10 @@ import lombok.Data;
 
 @Data
 @Builder
-public class NHApiDrawingTransferRequest {
+public class NHApiReceivedTransferAccountNumberRequest {
     private NHApiRequestHeader requestHeader;
-    private String FinAcno;
+    private BncdType bncdType;
+    private String Acno;
     private String Tram;
     private String DractOtlt;
     private String MractOtlt;
