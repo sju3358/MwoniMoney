@@ -14,18 +14,35 @@ import { InputBox, TextBox } from "../components/Common/About/AboutText";
 import { Link } from "react-router-dom";
 import { Img } from "../components/Common/About/AboutEmogi";
 import LeftArrow from "../assests/image/main/LeftArrow.png";
+import { userDataState } from "../states/UserInfoState";
+import { useRecoilState } from "recoil";
 
 // 입력칸
 interface InputImfoProps {
   title: string;
   info: string;
   placeholder: string;
+  id: string;
 }
 
-function InputImfo({ title, info, placeholder }: InputImfoProps) {
+function InputImfo({ title, info, placeholder, id }: InputImfoProps) {
+  const [userData, setUserData] = useRecoilState(userDataState);
+  const [inputValue, setInputValue] = useState("");
+
+  const handleInputChange = (e: any) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleButtonClick = () => {
+    alert(inputValue);
+    setUserData((userData: any) => ({
+      ...userData,
+      [id]: inputValue,
+    }));
+  };
   return (
     <>
-      <Container height="25%">
+      <Container height="30%">
         <TextBox fontSize="1.5em" height="100%">
           {title}
         </TextBox>
@@ -36,36 +53,47 @@ function InputImfo({ title, info, placeholder }: InputImfoProps) {
         justifyContent="center"
         align="center"
       >
-        <TextBox
-          height="30%"
-          width="93%"
-          fontSize="1em"
-          fontWeight="normal"
-          marginL="0%"
-          style={{ borderBottom: "1px solid black" }}
-        >
-          <Container height="100%" width="80%">
-            <InputBox
+        {userData.memberRole === "GUEST" ? (
+          <TextBox
+            height="40%"
+            width="93%"
+            fontSize="1em"
+            fontWeight="normal"
+            marginL="0%"
+            style={{ borderBottom: "1px solid black" }}
+          >
+            <Container height="100%" width="80%">
+              <InputBox
+                height="100%"
+                width="100%"
+                type="text"
+                fontsize="1.4em"
+                placeholder={placeholder}
+                id={id}
+                onChange={handleInputChange}
+              />
+            </Container>
+            <Container
               height="100%"
-              width="100%"
-              type="text"
-              placeholder={placeholder}
-            />
-          </Container>
-          <Container height="100%" width="20%" backcolor="#fbd56e">
-            추가
-          </Container>
-        </TextBox>
-        <TextBox
-          height="30%"
-          width="93%"
-          fontSize="1em"
-          fontWeight="normal"
-          marginL="0%"
-          style={{ borderBottom: "1px solid black" }}
-        >
-          {info}
-        </TextBox>
+              width="20%"
+              backcolor="#fbd56e"
+              onClick={handleButtonClick}
+            >
+              추가
+            </Container>
+          </TextBox>
+        ) : (
+          <TextBox
+            height="30%"
+            width="93%"
+            fontSize="1em"
+            fontWeight="normal"
+            marginL="0%"
+            style={{ borderBottom: "1px solid black" }}
+          >
+            {info}
+          </TextBox>
+        )}
       </Container>
     </>
   );
@@ -80,6 +108,7 @@ interface CheckedSettings {
 }
 
 function Mypage() {
+  const [userData, setUserData] = useRecoilState(userDataState);
   const [checked, setChecked] = useState<CheckedSettings>({
     challengeChecked: false,
     balanceChecked: false,
@@ -93,10 +122,13 @@ function Mypage() {
       [settingName]: !prevSettings[settingName],
     }));
   };
+  console.log(userData);
 
   const account = "000-000-0000";
-  const name = "이지현"; // api연결시 자녀1 이름으로 매핑
-  const birth = "00.01.01";
+  const name = userData.name; // api연결시 자녀1 이름으로 매핑
+  const birth = userData.birthday;
+  const memberRole = userData.memberRole;
+
   return (
     <MainContainer>
       {/* 페이지 제목 & 이미지 */}
@@ -117,15 +149,32 @@ function Mypage() {
             flexDirection: "column",
           }}
         >
-          <InputImfo
-            title="계좌"
-            info={`${account}`}
-            placeholder="000-000-0000"
-          />
+          <Container height="30%">
+            <TextBox fontSize="1.5em" height="100%">
+              계좌번호
+            </TextBox>
+          </Container>
+          <Container
+            flexDirection="column"
+            height="75%"
+            justifyContent="center"
+            align="center"
+          >
+            <TextBox
+              height="30%"
+              width="93%"
+              fontSize="1em"
+              fontWeight="normal"
+              marginL="0%"
+              style={{ borderBottom: "1px solid black" }}
+            >
+              {account}
+            </TextBox>
+          </Container>
         </WhiteBox1>
       </Container>
 
-      <Container height="50%">
+      <Container height="60%">
         <WhiteBox1
           style={{
             display: "flex",
@@ -133,7 +182,7 @@ function Mypage() {
           }}
         >
           <Container
-            height="90%"
+            height="100%"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -143,18 +192,20 @@ function Mypage() {
               title="이름"
               info={`${name}`}
               placeholder="실명을 적어주세요"
+              id="name"
             />
             <InputImfo
               title="생년월일"
               info={`${birth}`}
-              placeholder="생년월일"
+              placeholder="1997-03-20"
+              id="birthday"
             />
           </Container>
         </WhiteBox1>
       </Container>
       <Container height="50%">
-        <WhiteBox1>
-          <Container width="90%" height="90%">
+        <WhiteBox1 justify="center" align="center">
+          <Container width="95%" height="95%" flexDirection="column">
             <TextBox height="30%" fontSize="1.5em">
               알림설정
             </TextBox>
