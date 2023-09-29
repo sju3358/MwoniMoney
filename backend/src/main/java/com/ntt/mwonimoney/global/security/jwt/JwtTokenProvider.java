@@ -93,6 +93,7 @@ public class JwtTokenProvider {
 			.collect(Collectors.toList());
 
 		UserDetails principal = new User(claims.getSubject(), "", authorities);
+		System.out.println(principal.getUsername() + " " + principal.getPassword() + " " + principal.getAuthorities());
 		return new UsernamePasswordAuthenticationToken(principal, "", authorities);
 	}
 

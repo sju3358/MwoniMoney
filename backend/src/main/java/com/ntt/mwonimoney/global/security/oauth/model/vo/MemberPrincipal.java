@@ -38,8 +38,8 @@ public class MemberPrincipal implements OAuth2User, UserDetails, OidcUser {
 	public static MemberPrincipal create(Member member, MemberRole memberRole) {
 		return new MemberPrincipal(member.getSocialId(),
 			member.getEmail(),
-			member.getName(),
 			member.getUuid(),
+			"",
 			member.getSocialProvider(),
 			memberRole,
 			Collections.singletonList(new SimpleGrantedAuthority(memberRole.name())));
@@ -64,7 +64,7 @@ public class MemberPrincipal implements OAuth2User, UserDetails, OidcUser {
 
 	@Override
 	public String getUsername() {
-		return socialId;
+		return name;
 	}
 
 	@Override
