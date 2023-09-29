@@ -4,6 +4,7 @@ import static com.ntt.mwonimoney.domain.game.entity.QBalanceGame.*;
 import static com.ntt.mwonimoney.domain.game.entity.QBalanceGameHistory.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
@@ -64,9 +65,12 @@ public class CustomBalanceGameRepositoryImpl implements CustomBalanceGameReposit
 			.limit(pageable.getPageSize() + 1)
 			.fetch();
 
+		if (result.size() == 0)
+			throw new NoSuchElementException("밸런스게임이 존재하지 않습니다");
+
 		boolean hasNext = false;
 		if (result.size() > pageable.getPageSize()) {
-			result.remove(result.size());
+			result.remove(result.size() - 1);
 			hasNext = true;
 		}
 
