@@ -2,16 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import Newspaper from "../../../assests/image/main/Newspaper.png";
 import LeftArrow from "../../../assests/image/main/LeftArrow.png";
-import { WhiteBox1 } from "../About/AboutWhilteContainer";
-import News from "../../../modal/Quiz/News";
-import { TextBox } from "../About/AboutText";
-import { Container } from "../About/AboutContainer";
-import { EmogiBox } from "../About/AboutEmogi";
+import { Link } from "react-router-dom";
+import { WhiteBox } from "../About/AboutWhilteContainer";
+import { useNavigate } from "react-router";
 
 /**
  *
  * style
  */
+
+const BalanceContainer = styled.div`
+  // border: 1px solid black;
+  padding: 7%;
+  width: 100%;
+  height: 80%;
+`;
 
 interface TextProps {
   fontsize?: string | null;
@@ -20,6 +25,24 @@ interface TextProps {
   fontweight?: string | null;
   textalign?: string | null;
 }
+
+const Text = styled.div<TextProps>`
+  // border: 1px solid black;
+  font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
+  color: ${(props) => (props.fontcolor ? props.fontcolor : "black")};
+  padding: ${(props) => (props.fontpadding ? props.fontpadding : "0%")};
+  font-weight: ${(props) => (props.fontweight ? props.fontweight : "400")};
+  text-align: ${(props) => (props.textalign ? props.textalign : "")};
+`;
+const Text_no = styled.div<TextProps>`
+  // border: 1px solid black;
+  display: flex;
+  font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
+  color: ${(props) => (props.fontcolor ? props.fontcolor : "black")};
+  padding: ${(props) => (props.fontpadding ? props.fontpadding : "0%")};
+  font-weight: ${(props) => (props.fontweight ? props.fontweight : "400")};
+  text-align: ${(props) => (props.textalign ? props.textalign : "")};
+`;
 
 /**
  *
@@ -31,15 +54,35 @@ interface ImgProps {
   padding?: string | null;
   margin?: string | null;
 }
-
-export const Img_no = styled.img<ImgProps>`
+const Img = styled.img<ImgProps>`
   // border: 1px solid black;
   width: ${(props) => (props.width ? props.width : "100%")};
   height: ${(props) => (props.height ? props.height : "100%")};
   padding: ${(props) => (props.padding ? props.padding : "0%")};
   margin: ${(props) => (props.margin ? props.margin : "0%")};
 `;
+const Img_no = styled.img<ImgProps>`
+  // border: 1px solid black;
+  width: ${(props) => (props.width ? props.width : "100%")};
+  height: ${(props) => (props.height ? props.height : "100%")};
+  padding: ${(props) => (props.padding ? props.padding : "0%")};
+  margin: ${(props) => (props.margin ? props.margin : "0%")};
+`;
+interface ImgBoxProps {
+  justifycontent?: string | null;
+}
+const ImgBox = styled.div<ImgBoxProps>`
+  // border: 1px solid black;
+  display: flex;
+  justify-content: ${(props) =>
+    props.justifycontent ? props.justifycontent : "space-evenly"};
+`;
 
+const ButtonBox = styled.div`
+  // border: 1px solid black;
+  display: flex;
+  justify-content: center;
+`;
 interface ButtonProps {
   backgroundcolor: string;
   border: string;
@@ -52,21 +95,15 @@ const Button = styled.button<ButtonProps>`
   border-radius: 5px;
   margin: 2% 5% 0% 5%;
   padding: 2% 7% 2% 7%;
-  font-weight: bold;
-  font-size: 1em;
 `;
 
-const Click = styled.div`
-  width: 20%;
-  height: 17%;
+const ClickButton = styled.button`
   background-color: #ffa27e;
   border: 0;
-  border-radius: 50px;
+  border-radius: 12px;
   position: relative;
-  bottom: 15%;
-  left: 20%;
-  display: flex;
-  justify-content: center;
+  bottom: 10%;
+  left: 50%;
 `;
 
 interface BalanceCompoProps {
@@ -88,34 +125,38 @@ function BalanceCompo({
     console.log("버튼이 클릭되었습니다!");
   };
 
+  const GoGoalMoney = () => {
+    navigate("/Balance");
+  };
   return (
-    <Container height="100%" flexDirection="column">
-      <Container height="10%" overflowy="hidden">
-        {showText && <TextBox height="100%">오늘의 밸런스 게임</TextBox>}
-      </Container>
-      <WhiteBox1 height="75%" marginB="5%" flexDirection="column">
-        <Container height="10%" justifyContent="end">
-          {showImg && (
-            <EmogiBox
-              backImg={`${LeftArrow}`}
-              width="7%"
-              height="100%"
-              onClick={handleClick}
-            />
-          )}
-        </Container>
-        <Container height="53%" flexDirection="column">
-          <EmogiBox backImg={`${Newspaper}`} width="45%" height="100%" />
-          <Click>
-            <News />
-          </Click>
-        </Container>
-        <Container height="15%">
-          <TextBox
-            fontSize="1rem"
-            height="100%"
-            marginL="0%"
-            justifyContent="center"
+    <BalanceContainer>
+      {showText && (
+        <Text_no fontpadding="0% 0% 5% 0%" fontweight="700">
+          오늘의 밸런스 게임
+        </Text_no>
+      )}
+      <WhiteBox width="100%" onClick={GoGoalMoney}>
+        {showImg && (
+          <Link to="/Balance">
+            <ImgBox justifycontent="right">
+              <Img_no
+                src={`${LeftArrow}`}
+                width="7%"
+                height="7%"
+                onClick={handleClick}
+              />
+            </ImgBox>
+          </Link>
+        )}
+        <ImgBox>
+          <Img src={`${Newspaper}`} width="25%" height="25%" />
+        </ImgBox>
+        <ClickButton>
+          <Text
+            fontsize="0.625rem"
+            fontcolor="#FFFFFF"
+            fontweight="600"
+            textalign="center"
           >
             {questionText}
           </TextBox>
@@ -127,9 +168,9 @@ function BalanceCompo({
           <Button backgroundcolor="F4F4F4" border="0">
             {notBuyText}
           </Button>
-        </Container>
-      </WhiteBox1>
-    </Container>
+        </ButtonBox>
+      </WhiteBox>
+    </BalanceContainer>
   );
 }
 
