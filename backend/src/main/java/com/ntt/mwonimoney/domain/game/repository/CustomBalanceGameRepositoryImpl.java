@@ -58,6 +58,7 @@ public class CustomBalanceGameRepositoryImpl implements CustomBalanceGameReposit
 		List<BalanceGame> result = jpaQueryFactory
 			.select(balanceGame)
 			.from(balanceGame)
+			.where(balanceGame.balanceGameStatus.ne(BalanceGameStatus.WAIT))
 			.orderBy(balanceGame.createTime.desc())
 			.offset(pageable.getPageNumber())
 			.limit(pageable.getPageSize() + 1)
