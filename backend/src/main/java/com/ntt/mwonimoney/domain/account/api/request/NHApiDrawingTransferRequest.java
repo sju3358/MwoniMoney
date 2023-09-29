@@ -6,6 +6,5 @@ import lombok.Data;
 @Data
 @Builder
 public class NHApiDrawingTransferRequest {
-    private NHApiRequestHeader requestHeader;
-    private 
+	private NHApiRequestHeader requestHeader;
 }
