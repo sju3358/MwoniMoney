@@ -24,14 +24,12 @@ public class Parent extends Member {
 	@Override
 	public ParentDto convertToDto() {
 		return ParentDto.builder()
-			.idx(this.getIdx())
 			.uuid(this.getUuid())
 			.status(this.getStatus())
 			.name(this.getName())
 			.nickname(this.getNickname())
 			.birthday(this.getBirthday())
 			.socialProvider(this.getSocialProvider())
-			.socialId(this.getSocialId())
 			.memberRole(this.getMemberRole())
 			.build();
 	}

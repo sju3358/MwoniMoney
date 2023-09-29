@@ -47,14 +47,13 @@ public class BalanceGame {
 	@Column(name = "create_time", updatable = false)
 	private LocalDateTime createTime;
 
-	public void endBalanceGame(){
+	public void endBalanceGame() {
 		this.balanceGameStatus = BalanceGameStatus.END;
 	}
+
 	public void runBalanceGame() {
 		this.balanceGameStatus = BalanceGameStatus.RUNNING;
 	}
-
-
 
 	@Builder
 	public BalanceGame(String question, String leftAnswer, String rightAnswer) {
@@ -70,6 +69,7 @@ public class BalanceGame {
 			.question(this.question)
 			.leftAnswer(this.leftAnswer)
 			.rightAnswer(this.rightAnswer)
+			.balanceGameStatus(this.balanceGameStatus)
 			.build();
 	}
 
