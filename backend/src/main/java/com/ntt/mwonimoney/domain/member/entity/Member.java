@@ -1,6 +1,12 @@
 package com.ntt.mwonimoney.domain.member.entity;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.UUID;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.ntt.mwonimoney.domain.member.model.dto.GuestDto;
 import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
@@ -27,7 +33,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "member")
-public abstract class Member extends CommonEntity {
+public abstract class Member extends CommonEntity implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -107,5 +113,40 @@ public abstract class Member extends CommonEntity {
 
 	public void updateFCMToken(String FCMToken) {
 		this.FCMToken = FCMToken;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Collections.singletonList(new SimpleGrantedAuthority(getMemberRole().name()));
+	}
+
+	@Override
+	public String getPassword() {
+		return "";
+	}
+
+	@Override
+	public String getUsername() {
+		return getSocialId();
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 }
