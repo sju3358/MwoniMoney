@@ -1,50 +1,75 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import Switch from "@mui/material/Switch";
 
 import {
   Emoji,
   MainContainer,
   Text,
-  TextContainer,
   TextEmojiBox,
   TextMentBox,
 } from "../components/Common/MyPage/MyPage";
-
+import { Container } from "../components/Common/About/AboutContainer";
 import { WhiteBox1 } from "../components/Common/About/AboutWhilteContainer";
-import { TextBox } from "../components/Common/About/AboutText";
+import { InputBox, TextBox } from "../components/Common/About/AboutText";
 import { Link } from "react-router-dom";
 import { Img } from "../components/Common/About/AboutEmogi";
 import LeftArrow from "../assests/image/main/LeftArrow.png";
 
-interface ContainerProps {
-  height: string;
-  flexDirection?: string | null;
+// 입력칸
+interface InputImfoProps {
+  title: string;
+  info: string;
+  placeholder: string;
 }
 
-export const Container = styled.div<ContainerProps>`
-  height: ${(props) => props.height}; /* props.height 값을 스타일에 적용 */
-  width: 100%;
-  display: flex;
-  flex-direction: ${(props) =>
-    props.flexDirection ? props.flexDirection : "row"};
-  justify-content: center;
-  align-items: center;
-  border: 1px solid black;
-  box-sizing: border-box;
-`;
-
-interface HalfBoxProps {
-  width?: string;
-  height?: string;
+function InputImfo({ title, info, placeholder }: InputImfoProps) {
+  return (
+    <>
+      <Container height="25%">
+        <TextBox fontSize="1.5em" height="100%">
+          {title}
+        </TextBox>
+      </Container>
+      <Container
+        flexDirection="column"
+        height="75%"
+        justifyContent="center"
+        align="center"
+      >
+        <TextBox
+          height="30%"
+          width="93%"
+          fontSize="1em"
+          fontWeight="normal"
+          marginL="0%"
+          style={{ borderBottom: "1px solid black" }}
+        >
+          <Container height="100%" width="80%">
+            <InputBox
+              height="100%"
+              width="100%"
+              type="text"
+              placeholder={placeholder}
+            />
+          </Container>
+          <Container height="100%" width="20%" backcolor="#fbd56e">
+            추가
+          </Container>
+        </TextBox>
+        <TextBox
+          height="30%"
+          width="93%"
+          fontSize="1em"
+          fontWeight="normal"
+          marginL="0%"
+          style={{ borderBottom: "1px solid black" }}
+        >
+          {info}
+        </TextBox>
+      </Container>
+    </>
+  );
 }
-
-const HalfBox = styled.div<HalfBoxProps>`
-  // border: 1px solid black;
-  box-sizing: border-box;
-  width: ${(props) => (props.width ? props.width : "85%")};
-  height: ${(props) => (props.height ? props.height : "100%")};
-`;
 
 //알림
 interface CheckedSettings {
@@ -74,7 +99,8 @@ function Mypage() {
   const birth = "00.01.01";
   return (
     <MainContainer>
-      <TextContainer>
+      {/* 페이지 제목 & 이미지 */}
+      <Container width="100%" height="20%">
         <TextMentBox>
           <Text>{name}님</Text>
           <Text>안녕하세요!</Text>
@@ -82,7 +108,8 @@ function Mypage() {
         <TextEmojiBox>
           <Emoji />
         </TextEmojiBox>
-      </TextContainer>
+      </Container>
+      {/* 계좌번호 입력하는 칸 */}
       <Container height="30%">
         <WhiteBox1
           style={{
@@ -90,23 +117,14 @@ function Mypage() {
             flexDirection: "column",
           }}
         >
-          <HalfBox height="100%">
-            <TextBox fontSize="1.5em">계좌</TextBox>
-            <TextBox
-              height="30%"
-              fontSize="1em"
-              fontWeight="normal"
-              style={{
-                marginTop: "10px", // 상단 여백 추가
-                borderBottom: "1px solid black",
-                paddingLeft: "5%",
-              }}
-            >
-              {account}
-            </TextBox>
-          </HalfBox>
+          <InputImfo
+            title="계좌"
+            info={`${account}`}
+            placeholder="000-000-0000"
+          />
         </WhiteBox1>
       </Container>
+
       <Container height="50%">
         <WhiteBox1
           style={{
@@ -114,47 +132,29 @@ function Mypage() {
             flexDirection: "column",
           }}
         >
-          <HalfBox
+          <Container
             height="90%"
             style={{
               display: "flex",
               flexDirection: "column",
             }}
           >
-            <TextBox fontSize="1.5em">이름</TextBox>
-            <TextBox
-              height="30%"
-              fontSize="1em"
-              fontWeight="normal"
-              style={{
-                marginTop: "10px", // 상단 여백 추가
-                // color: "var(--text-color-unactive, #969696)",
-                borderBottom: "1px solid black",
-                paddingLeft: "5%",
-              }}
-            >
-              {name}
-            </TextBox>
-            <TextBox fontSize="1.5em">생년월일</TextBox>
-            <TextBox
-              height="30%"
-              fontSize="1em"
-              fontWeight="normal"
-              style={{
-                marginTop: "10px", // 상단 여백 추가
-                // color: "var(--text-color-unactive, #969696)",
-                borderBottom: "1px solid black",
-                paddingLeft: "5%",
-              }}
-            >
-              {birth}
-            </TextBox>
-          </HalfBox>
+            <InputImfo
+              title="이름"
+              info={`${name}`}
+              placeholder="실명을 적어주세요"
+            />
+            <InputImfo
+              title="생년월일"
+              info={`${birth}`}
+              placeholder="생년월일"
+            />
+          </Container>
         </WhiteBox1>
       </Container>
       <Container height="50%">
         <WhiteBox1>
-          <HalfBox width="90%" height="90%">
+          <Container width="90%" height="90%">
             <TextBox height="30%" fontSize="1.5em">
               알림설정
             </TextBox>
@@ -226,7 +226,7 @@ function Mypage() {
                 color="primary"
               />
             </TextBox>
-          </HalfBox>
+          </Container>
         </WhiteBox1>
       </Container>
       <Container
