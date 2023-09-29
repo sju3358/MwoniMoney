@@ -13,11 +13,9 @@ import { WhiteBox } from "../components/Common/About/AboutWhilteContainer";
 import { Img } from "../components/Common/About/AboutEmogi";
 
 //모달
-import ProgressModal from "../modal/ProgressModal";
 import IntoBalanceResult from "../components/Common/Main/IntoBalanceResult";
 
 //이미지
-import LeftArrow from "../assests/image/main/LeftArrow.png";
 import Chat from "../assests/image/main/Chat.png";
 
 const ListContainer = styled.div`
