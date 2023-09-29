@@ -30,7 +30,7 @@ import Layout from "./components/Layout/layout";
 
 function App() {
   // 로컬 스토리지에서 userUuidState 값을 가져옵니다.
-  const userUuidState = localStorage.getItem("userUuidState");
+  const userUuidState = localStorage.getItem("userState");
 
   return (
     <>
