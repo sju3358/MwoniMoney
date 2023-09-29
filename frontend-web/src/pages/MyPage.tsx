@@ -1,50 +1,103 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import Switch from "@mui/material/Switch";
 
 import {
   Emoji,
   MainContainer,
   Text,
-  TextContainer,
   TextEmojiBox,
   TextMentBox,
 } from "../components/Common/MyPage/MyPage";
-
+import { Container } from "../components/Common/About/AboutContainer";
 import { WhiteBox1 } from "../components/Common/About/AboutWhilteContainer";
-import { TextBox } from "../components/Common/About/AboutText";
+import { InputBox, TextBox } from "../components/Common/About/AboutText";
 import { Link } from "react-router-dom";
 import { Img } from "../components/Common/About/AboutEmogi";
 import LeftArrow from "../assests/image/main/LeftArrow.png";
+import { userDataState } from "../states/UserInfoState";
+import { useRecoilState } from "recoil";
 
-interface ContainerProps {
-  height: string;
-  flexDirection?: string | null;
+// 입력칸
+interface InputImfoProps {
+  title: string;
+  info: string;
+  placeholder: string;
+  id: string;
 }
 
-export const Container = styled.div<ContainerProps>`
-  height: ${(props) => props.height}; /* props.height 값을 스타일에 적용 */
-  width: 100%;
-  display: flex;
-  flex-direction: ${(props) =>
-    props.flexDirection ? props.flexDirection : "row"};
-  justify-content: center;
-  align-items: center;
-  border: 1px solid black;
-  box-sizing: border-box;
-`;
+function InputImfo({ title, info, placeholder, id }: InputImfoProps) {
+  const [userData, setUserData] = useRecoilState(userDataState);
+  const [inputValue, setInputValue] = useState("");
 
-interface HalfBoxProps {
-  width?: string;
-  height?: string;
+  const handleInputChange = (e: any) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleButtonClick = () => {
+    alert(inputValue);
+    setUserData((userData: any) => ({
+      ...userData,
+      [id]: inputValue,
+    }));
+  };
+  return (
+    <>
+      <Container height="30%">
+        <TextBox fontSize="1.5em" height="100%">
+          {title}
+        </TextBox>
+      </Container>
+      <Container
+        flexDirection="column"
+        height="75%"
+        justifyContent="center"
+        align="center"
+      >
+        {userData.memberRole === "GUEST" ? (
+          <TextBox
+            height="40%"
+            width="93%"
+            fontSize="1em"
+            fontWeight="normal"
+            marginL="0%"
+            style={{ borderBottom: "1px solid black" }}
+          >
+            <Container height="100%" width="80%">
+              <InputBox
+                height="100%"
+                width="100%"
+                type="text"
+                fontsize="1.4em"
+                placeholder={placeholder}
+                id={id}
+                onChange={handleInputChange}
+              />
+            </Container>
+            <Container
+              height="100%"
+              width="20%"
+              backcolor="#fbd56e"
+              onClick={handleButtonClick}
+            >
+              추가
+            </Container>
+          </TextBox>
+        ) : (
+          <TextBox
+            height="30%"
+            width="93%"
+            fontSize="1em"
+            fontWeight="normal"
+            marginL="0%"
+            style={{ borderBottom: "1px solid black" }}
+          >
+            {info}
+          </TextBox>
+        )}
+      </Container>
+    </>
+  );
 }
-
-const HalfBox = styled.div<HalfBoxProps>`
-  // border: 1px solid black;
-  box-sizing: border-box;
-  width: ${(props) => (props.width ? props.width : "85%")};
-  height: ${(props) => (props.height ? props.height : "100%")};
-`;
 
 //알림
 interface CheckedSettings {
@@ -55,6 +108,7 @@ interface CheckedSettings {
 }
 
 function Mypage() {
+  const [userData, setUserData] = useRecoilState(userDataState);
   const [checked, setChecked] = useState<CheckedSettings>({
     challengeChecked: false,
     balanceChecked: false,
@@ -68,13 +122,17 @@ function Mypage() {
       [settingName]: !prevSettings[settingName],
     }));
   };
+  console.log(userData);
 
   const account = "000-000-0000";
-  const name = "이지현"; // api연결시 자녀1 이름으로 매핑
-  const birth = "00.01.01";
+  const name = userData.name; // api연결시 자녀1 이름으로 매핑
+  const birth = userData.birthday;
+  const memberRole = userData.memberRole;
+
   return (
     <MainContainer>
-      <TextContainer>
+      {/* 페이지 제목 & 이미지 */}
+      <Container width="100%" height="20%">
         <TextMentBox>
           <Text>{name}님</Text>
           <Text>안녕하세요!</Text>
@@ -82,7 +140,8 @@ function Mypage() {
         <TextEmojiBox>
           <Emoji />
         </TextEmojiBox>
-      </TextContainer>
+      </Container>
+      {/* 계좌번호 입력하는 칸 */}
       <Container height="30%">
         <WhiteBox1
           style={{
@@ -90,71 +149,63 @@ function Mypage() {
             flexDirection: "column",
           }}
         >
-          <HalfBox height="100%">
-            <TextBox fontSize="1.5em">계좌</TextBox>
+          <Container height="30%">
+            <TextBox fontSize="1.5em" height="100%">
+              계좌번호
+            </TextBox>
+          </Container>
+          <Container
+            flexDirection="column"
+            height="75%"
+            justifyContent="center"
+            align="center"
+          >
             <TextBox
               height="30%"
+              width="93%"
               fontSize="1em"
               fontWeight="normal"
-              style={{
-                marginTop: "10px", // 상단 여백 추가
-                borderBottom: "1px solid black",
-                paddingLeft: "5%",
-              }}
+              marginL="0%"
+              style={{ borderBottom: "1px solid black" }}
             >
               {account}
             </TextBox>
-          </HalfBox>
+          </Container>
         </WhiteBox1>
       </Container>
-      <Container height="50%">
+
+      <Container height="60%">
         <WhiteBox1
           style={{
             display: "flex",
             flexDirection: "column",
           }}
         >
-          <HalfBox
-            height="90%"
+          <Container
+            height="100%"
             style={{
               display: "flex",
               flexDirection: "column",
             }}
           >
-            <TextBox fontSize="1.5em">이름</TextBox>
-            <TextBox
-              height="30%"
-              fontSize="1em"
-              fontWeight="normal"
-              style={{
-                marginTop: "10px", // 상단 여백 추가
-                // color: "var(--text-color-unactive, #969696)",
-                borderBottom: "1px solid black",
-                paddingLeft: "5%",
-              }}
-            >
-              {name}
-            </TextBox>
-            <TextBox fontSize="1.5em">생년월일</TextBox>
-            <TextBox
-              height="30%"
-              fontSize="1em"
-              fontWeight="normal"
-              style={{
-                marginTop: "10px", // 상단 여백 추가
-                // color: "var(--text-color-unactive, #969696)",
-                borderBottom: "1px solid black",
-                paddingLeft: "5%",
-              }}
-            >
-              {birth}
-            </TextBox>
-          </HalfBox>
+            <InputImfo
+              title="이름"
+              info={`${name}`}
+              placeholder="실명을 적어주세요"
+              id="name"
+            />
+            <InputImfo
+              title="생년월일"
+              info={`${birth}`}
+              placeholder="1997-03-20"
+              id="birthday"
+            />
+          </Container>
         </WhiteBox1>
       </Container>
       <Container height="50%">
-        <WhiteBox1>
-          <HalfBox width="90%" height="90%">
+        <WhiteBox1 justify="center" align="center">
+          <Container width="95%" height="95%" flexDirection="column">
             <TextBox height="30%" fontSize="1.5em">
               알림설정
             </TextBox>
@@ -226,7 +277,7 @@ function Mypage() {
                 color="primary"
               />
             </TextBox>
-          </HalfBox>
+          </Container>
         </WhiteBox1>
       </Container>
       <Container

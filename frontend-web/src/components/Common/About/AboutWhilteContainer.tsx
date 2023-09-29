@@ -7,6 +7,8 @@ interface WhiteBoxProps {
   backcolor?: string;
   marginB?: string;
   paddingB?: string | undefined;
+  justify?: string | undefined;
+  align?: string | undefined;
 }
 
 export const WhiteBox1 = styled.div<WhiteBoxProps>`
@@ -21,6 +23,8 @@ export const WhiteBox1 = styled.div<WhiteBoxProps>`
   flex-direction: ${(props) => props.flexDirection};
   margin-top: ${(props) => (props.marginB ? props.marginB : "0%")};
   padding-top: ${(props) => props.paddingB};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.align};
 `;
 
 interface WhiteBoxProps_v1 {
