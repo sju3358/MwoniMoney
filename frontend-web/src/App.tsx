@@ -125,6 +125,7 @@ function App() {
                 userUuidState ? <MoneyPage /> : <Navigate to="/LoginPage" />
               }
             />
+
             <Route
               path="Challenge"
               element={
@@ -135,12 +136,13 @@ function App() {
               path="Bank"
               element={userUuidState ? <Bank /> : <Navigate to="/LoginPage" />}
             />
-            <Route
+            {/* <Route
               path="MyPage"
               element={
                 userUuidState ? <MyPage /> : <Navigate to="/LoginPage" />
               }
-            />
+            /> */}
+            <Route path="MyPage" element={<MyPage />} />
             <Route
               path="Balance"
               element={
