@@ -46,6 +46,7 @@ public class BalanceGameServiceImpl implements BalanceGameService {
 				BalanceGameListDto.builder()
 					.idx(balanceGameEntity.getIdx())
 					.question(balanceGameEntity.getQuestion())
+					.status(balanceGameEntity.getBalanceGameStatus().name())
 					.build());
 		}
 
