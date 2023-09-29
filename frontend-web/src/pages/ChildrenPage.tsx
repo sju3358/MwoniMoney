@@ -7,9 +7,11 @@ import {
 import { Container } from "../components/Common/About/AboutContainer";
 import { TextBox } from "../components/Common/About/AboutText";
 //컴포넌트
+import BalanceCompo, {
+  Img_no,
+} from "../components/Common/Balance/BalanceCompo";
 import Quiz from "../components/Common/Quiz/Quiz";
 import Challenge from "../components/Children/Challenge";
-import BalanceCompo from "../components/Common/Balance/BalanceCompo";
 
 //이미지
 import Coin from "../assests/image/main/Coin.png";
