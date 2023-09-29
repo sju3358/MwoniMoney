@@ -70,7 +70,7 @@ function ChildrenPage() {
         <Quiz />
       </Container>
       <Container height="50%">
-        <Challenge />
+        <Challenge ismain="Y" />
       </Container>
     </MainContainer>
   );
