@@ -5,7 +5,6 @@ import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -22,38 +21,82 @@ public class Child extends Member {
 	@Column(name = "member_credit_score")
 	private int creditScore;
 
+	@Column(name = "member_quiz_reward_remain")
+	private int quizRewardRemain;
+
 	@Column(name = "member_quiz_reward")
 	private int quizReward;
 
 	@Embedded
-	@Nullable
 	private SmallAccount smallAccount;
 
+	public void makeSmallAccount(
+		int goalMoney,
+		String goalName,
+		String imageFilename,
+		int saveRatio) {
+
+		SmallAccount accountInfo = new SmallAccount(goalMoney, goalName, imageFilename, saveRatio);
+		this.smallAccount = accountInfo;
+	}
+
+	public void deleteSmallAccount() {
+		this.smallAccount = null;
+	}
+
+	public void addQuizRewardRemain(int rewardToAdd) {
+		if (this.quizReward + rewardToAdd >= 1000000000)
+			throw new IllegalArgumentException("최대치 초과");
+		this.quizRewardRemain += rewardToAdd;
+	}
+
+	public void subQuizRewardRemain(int rewardToSub) {
+		if (this.quizRewardRemain - rewardToSub < 0)
+			throw new IllegalArgumentException("리워드 한도가 초과 되었습니다.");
+		this.quizRewardRemain -= rewardToSub;
+	}
+
+	public void changeQuizReward(int reward) {
+		this.quizReward = reward;
+	}
+
 	@Builder
-	public Child(int status, String name, String nickname, String birthday,
+	public Child(
+		int status,
+		String name,
+		String nickname,
+		String birthday,
 		SocialProvider socialProvider,
-		String socialId, String email, int creditScore, int quizReward, SmallAccount smallAccount) {
+		String socialId,
+		String email,
+		int creditScore,
+		int quizRewardRemain,
+		int quizReward,
+		SmallAccount smallAccount) {
+
 		super(status, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD);
+
+		this.quizRewardRemain = quizRewardRemain;
 		this.creditScore = creditScore;
 		this.quizReward = quizReward;
 		this.smallAccount = smallAccount;
 	}
 
+	@Override
 	public ChildDto convertToDto() {
 
 		return ChildDto.builder()
-			.idx(this.getIdx())
 			.uuid(this.getUuid())
 			.status(this.getStatus())
 			.name(this.getName())
 			.nickname(this.getNickname())
 			.birthday(this.getBirthday())
 			.socialProvider(this.getSocialProvider())
-			.socialId(this.getSocialId())
 			.memberRole(this.getMemberRole())
 			.creditScore(this.creditScore)
+			.quizRewardRemain(this.quizRewardRemain)
 			.quizReward(this.quizReward)
-			.smallAccount(smallAccount.createVo())
+			.smallAccount(this.smallAccount == null ? null : smallAccount.createVo())
 			.build();
 	}
 

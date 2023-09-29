@@ -28,4 +28,9 @@ public class FinAccountService {
     public FinAccount saveFinAccount(FinAccount finAccount) {
         return finAccountRepository.save(finAccount);
     }
+
+    public List<FinAccount> getFinAccountByMember(Long memberIdx){
+        return finAccountRepository.findByMember(memberIdx);
+    }
+
 }
