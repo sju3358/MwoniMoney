@@ -13,5 +13,6 @@ public class NHApiVirtualAccountReceivedListInquiryResponse {
     private int TotCnt;
     private int IqtCnt;
     private int PageNo;
+    @Builder.Default
     private List<VirtualAccountReceivedInquiry> REC = new ArrayList<>();
 }
