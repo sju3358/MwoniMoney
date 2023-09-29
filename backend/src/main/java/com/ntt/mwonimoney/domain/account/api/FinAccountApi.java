@@ -1,15 +1,21 @@
 package com.ntt.mwonimoney.domain.account.api;
 
-import com.ntt.mwonimoney.domain.account.entity.FinAccount;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.ntt.mwonimoney.domain.account.service.FinAccountService;
+<<<<<<< HEAD
 import com.ntt.mwonimoney.domain.game.api.request.BalanceGameListRequest;
 import com.ntt.mwonimoney.domain.member.entity.MemberAuth;
 import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
+=======
+
+>>>>>>> 1cd87a9ad1055c20f47e7b10d52f5ebb62692996
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +25,7 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class FinAccountApi {
 
+<<<<<<< HEAD
     private final FinAccountService finAccountService;
     private final MemberAuthService memberAuthService;
     private final JwtTokenProvider jwtTokenProvider;
@@ -40,6 +47,15 @@ public class FinAccountApi {
         // 1. finAccountIdx로 finAccount 정보 불러오기
         return ResponseEntity.ok().build();
     }
+=======
+	private final FinAccountService finAccountService;
+
+	@GetMapping("/accounts")
+	public ResponseEntity getFinAccountList() {
+
+		return ResponseEntity.ok().build();
+	}
+>>>>>>> 1cd87a9ad1055c20f47e7b10d52f5ebb62692996
 
     @PostMapping("/accounts")
     public ResponseEntity makeFinAccount(){

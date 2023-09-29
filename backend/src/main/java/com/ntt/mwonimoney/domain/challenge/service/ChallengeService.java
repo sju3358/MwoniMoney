@@ -37,7 +37,7 @@ public class ChallengeService {
 		//카테고리번호 조회
 		Challenge challenge = challengeRepository.findChallenge(challengeRequestDto.getTitle(),
 			challengeRequestDto.getCategory());
-		Optional<Member> member = memberRepository.findMemberByIdx(childIdx);
+		Optional<Member> member = (Optional<Member>)memberRepository.findMemberByIdx(childIdx);
 
 		//memberChallenge 생성
 		MemberChallenge memberChallenge = MemberChallenge.builder()
@@ -124,7 +124,7 @@ public class ChallengeService {
 		Challenge challenge = challengeRepository.findChallenge(challengeRequestDto.getTitle(),
 			challengeRequestDto.getCategory());
 
-		Optional<Member> member = memberRepository.findMemberByIdx(childIdx);
+		Optional<Member> member = (Optional<Member>)memberRepository.findMemberByIdx(childIdx);
 
 		//memberChallenge 생성
 		MemberChallenge memberChallenge = MemberChallenge.builder()
