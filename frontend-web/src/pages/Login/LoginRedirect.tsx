@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import jwt from "jwt-decode";
 import { useRecoilState } from "recoil";
 import { userDataState } from "../../states/UserInfoState";
-import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { api } from "../../apis/Api";
 
 // JWT 토큰의 형태를 정의
@@ -50,6 +50,8 @@ function KakaoLoginRedirect() {
     if (accessToken) {
       // JWT 토큰 디코딩
       const decodedToken = jwt<JwtToken>(accessToken);
+
+      localStorage.setItem("accessToken", accessToken);
 
       // postRegister를 사용하여 데이터를 가져오기
       postRegister({ bearerToken: accessToken })
