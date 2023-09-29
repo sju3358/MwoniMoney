@@ -23,7 +23,7 @@ public class MemberAuthServiceImpl implements MemberAuthService {
 	@Override
 	public MemberAuthDto getMemberAuthInfo(String memberUUID) {
 		MemberAuth memberAuth = memberAuthRepository.findById(memberUUID)
-			.orElseThrow(() -> new NoSuchElementException());
+			.orElseThrow(() -> new NoSuchElementException("로그인 되어있지 않습니다."));
 		return memberAuth.convertToDto();
 	}
 
