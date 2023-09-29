@@ -9,6 +9,6 @@ public class BalanceGameListDto {
 
 	private Long idx;
 	private String question;
-
+	private String status;
 
 }
