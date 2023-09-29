@@ -4,13 +4,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.amazonaws.Response;
-
 @RestControllerAdvice
-public class CustomExceptionHandler {
+public class CustomGameExceptionHandler {
 
 	@ExceptionHandler
-	public ResponseEntity handleGameDeactivateException(GameDeactivateException e){
+	public ResponseEntity handleGameDeactivateException(GameDeactivateException e) {
 
 		String errorMessage = e.getMessage();
 

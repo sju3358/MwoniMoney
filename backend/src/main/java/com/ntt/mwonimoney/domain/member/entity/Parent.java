@@ -21,16 +21,15 @@ public class Parent extends Member {
 		super(status, name, nickname, birthday, socialProvider, socialId, email, MemberRole.PARENT);
 	}
 
+	@Override
 	public ParentDto convertToDto() {
 		return ParentDto.builder()
-			.idx(this.getIdx())
 			.uuid(this.getUuid())
 			.status(this.getStatus())
 			.name(this.getName())
 			.nickname(this.getNickname())
 			.birthday(this.getBirthday())
 			.socialProvider(this.getSocialProvider())
-			.socialId(this.getSocialId())
 			.memberRole(this.getMemberRole())
 			.build();
 	}
