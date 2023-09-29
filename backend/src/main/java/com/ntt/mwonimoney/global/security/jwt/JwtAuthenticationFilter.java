@@ -51,7 +51,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			Authentication authentication = jwtTokenProvider.getAuthentication(token);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			chain.doFilter(request, response);
-			return;
 		}
 
 		if (Objects.equals(validateResult, "isExpired")) {
@@ -62,14 +61,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			if (cookie.isEmpty()) {
 				log.info("쿠키가 없음");
 				chain.doFilter(request, response);
-				return;
 			}
 
 			String refreshTokenFromCookie = cookie.get();
 			if (!jwtTokenProvider.getIsExipired(refreshTokenFromCookie)) {
 				log.info("리프레시 토큰 만료");
 				chain.doFilter(request, response);
-				return;
 			}
 
 			String memberUUID = jwtTokenProvider.getMemberUUID(refreshTokenFromCookie);
@@ -108,7 +105,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 			chain.doFilter(request, response);
+
 		}
+		chain.doFilter(request, response);
+
 	}
 
 	// Request Header 에서 토큰 정보 추출
