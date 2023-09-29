@@ -17,6 +17,5 @@ public class NHApiInquireTransactionHistoryRequest {
     private LnsqType Lnsq = LnsqType.ASC;
     @Builder.Default
     private int PageNo = 1;
-    @Builder.Default
     private int Dmcnt;
 }
