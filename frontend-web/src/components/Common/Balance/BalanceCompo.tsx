@@ -2,11 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import Newspaper from "../../../assests/image/main/Newspaper.png";
 import LeftArrow from "../../../assests/image/main/LeftArrow.png";
+<<<<<<< HEAD
+import { Link } from "react-router-dom";
+import { WhiteBox } from "../About/AboutWhilteContainer";
+import { useNavigate } from "react-router";
+=======
 import { WhiteBox1 } from "../About/AboutWhilteContainer";
 import News from "../../../modal/Quiz/News";
 import { TextBox } from "../About/AboutText";
 import { Container } from "../About/AboutContainer";
 import { EmogiBox } from "../About/AboutEmogi";
+>>>>>>> cec8bc44fe80422af95a720405a9d69afad76fab
 
 /**
  *
@@ -74,9 +80,54 @@ interface BalanceCompoProps {
 
 function BalanceCompo({ showText = true, showImg = true }: BalanceCompoProps) {
   const balancequestion = "ABC 기업의 주식을 구매하시겠습니까?";
+<<<<<<< HEAD
+  const navigate = useNavigate();
+
   const handleClick = () => {
     console.log("버튼이 클릭되었습니다!");
   };
+
+  const GoGoalMoney = () => {
+    navigate("/Balance");
+  };
+  return (
+    <BalanceContainer>
+      {showText && (
+        <Text_no fontpadding="0% 0% 5% 0%" fontweight="700">
+          오늘의 밸런스 게임
+        </Text_no>
+      )}
+      <WhiteBox width="100%" onClick={GoGoalMoney}>
+        {showImg && (
+          <Link to="/Balance">
+            <ImgBox justifycontent="right">
+              <Img_no
+                src={`${LeftArrow}`}
+                width="7%"
+                height="7%"
+                onClick={handleClick}
+              />
+            </ImgBox>
+          </Link>
+        )}
+        <ImgBox>
+          <Img src={`${Newspaper}`} width="25%" height="25%" />
+        </ImgBox>
+        <ClickButton>
+          <Text
+            fontsize="0.625rem"
+            fontcolor="#FFFFFF"
+            fontweight="600"
+            textalign="center"
+          >
+            Click
+          </Text>
+        </ClickButton>
+=======
+  const handleClick = () => {
+    console.log("버튼이 클릭되었습니다!");
+  };
+>>>>>>> cec8bc44fe80422af95a720405a9d69afad76fab
 
   return (
     <Container height="100%" flexDirection="column">
