@@ -9,7 +9,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class FinAccountTransactionService {
 
-    private final FinAccountTransactionService finAccountTransactionService;
-
-
 }
