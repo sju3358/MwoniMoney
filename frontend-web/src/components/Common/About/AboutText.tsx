@@ -14,7 +14,7 @@ interface TextBoxProps {
 }
 
 export const TextBox = styled.div<TextBoxProps>`
-  // border: 1px solid green;
+  border: 1px solid green;
   box-sizing: border-box;
   display: flex;
   flex-direction: ${(props) =>
@@ -42,9 +42,23 @@ interface TextProps {
   padding?: string;
   textalign?: string;
   marginL?: string | undefined;
+  border?: string | undefined;
 }
 export const Text = styled.div<TextProps>`
   // border: 1px solid blue;
+  color: ${(props) => (props.color ? props.color : "black")};
+  font-family: ${(props) => (props.fontfamily ? props.fontfamily : "Inter")};
+  font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
+  font-style: ${(props) => (props.fontstyle ? props.fontstyle : "normal")};
+  font-weight: ${(props) => (props.fontweight ? props.fontweight : "400")};
+  margin: ${(props) => (props.margin ? props.margin : "0%")};
+  padding: ${(props) => (props.padding ? props.padding : "0%")};
+  text-align: ${(props) => (props.textalign ? props.textalign : "")};
+  margin-left: ${(props) => (props.marginL ? props.marginL : "7%")};
+`;
+
+export const InputBox = styled.input<TextProps>`
+  border: 1px solid orange;
   color: ${(props) => (props.color ? props.color : "black")};
   font-family: ${(props) => (props.fontfamily ? props.fontfamily : "Inter")};
   font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};

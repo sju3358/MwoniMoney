@@ -43,14 +43,12 @@ public class Child extends Member {
 	public ChildDto convertToDto() {
 
 		return ChildDto.builder()
-			.idx(this.getIdx())
 			.uuid(this.getUuid())
 			.status(this.getStatus())
 			.name(this.getName())
 			.nickname(this.getNickname())
 			.birthday(this.getBirthday())
 			.socialProvider(this.getSocialProvider())
-			.socialId(this.getSocialId())
 			.memberRole(this.getMemberRole())
 			.creditScore(this.creditScore)
 			.quizReward(this.quizReward)
