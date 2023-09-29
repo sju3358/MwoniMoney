@@ -58,8 +58,7 @@ export const Text = styled.div<TextProps>`
 `;
 
 export const InputBox = styled.input<TextProps>`
-  // border: 1px solid skyblue;
-  border: ${(props) => (props.border ? props.border : "none")};
+  border: 1px solid orange;
   color: ${(props) => (props.color ? props.color : "black")};
   font-family: ${(props) => (props.fontfamily ? props.fontfamily : "Inter")};
   font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
@@ -68,4 +67,5 @@ export const InputBox = styled.input<TextProps>`
   margin: ${(props) => (props.margin ? props.margin : "0%")};
   padding: ${(props) => (props.padding ? props.padding : "0%")};
   text-align: ${(props) => (props.textalign ? props.textalign : "")};
+  margin-left: ${(props) => (props.marginL ? props.marginL : "7%")};
 `;
