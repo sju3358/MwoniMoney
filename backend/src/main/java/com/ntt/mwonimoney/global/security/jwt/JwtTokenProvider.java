@@ -4,6 +4,7 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -54,7 +55,7 @@ public class JwtTokenProvider {
 			.setIssuedAt(new Date())
 			.claim(AUTHORITIES_KEY, role)
 			.signWith(key, SignatureAlgorithm.HS256)
-			.setExpiration(new Date(now + ACCESS_TOKEN_EXPIRE_TIME))
+			.setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
 			.compact();
 
 		String refreshToken = Jwts
@@ -142,5 +143,16 @@ public class JwtTokenProvider {
 
 		long now = new Date().getTime();
 		return (expiration.getTime() - now) > 0;
+	}
+
+	public String getMemberUUID(String accessToken) {
+		StringTokenizer st = new StringTokenizer(accessToken);
+		st.nextToken();
+
+		String jwtToken = st.nextToken();
+
+		Claims claims = this.parseClaims(jwtToken);
+
+		return claims.get("sub").toString();
 	}
 }

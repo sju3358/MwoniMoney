@@ -4,7 +4,7 @@ import { Container } from "../About/AboutContainer";
 import { EmogiBox } from "../About/AboutEmogi";
 import Childeyes from "../../../assests/image/main/Childeyes.png";
 import RegistChild from "../../../modal/ChildCreate";
-import ModalBody3 from "../../../modal/ModalImg";
+import {ModalBody3} from "../../../modal/ModalImg";
 import AddChildImg from "../../../assests/image/main/Addchild.png";
 
 interface ChildProps {

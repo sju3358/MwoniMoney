@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "../About/AboutContainer";
 import LoanProposal from "../../../modal/LoanProposal";
-import ModalBody3 from "../../../modal/ModalImg";
+import {ModalBody3} from "../../../modal/ModalImg";
 import { EmogiBox } from "../History";
 import AddChildImg from "../../../assests/image/AddBox.png";
 

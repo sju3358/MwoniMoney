@@ -6,8 +6,12 @@ interface WhiteBoxProps {
   flexDirection?: string;
   backcolor?: string;
   marginB?: string;
+<<<<<<< HEAD
   justify?: string | undefined;
   align?: string | undefined;
+=======
+  paddingB?: string | undefined;
+>>>>>>> cec8bc44fe80422af95a720405a9d69afad76fab
 }
 
 export const WhiteBox1 = styled.div<WhiteBoxProps>`
@@ -21,8 +25,12 @@ export const WhiteBox1 = styled.div<WhiteBoxProps>`
   display: flex;
   flex-direction: ${(props) => props.flexDirection};
   margin-top: ${(props) => (props.marginB ? props.marginB : "0%")};
+<<<<<<< HEAD
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
+=======
+  padding-top: ${(props) => props.paddingB};
+>>>>>>> cec8bc44fe80422af95a720405a9d69afad76fab
 `;
 
 interface WhiteBoxProps_v1 {

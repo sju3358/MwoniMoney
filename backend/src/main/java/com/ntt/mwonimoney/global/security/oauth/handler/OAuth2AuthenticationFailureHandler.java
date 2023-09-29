@@ -33,7 +33,7 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
 			.map(Cookie::getValue)
 			.orElse(("/"));
 
-		log.error("OAuth2 에러 : ", exception.getMessage());
+		log.error("OAuth2 에러 : {} ", exception.getMessage());
 
 		targetUrl = UriComponentsBuilder.fromUriString(targetUrl)
 			.queryParam("error", exception.getLocalizedMessage())
