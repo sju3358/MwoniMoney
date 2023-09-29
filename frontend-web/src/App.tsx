@@ -27,6 +27,7 @@ import Qr from "./pages/Qr";
 import { RecoilRoot } from "recoil";
 import { GlobalStyles } from "./Styles/GlobalStyle";
 import Layout from "./components/Layout/layout";
+import Chatting from "./components/Chatting/Chatting";
 
 function App() {
   // 로컬 스토리지에서 userUuidState 값을 가져옵니다.
@@ -38,6 +39,7 @@ function App() {
       <RecoilRoot>
         <Routes>
           <Route path="/LoginPage" element={<LoginPage />} />
+          <Route path="/Chatting" element={<Chatting />} />
           <Route
             path="/StartPage1"
             element={
