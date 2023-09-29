@@ -33,7 +33,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "member")
-public abstract class Member extends CommonEntity implements UserDetails {
+public abstract class Member extends CommonEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -115,38 +115,4 @@ public abstract class Member extends CommonEntity implements UserDetails {
 		this.FCMToken = FCMToken;
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.singletonList(new SimpleGrantedAuthority(getMemberRole().name()));
-	}
-
-	@Override
-	public String getPassword() {
-		return "";
-	}
-
-	@Override
-	public String getUsername() {
-		return getSocialId();
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
 }
