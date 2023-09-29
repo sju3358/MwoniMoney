@@ -14,7 +14,7 @@ interface TextBoxProps {
 }
 
 export const TextBox = styled.div<TextBoxProps>`
-  // border: 1px solid green;
+  border: 1px solid green;
   box-sizing: border-box;
   display: flex;
   flex-direction: ${(props) =>
@@ -42,6 +42,7 @@ interface TextProps {
   padding?: string;
   textalign?: string;
   marginL?: string | undefined;
+  border?: string | undefined;
 }
 export const Text = styled.div<TextProps>`
   // border: 1px solid blue;
