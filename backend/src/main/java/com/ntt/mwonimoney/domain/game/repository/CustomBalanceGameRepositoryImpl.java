@@ -1,11 +1,17 @@
 package com.ntt.mwonimoney.domain.game.repository;
 
-import java.util.NoSuchElementException;
+import static com.ntt.mwonimoney.domain.game.entity.QBalanceGame.*;
+import static com.ntt.mwonimoney.domain.game.entity.QBalanceGameHistory.*;
+
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 
-
+import com.ntt.mwonimoney.domain.game.entity.BalanceGame;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameDto;
 import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameAnswer;
 import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameStatus;
@@ -13,12 +19,10 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
-import static com.ntt.mwonimoney.domain.game.entity.QBalanceGame.balanceGame;
-import static com.ntt.mwonimoney.domain.game.entity.QBalanceGameHistory.balanceGameHistory;
 
 @Repository
 @RequiredArgsConstructor
-public class BalanceGameDtoRepositoryImpl implements BalanceGameDtoRepository{
+public class CustomBalanceGameRepositoryImpl implements CustomBalanceGameRepository {
 
 	private final JPAQueryFactory jpaQueryFactory;
 
@@ -26,18 +30,18 @@ public class BalanceGameDtoRepositoryImpl implements BalanceGameDtoRepository{
 	public Optional<BalanceGameDto> findTodayBalanceGameDto() {
 		BalanceGameDto balanceGameDto = jpaQueryFactory
 			.select(Projections.bean(BalanceGameDto.class
-				,balanceGame.idx
-				,balanceGame.question
-				,balanceGame.leftAnswer
-				,balanceGame.rightAnswer
-				,balanceGame.balanceGameStatus))
+				, balanceGame.idx
+				, balanceGame.question
+				, balanceGame.leftAnswer
+				, balanceGame.rightAnswer
+				, balanceGame.balanceGameStatus))
 			.from(balanceGame)
 			.where(balanceGame.balanceGameStatus.eq(BalanceGameStatus.RUNNING))
 			.orderBy(balanceGame.createTime.desc())
 			.limit(1)
 			.fetchOne();
 
-		if(balanceGameDto == null)
+		if (balanceGameDto == null)
 			return Optional.empty();
 
 		int countOfLeftAnswer = getCountOfAnswer(BalanceGameAnswer.LEFT);
@@ -50,20 +54,41 @@ public class BalanceGameDtoRepositoryImpl implements BalanceGameDtoRepository{
 	}
 
 	@Override
+	public Slice<BalanceGame> findSliceGamesBy(Pageable pageable) {
+		List<BalanceGame> result = jpaQueryFactory
+			.select(balanceGame)
+			.from(balanceGame)
+			.where(balanceGame.balanceGameStatus.eq(BalanceGameStatus.RUNNING))
+			.orderBy(balanceGame.createTime.desc())
+			.offset(pageable.getPageNumber())
+			.limit(pageable.getPageSize() + 1)
+			.fetch();
+
+		boolean hasNext = false;
+		if (result.size() > pageable.getPageSize()) {
+			result.remove(result.size());
+			hasNext = true;
+		}
+
+		return new SliceImpl<>(result, pageable, hasNext);
+
+	}
+
+	@Override
 	public Optional<BalanceGameDto> findBalanceGameDtoByIdx(Long idx) {
 
 		BalanceGameDto balanceGameDto = jpaQueryFactory
 			.select(Projections.bean(BalanceGameDto.class
-				,balanceGame.idx
-				,balanceGame.question
-				,balanceGame.leftAnswer
-				,balanceGame.rightAnswer
-				,balanceGame.balanceGameStatus))
+				, balanceGame.idx
+				, balanceGame.question
+				, balanceGame.leftAnswer
+				, balanceGame.rightAnswer
+				, balanceGame.balanceGameStatus))
 			.from(balanceGame)
 			.where(balanceGame.idx.eq(idx))
 			.fetchOne();
 
-		if(balanceGameDto == null)
+		if (balanceGameDto == null)
 			return Optional.empty();
 
 		int countOfLeftAnswer = getCountOfAnswer(BalanceGameAnswer.LEFT);
@@ -75,13 +100,12 @@ public class BalanceGameDtoRepositoryImpl implements BalanceGameDtoRepository{
 		return Optional.of(balanceGameDto);
 	}
 
-	private int getCountOfAnswer(BalanceGameAnswer answer){
+	private int getCountOfAnswer(BalanceGameAnswer answer) {
 		return jpaQueryFactory
 			.select(balanceGameHistory)
 			.from(balanceGameHistory)
 			.where(balanceGameHistory.selectAnswer.eq(answer))
 			.fetch().size();
 	}
-
 
 }
