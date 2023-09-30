@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 //recoil
 import { useRecoilState } from "recoil";
 import { newChallenge } from "../../states/ChallengeState";
+import { isProposeChallenge } from "../../states/ChallengeState";
 
 //axios
 import { api } from "../../apis/Api";
@@ -107,6 +108,8 @@ const ModalChildrenChallenge: React.FC<ModalProps> = ({
 }) => {
   console.log(useState_open + "455654");
   const [newChallengeData, setNewChallengeData] = useRecoilState(newChallenge);
+  const [isProposeState, setisProposeState] =
+    useRecoilState(isProposeChallenge);
 
   const handleSubmit = () => {
     // NewChallengeData에 uuid랑 status설정하기
@@ -129,6 +132,7 @@ const ModalChildrenChallenge: React.FC<ModalProps> = ({
         set_open(false);
         console.log("onclick_Close");
         handleClearNewChallenge();
+        setisProposeState(true);
       })
       .catch((error) => {
         // 요청이 실패한 경우 처리할 로직

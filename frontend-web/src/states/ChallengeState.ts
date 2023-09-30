@@ -31,6 +31,23 @@ export const newChallenge = atom<newChallenge>({
   // effects_UNSTABLE: [persistAtom],
 });
 
-export default {
-  newChallenge,
-};
+export interface getChallenge {
+  memberChallengeIdx: number;
+  challengeIdx: number;
+  memberIdx: number;
+  memo: string;
+  reward: number;
+  status: number;
+  endTime: any;
+  createdTime: any;
+}
+
+export const ChallengeStore = atom<getChallenge[]>({
+  key: "challenge_store",
+  default: [],
+});
+
+export const isProposeChallenge = atom<boolean>({
+  key: "is_propose_challenge",
+  default: false,
+});
