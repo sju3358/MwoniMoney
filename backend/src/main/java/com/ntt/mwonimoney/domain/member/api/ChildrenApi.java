@@ -3,7 +3,6 @@ package com.ntt.mwonimoney.domain.member.api;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +28,10 @@ public class ChildrenApi {
 	private final JwtTokenProvider jwtTokenProvider;
 
 	@GetMapping("/children")
-	public ResponseEntity<List<ChildDto>> getChildrenListRequest(@CookieValue("memberUUID") String memberUUID) {
+	public ResponseEntity<List<ChildDto>> getChildrenListRequest(
+		@RequestHeader("Authorization") String accessToken) {
+
+		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 
 		List<ChildDto> childDtoList = childrenService.getChildren(memberUUID);
 
