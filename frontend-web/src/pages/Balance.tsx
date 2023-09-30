@@ -44,9 +44,9 @@ const ImgBox = styled.button`
 export const getBalance = (props: GetRegisterProps): Promise<AxiosResponse> => {
   // axios 요청을 보낼 때 Authorization 헤더 설정
   return api.get("/v1/balances?page=0&size=20", {
-    headers: {
-      Authorization: `Bearer ${props.bearerToken}`,
-    },
+    // headers: {
+    //   Authorization: `Bearer ${props.bearerToken}`,
+    // },
   });
 };
 

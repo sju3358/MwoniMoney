@@ -28,7 +28,7 @@ function LoanList() {
         <ProgressBar />
       </Container>
       <Container height="40%">
-        <Button content="돈 갚기" width="50%" fontSize="1.2em" height="70%" />
+        <Button content="돈 갚기" width="50%" fontS="1.2em" height="70%" />
       </Container>
     </WhiteBox1>
   );

@@ -1,12 +1,6 @@
 package com.ntt.mwonimoney.domain.member.entity;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.UUID;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.ntt.mwonimoney.domain.member.model.dto.GuestDto;
 import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
@@ -72,15 +66,6 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "FCMToken", length = 300)
 	private String FCMToken;
 
-	public void changeMemberRole(MemberRole memberRole) {
-
-		if (this.memberRole.equals(MemberRole.CHILD) || this.memberRole.equals(MemberRole.PARENT)) {
-			throw new IllegalArgumentException("멤버 유형은 게스트만 변경 할 수 있습니다.");
-		}
-
-		this.memberRole = memberRole;
-	}
-
 	public void changeMemberEmail(String email) {
 		this.email = email;
 	}
@@ -91,6 +76,10 @@ public abstract class Member extends CommonEntity {
 
 	public void changeMemberNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	public void changeMemberName(String name) {
+		this.name = name;
 	}
 
 	protected Member(int status, String name, String nickname, String birthday,
