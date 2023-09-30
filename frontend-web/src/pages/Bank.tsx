@@ -7,13 +7,17 @@ import Card from "../components/Common/Bank/Card";
 import CategoryTag from "../components/Common/About/AboutCategory";
 import LoanList from "../components/Common/Bank/LoanList";
 import LoanAdd from "../components/Common/Bank/LoanAdd";
+import { userDataState } from "../states/UserInfoState";
+import { useRecoilState } from "recoil";
 
 function Bank() {
   const childName = "지현";
   const debt = 100000;
   const score = 50;
   //number = 1 : 부모 , number = 0 : 자식
-  const role: number = 0;
+  const [userData, setUserData] = useRecoilState(userDataState);
+
+  const role = userData.memberRole;
 
   return (
     <>
@@ -42,7 +46,7 @@ function Bank() {
       </Container>
       {/* LoanModal */}
       <Container height="100%" flexDirection="column">
-        {role === 1 ? <LoanAdd /> : <></>}
+        {role === "PARENT" ? <LoanAdd /> : <></>}
         <LoanList />
         <LoanList />
         <LoanList />
