@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import jwt from "jwt-decode";
 import { useRecoilState } from "recoil";
 import { userDataState } from "../../states/UserInfoState";
-import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { api } from "../../apis/Api";
 import { number } from "yargs";
 import { userDataProps } from "../../states/UserInfoState";

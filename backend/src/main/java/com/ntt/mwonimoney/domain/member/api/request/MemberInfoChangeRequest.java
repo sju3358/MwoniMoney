@@ -11,6 +11,7 @@ import lombok.Data;
 @Builder
 public class MemberInfoChangeRequest {
 
+	private Optional<String> name;
 	private Optional<String> nickname;
 	private Optional<String> email;
 	private Optional<String> birthday;

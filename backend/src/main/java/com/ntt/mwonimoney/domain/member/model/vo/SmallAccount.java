@@ -21,7 +21,7 @@ public class SmallAccount {
 	private String imageFilename;
 
 	@Column(name = "smallaccount_saveratio")
-	private byte saveRatio;
+	private int saveRatio;
 
 	public SmallAccount createVo() {
 		return new SmallAccount(

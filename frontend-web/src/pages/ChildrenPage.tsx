@@ -7,9 +7,11 @@ import {
 import { Container } from "../components/Common/About/AboutContainer";
 import { TextBox } from "../components/Common/About/AboutText";
 //컴포넌트
+import BalanceCompo, {
+  Img_no,
+} from "../components/Common/Balance/BalanceCompo";
 import Quiz from "../components/Common/Quiz/Quiz";
 import Challenge from "../components/Children/Challenge";
-import BalanceCompo from "../components/Common/Balance/BalanceCompo";
 
 //이미지
 import Coin from "../assests/image/main/Coin.png";
@@ -62,13 +64,19 @@ function ChildrenPage() {
 
       {/*주요기능 컴포넌트 컨테이너*/}
       <Container height="50%">
-        <BalanceCompo />
+        <BalanceCompo
+          showText={true}
+          showImg={true}
+          questionText="ABC 기업의 주식을 구매하시겠습니까?"
+          buyText="산다"
+          notBuyText="안산다"
+        />
       </Container>
       <Container height="50%" overflowy="hidden">
         <Quiz />
       </Container>
       <Container height="50%">
-        <Challenge />
+        <Challenge ismain="Y" />
       </Container>
     </MainContainer>
   );

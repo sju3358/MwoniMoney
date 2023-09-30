@@ -5,11 +5,10 @@ import java.util.Optional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
-import com.ntt.mwonimoney.domain.game.entity.BalanceGame;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameDto;
 
 public interface CustomBalanceGameRepository {
-	Slice<BalanceGame> findSliceGamesBy(Pageable pageable);
+	Slice<BalanceGameDto> findSliceGamesBy(Pageable pageable);
 
 	Optional<BalanceGameDto> findBalanceGameDtoByIdx(Long idx);
 

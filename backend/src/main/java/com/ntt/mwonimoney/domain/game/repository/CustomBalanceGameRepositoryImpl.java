@@ -3,6 +3,7 @@ package com.ntt.mwonimoney.domain.game.repository;
 import static com.ntt.mwonimoney.domain.game.entity.QBalanceGame.*;
 import static com.ntt.mwonimoney.domain.game.entity.QBalanceGameHistory.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -55,7 +56,7 @@ public class CustomBalanceGameRepositoryImpl implements CustomBalanceGameReposit
 	}
 
 	@Override
-	public Slice<BalanceGame> findSliceGamesBy(Pageable pageable) {
+	public Slice<BalanceGameDto> findSliceGamesBy(Pageable pageable) {
 		List<BalanceGame> result = jpaQueryFactory
 			.select(balanceGame)
 			.from(balanceGame)
@@ -68,13 +69,33 @@ public class CustomBalanceGameRepositoryImpl implements CustomBalanceGameReposit
 		if (result.size() == 0)
 			throw new NoSuchElementException("밸런스게임이 존재하지 않습니다");
 
+		List<BalanceGameDto> balanceGames = new ArrayList<>();
+
+		for (BalanceGame balanceGameEntity : result) {
+			if (balanceGameEntity.getBalanceGameStatus().equals(BalanceGameStatus.RUNNING)) {
+				BalanceGameDto dto = balanceGameEntity.convertToDto();
+				dto.setCountOfRightAnswer(getCountOfAnswer(BalanceGameAnswer.RIGHT));
+				dto.setCountOfRightAnswer(getCountOfAnswer(BalanceGameAnswer.LEFT));
+				balanceGames.add(dto);
+			}
+		}
+
+		for (BalanceGame balanceGameEntity : result) {
+			if (balanceGameEntity.getBalanceGameStatus().equals(BalanceGameStatus.END)) {
+				BalanceGameDto dto = balanceGameEntity.convertToDto();
+				dto.setCountOfRightAnswer(getCountOfAnswer(BalanceGameAnswer.RIGHT));
+				dto.setCountOfRightAnswer(getCountOfAnswer(BalanceGameAnswer.LEFT));
+				balanceGames.add(dto);
+			}
+		}
+
 		boolean hasNext = false;
-		if (result.size() > pageable.getPageSize()) {
-			result.remove(result.size() - 1);
+		if (balanceGames.size() > pageable.getPageSize()) {
+			balanceGames.remove(result.size() - 1);
 			hasNext = true;
 		}
 
-		return new SliceImpl<>(result, pageable, hasNext);
+		return new SliceImpl<>(balanceGames, pageable, hasNext);
 
 	}
 

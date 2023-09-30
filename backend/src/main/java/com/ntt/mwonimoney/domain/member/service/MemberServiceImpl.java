@@ -39,6 +39,9 @@ public class MemberServiceImpl implements MemberService {
 		if (request.getMemberRole().isPresent())
 			member.changeMemberRole(request.getMemberRole().get());
 
+		if (request.getName().isPresent())
+			member.changeMemberName(request.getName().get());
+
 		if (request.getEmail().isPresent())
 			member.changeMemberEmail(request.getEmail().get());
 
