@@ -45,7 +45,9 @@ function InputInfo({ title, info, placeholder, id }: InputImfoProps) {
         justifyContent="center"
         align="center"
       >
-        {userData.memberRole === "GUEST" ? (
+        {userCheck.birthdayCheck === false ||
+        userCheck.emailCheck === false ||
+        userCheck.nameCheck === false ? (
           <TextBox
             height="40%"
             width="93%"
