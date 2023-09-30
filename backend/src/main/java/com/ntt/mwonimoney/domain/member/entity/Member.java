@@ -36,9 +36,6 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "member_idx")
 	private Long idx;
 
-	@Column(name = "dtype")
-	private String typeOfMember;
-
 	@Column(name = "member_uuid", unique = true, nullable = false)
 	private String uuid;
 
@@ -79,15 +76,8 @@ public abstract class Member extends CommonEntity {
 		}
 
 		this.memberRole = memberRole;
-
-		if (this.memberRole.equals(MemberRole.GUEST))
-			this.typeOfMember = "Guest";
-		if (this.memberRole.equals(MemberRole.CHILD))
-			this.typeOfMember = "Child";
-		if (this.memberRole.equals(MemberRole.PARENT))
-			this.typeOfMember = "Parent";
 	}
-	
+
 	public void changeMemberEmail(String email) {
 		this.email = email;
 	}
