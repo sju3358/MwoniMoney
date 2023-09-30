@@ -6,7 +6,20 @@ const { persistAtom } = recoilPersist({
   storage: localStorage,
 });
 
-export const userDataState = atom({
+export interface userDataProps {
+  idx: any;
+  uuid: string;
+  status: number;
+  name: string;
+  nickname: string;
+  birthday: string;
+  socialProvider: string;
+  socialId: string;
+  memberRole: string;
+  email: string;
+}
+
+export const userDataState = atom<userDataProps>({
   key: "userDataState",
   default: {
     idx: 0,
@@ -18,6 +31,24 @@ export const userDataState = atom({
     socialProvider: "",
     socialId: "",
     memberRole: "",
+    email: "",
   },
   effects_UNSTABLE: [persistAtom],
+});
+
+export interface userCheckProps {
+  nameCheck: boolean;
+  birthdayCheck: boolean;
+  memberRolecheck: boolean;
+  emailCheck: boolean;
+}
+
+export const userCheckState = atom<userCheckProps>({
+  key: "useCheckState",
+  default: {
+    nameCheck: false,
+    birthdayCheck: false,
+    memberRolecheck: false,
+    emailCheck: false,
+  },
 });
