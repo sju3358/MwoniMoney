@@ -80,4 +80,11 @@ public class ChildrenServiceImpl implements ChildrenService {
 
 		childrenRepository.delete(children);
 	}
+
+	@Override
+	public boolean isMyParent(String parentUUID, String childUUID) {
+		ChildrenKey childrenKey = new ChildrenKey(parentUUID, childUUID);
+		return
+			childrenRepository.findChildrenByChildrenKey(childrenKey).isEmpty() != true;
+	}
 }
