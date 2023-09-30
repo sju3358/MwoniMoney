@@ -63,6 +63,13 @@ function MyComponent() {
   const handleGoogleLoginClick = () => {
     // 여기에서 구글 로그인 처리를 수행하거나 필요한 동작을 수행할 수 있음
     console.log("GoogleLogin 클릭됨");
+    const socialName = "google"; // 소셜 미디어 이름
+    const redirectURI = "your_redirect_uri"; // 리디렉션 URI를 여기에 추가
+    const kakaoURL = `${process.env.REACT_APP_SERVER_URL}/api/oauth2/authorization/${socialName}?redirect_uri=${process.env.REACT_APP_BASE_URL}/oauth/redirect`;
+    console.log("Kakao URL 주소: " + kakaoURL);
+
+    // 페이지 리디렉션
+    window.location.href = kakaoURL;
   };
 
   return (
