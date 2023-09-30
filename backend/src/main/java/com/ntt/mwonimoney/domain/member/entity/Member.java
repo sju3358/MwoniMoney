@@ -93,6 +93,10 @@ public abstract class Member extends CommonEntity implements UserDetails {
 		this.nickname = nickname;
 	}
 
+	public void changeMemberName(String name) {
+		this.name = name;
+	}
+
 	protected Member(int status, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
 		String socialId, String email, MemberRole memberRole) {
