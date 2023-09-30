@@ -1,10 +1,10 @@
 spring:
   data:
     mongodb:
-      host: j9b310.p.ssafy.io
-      port: 27017
-      username: ssafy-b310
-      password: j9b310p_kplyjc
-      authentication-database: mownimoney
+      # host: j9b310.p.ssafy.io
+      # port: 27017
+      # username: ssafy-b310
+      # password: j9b310p_kplyjc
+      # authentication-database: mownimoney
       database: mwonimoney
-      uri: mongodb://ssafy-b310:j9b310p_kplyjc@j9b310.p.ssafy.io:27017/?authMechanism=SCRAM-SHA-1
+      uri: mongodb://ssafy-b310:j9b310p_kplyjc@127.0.0.1:27017/?authMechanism=SCRAM-SHA-1
