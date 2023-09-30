@@ -1,12 +1,8 @@
 package com.ntt.mwonimoney.domain.member.entity;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.UUID;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ntt.mwonimoney.domain.member.model.dto.GuestDto;
 import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
@@ -40,6 +36,9 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "member_idx")
 	private Long idx;
 
+	@Column(name = "dtype")
+	private String typeOfMember;
+
 	@Column(name = "member_uuid", unique = true, nullable = false)
 	private String uuid;
 
@@ -72,6 +71,7 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "FCMToken", length = 300)
 	private String FCMToken;
 
+	@Transactional
 	public void changeMemberRole(MemberRole memberRole) {
 
 		if (this.memberRole.equals(MemberRole.CHILD) || this.memberRole.equals(MemberRole.PARENT)) {
@@ -79,8 +79,15 @@ public abstract class Member extends CommonEntity {
 		}
 
 		this.memberRole = memberRole;
-	}
 
+		if (this.memberRole.equals(MemberRole.GUEST))
+			this.typeOfMember = "Guest";
+		if (this.memberRole.equals(MemberRole.CHILD))
+			this.typeOfMember = "Child";
+		if (this.memberRole.equals(MemberRole.PARENT))
+			this.typeOfMember = "Parent";
+	}
+	
 	public void changeMemberEmail(String email) {
 		this.email = email;
 	}
