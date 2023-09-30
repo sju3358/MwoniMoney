@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -46,6 +47,14 @@ const GoogleLogin = styled.div`
 `;
 
 function QrLoginPage() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  // 특정 query parameter 값 읽기
+  const paramValue = queryParams.get("parentuuid");
+  const valueToStore = paramValue || ""; // null인 경우 빈 문자열로 설정
+  localStorage.setItem("parentuuid", valueToStore);
+
   const handleKaKaoLoginClick = () => {
     // ?????? ???? ?α??? ????? ???????? ????? ?????? ?????? ?? ????
     console.log("KaKaoLogin ?????");
