@@ -12,8 +12,11 @@ function Qr() {
   const userData = useRecoilValue(userDataState);
   console.log(userData);
   const uuid = userData.uuid;
-  const qrLink = `https://j9b310.p.ssafy.io/api/v1/children/${uuid}`;
 
+  // 먼저 로그인 페이지로 가고 거기서 로그인 하면 redirect 합시다!
+
+  const qrLink = `https://j9b310.p.ssafy.io/QrLoginPage`;
+  //https://j9b310.p.ssafy.io/api/v1/children/${uuid}?redirect_uri=https://j9b310.p.ssafy.io/
   const containerStyle = {
     display: "flex",
     flexDirection: "column" as FlexDirection, // FlexDirection 타입으로 지정
