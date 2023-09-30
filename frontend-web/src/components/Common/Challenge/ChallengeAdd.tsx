@@ -3,9 +3,11 @@ import styled from "styled-components";
 import AddBox from "../../../assests/image/AddBox.png";
 import AddChildImg from "../../../assests/image/AddBox.png";
 import CreateChallenge from "../../../modal/Challenge/ChallengeCreate";
-import {ModalBody3} from "../../../modal/ModalImg";
+import { ModalBody3 } from "../../../modal/ModalImg";
 import { EmogiBox } from "../History";
 import { Container } from "../About/AboutContainer";
+import ModalChildrenChallenge from "../../../modal/Challenge/ModalChildrenChallenge";
+import ModalParentChallenge from "../../../modal/Challenge/ModalParentChallenge";
 
 const AddContainer = styled.button`
   border: 1px solid black;
@@ -26,6 +28,8 @@ const Add = styled.div`
 `;
 
 function ChallengeAdd() {
+  //number = 1 : 부모 , number = 0 : 자식
+  const role: number = 0;
   const [open, setOpen] = React.useState(false);
   console.log(open + "33");
   const handleOpen = (e: any) => {
@@ -41,15 +45,27 @@ function ChallengeAdd() {
       >
         <EmogiBox backImg={AddChildImg} width="100%" height="100%" />
       </button>
-      <ModalBody3
-        useState_open={open}
-        set_open={setOpen}
-        modal_title="챌린지 만들기"
-        modal_content={<CreateChallenge />}
-        modal_btn1="생성"
-        modal_btn2="취소"
-        btn_justify="space-around"
-      />
+      {role === 1 ? (
+        <ModalParentChallenge
+          useState_open={open}
+          set_open={setOpen}
+          modal_title="챌린지 만들기"
+          modal_content={<CreateChallenge />}
+          modal_btn1="생성"
+          modal_btn2="취소"
+          btn_justify="space-around"
+        />
+      ) : (
+        <ModalChildrenChallenge
+          useState_open={open}
+          set_open={setOpen}
+          modal_title="챌린지 제안하기"
+          modal_content={<CreateChallenge />}
+          modal_btn1="생성"
+          modal_btn2="취소"
+          btn_justify="space-around"
+        />
+      )}
     </Container>
   );
 }

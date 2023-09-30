@@ -13,14 +13,41 @@ interface newChallenge {
   memo: string;
   reward: number;
   status: number;
-  endTime: any;
+  endTime: string;
 }
-export const newChallengeState = atom<newChallenge[]>({
-  key: "new_challenge_state",
-  default: [],
+
+//input에서 넣은 post용 데이터
+export const newChallenge = atom<newChallenge>({
+  key: "new_challenge",
+  default: {
+    childUuid: "",
+    title: "",
+    category: "",
+    memo: "",
+    reward: 0,
+    status: 0,
+    endTime: "",
+  },
   // effects_UNSTABLE: [persistAtom],
 });
 
-export default {
-  newChallengeState,
-};
+export interface getChallenge {
+  memberChallengeIdx: number;
+  challengeIdx: number;
+  memberIdx: number;
+  memo: string;
+  reward: number;
+  status: number;
+  endTime: any;
+  createdTime: any;
+}
+
+export const ChallengeStore = atom<getChallenge[]>({
+  key: "challenge_store",
+  default: [],
+});
+
+export const isProposeChallenge = atom<boolean>({
+  key: "is_propose_challenge",
+  default: false,
+});

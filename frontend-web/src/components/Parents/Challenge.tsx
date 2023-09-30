@@ -14,9 +14,9 @@ function Challenge() {
       <ChallengeCategory />
       <ChallengeAdd />
       <ChallengeListContainer>
+        {/* <ChallengeList />
         <ChallengeList />
-        <ChallengeList />
-        <ChallengeList />
+        <ChallengeList /> */}
       </ChallengeListContainer>
     </MainContainer>
   );
