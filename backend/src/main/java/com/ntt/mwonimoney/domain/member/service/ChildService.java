@@ -1,8 +1,10 @@
 package com.ntt.mwonimoney.domain.member.service;
 
+import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
+
 public interface ChildService {
 
-	public void addSmallAccountInfo(
+	public SmallAccount addSmallAccountInfo(
 		Long memberIdx,
 		int goalMoney,
 		String goalName,
@@ -11,8 +13,8 @@ public interface ChildService {
 
 	public void deleteSmallAccountInfo(Long memberIdx);
 
-	public void editQuizReward(Long memberIdx, int quizReward);
+	public void editQuizReward(String childUUID, int quizReward);
 
-	public void editQuizRewardRemain(Long memberIdx, int quiRewardRemainToAdd);
-	
+	public void editQuizRewardRemain(String childUUID, int quiRewardRemainToAdd);
+
 }
