@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -24,6 +25,7 @@ import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 import com.ntt.mwonimoney.global.security.jwt.Token;
 import com.ntt.mwonimoney.global.security.oauth.info.OAuth2MemberInfo;
 import com.ntt.mwonimoney.global.security.oauth.info.OAuth2UserInfoFactory;
+import com.ntt.mwonimoney.global.security.oauth.model.vo.MemberPrincipal;
 import com.ntt.mwonimoney.global.security.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.ntt.mwonimoney.global.security.oauth.util.CookieUtil;
 
@@ -108,9 +110,15 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 				.memberIdx(bySocialId.getIdx())
 				.memberRefreshToken(tokenInfo.getRefreshToken())
 				.build());
+		Object principal = authentication.getPrincipal();
+		MemberPrincipal user1 = (MemberPrincipal)principal;
+		log.info("Success Handler Principal: " + user1.getUsername());
+		log.info("Success Handler Principal: " + user1.getPassword());
+		log.info("Success Handler Principal: " + user1.getAuthorities());
 
 		return UriComponentsBuilder.fromUriString(targetUrl)
 			.queryParam("accessToken", tokenInfo.getAccessToken())
+			.queryParam("refreshToken", tokenInfo.getRefreshToken())
 			.build()
 			.toUriString();
 	}

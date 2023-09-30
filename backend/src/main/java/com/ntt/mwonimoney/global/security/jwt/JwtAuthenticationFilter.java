@@ -50,6 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			log.info("jwt 인증 성공");
 			Authentication authentication = jwtTokenProvider.getAuthentication(token);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
+			log.info("Filter Principal: " + authentication.getPrincipal().toString());
 			chain.doFilter(request, response);
 		}
 
@@ -108,7 +109,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 		}
 		chain.doFilter(request, response);
-
 	}
 
 	// Request Header 에서 토큰 정보 추출
