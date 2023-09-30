@@ -8,7 +8,6 @@ import { Logo } from "./LoginPage";
 
 function RegistRole() {
   const [userData, setUserData] = useRecoilState(userDataState);
-  const memberRole = userData.memberRole;
 
   return (
     <Container height="100vh" flexDirection="column" justifyContent="start">

@@ -96,7 +96,7 @@ export default function RoleSelect() {
           console.log(e);
         });
 
-      navigate("/LoginPage");
+      navigate("/Mypage");
     } catch (error) {
       alert("axios 실패");
       console.error(error);
