@@ -20,7 +20,7 @@ export default function Chatting({ balanceGameIdx = 1 }) {
   // 세션 연결
   useEffect(() => {
     const EventSource = EventSourcePolyfill || NativeEventSource;
-    console.log(11111);
+    console.log("채팅세션연결요청");
     const eventSource = new EventSource(
       `https://j9b310.p.ssafy.io/api/v1/balances/${balanceGameIdx}/chatting`,
       {
@@ -31,7 +31,7 @@ export default function Chatting({ balanceGameIdx = 1 }) {
     );
 
     eventSource.onmessage = (event: any) => {
-      console.log(33333);
+      console.log("채팅세션연결완료");
 
       const data = JSON.parse(event.data);
       // console.log(data);
