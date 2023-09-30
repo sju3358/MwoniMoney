@@ -57,12 +57,15 @@ public class Child extends Member {
 	}
 
 	public void changeQuizReward(int reward) {
+		if (reward < 0)
+			throw new IllegalArgumentException("퀴즈 리워드는 0보다 커야합니다");
 		this.quizReward = reward;
 	}
 
 	@Builder
 	public Child(
 		int status,
+		String uuid,
 		String name,
 		String nickname,
 		String birthday,
@@ -74,7 +77,7 @@ public class Child extends Member {
 		int quizReward,
 		SmallAccount smallAccount) {
 
-		super(status, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD);
+		super(status, uuid, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD);
 
 		this.quizRewardRemain = quizRewardRemain;
 		this.creditScore = creditScore;

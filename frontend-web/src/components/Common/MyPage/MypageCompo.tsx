@@ -10,7 +10,6 @@ import { Container } from "../About/AboutContainer";
 import { WhiteBox1 } from "../About/AboutWhilteContainer";
 import { TextBox } from "../About/AboutText";
 import { useRecoilState } from "recoil";
-import RoleSelect from "./RoleSelect";
 import InputInfo from "./InputInfo";
 import Notifications from "./Notifications";
 import FAQ from "./FAQ";
@@ -110,24 +109,7 @@ function MypageCompo() {
           </Container>
         </WhiteBox1>
       </Container>
-      <Container height="25%">
-        <WhiteBox1 height="90%" justify="center" align="center">
-          <Container width="95%" height="95%" flexDirection="column">
-            <Container height="30%">
-              <TextBox fontSize="1.5em" height="100%">
-                역할
-              </TextBox>
-            </Container>
-            <Container height="65%" flexDirection="column">
-              {userData.memberRole === "GUEST" ? (
-                <RoleSelect />
-              ) : (
-                <TextBox>{memberRole == "PARENT" ? "부모" : "자녀"}</TextBox>
-              )}
-            </Container>
-          </Container>
-        </WhiteBox1>
-      </Container>
+
       <Notifications />
       <FAQ />
       <MypageModal />

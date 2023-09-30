@@ -1,58 +1,54 @@
 import React from "react";
 import styled from "styled-components";
+import { Container } from "../../../components/Common/About/AboutContainer";
 
 const Background = styled.div`
-  /* ·Î°í ÀÌ¹ÌÁö ½ºÅ¸ÀÏ ¼³Á¤ */
-  width: 100vw; /* È­¸é ³Êºñ¿¡ ¸Â°Ô ÄÁÅ×ÀÌ³Ê Å©±â ¼³Á¤ */
-  height: 100vh; /* È­¸é ³ôÀÌ¿¡ ¸Â°Ô ÄÁÅ×ÀÌ³Ê Å©±â ¼³Á¤ */
+  width: 100vw;
+  height: 100vh;
   background-image: url(${process.env
     .PUBLIC_URL}/images/StartPage1/background1.png);
   background-size: 100% 100%;
-  background-repeat: no-repeat; /* ÀÌ¹ÌÁö ¹İº¹ Á¦°Å */
+  background-repeat: no-repeat;
 `;
 
 const Skip = styled.div`
-  /* Ä«Ä«¿À ·Î±×ÀÎ ÀÌ¹ÌÁö ½ºÅ¸ÀÏ ¼³Á¤ */
-  width: 17.78vw; /* °¡·Î ³Êºñ¸¦ È­¸é ³ÊºñÀÇ 17.78%·Î ¼³Á¤ */
-  height: 3.75vh; /* ³ôÀÌ¸¦ È­¸é ³ôÀÌÀÇ 3.75%·Î ¼³Á¤ */
+  width: 17.78vw;
+  height: 3.75vh;
   background-image: url(${process.env.PUBLIC_URL}/images/StartPage1/Skip.png);
   background-size: 100% 100%;
-  font-family: "Nanum Gothic", sans-serif; /* ÇÑ±Û ÆùÆ® ¼³Á¤ */
+  font-family: "Nanum Gothic", sans-serif;
   position: absolute;
-  left: 74.72vw; /* ¿ŞÂÊÀ¸·Î 74.72%¸¸Å­ ÀÌµ¿ */
-  top: 6.56vh; /* À§·Î 6.56%¸¸Å­ ÀÌµ¿ */
+  left: 74.72vw;
+  top: 6.56vh;
 `;
 
-const Prev = styled.div`
-  /* Ä«Ä«¿À ·Î±×ÀÎ ÀÌ¹ÌÁö ½ºÅ¸ÀÏ ¼³Á¤ */
-  width: 41.11vw; /* °¡·Î ³Êºñ¸¦ È­¸é ³ÊºñÀÇ 41.11%·Î ¼³Á¤ */
-  height: 6.41vh; /* ³ôÀÌ¸¦ È­¸é ³ôÀÌÀÇ 6.41%·Î ¼³Á¤ */
-  background-image: url(${process.env.PUBLIC_URL}/images/StartPage1/prev.png);
-  background-size: 100% 100%;
-  font-family: "Nanum Gothic", sans-serif; /* ÇÑ±Û ÆùÆ® ¼³Á¤ */
-  position: absolute;
-  left: 7.78vw; /* ¿ŞÂÊÀ¸·Î 7.78%¸¸Å­ ÀÌµ¿ */
-  top: 87.5vh; /* À§·Î 87.5%¸¸Å­ ÀÌµ¿ */
-`;
+interface StartBtnProps {
+  backC?: string | undefined;
+}
 
-const Next = styled.div`
-  /* Ä«Ä«¿À ·Î±×ÀÎ ÀÌ¹ÌÁö ½ºÅ¸ÀÏ ¼³Á¤ */
-  width: 41.11vw; /* °¡·Î ³Êºñ¸¦ È­¸é ³ÊºñÀÇ 41.11%·Î ¼³Á¤ */
-  height: 6.41vh; /* ³ôÀÌ¸¦ È­¸é ³ôÀÌÀÇ 6.41%·Î ¼³Á¤ */
-  background-image: url(${process.env.PUBLIC_URL}/images/StartPage1/next.png);
-  background-size: cover;
-  font-family: "Nanum Gothic", sans-serif; /* ÇÑ±Û ÆùÆ® ¼³Á¤ */
-  position: absolute;
-  left: 50vw; /* ¿ŞÂÊÀ¸·Î 50%¸¸Å­ ÀÌµ¿ */
-  top: 87.5vh; /* À§·Î 87.5%¸¸Å­ ÀÌµ¿ */
+const StartBtn = styled.div<StartBtnProps>`
+  border: 1px solid black;
+  width: 40%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: ${(props) => (props.backC ? props.backC : "#ffffff")};
+  font-weight: bolder;
 `;
 
 function MyComponent() {
   return (
     <Background>
-      <Skip></Skip>
-      <Prev></Prev>
-      <Next></Next>
+      <Container height="15%">
+        <Skip />
+      </Container>
+      <Container height="70%" />
+      <Container height="15%" justifyContent="space-around" align="center">
+        <StartBtn>ì´ì „</StartBtn>
+        <StartBtn backC="#fbd56e">ë‹¤ìŒ</StartBtn>
+      </Container>
     </Background>
   );
 }

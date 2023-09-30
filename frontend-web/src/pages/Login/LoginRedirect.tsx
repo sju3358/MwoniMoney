@@ -4,8 +4,9 @@ import { useRecoilState } from "recoil";
 import { userDataState } from "../../states/UserInfoState";
 import axios, { AxiosResponse } from "axios";
 import { api } from "../../apis/Api";
-import { number } from "yargs";
+// import { number } from "yargs";
 import { userDataProps } from "../../states/UserInfoState";
+import { useNavigate } from "react-router";
 
 // JWT 토큰의 형태를 정의
 interface JwtToken {
@@ -30,9 +31,7 @@ interface PostRegisterProps {
   bearerToken: string;
 }
 
-export const postRegister = (
-  props: PostRegisterProps
-): Promise<AxiosResponse> => {
+const postRegister = (props: PostRegisterProps): Promise<AxiosResponse> => {
   // axios 요청을 보낼 때 Authorization 헤더 설정
   return api.get("/v1/members", {
     headers: {
@@ -43,6 +42,7 @@ export const postRegister = (
 
 function KakaoLoginRedirect() {
   const [userInfo, setUserInfo] = useRecoilState(userDataState);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // URL에서 JWT 토큰 추출 (카카오 로그인 콜백에서 전달된 토큰)
@@ -64,7 +64,7 @@ function KakaoLoginRedirect() {
           // 사용자 정보 업데이트
           const updatedUserInfo: userDataProps = {
             idx: decodedToken.sub,
-            uuid: response.data.idx,
+            uuid: response.data.uuid,
             status: response.data.status,
             name: response.data.name,
             nickname: response.data.nickname,
@@ -78,7 +78,11 @@ function KakaoLoginRedirect() {
           setUserInfo(updatedUserInfo);
 
           // 리디렉션 (예: 홈 페이지로)
-          window.location.href = `${process.env.REACT_APP_BASE_URL}`;
+          if (userInfo.memberRole == "GUEST") {
+            navigate("/RegistRole");
+          } else {
+            window.location.href = `${process.env.REACT_APP_BASE_URL}`;
+          }
         })
         .catch((error) => {
           // 에러가 발생했을 때의 처리
