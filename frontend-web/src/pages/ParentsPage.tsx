@@ -14,8 +14,25 @@ import { ChildCard, AddChild } from "../components/Common/Main/ChildCard";
 import GoalForMain from "../components/Common/GoalMoney/GoalMoneyForMain";
 import { userDataState } from "../states/UserInfoState";
 import { useRecoilState } from "recoil";
+import axios, { AxiosResponse } from "axios";
+import { api } from "../apis/Api";
+
+const postRegister = (): Promise<AxiosResponse> => {
+  // axios 요청을 보낼 때 Authorization 헤더 설정
+  return api.get("/v1/children", {});
+};
 
 function ParentsPage() {
+  console.log("asdf");
+  postRegister()
+    .then((response) => {
+      // postRegisterChild의 응답을 처리합니다.
+      console.log("postRegisterChild 응답 데이터:", response.data);
+    })
+    .catch((childError) => {
+      console.error("postRegisterChild 오류:", childError);
+    });
+
   const childName = "지현"; // api연결시 자녀1 이름으로 매핑
   const childAllowance = 100000;
   const [userData, setUserData] = useRecoilState(userDataState);
