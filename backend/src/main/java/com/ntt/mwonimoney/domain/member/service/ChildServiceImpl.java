@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ntt.mwonimoney.domain.member.entity.Child;
 import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
+import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class ChildServiceImpl implements ChildService {
 
 	@Override
 	@Transactional
-	public void addSmallAccountInfo(Long memberIdx, int goalMoney, String goalName, String imageFilename,
+	public SmallAccount addSmallAccountInfo(Long memberIdx, int goalMoney, String goalName, String imageFilename,
 		int saveRatio) {
 
 		Member member = memberRepository.findMemberByIdx(memberIdx)
@@ -34,6 +35,8 @@ public class ChildServiceImpl implements ChildService {
 			throw new IllegalArgumentException("짜금통 정보가 이미 존재합니다.");
 
 		((Child)member).makeSmallAccount(goalMoney, goalName, imageFilename, saveRatio);
+
+		return new SmallAccount(goalMoney, goalName, imageFilename, saveRatio);
 	}
 
 	@Override
@@ -51,9 +54,9 @@ public class ChildServiceImpl implements ChildService {
 
 	@Override
 	@Transactional
-	public void editQuizReward(Long memberIdx, int quizReward) {
+	public void editQuizReward(String childUUID, int quizReward) {
 
-		Member member = memberRepository.findMemberByIdx(memberIdx)
+		Member member = memberRepository.findMemberByUuid(childUUID)
 			.orElseThrow(() -> new NoSuchElementException("멤버 정보가 존재하지 않습니다."));
 
 		if (member.getMemberRole().equals(MemberRole.CHILD) != true)
@@ -64,8 +67,8 @@ public class ChildServiceImpl implements ChildService {
 
 	@Override
 	@Transactional
-	public void editQuizRewardRemain(Long memberIdx, int quiRewardRemainToAdd) {
-		Member member = memberRepository.findMemberByIdx(memberIdx)
+	public void editQuizRewardRemain(String childUUID, int quiRewardRemainToAdd) {
+		Member member = memberRepository.findMemberByUuid(childUUID)
 			.orElseThrow(() -> new NoSuchElementException("멤버 정보가 존재하지 않습니다."));
 
 		if (member.getMemberRole().equals(MemberRole.CHILD) != true)
