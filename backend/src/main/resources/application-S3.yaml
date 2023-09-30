@@ -1,0 +1,10 @@
+spring:
+  data:
+    couchbase:
+      bucket-name: mwonimoney
+cloud:
+  aws:
+    stack:
+      auto: false
+    region:
+      static: ap-northeast-2
