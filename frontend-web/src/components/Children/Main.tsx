@@ -63,13 +63,19 @@ function ChildrenPage() {
         </TextEmojiBox>
       </TextContainer>
       <BalanceContainer height="50%">
-        <BalanceCompo />
+        <BalanceCompo
+          showText={true}
+          showImg={true}
+          questionText="ABC 기업의 주식을 구매하시겠습니까?"
+          buyText="산다"
+          notBuyText="안산다"
+        />
       </BalanceContainer>
       <QuizContainer height="auto">
         <Quiz />
       </QuizContainer>
       <ChallengeContainer height="60%">
-        <Challenge />
+        {/* <Challenge /> */}
       </ChallengeContainer>
     </MainContainer>
   );
