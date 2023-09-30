@@ -16,9 +16,9 @@ import lombok.NoArgsConstructor;
 public class Guest extends Member {
 
 	@Builder
-	public Guest(int status, String name, String nickname, String birthday, SocialProvider socialProvider,
+	public Guest(int status, String uuid, String name, String nickname, String birthday, SocialProvider socialProvider,
 		String socialId, String email) {
-		super(status, name, nickname, birthday, socialProvider, socialId, email, MemberRole.GUEST);
+		super(status, uuid, name, nickname, birthday, socialProvider, socialId, email, MemberRole.GUEST);
 	}
 
 	public GuestDto convertToDto() {
