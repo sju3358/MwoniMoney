@@ -12,11 +12,15 @@ import Money from "../assests/image/Money.png";
 import { Container } from "../components/Common/About/AboutContainer";
 import { ChildCard, AddChild } from "../components/Common/Main/ChildCard";
 import GoalForMain from "../components/Common/GoalMoney/GoalMoneyForMain";
+import { userDataState } from "../states/UserInfoState";
+import { useRecoilState } from "recoil";
 
 function ParentsPage() {
   const childName = "지현"; // api연결시 자녀1 이름으로 매핑
   const childAllowance = 100000;
-
+  const [userData, setUserData] = useRecoilState(userDataState);
+  // if(userData.memberRole == "G")
+  // alert(userData.memberRole);
   return (
     <MainContainer>
       <Container height="15%">

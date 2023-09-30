@@ -8,7 +8,10 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { userCheckState, userDataState } from "../../../states/UserInfoState";
 import { Container } from "../About/AboutContainer";
 import { useRecoilState } from "recoil";
-import { type } from "os";
+import { ModalBtn } from "../../../modal/ModalBtn1";
+import { api } from "../../../apis/Api";
+
+import { useNavigate } from "react-router";
 
 const BpIcon = styled("span")(({ theme }) => ({
   borderRadius: "50%",
@@ -73,6 +76,8 @@ export default function RoleSelect() {
   const [userData, setUserData] = useRecoilState(userDataState);
   const [userCheck, setUserCheck] = useRecoilState(userCheckState);
 
+  const navigate = useNavigate();
+
   const handleChange = (event: any) => {
     setSelectedValue(event.target.value);
   };
@@ -82,10 +87,21 @@ export default function RoleSelect() {
       ...userData,
       memberRole: selectedValue,
     }));
-    setUserCheck((prevUserCheck) => ({
-      ...prevUserCheck,
-      memberRolecheck: true,
-    }));
+    try {
+      api
+        .post("/v1/members/role", {
+          memberRole: userData.memberRole,
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+
+      navigate("/LoginPage");
+    } catch (error) {
+      alert("axios 실패");
+      console.error(error);
+      throw error;
+    }
   };
   return (
     <>
@@ -97,18 +113,21 @@ export default function RoleSelect() {
           aria-labelledby="demo-customized-radios"
           name="customized-radios"
           sx={{
-            //   border: "1px solid red",
             flexDirection: "row",
           }}
         >
           <FormControlLabel value="PARENT" control={<BpRadio />} label="부모" />
-          <FormControlLabel value="CHILD" control={<BpRadio />} label="자녀" />
+          <FormControlLabel value="CHILD" control={<BpRadio />} label="아이" />
         </RadioGroup>
       </Container>
-      <Container height="30%">
-        <button type="button" onClick={handleClick}>
+      <Container height="30%" width="40%">
+        <ModalBtn
+          modalBtn_height="50%"
+          modalBtn_width="80%"
+          onClick={handleClick}
+        >
           저장
-        </button>
+        </ModalBtn>
       </Container>
     </>
   );
