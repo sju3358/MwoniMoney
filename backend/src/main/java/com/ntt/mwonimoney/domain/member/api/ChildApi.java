@@ -85,8 +85,7 @@ public class ChildApi {
 
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
-		if (memberService.getMemberInfo(memberIdx).getMemberRole().equals("Parent") != true)
-			throw new AuthenticationException("부모님만 요청 할 수 있습니다");
+		childService.checkParent(memberUUID, request.getChildUUID());
 
 		childService.editQuizReward(request.getChildUUID(), request.getReward());
 
@@ -102,8 +101,7 @@ public class ChildApi {
 
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
-		if (memberService.getMemberInfo(memberIdx).getMemberRole().equals("Parent") != true)
-			throw new AuthenticationException("부모님만 요청 할 수 있습니다");
+		childService.checkParent(memberUUID, request.getChildUUID());
 
 		childService.editQuizRewardRemain(request.getChildUUID(), request.getRewardRemain());
 
