@@ -19,6 +19,6 @@ public class QuizDto {
 
 	private String option4;
 
-	private String answer;
+	private int answer;
 
 }
