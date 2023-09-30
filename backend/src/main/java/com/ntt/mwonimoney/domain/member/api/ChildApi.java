@@ -1,6 +1,7 @@
 package com.ntt.mwonimoney.domain.member.api;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import javax.security.sasl.AuthenticationException;
 
@@ -47,6 +48,8 @@ public class ChildApi {
 		@RequestPart(value = "info") SmallAccountRequest request,
 		@RequestPart(value = "image") MultipartFile file) throws IOException {
 
+		log.info("[짜금통 만들기 요청 시작]", LocalDateTime.now());
+
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
@@ -59,6 +62,8 @@ public class ChildApi {
 			goalImageUrl,
 			request.getSaveRatio());
 
+		log.info("[짜금통 만들기 요청 끝]", LocalDateTime.now());
+
 		return ResponseEntity.ok().body(smallAccount);
 
 	}
@@ -67,11 +72,15 @@ public class ChildApi {
 	public ResponseEntity deleteSmallAccountRequest(
 		@RequestHeader("Authorization") String accessToken) {
 
+		log.info("[짜금통 삭제 요청 시작]", LocalDateTime.now());
+
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
 		childService.deleteSmallAccountInfo(memberIdx);
+
+		log.info("[짜금통 삭제 요청 끝]", LocalDateTime.now());
 
 		return ResponseEntity.ok().build();
 	}
@@ -79,15 +88,17 @@ public class ChildApi {
 	@PostMapping("/members/reward")
 	public ResponseEntity editChildRewardRequest(
 		@RequestHeader("Authorization") String accessToken,
-		@RequestBody EditRewardRequest request) throws AuthenticationException {
+		@RequestBody EditRewardRequest request) {
+
+		log.info("[자녀 리워드 변경 요청 시작]", LocalDateTime.now());
 
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
-
-		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
 		childService.checkParent(memberUUID, request.getChildUUID());
 
 		childService.editQuizReward(request.getChildUUID(), request.getReward());
+
+		log.info("[자녀 리워드 변경 요청 끝]", LocalDateTime.now());
 
 		return ResponseEntity.ok().body(request.getReward());
 	}
@@ -97,13 +108,15 @@ public class ChildApi {
 		@RequestHeader("Authorization") String accessToken,
 		@RequestBody EditRewardRemainRequest request) throws AuthenticationException {
 
-		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+		log.info("[자녀 리워드 한도 변경 요청 시작]", LocalDateTime.now());
 
-		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
+		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 
 		childService.checkParent(memberUUID, request.getChildUUID());
 
 		childService.editQuizRewardRemain(request.getChildUUID(), request.getRewardRemain());
+
+		log.info("[자녀 리워드 한도 변경 요청 끝]", LocalDateTime.now());
 
 		return ResponseEntity.ok().body(request.getRewardRemain());
 	}
