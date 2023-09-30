@@ -4,9 +4,8 @@ import { useRecoilState } from "recoil";
 import { userDataState } from "../../states/UserInfoState";
 import axios, { AxiosResponse } from "axios";
 import { api } from "../../apis/Api";
-// import { number } from "yargs";
+import { number } from "yargs";
 import { userDataProps } from "../../states/UserInfoState";
-import { useNavigate } from "react-router";
 
 // JWT 토큰의 형태를 정의
 interface JwtToken {
@@ -31,18 +30,22 @@ interface PostRegisterProps {
   bearerToken: string;
 }
 
-const postRegister = (props: PostRegisterProps): Promise<AxiosResponse> => {
+export const postRegister = (
+  props: PostRegisterProps
+): Promise<AxiosResponse> => {
   // axios 요청을 보낼 때 Authorization 헤더 설정
-  return api.get("/v1/members", {
-    headers: {
-      Authorization: `Bearer ${props.bearerToken}`,
-    },
-  });
+  return api.get("/v1/members", {});
 };
 
-function KakaoLoginRedirect() {
+export const postRegisterChild = (
+  uuid: string // uuid를 props로 받습니다.
+): Promise<AxiosResponse> => {
+  // axios 요청을 보낼 때 Authorization 헤더 설정 등을 수행합니다.
+  return api.post(`/v1/children/${uuid}`); // uuid를 경로에 삽입합니다.
+};
+
+function QrLoginRedirect() {
   const [userInfo, setUserInfo] = useRecoilState(userDataState);
-  const navigate = useNavigate();
 
   useEffect(() => {
     // URL에서 JWT 토큰 추출 (카카오 로그인 콜백에서 전달된 토큰)
@@ -76,13 +79,17 @@ function KakaoLoginRedirect() {
           };
 
           setUserInfo(updatedUserInfo);
-
+          const uuid = response.data.uuid;
+          postRegisterChild(uuid)
+            .then((childResponse) => {
+              // postRegisterChild의 응답을 처리합니다.
+              console.log("postRegisterChild 응답 데이터:", childResponse.data);
+            })
+            .catch((childError) => {
+              console.error("postRegisterChild 오류:", childError);
+            });
           // 리디렉션 (예: 홈 페이지로)
-          if (userInfo.memberRole == "GUEST") {
-            navigate("/RegistRole");
-          } else {
-            window.location.href = `${process.env.REACT_APP_BASE_URL}`;
-          }
+          window.location.href = `${process.env.REACT_APP_BASE_URL}`;
         })
         .catch((error) => {
           // 에러가 발생했을 때의 처리
@@ -94,4 +101,4 @@ function KakaoLoginRedirect() {
   return <div>Redirecting...</div>;
 }
 
-export default KakaoLoginRedirect;
+export default QrLoginRedirect;

@@ -89,12 +89,11 @@ public class JwtTokenProvider {
 					.get(AUTHORITIES_KEY)
 					.toString()
 					.split(","))
-			.map(SimpleGrantedAuthority::new)
+			.map(authority -> new SimpleGrantedAuthority("ROLE_" + authority))
 			.collect(Collectors.toList());
 
 		UserDetails principal = new User(claims.getSubject(), "", authorities);
-		System.out.println(principal.getUsername() + " " + principal.getPassword() + " " + principal.getAuthorities());
-		return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+		return new UsernamePasswordAuthenticationToken(principal, accessToken, authorities);
 	}
 
 	public Claims parseClaims(String accessToken) {
