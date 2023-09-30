@@ -34,11 +34,7 @@ export const postRegister = (
   props: PostRegisterProps
 ): Promise<AxiosResponse> => {
   // axios 요청을 보낼 때 Authorization 헤더 설정
-  return api.get("/v1/members", {
-    headers: {
-      Authorization: `Bearer ${props.bearerToken}`,
-    },
-  });
+  return api.get("/v1/members", {});
 };
 
 function KakaoLoginRedirect() {
