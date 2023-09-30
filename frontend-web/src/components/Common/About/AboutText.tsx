@@ -11,6 +11,7 @@ interface TextBoxProps {
   fontcolor?: string | undefined;
   marginT?: string | undefined;
   paddingB?: string | undefined;
+  TextBox_align?: string | undefined;
 }
 
 export const TextBox = styled.div<TextBoxProps>`
@@ -21,7 +22,8 @@ export const TextBox = styled.div<TextBoxProps>`
     props.flexDirection ? props.flexDirection : "start"};
   justify-content: ${(props) =>
     props.justifyContent ? props.justifyContent : "start"};
-  align-items: center;
+  align-items: ${(props) =>
+    props.TextBox_align ? props.TextBox_align : "center"};
   margin-left: ${(props) => (props.marginL ? props.marginL : "7%")};
   width: ${(props) => (props.width ? props.width : "100%")};
   height: ${(props) => (props.height ? props.height : "50%")};
