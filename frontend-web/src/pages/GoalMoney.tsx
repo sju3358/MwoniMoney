@@ -10,7 +10,8 @@ import Item from "../assests/image/Item.png";
 import { Btn } from "../components/Common/About/AboutButton";
 import History from "../components/Common/History";
 import { DemoLiquid } from "../components/Common/About/AboutChart";
-
+import { userDataState } from "../states/UserInfoState";
+import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 
 const MainContainer = styled.div`
@@ -57,8 +58,10 @@ function GoalMoney() {
   const num = 30;
   const goalPoint = num / 100;
 
+  const [userData, setUserData] = useRecoilState(userDataState);
+
+  const role = userData.memberRole;
   //number = 1 : 부모 , number = 0 : 자식
-  const role: number = 1;
 
   const navigate = useNavigate();
 
@@ -94,7 +97,7 @@ function GoalMoney() {
         </WhiteBox>
       </Container>
       <Container height="auto" flexdirection="column" padding="5% 0% 0% 5%">
-        {role === 1 ? (
+        {role === "PARENT" ? (
           <>
             <Text fontsize="1.5rem" fontweight="700" padding="0% 0% 5% 0%">
               {name}님이
@@ -161,7 +164,7 @@ function GoalMoney() {
           <History />
         </WhiteBox>
       </Container>
-      {role === 1 ? (
+      {role === "PARENT" ? (
         <>
           <Container
             height="10%"
