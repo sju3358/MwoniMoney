@@ -24,6 +24,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -128,8 +129,11 @@ public class JwtTokenProvider {
 			return "isUnsupporeted";
 		} catch (IllegalArgumentException e) {
 			log.info("IllegalArgumentException");
+			return "isIllegal";
+		} catch (SignatureException e) {
+			log.info("SignatureException");
 		}
-		return "isIllegal";
+		return "isSignature";
 	}
 
 	public boolean getIsExipired(String accessToken) {
