@@ -15,6 +15,8 @@ public class BalanceGameDto {
 
 	private Long idx;
 
+	private String news;
+	
 	private String question;
 
 	private String leftAnswer;
