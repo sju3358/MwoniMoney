@@ -2,10 +2,18 @@ import styled from "styled-components";
 
 interface ContainerProps {
   width?: string;
-  height: string;
+  height?: string;
   flexDirection?: string;
   justifyContent?: string;
-  overflow?: string | undefined; // overflow의 타입을 명시적으로 지정
+  overflowx?: string | undefined;
+  overflowy?: string | undefined;
+  radius?: string | undefined;
+  backcolor?: string | undefined;
+  color?: string | undefined;
+  fontw?: string | undefined;
+  fonts?: string | undefined;
+  marginT?: string | undefined;
+  align?: string | undefined;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -18,6 +26,13 @@ export const Container = styled.div<ContainerProps>`
     props.flexDirection ? props.flexDirection : "row"};
   justify-content: ${(props) =>
     props.justifyContent ? props.justifyContent : "center"};
-  align-items: center;
-  overflow: ${(props) => props.overflow}; // 기본값을 설정하지 않음
+  align-items: ${(props) => (props.align ? props.align : "center")};
+  overflow-x: ${(props) => (props.overflowx ? props.overflowx : "hidden")};
+  overflow-y: ${(props) => props.overflowy};
+  border-radius: ${(props) => props.radius};
+  background-color: ${(props) => props.backcolor};
+  color: ${(props) => props.color};
+  font-weight: ${(props) => props.fontw};
+  font-size: ${(props) => props.fonts};
+  margin-top: ${(props) => props.marginT};
 `;
