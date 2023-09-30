@@ -3,13 +3,11 @@ package com.ntt.mwonimoney.domain.game.service;
 import java.util.List;
 
 import com.ntt.mwonimoney.domain.game.entity.Chat;
-import com.ntt.mwonimoney.domain.game.entity.Word;
-
-import reactor.core.publisher.Flux;
+import com.ntt.mwonimoney.domain.game.model.dto.WordDto;
 
 public interface WordCloudService {
 
-	Flux<List<Word>> getWordCloudData(Long balanceGameIdx);
+	List<WordDto> getWordCloudData(Long balanceGameIdx);
 
 	void addWord(Chat chat, Long balanceGameIdx);
 }

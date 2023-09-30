@@ -22,7 +22,8 @@ export default function Chatting({ balanceGameIdx = 1 }) {
     const EventSource = EventSourcePolyfill || NativeEventSource;
     console.log("채팅세션연결요청");
     const eventSource = new EventSource(
-      `https://j9b310.p.ssafy.io/api/v1/balances/${balanceGameIdx}/chatting`,
+      `${process.env.REACT_APP_SERVER_URL}/api/v1/balances/${balanceGameIdx}/chatting`,
+
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -31,8 +32,6 @@ export default function Chatting({ balanceGameIdx = 1 }) {
     );
 
     eventSource.onmessage = (event: any) => {
-      console.log("채팅세션연결완료");
-
       const data = JSON.parse(event.data);
       // console.log(data);
 
@@ -150,6 +149,16 @@ export default function Chatting({ balanceGameIdx = 1 }) {
 
     api
       .post(`/v1/balances/${balanceGameIdx}/chatting`, chat)
+      .then(() => {
+        console.log("채팅보냄");
+      })
+      .catch((result) => console.log(result));
+
+    api
+      .post(`/v1/balances/${balanceGameIdx}/word-cloud`, chat)
+      .then(() => {
+        console.log("워드클라우드 보냄");
+      })
       .catch((result) => console.log(result));
 
     msgInput.value = "";
@@ -168,19 +177,21 @@ export default function Chatting({ balanceGameIdx = 1 }) {
   };
 
   return (
-    <div id="user_chat_data">
-      <div id="chat-box"></div>
+    <div>
+      <div id="user_chat_data">
+        <div id="chat-box"></div>
 
-      <div id="typeMsg">
-        <input
-          onKeyDown={(e) => sendMsg(e)}
-          id="chat-outgoing-msg"
-          type="text"
-          placeholder="메세지를 입력하세요"
-        />
-        <button id="chat-send" onClick={enterMsg} type="button">
-          전송
-        </button>
+        <div id="typeMsg">
+          <input
+            onKeyDown={(e) => sendMsg(e)}
+            id="chat-outgoing-msg"
+            type="text"
+            placeholder="메세지를 입력하세요"
+          />
+          <button id="chat-send" onClick={enterMsg} type="button">
+            전송
+          </button>
+        </div>
       </div>
     </div>
   );

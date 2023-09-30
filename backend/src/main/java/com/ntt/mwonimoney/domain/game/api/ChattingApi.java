@@ -30,11 +30,8 @@ public class ChattingApi {
 	@GetMapping(value = "/balances/{balanceGameIdx}/chatting", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<Chat> getChattingHistoryRequest(@PathVariable Long balanceGameIdx) {
 
-		log.info("채팅 세션 요청 시작");
-		Flux<Chat> chatFlux = chattingService.getBalanceGameChattingHistory(balanceGameIdx);
-		log.info(chatFlux.toString());
-		log.info("채팅 세션 요청 끝");
-		return chatFlux;
+		log.info("채팅 세션 요청");
+		return chattingService.getBalanceGameChattingHistory(balanceGameIdx);
 	}
 
 	@PostMapping("/balances/{balanceGameIdx}/chatting")

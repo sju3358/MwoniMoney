@@ -27,7 +27,7 @@ import Qr from "./pages/Qr";
 import { RecoilRoot } from "recoil";
 import { GlobalStyles } from "./Styles/GlobalStyle";
 import Layout from "./components/Layout/layout";
-import Chatting from "./components/Chatting/Chatting";
+import ChattingPage from "./components/Chatting/ChattingPage";
 //임시페이지
 import RegistRole from "./pages/Login/RegistRole";
 import QrLoginRedirect from "./pages/Login/QrLoginRedirect";
@@ -46,7 +46,7 @@ function App() {
         <Routes>
           <Route path="/LoginPage" element={<LoginPage />} />
           <Route path="/QrLoginPage" element={<QrLoginPage />} />
-          <Route path="/Chatting" element={<Chatting />} />
+          <Route path="/Chatting" element={<ChattingPage />} />
           <Route path="/RegistRole" element={<RegistRole />} />
           <Route path="/CreatGoal" element={<CreatGoal />} />
           <Route
