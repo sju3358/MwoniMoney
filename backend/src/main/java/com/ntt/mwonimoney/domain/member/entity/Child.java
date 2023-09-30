@@ -57,6 +57,8 @@ public class Child extends Member {
 	}
 
 	public void changeQuizReward(int reward) {
+		if (reward < 0)
+			throw new IllegalArgumentException("퀴즈 리워드는 0보다 커야합니다");
 		this.quizReward = reward;
 	}
 
