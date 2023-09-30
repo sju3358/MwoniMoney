@@ -1,5 +1,7 @@
 package com.ntt.mwonimoney.domain.member.api;
 
+import java.time.LocalDateTime;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -33,17 +35,15 @@ public class MemberApi {
 	public ResponseEntity getMemberInfoRequest(
 		@RequestHeader("Authorization") String accessToken) {
 
-		log.info("[멤버 조회 요청 시작]");
+		log.info("[멤버 조회 요청 시작]", LocalDateTime.now());
 
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
-		log.info("멤버 UUID : ", memberUUID);
 
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
-		log.info("멤버 idx : ", memberIdx);
 
 		MemberDto responseData = memberService.getMemberInfo(memberIdx);
 
-		log.info("[멤버 조회 요청 끝]");
+		log.info("[멤버 조회 요청 끝]", LocalDateTime.now());
 		return ResponseEntity.ok().body(responseData);
 	}
 
@@ -52,11 +52,15 @@ public class MemberApi {
 		@RequestHeader("Authorization") String accessToken,
 		@RequestBody MemberInfoChangeRequest request) {
 
+		log.error("[멤버 정보 변경 요청 시작]", LocalDateTime.now());
+
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
 		memberService.editMember(request, memberIdx);
+
+		log.error("[멤버 정보 변경 요청 끝]", LocalDateTime.now());
 
 		return ResponseEntity.ok().build();
 

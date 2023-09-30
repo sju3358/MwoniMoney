@@ -19,9 +19,7 @@ function MypageModal() {
   const memberRole = userData.memberRole;
   const email = userData.email;
 
-  const allTrue =
-    userData.memberRole !== "GUEST" &&
-    Object.values(userCheck).every((value) => value === true);
+  const allTrue = Object.values(userCheck).every((value) => value === true);
 
   useEffect(() => {
     if (allTrue) {
@@ -78,7 +76,7 @@ function MypageModal() {
               생년월일 : {birth}
             </TextBox>
             <TextBox height="15%" fontSize="1.2em">
-              역할 : {memberRole === "PARENT" ? "부모" : "자녀"}
+              역할 : {memberRole === "PARENT" ? "부모" : "아이"}
             </TextBox>
             <TextBox height="15%" fontSize="1.2em">
               이메일 :{email}

@@ -7,8 +7,8 @@ const Container = styled.div`
   position: relative;
 `;
 
-const Logo = styled.div`
-  /* �ΰ� �̹��� ��Ÿ�� ���� */
+export const Logo = styled.div`
+  // border: 1px solid blue;
   width: 61.67%;
   height: 30.44%;
   background-image: url(${process.env
@@ -20,7 +20,6 @@ const Logo = styled.div`
 `;
 
 const KaKaoLogin = styled.div`
-  /* īī�� �α��� �̹��� ��Ÿ�� ���� */
   width: 84.72%;
   height: 7.81%;
   background-image: url(${process.env
@@ -29,11 +28,10 @@ const KaKaoLogin = styled.div`
   position: absolute;
   left: 7.78%;
   top: 59.38%;
-  cursor: pointer; /* Ŀ���� �����ͷ� �����Ͽ� Ŭ�� �����ϰ� �� */
+  cursor: pointer;
 `;
 
 const GoogleLogin = styled.div`
-  /* ���� �α��� �̹��� ��Ÿ�� ���� */
   width: 84.72%;
   height: 7.81%;
   background-image: url(${process.env
@@ -42,21 +40,20 @@ const GoogleLogin = styled.div`
   position: absolute;
   left: 7.78%;
   top: 70.19%;
-  cursor: pointer; /* Ŀ���� �����ͷ� �����Ͽ� Ŭ�� �����ϰ� �� */
+  cursor: pointer;
 `;
 
 function MyComponent() {
+  //memberRole을 확인
+
   const handleKaKaoLoginClick = () => {
-    // ���⿡�� īī�� �α��� ó���� �����ϰų� �ʿ��� ������ ������ �� ����
-    console.log("KaKaoLogin Ŭ����");
-
-    // kakaoURL�� �ֿܼ� ���
-    const socialName = "kakao"; // �Ҽ� �̵�� �̸�
-    const redirectURI = "your_redirect_uri"; // ���𷺼� URI�� ���⿡ �߰�
+    console.log("KaKaoLogin 로그인");
+    // kakaoURL
+    const socialName = "kakao";
+    const redirectURI = "your_redirect_uri";
     const kakaoURL = `${process.env.REACT_APP_SERVER_URL}/api/oauth2/authorization/${socialName}?redirect_uri=${process.env.REACT_APP_BASE_URL}/oauth/redirect`;
-    console.log("Kakao URL �ּ�: " + kakaoURL);
+    console.log("Kakao URL 주소: " + kakaoURL);
 
-    // ������ ���𷺼�
     window.location.href = kakaoURL;
   };
 
