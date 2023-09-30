@@ -40,10 +40,10 @@ public class Quiz {
 	private String option4;
 
 	@Column(name = "quiz_answer")
-	private String answer;
+	private int answer;
 
 	public Quiz(Long id, String question, String option1, String option2, String option3, String option4,
-		String answer) {
+		int answer) {
 		this.id = id;
 		this.question = question;
 		this.option1 = option1;
