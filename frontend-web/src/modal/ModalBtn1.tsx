@@ -76,7 +76,7 @@ export const ModalBtn = styled.div<ModalBtnProps>`
 interface ModalProps {
   modal_start_text: string;
   modal_title: string;
-  modal_content: React.ReactNode;
+  modal_content: any;
   modal_btn: string;
   content_justify?: string;
   content_align?: string;
@@ -114,7 +114,12 @@ const ModalBody: React.FC<ModalProps> = ({
               {modal_content}
             </ModalContent>
             <ModalTopBottom>
-              <ModalBtn onClick={handleClose} color={color_btn}>
+              <ModalBtn
+                onClick={() => {
+                  handleClose();
+                }}
+                color={color_btn}
+              >
                 {modal_btn}
               </ModalBtn>
             </ModalTopBottom>

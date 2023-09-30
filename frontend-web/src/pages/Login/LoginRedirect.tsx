@@ -4,6 +4,8 @@ import { useRecoilState } from "recoil";
 import { userDataState } from "../../states/UserInfoState";
 import axios, { AxiosResponse } from "axios";
 import { api } from "../../apis/Api";
+import { number } from "yargs";
+import { userDataProps } from "../../states/UserInfoState";
 
 // JWT 토큰의 형태를 정의
 interface JwtToken {
@@ -51,7 +53,7 @@ function KakaoLoginRedirect() {
       // JWT 토큰 디코딩
       const decodedToken = jwt<JwtToken>(accessToken);
 
-      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("token", accessToken);
 
       // postRegister를 사용하여 데이터를 가져오기
       postRegister({ bearerToken: accessToken })
@@ -60,18 +62,19 @@ function KakaoLoginRedirect() {
           console.log("postRegister 응답 데이터:", response.data);
 
           // 사용자 정보 업데이트
-          const updatedUserInfo = {
+          const updatedUserInfo: userDataProps = {
             idx: decodedToken.sub,
-            uuid: response.data.idx, // 적절한 값으로 대체
-            status: response.data.status, // 적절한 값으로 대체
-            name: response.data.name, // 적절한 값으로 대체
-            nickname: response.data.nickname, // 적절한 값으로 대체
-            birthday: response.data.birthday, // 적절한 값으로 대체
-            socialProvider: response.data.socialProvider, // 오타 수정
-            socialId: response.data.socialId, // 오타 수정
-            memberRole: response.data.memberRole, // 적절한 값으로 대체
-            token: accessToken,
+            uuid: response.data.idx,
+            status: response.data.status,
+            name: response.data.name,
+            nickname: response.data.nickname,
+            birthday: response.data.birthday,
+            socialProvider: response.data.socialProvider,
+            socialId: response.data.socialId,
+            memberRole: response.data.memberRole,
+            email: response.data.email,
           };
+
           setUserInfo(updatedUserInfo);
 
           // 리디렉션 (예: 홈 페이지로)
