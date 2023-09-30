@@ -59,11 +59,22 @@ public class ChildServiceImpl implements ChildService {
 		if (member.getMemberRole().equals(MemberRole.CHILD) != true)
 			throw new IllegalArgumentException("자녀 회원이 아닙니다");
 
+		((Child)member).changeQuizReward(quizReward);
 	}
 
 	@Override
 	@Transactional
 	public void editQuizRewardRemain(Long memberIdx, int quiRewardRemainToAdd) {
+		Member member = memberRepository.findMemberByIdx(memberIdx)
+			.orElseThrow(() -> new NoSuchElementException("멤버 정보가 존재하지 않습니다."));
+
+		if (member.getMemberRole().equals(MemberRole.CHILD) != true)
+			throw new IllegalArgumentException("자녀 회원이 아닙니다");
+
+		if (quiRewardRemainToAdd > 0)
+			((Child)member).addQuizRewardRemain(quiRewardRemainToAdd);
+		else
+			((Child)member).subQuizRewardRemain((-1) * quiRewardRemainToAdd);
 
 	}
 
