@@ -34,11 +34,14 @@ export const postRegister = (
   props: PostRegisterProps
 ): Promise<AxiosResponse> => {
   // axios 요청을 보낼 때 Authorization 헤더 설정
-  return api.get("/v1/members", {
-    headers: {
-      Authorization: `Bearer ${props.bearerToken}`,
-    },
-  });
+  return api.get("/v1/members", {});
+};
+
+export const postRegisterChild = (
+  uuid: string // uuid를 props로 받습니다.
+): Promise<AxiosResponse> => {
+  // axios 요청을 보낼 때 Authorization 헤더 설정 등을 수행합니다.
+  return api.post(`/v1/children/${uuid}`); // uuid를 경로에 삽입합니다.
 };
 
 function QrLoginRedirect() {
@@ -51,39 +54,25 @@ function QrLoginRedirect() {
 
     if (accessToken) {
       // JWT 토큰 디코딩
+      const uuid = localStorage.getItem("parentuuid");
       const decodedToken = jwt<JwtToken>(accessToken);
 
       localStorage.setItem("token", accessToken);
 
-      // postRegister를 사용하여 데이터를 가져오기
-      postRegister({ bearerToken: accessToken })
-        .then((response) => {
-          // 데이터를 성공적으로 받았을 때의 처리
-          console.log("postRegister 응답 데이터:", response.data);
+      if (uuid) {
+        // uuid가 null이 아닌 경우에만 postRegisterChild 호출
+        postRegisterChild(uuid)
+          .then((childResponse) => {
+            // postRegisterChild의 응답을 처리합니다.
+            console.log("postRegisterChild 응답 데이터:", childResponse.data);
+          })
+          .catch((childError) => {
+            console.error("postRegisterChild 오류:", childError);
+          });
+      }
 
-          // 사용자 정보 업데이트
-          const updatedUserInfo: userDataProps = {
-            idx: decodedToken.sub,
-            uuid: response.data.uuid,
-            status: response.data.status,
-            name: response.data.name,
-            nickname: response.data.nickname,
-            birthday: response.data.birthday,
-            socialProvider: response.data.socialProvider,
-            socialId: response.data.socialId,
-            memberRole: response.data.memberRole,
-            email: response.data.email,
-          };
-
-          setUserInfo(updatedUserInfo);
-          const uuid = response.data.uuid;
-          // 리디렉션 (예: 홈 페이지로)
-          window.location.href = `${process.env.REACT_APP_BASE_URL}/api/v1/children/${uuid}`;
-        })
-        .catch((error) => {
-          // 에러가 발생했을 때의 처리
-          console.error("postRegister 오류:", error);
-        });
+      // 리디렉션 (예: 홈 페이지로)
+      window.location.href = `${process.env.REACT_APP_BASE_URL}`;
     }
   }, []);
 

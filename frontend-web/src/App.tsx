@@ -28,6 +28,8 @@ import { RecoilRoot } from "recoil";
 import { GlobalStyles } from "./Styles/GlobalStyle";
 import Layout from "./components/Layout/layout";
 import Chatting from "./components/Chatting/Chatting";
+//임시페이지
+import RegistRole from "./pages/Login/RegistRole";
 import QrLoginRedirect from "./pages/Login/QrLoginRedirect";
 import QrLoginPage from "./pages/Login/QrLoginPage";
 
@@ -43,6 +45,7 @@ function App() {
           <Route path="/LoginPage" element={<LoginPage />} />
           <Route path="/QrLoginPage" element={<QrLoginPage />} />
           <Route path="/Chatting" element={<Chatting />} />
+          <Route path="/RegistRole" element={<RegistRole />} />
           <Route
             path="/StartPage1"
             element={

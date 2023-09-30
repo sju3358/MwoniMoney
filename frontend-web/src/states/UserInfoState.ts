@@ -39,7 +39,6 @@ export const userDataState = atom<userDataProps>({
 export interface userCheckProps {
   nameCheck: boolean;
   birthdayCheck: boolean;
-  memberRolecheck: boolean;
   emailCheck: boolean;
 }
 
@@ -48,7 +47,6 @@ export const userCheckState = atom<userCheckProps>({
   default: {
     nameCheck: false,
     birthdayCheck: false,
-    memberRolecheck: false,
     emailCheck: false,
   },
 });

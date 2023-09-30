@@ -1,0 +1,13 @@
+spring:
+  data:
+    couchbase:
+      bucket-name: mwonimoney
+cloud:
+  aws:
+    stack:
+      auto: false
+    region:
+      static: ap-northeast-2
+    credentials:
+      secret-key: Qjr8GXYkmVG9qn6HpTsXfG10lpIL8LM5PSrhWQF3
+      access-key: AKIARU537MT6TLAF5CEH

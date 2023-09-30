@@ -58,15 +58,18 @@ export const ModalContent = styled.div<ModalContentProps>`
 `;
 
 interface ModalBtnProps {
-  color?: string;
+  modalBtn_color?: string;
+  modalBtn_width?: string | undefined;
+  modalBtn_height?: string | undefined;
 }
 
 /**모달 닫기 버튼 */
 export const ModalBtn = styled.div<ModalBtnProps>`
   // border: 1px solid black;
-  width: 60%;
-  height: 80%;
-  background-color: ${(props) => (props.color ? props.color : "#fbd570")};
+  width: ${(props) => (props.modalBtn_width ? props.modalBtn_width : "60%")};
+  height: ${(props) => (props.modalBtn_height ? props.modalBtn_height : "80%")};
+  background-color: ${(props) =>
+    props.modalBtn_color ? props.modalBtn_color : "#fbd570"};
   border-radius: 10px;
   display: flex;
   justify-content: center;

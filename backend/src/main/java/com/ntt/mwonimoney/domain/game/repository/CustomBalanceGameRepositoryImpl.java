@@ -33,6 +33,7 @@ public class CustomBalanceGameRepositoryImpl implements CustomBalanceGameReposit
 		BalanceGameDto balanceGameDto = jpaQueryFactory
 			.select(Projections.bean(BalanceGameDto.class
 				, balanceGame.idx
+				, balanceGame.news
 				, balanceGame.question
 				, balanceGame.leftAnswer
 				, balanceGame.rightAnswer
@@ -105,6 +106,7 @@ public class CustomBalanceGameRepositoryImpl implements CustomBalanceGameReposit
 		BalanceGameDto balanceGameDto = jpaQueryFactory
 			.select(Projections.bean(BalanceGameDto.class
 				, balanceGame.idx
+				, balanceGame.news
 				, balanceGame.question
 				, balanceGame.leftAnswer
 				, balanceGame.rightAnswer
