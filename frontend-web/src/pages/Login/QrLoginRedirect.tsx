@@ -78,7 +78,7 @@ function QrLoginRedirect() {
           setUserInfo(updatedUserInfo);
           const uuid = response.data.uuid;
           // 리디렉션 (예: 홈 페이지로)
-          window.location.href = `${process.env.REACT_APP_BASE_URL}/api/v1/children/${uuid}?redirect_uri=https://j9b310.p.ssafy.io`;
+          window.location.href = `${process.env.REACT_APP_BASE_URL}/api/v1/children/${uuid}`;
         })
         .catch((error) => {
           // 에러가 발생했을 때의 처리
