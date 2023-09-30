@@ -4,8 +4,9 @@ import ChallengeChild from "../components/Children/Challenge";
 
 function Challenge() {
   //number = 1 : 부모 , number = 0 : 자식
-  const role: number = 1;
-  return <>{role === 1 ? <ChallengeParents /> : <ChallengeChild />}</>;
+  const role: number = 0;
+  return <>{role === 1 ? <ChallengeParents /> : <ChallengeChild  ismain = "N"/>}</>;
 }
 
 export default Challenge;
+

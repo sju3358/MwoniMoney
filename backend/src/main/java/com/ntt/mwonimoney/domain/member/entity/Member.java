@@ -2,6 +2,8 @@ package com.ntt.mwonimoney.domain.member.entity;
 
 import java.util.UUID;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ntt.mwonimoney.domain.member.model.dto.GuestDto;
 import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
@@ -66,6 +68,7 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "FCMToken", length = 300)
 	private String FCMToken;
 
+	@Transactional
 	public void changeMemberRole(MemberRole memberRole) {
 
 		if (this.memberRole.equals(MemberRole.CHILD) || this.memberRole.equals(MemberRole.PARENT)) {
@@ -85,6 +88,10 @@ public abstract class Member extends CommonEntity {
 
 	public void changeMemberNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	public void changeMemberName(String name) {
+		this.name = name;
 	}
 
 	protected Member(int status, String name, String nickname, String birthday,
@@ -108,4 +115,5 @@ public abstract class Member extends CommonEntity {
 	public void updateFCMToken(String FCMToken) {
 		this.FCMToken = FCMToken;
 	}
+
 }
