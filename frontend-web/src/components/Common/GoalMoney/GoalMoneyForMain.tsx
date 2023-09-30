@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { WhiteBox } from "../About/AboutWhilteContainer";
 import { useNavigate } from "react-router-dom";
 import { ImgBox, Img } from "../About/AboutEmogi";
