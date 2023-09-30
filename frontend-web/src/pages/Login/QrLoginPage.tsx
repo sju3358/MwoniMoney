@@ -52,6 +52,7 @@ function QrLoginPage() {
 
   // 특정 query parameter 값 읽기
   const paramValue = queryParams.get("parentuuid");
+  console.log(paramValue);
   const valueToStore = paramValue || ""; // null인 경우 빈 문자열로 설정
   localStorage.setItem("parentuuid", valueToStore);
 
