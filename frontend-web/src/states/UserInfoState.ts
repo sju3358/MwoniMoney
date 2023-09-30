@@ -50,17 +50,3 @@ export const userCheckState = atom<userCheckProps>({
     emailCheck: false,
   },
 });
-
-// export interface roleCheckProps {
-//   nameCheck: boolean;
-//   birthdayCheck: boolean;
-//   memberRolecheck: boolean;
-//   emailCheck: boolean;
-// }
-
-// export const roleCheckState = atom<roleCheckProps>({
-//   key: "useCheckState",
-//   default: {
-//     memberRolecheck: false,
-//   },
-// });
