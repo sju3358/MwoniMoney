@@ -16,6 +16,7 @@ function InputInfo({ title, info, placeholder, id }: InputImfoProps) {
   const [userData, setUserData] = useRecoilState(userDataState);
   const [userCheck, setUserCheck] = useRecoilState(userCheckState);
   const [inputValue, setInputValue] = useState("");
+  console.log(userCheck);
 
   const handleInputChange = (e: any) => {
     setInputValue(e.target.value);
