@@ -20,17 +20,15 @@ export default function Chatting({ balanceGameIdx = 1 }) {
   // 세션 연결
   useEffect(() => {
     const EventSource = EventSourcePolyfill || NativeEventSource;
-
+    console.log(11111);
     const eventSource = new EventSource(
-      `http://localhost:8080/api/v1/balances/${balanceGameIdx}/chatting`,
+      `https://j9b310.p.ssafy.io/api/v1/balances/${balanceGameIdx}/chatting`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     );
-
-    console.log(eventSource);
 
     eventSource.onmessage = (event: any) => {
       console.log(33333);
