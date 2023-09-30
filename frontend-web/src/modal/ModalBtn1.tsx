@@ -57,12 +57,19 @@ export const ModalContent = styled.div<ModalContentProps>`
   align-items:${(props) => (props.align ? props.align : "center")};
 `;
 
+interface ModalBtnProps {
+  modalBtn_color?: string;
+  modalBtn_width?: string | undefined;
+  modalBtn_height?: string | undefined;
+}
+
 /**모달 닫기 버튼 */
-export const ModalBtn = styled.div`
+export const ModalBtn = styled.div<ModalBtnProps>`
   // border: 1px solid black;
-  width: 60%;
-  height: 80%;
-  background-color: #fbd570;
+  width: ${(props) => (props.modalBtn_width ? props.modalBtn_width : "60%")};
+  height: ${(props) => (props.modalBtn_height ? props.modalBtn_height : "80%")};
+  background-color: ${(props) =>
+    props.modalBtn_color ? props.modalBtn_color : "#fbd570"};
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -72,19 +79,23 @@ export const ModalBtn = styled.div`
 interface ModalProps {
   modal_start_text: string;
   modal_title: string;
-  modal_content: React.ReactNode;
+  modal_content: any;
   modal_btn: string;
   content_justify?: string;
   content_align?: string;
+  color_btn?: string;
+  modal_text_color?: string;
 }
 
 const ModalBody: React.FC<ModalProps> = ({
+  modal_text_color,
   modal_start_text,
   modal_title,
   modal_content,
   modal_btn,
   content_justify,
   content_align,
+  color_btn,
 }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -95,7 +106,9 @@ const ModalBody: React.FC<ModalProps> = ({
   console.log(open);
   return (
     <>
-      <Button onClick={handleOpen}>{modal_start_text}</Button>
+      <Button style={{ color: `${modal_text_color}` }} onClick={handleOpen}>
+        {modal_start_text}
+      </Button>
       <Modal open={open} onClose={handleClose}>
         <ModalContainer>
           <ModalBack>
@@ -104,7 +117,14 @@ const ModalBody: React.FC<ModalProps> = ({
               {modal_content}
             </ModalContent>
             <ModalTopBottom>
-              <ModalBtn onClick={handleClose}>{modal_btn}</ModalBtn>
+              <ModalBtn
+                onClick={() => {
+                  handleClose();
+                }}
+                color={color_btn}
+              >
+                {modal_btn}
+              </ModalBtn>
             </ModalTopBottom>
           </ModalBack>
         </ModalContainer>

@@ -4,6 +4,7 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +32,7 @@ public class JwtTokenProvider {
 
 	private static final String AUTHORITIES_KEY = "Auth";
 	private static final String BEARER_TYPE = "Bearer";
-	private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L; // 30분
+	private static final long ACCESS_TOKEN_EXPIRE_TIME = 48 * 30 * 60 * 1000L; // 30분
 	private static final long REFRESH_TOKEN_EXPIRE_TIME = 30 * 24 * 60 * 60 * 1000L; // 한달
 	private static final int REFRESH_TOKEN_EXPIRE_TIME_COOKIE = 12 * 30 * 24 * 60 * 60; // 12개월
 	private final Key key;
@@ -54,7 +55,7 @@ public class JwtTokenProvider {
 			.setIssuedAt(new Date())
 			.claim(AUTHORITIES_KEY, role)
 			.signWith(key, SignatureAlgorithm.HS256)
-			.setExpiration(new Date(now + ACCESS_TOKEN_EXPIRE_TIME))
+			.setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
 			.compact();
 
 		String refreshToken = Jwts
@@ -88,11 +89,11 @@ public class JwtTokenProvider {
 					.get(AUTHORITIES_KEY)
 					.toString()
 					.split(","))
-			.map(SimpleGrantedAuthority::new)
+			.map(authority -> new SimpleGrantedAuthority("ROLE_" + authority))
 			.collect(Collectors.toList());
 
 		UserDetails principal = new User(claims.getSubject(), "", authorities);
-		return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+		return new UsernamePasswordAuthenticationToken(principal, accessToken, authorities);
 	}
 
 	public Claims parseClaims(String accessToken) {
@@ -142,5 +143,16 @@ public class JwtTokenProvider {
 
 		long now = new Date().getTime();
 		return (expiration.getTime() - now) > 0;
+	}
+
+	public String getMemberUUID(String accessToken) {
+		StringTokenizer st = new StringTokenizer(accessToken);
+		st.nextToken();
+
+		String jwtToken = st.nextToken();
+
+		Claims claims = this.parseClaims(jwtToken);
+
+		return claims.get("sub").toString();
 	}
 }

@@ -2,6 +2,8 @@ package com.ntt.mwonimoney.domain.member.entity;
 
 import java.util.UUID;
 
+import com.ntt.mwonimoney.domain.member.model.dto.GuestDto;
+import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 import com.ntt.mwonimoney.global.common.entity.CommonEntity;
@@ -32,20 +34,20 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "member_idx")
 	private Long idx;
 
-	@Column(name = "member_uuid", unique = true)
-	private String uuid;
+	@Column(name = "member_uuid", unique = true, nullable = false)
+	protected String uuid;
 
-	@Column(name = "member_status")
-	private int status;
+	@Column(name = "member_status", nullable = false)
+	protected int status;
 
 	@Column(name = "member_name")
-	private String name;
+	protected String name;
 
 	@Column(name = "member_nickname")
-	private String nickname;
+	protected String nickname;
 
 	@Column(name = "member_birthday")
-	private String birthday;
+	protected String birthday;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "member_social_provider")
@@ -55,7 +57,7 @@ public abstract class Member extends CommonEntity {
 	private String socialId;
 
 	@Column(name = "member_email")
-	private String email;
+	protected String email;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "member_role")
@@ -64,10 +66,29 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "FCMToken", length = 300)
 	private String FCMToken;
 
-	protected Member(int status, String name, String nickname, String birthday,
+	public void changeMemberEmail(String email) {
+		this.email = email;
+	}
+
+	public void changeMemberBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public void changeMemberNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public void changeMemberName(String name) {
+		this.name = name;
+	}
+
+	protected Member(int status, String memberUUID, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
 		String socialId, String email, MemberRole memberRole) {
-		this.uuid = UUID.randomUUID().toString();
+		if (memberUUID == null || memberUUID.isEmpty())
+			this.uuid = UUID.randomUUID().toString();
+		else
+			this.uuid = memberUUID;
 		this.status = status;
 		this.name = name;
 		this.nickname = nickname;
@@ -78,7 +99,12 @@ public abstract class Member extends CommonEntity {
 		this.memberRole = memberRole;
 	}
 
+	public MemberDto convertToDto() {
+		return GuestDto.builder().build();
+	}
+
 	public void updateFCMToken(String FCMToken) {
 		this.FCMToken = FCMToken;
 	}
+
 }

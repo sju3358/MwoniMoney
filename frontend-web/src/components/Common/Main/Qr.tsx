@@ -1,72 +1,33 @@
 import React from "react";
-import styled from "styled-components";
-import { WhiteBox } from "../About/WhiteBox";
 import QrEmogi from "../../../assests/image/QR.png";
-
-const RowTextContainer = styled.div`
-  // border: 1px solid black;
-  width: 60%;
-  height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-const Boldtext = styled.div`
-  // border: 1px solid black;
-  width: 100%;
-  height: 60%;
-  box-sizing: border-box;
-  font-size: 1.5em;
-  font-weight: bold;
-  display: flex;
-  // justify-content: center;
-  align-items: center;
-  margin-left: 5%;
-`;
-
-const Samlltext = styled.div`
-  // border: 1px solid black;
-  width: 100%;
-  height: 20%;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  margin-left: 5%;
-`;
-const EmogiTextContainer = styled.div`
-  // border: 1px solid black;
-  width: 40%;
-  height: 100%;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Emoji1 = styled.div`
-  // border: 1px solid red;
-  width: 56%;
-  height: 56%;
-  box-sizing: border-box;
-  background-image: url(${QrEmogi});
-  background-size: 100% 100%;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-`;
+import { useNavigate } from "react-router-dom";
+import { WhiteBox1 } from "../About/AboutWhilteContainer";
+import { Container } from "../About/AboutContainer";
+import { EmogiBox } from "../About/AboutEmogi";
+import { TextBox, Text } from "../About/AboutText";
 
 function Qr() {
+  const navigate = useNavigate();
+  const goQr = () => {
+    navigate("/Qr");
+  };
   return (
-    <WhiteBox style={{ display: "flex" }}>
-      <RowTextContainer>
-        <Boldtext>QR 발급</Boldtext>
-        <Samlltext>자녀에게</Samlltext>
-        <Samlltext>QR코드를 발급해주세요!</Samlltext>
-      </RowTextContainer>
-      <EmogiTextContainer>
-        <Emoji1 />
-      </EmogiTextContainer>
-    </WhiteBox>
+    <WhiteBox1 height="90%" onClick={goQr}>
+      <Container
+        height="100%"
+        width="65%"
+        flexDirection="column"
+        align="start"
+        justifyContent="start"
+      >
+        <TextBox marginL="10%">QR 발급</TextBox>
+        <Text>자녀에게</Text>
+        <Text>QR코드를 발급해주세요!</Text>
+      </Container>
+      <Container height="100%" width="35%">
+        <EmogiBox height="60%" width="65%" backImg={`${QrEmogi}`} />
+      </Container>
+    </WhiteBox1>
   );
 }
 

@@ -5,7 +5,7 @@ import { ListTitle, CategoryTag, DeadLine } from "../Challenge/ChallengeList";
 import { Category } from "../About/AboutCategory";
 import { TextBox } from "../About/AboutText";
 import Button from "../About/AboutButton";
-import ProgressBar from "./ProgressBar";
+import { ProgressBar } from "./ProgressBar";
 
 function LoanList() {
   const title = "돈 빌려주세요";
@@ -28,7 +28,7 @@ function LoanList() {
         <ProgressBar />
       </Container>
       <Container height="40%">
-        <Button content="돈 갚기" width="50%" fontSize="1.2em" height="70%" />
+        <Button content="돈 갚기" width="50%" fontS="1.2em" height="70%" />
       </Container>
     </WhiteBox1>
   );
