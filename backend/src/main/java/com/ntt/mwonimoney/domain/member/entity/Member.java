@@ -2,8 +2,6 @@ package com.ntt.mwonimoney.domain.member.entity;
 
 import java.util.UUID;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.ntt.mwonimoney.domain.member.model.dto.GuestDto;
 import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
@@ -37,7 +35,7 @@ public abstract class Member extends CommonEntity {
 	private Long idx;
 
 	@Column(name = "member_uuid", unique = true, nullable = false)
-	private String uuid;
+	protected String uuid;
 
 	@Column(name = "member_status", nullable = false)
 	protected int status;
@@ -68,16 +66,6 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "FCMToken", length = 300)
 	private String FCMToken;
 
-	@Transactional
-	public void changeMemberRole(MemberRole memberRole) {
-
-		if (this.memberRole.equals(MemberRole.CHILD) || this.memberRole.equals(MemberRole.PARENT)) {
-			throw new IllegalArgumentException("멤버 유형은 게스트만 변경 할 수 있습니다.");
-		}
-
-		this.memberRole = memberRole;
-	}
-
 	public void changeMemberEmail(String email) {
 		this.email = email;
 	}
@@ -94,10 +82,13 @@ public abstract class Member extends CommonEntity {
 		this.name = name;
 	}
 
-	protected Member(int status, String name, String nickname, String birthday,
+	protected Member(int status, String memberUUID, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
 		String socialId, String email, MemberRole memberRole) {
-		this.uuid = UUID.randomUUID().toString();
+		if (memberUUID == null || memberUUID.isEmpty())
+			this.uuid = UUID.randomUUID().toString();
+		else
+			this.uuid = memberUUID;
 		this.status = status;
 		this.name = name;
 		this.nickname = nickname;

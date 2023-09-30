@@ -24,6 +24,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -89,12 +90,11 @@ public class JwtTokenProvider {
 					.get(AUTHORITIES_KEY)
 					.toString()
 					.split(","))
-			.map(SimpleGrantedAuthority::new)
+			.map(authority -> new SimpleGrantedAuthority("ROLE_" + authority))
 			.collect(Collectors.toList());
 
 		UserDetails principal = new User(claims.getSubject(), "", authorities);
-		System.out.println(principal.getUsername() + " " + principal.getPassword() + " " + principal.getAuthorities());
-		return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+		return new UsernamePasswordAuthenticationToken(principal, accessToken, authorities);
 	}
 
 	public Claims parseClaims(String accessToken) {
@@ -129,8 +129,11 @@ public class JwtTokenProvider {
 			return "isUnsupporeted";
 		} catch (IllegalArgumentException e) {
 			log.info("IllegalArgumentException");
+			return "isIllegal";
+		} catch (SignatureException e) {
+			log.info("SignatureException");
 		}
-		return "isIllegal";
+		return "isSignature";
 	}
 
 	public boolean getIsExipired(String accessToken) {

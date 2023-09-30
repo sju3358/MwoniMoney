@@ -28,6 +28,10 @@ import { RecoilRoot } from "recoil";
 import { GlobalStyles } from "./Styles/GlobalStyle";
 import Layout from "./components/Layout/layout";
 import Chatting from "./components/Chatting/Chatting";
+//임시페이지
+import RegistRole from "./pages/Login/RegistRole";
+import QrLoginRedirect from "./pages/Login/QrLoginRedirect";
+import QrLoginPage from "./pages/Login/QrLoginPage";
 
 function App() {
   // 로컬 스토리지에서 userUuidState 값을 가져옵니다.
@@ -39,7 +43,9 @@ function App() {
       <RecoilRoot>
         <Routes>
           <Route path="/LoginPage" element={<LoginPage />} />
+          <Route path="/QrLoginPage" element={<QrLoginPage />} />
           <Route path="/Chatting" element={<Chatting />} />
+          <Route path="/RegistRole" element={<RegistRole />} />
           <Route
             path="/StartPage1"
             element={
@@ -113,6 +119,7 @@ function App() {
             }
           />
           <Route path="/oauth/redirect" element={<LoginRedirect />} />
+          <Route path="/oauth/QrLoginRedirect" element={<QrLoginRedirect />} />
 
           {/* Layout 컴포넌트가 중첩 라우트를 포함하도록 수정 */}
           <Route path="/" element={<Layout />}>
