@@ -64,7 +64,7 @@ function KakaoLoginRedirect() {
           // 사용자 정보 업데이트
           const updatedUserInfo: userDataProps = {
             idx: decodedToken.sub,
-            uuid: response.data.idx,
+            uuid: response.data.uuid,
             status: response.data.status,
             name: response.data.name,
             nickname: response.data.nickname,
