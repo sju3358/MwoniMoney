@@ -117,7 +117,7 @@ public class JwtTokenProvider {
 				.setSigningKey(key)
 				.build()
 				.parseClaimsJws(token);
-			return "vaild";
+			return "valid";
 		} catch (MalformedJwtException e) {
 			log.info("MalformedJwtException");
 			return "invalid";
