@@ -55,6 +55,9 @@ function QrLoginRedirect() {
     if (accessToken) {
       // JWT 토큰 디코딩
       const uuid = localStorage.getItem("parentuuid");
+      const decodedToken = jwt<JwtToken>(accessToken);
+
+      localStorage.setItem("token", accessToken);
 
       if (uuid) {
         // uuid가 null이 아닌 경우에만 postRegisterChild 호출
