@@ -14,12 +14,14 @@ import com.ntt.mwonimoney.domain.game.service.ChattingService;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("api/v1")
 @RequiredArgsConstructor
+@Slf4j
 public class ChattingApi {
 
 	private final ChattingService chattingService;
@@ -27,7 +29,11 @@ public class ChattingApi {
 
 	@GetMapping(value = "/balances/{balanceGameIdx}/chatting", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<Chat> getChattingHistoryRequest(@PathVariable Long balanceGameIdx) {
+
+		log.info("채팅 세션 요청 시작");
 		Flux<Chat> chatFlux = chattingService.getBalanceGameChattingHistory(balanceGameIdx);
+		log.info(chatFlux.toString());
+		log.info("채팅 세션 요청 끝");
 		return chatFlux;
 	}
 
