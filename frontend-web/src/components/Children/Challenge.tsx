@@ -56,7 +56,6 @@ function Challenge(props: ChallengeProps) {
           <ChallengeAdd />
         </>
       )}
-
       <ChallengeListContainer>
         <ChallengeList />
         <ChallengeList />
