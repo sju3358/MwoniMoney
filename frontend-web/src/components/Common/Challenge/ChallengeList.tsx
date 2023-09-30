@@ -2,6 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Category } from "./ChallengeCategory";
 
+//recoil
+import { getChallenge } from "../../../states/ChallengeState";
+
 export const ChallengeListContainer = styled.div`
   // border: 1px solid black;
   width: 100%;
@@ -87,19 +90,29 @@ const ChallengeBtn = styled.div<BtnProps>`
   font-weight: bold;
   background-color: ${(props) => props.backcolor};
 `;
-
-function ChallengeList() {
-  const ChallengeTitle = "방 청소하기";
+interface Props {
+  data: getChallenge;
+}
+function ChallengeList({ data }: Props) {
+  const formatDate = (origindate: string) => {
+    const date = new Date(origindate);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 2자리로 포맷팅
+    const day = date.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+  const formattedDate = formatDate(data.endTime);
   return (
     <ListComponent>
       <ListTitle>
-        <Title>{ChallengeTitle}</Title>
+        <Title>{data.memo}</Title>
         <CategoryTag>
           <Category backcolor="#fcdf92" width="80%">
             진행중
+            {data.status}
           </Category>
         </CategoryTag>
-        <DeadLine> ~2023/10/07</DeadLine>
+        <DeadLine> {formattedDate}</DeadLine>
       </ListTitle>
       <ListBtn>
         <ChallengeBtn backcolor="#fbd56e">완료</ChallengeBtn>
