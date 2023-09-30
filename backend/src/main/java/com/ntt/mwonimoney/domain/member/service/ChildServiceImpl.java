@@ -6,9 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ntt.mwonimoney.domain.member.entity.Child;
+import com.ntt.mwonimoney.domain.member.entity.ChildrenKey;
 import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
+import com.ntt.mwonimoney.domain.member.repository.ChildrenRepository;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class ChildServiceImpl implements ChildService {
 
 	private final MemberRepository memberRepository;
+	private final ChildrenRepository childrenRepository;
 
 	@Override
 	@Transactional
@@ -79,6 +82,13 @@ public class ChildServiceImpl implements ChildService {
 		else
 			((Child)member).subQuizRewardRemain((-1) * quiRewardRemainToAdd);
 
+	}
+
+	@Override
+	public void checkParent(String parentUUID, String childUUID) {
+		ChildrenKey key = new ChildrenKey(parentUUID, childUUID);
+		childrenRepository.findChildrenByChildrenKey(key)
+			.orElseThrow(() -> new NoSuchElementException("부모가 아닙니다"));
 	}
 
 }

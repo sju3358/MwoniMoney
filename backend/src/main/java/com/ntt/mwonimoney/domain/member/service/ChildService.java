@@ -17,4 +17,5 @@ public interface ChildService {
 
 	public void editQuizRewardRemain(String childUUID, int quiRewardRemainToAdd);
 
+	public void checkParent(String parentUUID, String childUUID);
 }
