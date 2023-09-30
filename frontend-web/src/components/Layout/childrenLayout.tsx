@@ -7,8 +7,7 @@ import FooterChild from "./footerChild";
 function ChildrenLayout() {
   return (
     <>
-      {/* <Header /> */}
-      <div>자식 헤더</div>
+      <Header />
       <div style={{ height: "80vh", paddingTop: "10vh" }}>
         <Outlet />
       </div>
