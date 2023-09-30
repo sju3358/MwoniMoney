@@ -65,6 +65,7 @@ public class Child extends Member {
 	@Builder
 	public Child(
 		int status,
+		String uuid,
 		String name,
 		String nickname,
 		String birthday,
@@ -76,7 +77,7 @@ public class Child extends Member {
 		int quizReward,
 		SmallAccount smallAccount) {
 
-		super(status, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD);
+		super(status, uuid, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD);
 
 		this.quizRewardRemain = quizRewardRemain;
 		this.creditScore = creditScore;
