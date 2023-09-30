@@ -3,6 +3,13 @@ import * as React from "react";
 import styled from "styled-components";
 import Modal from "@mui/material/Modal";
 
+//recoil
+import { useRecoilState } from "recoil";
+import { newChallenge } from "../../states/ChallengeState";
+
+//axios
+import { api } from "../../apis/Api";
+
 interface ModalBackPops {
   height?: string;
 }
@@ -99,11 +106,66 @@ const ModalChildrenChallenge: React.FC<ModalProps> = ({
   set_open,
 }) => {
   console.log(useState_open + "455654");
+  const [newChallengeData, setNewChallengeData] = useRecoilState(newChallenge);
+
+  const handleSubmit = () => {
+    // NewChallengeData에 uuid랑 status설정하기
+    const PostData = {
+      childUuid: "string",
+      title: newChallengeData.title,
+      category: newChallengeData.category,
+      memo: newChallengeData.memo,
+      reward: newChallengeData.reward,
+      status: 2,
+      endTime: new Date(newChallengeData.endTime).toISOString(),
+    };
+    console.log(PostData);
+
+    api
+      .post("/v1/challenges/propose", PostData)
+      .then((response) => {
+        // 성공적으로 요청이 완료된 경우 처리할 로직
+        console.log("POST 요청 성공:", response.data);
+        set_open(false);
+        console.log("onclick_Close");
+        handleClearNewChallenge();
+      })
+      .catch((error) => {
+        // 요청이 실패한 경우 처리할 로직
+        if (error.response) {
+          // 서버에서 응답이 왔지만, 응답 상태 코드가 실패인 경우
+          console.error("POST 요청 실패 - 응답 데이터:", error.response.data);
+        } else if (error.request) {
+          // 서버로 요청을 보내지 못한 경우
+          console.error("POST 요청 실패 - 요청을 보낼 수 없음");
+        } else {
+          // 요청 준비 과정에서 에러가 발생한 경우
+          console.error("POST 요청 실패 - 요청 준비 중 에러 발생");
+        }
+      });
+  };
+
+  //NewChallengeData 초기화하기
+  const handleClearNewChallenge = () => {
+    setNewChallengeData({
+      childUuid: "",
+      title: "",
+      category: "",
+      memo: "",
+      reward: 0,
+      status: 0,
+      endTime: "",
+    });
+  };
+
   const handleClose = () => {
     set_open(false);
     console.log("onclick_Close");
+    handleClearNewChallenge();
   };
+
   console.log(useState_open);
+
   return (
     <Modal
       open={useState_open}
@@ -118,7 +180,7 @@ const ModalChildrenChallenge: React.FC<ModalProps> = ({
             {modal_content}
           </ModalContent>
           <ModalTopBottom justify="space-around">
-            <ModalBtn onClick={handleClose}>{modal_btn1}</ModalBtn>
+            <ModalBtn onClick={handleSubmit}>{modal_btn1}</ModalBtn>
             <ModalBtn back_color="#f5f3ed" onClick={handleClose}>
               {modal_btn2}
             </ModalBtn>
