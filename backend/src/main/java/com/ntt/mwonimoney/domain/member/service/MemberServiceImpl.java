@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ntt.mwonimoney.domain.member.api.request.MemberInfoChangeRequest;
 import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
+import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -36,8 +37,8 @@ public class MemberServiceImpl implements MemberService {
 		Member member = memberRepository.findMemberByIdx(memberIdx)
 			.orElseThrow(() -> new NoSuchElementException("멤버정보가 존재하지 않습니다"));
 
-		if (request.getMemberRole().isPresent())
-			member.changeMemberRole(request.getMemberRole().get());
+		if (request.getName().isPresent())
+			member.changeMemberName(request.getName().get());
 
 		if (request.getEmail().isPresent())
 			member.changeMemberEmail(request.getEmail().get());
@@ -48,4 +49,12 @@ public class MemberServiceImpl implements MemberService {
 		if (request.getBirthday().isPresent())
 			member.changeMemberBirthday(request.getBirthday().get());
 	}
+
+	@Override
+	@Transactional
+	public void changeMemberRole(Long memberIdx, MemberRole memberRole) {
+
+		memberRepository.changeAndSaveMemberRole(memberIdx, memberRole);
+	}
+
 }

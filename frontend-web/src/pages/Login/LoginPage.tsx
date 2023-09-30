@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 const Logo = styled.div`
-  /* ·Î°í ÀÌ¹ÌÁö ½ºÅ¸ÀÏ ¼³Á¤ */
+  /* ï¿½Î°ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
   width: 61.67%;
   height: 30.44%;
   background-image: url(${process.env
@@ -20,7 +20,7 @@ const Logo = styled.div`
 `;
 
 const KaKaoLogin = styled.div`
-  /* Ä«Ä«¿À ·Î±×ÀÎ ÀÌ¹ÌÁö ½ºÅ¸ÀÏ ¼³Á¤ */
+  /* Ä«Ä«ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
   width: 84.72%;
   height: 7.81%;
   background-image: url(${process.env
@@ -29,11 +29,11 @@ const KaKaoLogin = styled.div`
   position: absolute;
   left: 7.78%;
   top: 59.38%;
-  cursor: pointer; /* Ä¿¼­¸¦ Æ÷ÀÎÅÍ·Î º¯°æÇÏ¿© Å¬¸¯ °¡´ÉÇÏ°Ô ÇÔ */
+  cursor: pointer; /* Ä¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ */
 `;
 
 const GoogleLogin = styled.div`
-  /* ±¸±Û ·Î±×ÀÎ ÀÌ¹ÌÁö ½ºÅ¸ÀÏ ¼³Á¤ */
+  /* ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
   width: 84.72%;
   height: 7.81%;
   background-image: url(${process.env
@@ -42,27 +42,34 @@ const GoogleLogin = styled.div`
   position: absolute;
   left: 7.78%;
   top: 70.19%;
-  cursor: pointer; /* Ä¿¼­¸¦ Æ÷ÀÎÅÍ·Î º¯°æÇÏ¿© Å¬¸¯ °¡´ÉÇÏ°Ô ÇÔ */
+  cursor: pointer; /* Ä¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ */
 `;
 
 function MyComponent() {
   const handleKaKaoLoginClick = () => {
-    // ¿©±â¿¡¼­ Ä«Ä«¿À ·Î±×ÀÎ Ã³¸®¸¦ ¼öÇàÇÏ°Å³ª ÇÊ¿äÇÑ µ¿ÀÛÀ» ¼öÇàÇÒ ¼ö ÀÖÀ½
-    console.log("KaKaoLogin Å¬¸¯µÊ");
+    // ï¿½ï¿½ï¿½â¿¡ï¿½ï¿½ Ä«Ä«ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Å³ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    console.log("KaKaoLogin Å¬ï¿½ï¿½ï¿½ï¿½");
 
-    // kakaoURLÀ» ÄÜ¼Ö¿¡ Ãâ·Â
-    const socialName = "kakao"; // ¼Ò¼È ¹Ìµð¾î ÀÌ¸§
-    const redirectURI = "your_redirect_uri"; // ¸®µð·º¼Ç URI¸¦ ¿©±â¿¡ Ãß°¡
+    // kakaoURLï¿½ï¿½ ï¿½Ü¼Ö¿ï¿½ ï¿½ï¿½ï¿½
+    const socialName = "kakao"; // ï¿½Ò¼ï¿½ ï¿½Ìµï¿½ï¿½ ï¿½Ì¸ï¿½
+    const redirectURI = "your_redirect_uri"; // ï¿½ï¿½ï¿½ð·º¼ï¿½ URIï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½ß°ï¿½
     const kakaoURL = `${process.env.REACT_APP_SERVER_URL}/api/oauth2/authorization/${socialName}?redirect_uri=${process.env.REACT_APP_BASE_URL}/oauth/redirect`;
-    console.log("Kakao URL ÁÖ¼Ò: " + kakaoURL);
+    console.log("Kakao URL ï¿½Ö¼ï¿½: " + kakaoURL);
 
-    // ÆäÀÌÁö ¸®µð·º¼Ç
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ð·º¼ï¿½
     window.location.href = kakaoURL;
   };
 
   const handleGoogleLoginClick = () => {
-    // ¿©±â¿¡¼­ ±¸±Û ·Î±×ÀÎ Ã³¸®¸¦ ¼öÇàÇÏ°Å³ª ÇÊ¿äÇÑ µ¿ÀÛÀ» ¼öÇàÇÒ ¼ö ÀÖÀ½
-    console.log("GoogleLogin Å¬¸¯µÊ");
+    // ï¿½ï¿½ï¿½â¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Å³ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    console.log("GoogleLogin Å¬ï¿½ï¿½ï¿½ï¿½");
+    const socialName = "google"; // ï¿½Ò¼ï¿½ ï¿½Ìµï¿½ï¿½ ï¿½Ì¸ï¿½
+    const redirectURI = "your_redirect_uri"; // ï¿½ï¿½ï¿½ð·º¼ï¿½ URIï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½ß°ï¿½
+    const kakaoURL = `${process.env.REACT_APP_SERVER_URL}/api/oauth2/authorization/${socialName}?redirect_uri=${process.env.REACT_APP_BASE_URL}/oauth/redirect`;
+    console.log("Kakao URL ï¿½Ö¼ï¿½: " + kakaoURL);
+
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ð·º¼ï¿½
+    window.location.href = kakaoURL;
   };
 
   return (

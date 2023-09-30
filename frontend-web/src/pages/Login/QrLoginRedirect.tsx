@@ -41,7 +41,7 @@ export const postRegister = (
   });
 };
 
-function KakaoLoginRedirect() {
+function QrLoginRedirect() {
   const [userInfo, setUserInfo] = useRecoilState(userDataState);
 
   useEffect(() => {
@@ -76,9 +76,9 @@ function KakaoLoginRedirect() {
           };
 
           setUserInfo(updatedUserInfo);
-
+          const uuid = response.data.uuid;
           // 리디렉션 (예: 홈 페이지로)
-          window.location.href = `${process.env.REACT_APP_BASE_URL}`;
+          window.location.href = `${process.env.REACT_APP_BASE_URL}/api/v1/children/${uuid}`;
         })
         .catch((error) => {
           // 에러가 발생했을 때의 처리
@@ -90,4 +90,4 @@ function KakaoLoginRedirect() {
   return <div>Redirecting...</div>;
 }
 
-export default KakaoLoginRedirect;
+export default QrLoginRedirect;
