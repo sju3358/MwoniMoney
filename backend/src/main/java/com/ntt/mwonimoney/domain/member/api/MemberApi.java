@@ -3,11 +3,13 @@ package com.ntt.mwonimoney.domain.member.api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ntt.mwonimoney.domain.member.api.request.ChangeMemberRoleRequest;
 import com.ntt.mwonimoney.domain.member.api.request.MemberInfoChangeRequest;
 import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
 import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
@@ -55,6 +57,21 @@ public class MemberApi {
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
 		memberService.editMember(request, memberIdx);
+
+		return ResponseEntity.ok().build();
+
+	}
+
+	@PostMapping("/members/role")
+	public ResponseEntity changeMemberRoleRequest(
+		@RequestHeader("Authorization") String accessToken,
+		@RequestBody ChangeMemberRoleRequest request) {
+
+		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+
+		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
+
+		memberService.changeMemberRole(memberIdx, request.getMemberRole());
 
 		return ResponseEntity.ok().build();
 
