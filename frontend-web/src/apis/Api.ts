@@ -7,3 +7,6 @@ export const api = axios.create({
     Authorization: "Bearer " + localStorage.getItem("token"),
   },
 });
+export const api_ver2 = axios.create({
+  baseURL: API_BASE_URL,
+});
