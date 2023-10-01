@@ -50,14 +50,3 @@ export const userCheckState = atom<userCheckProps>({
     emailCheck: false,
   },
 });
-
-export interface userAccountProps {
-  account: string;
-}
-
-export const userAccountState = atom<userAccountProps>({
-  key: "userAccountState",
-  default: {
-    account: "",
-  },
-});
