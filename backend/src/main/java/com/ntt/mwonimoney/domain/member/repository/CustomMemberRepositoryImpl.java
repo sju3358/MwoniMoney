@@ -107,7 +107,7 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 			throw new IllegalArgumentException("게스트만 변경 가능");
 		else {
 
-			Member memberRoleChanged = result;
+			Member memberRoleChanged = null;
 			if (memberRole.equals(MemberRole.CHILD)) {
 				memberRoleChanged = Child.builder()
 					.status(1)
