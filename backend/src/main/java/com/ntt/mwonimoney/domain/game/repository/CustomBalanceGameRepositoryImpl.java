@@ -47,8 +47,8 @@ public class CustomBalanceGameRepositoryImpl implements CustomBalanceGameReposit
 		if (balanceGameDto == null)
 			return Optional.empty();
 
-		int countOfLeftAnswer = getCountOfAnswer(BalanceGameAnswer.LEFT);
-		int countOfRightAnswer = getCountOfAnswer(BalanceGameAnswer.RIGHT);
+		int countOfLeftAnswer = getCountOfAnswer(balanceGameDto.getIdx(), BalanceGameAnswer.LEFT);
+		int countOfRightAnswer = getCountOfAnswer(balanceGameDto.getIdx(), BalanceGameAnswer.RIGHT);
 
 		balanceGameDto.setCountOfLeftAnswer(countOfLeftAnswer);
 		balanceGameDto.setCountOfRightAnswer(countOfRightAnswer);
@@ -75,8 +75,8 @@ public class CustomBalanceGameRepositoryImpl implements CustomBalanceGameReposit
 		for (BalanceGame balanceGameEntity : result) {
 			if (balanceGameEntity.getBalanceGameStatus().equals(BalanceGameStatus.RUNNING)) {
 				BalanceGameDto dto = balanceGameEntity.convertToDto();
-				dto.setCountOfRightAnswer(getCountOfAnswer(BalanceGameAnswer.RIGHT));
-				dto.setCountOfRightAnswer(getCountOfAnswer(BalanceGameAnswer.LEFT));
+				dto.setCountOfRightAnswer(getCountOfAnswer(dto.getIdx(), BalanceGameAnswer.RIGHT));
+				dto.setCountOfLeftAnswer(getCountOfAnswer(dto.getIdx(), BalanceGameAnswer.LEFT));
 				balanceGames.add(dto);
 			}
 		}
@@ -84,8 +84,8 @@ public class CustomBalanceGameRepositoryImpl implements CustomBalanceGameReposit
 		for (BalanceGame balanceGameEntity : result) {
 			if (balanceGameEntity.getBalanceGameStatus().equals(BalanceGameStatus.END)) {
 				BalanceGameDto dto = balanceGameEntity.convertToDto();
-				dto.setCountOfRightAnswer(getCountOfAnswer(BalanceGameAnswer.RIGHT));
-				dto.setCountOfRightAnswer(getCountOfAnswer(BalanceGameAnswer.LEFT));
+				dto.setCountOfRightAnswer(getCountOfAnswer(dto.getIdx(), BalanceGameAnswer.RIGHT));
+				dto.setCountOfLeftAnswer(getCountOfAnswer(dto.getIdx(), BalanceGameAnswer.LEFT));
 				balanceGames.add(dto);
 			}
 		}
@@ -118,8 +118,8 @@ public class CustomBalanceGameRepositoryImpl implements CustomBalanceGameReposit
 		if (balanceGameDto == null)
 			return Optional.empty();
 
-		int countOfLeftAnswer = getCountOfAnswer(BalanceGameAnswer.LEFT);
-		int countOfRightAnswer = getCountOfAnswer(BalanceGameAnswer.RIGHT);
+		int countOfLeftAnswer = getCountOfAnswer(balanceGameDto.getIdx(), BalanceGameAnswer.LEFT);
+		int countOfRightAnswer = getCountOfAnswer(balanceGameDto.getIdx(), BalanceGameAnswer.RIGHT);
 
 		balanceGameDto.setCountOfLeftAnswer(countOfLeftAnswer);
 		balanceGameDto.setCountOfRightAnswer(countOfRightAnswer);
@@ -127,11 +127,12 @@ public class CustomBalanceGameRepositoryImpl implements CustomBalanceGameReposit
 		return Optional.of(balanceGameDto);
 	}
 
-	private int getCountOfAnswer(BalanceGameAnswer answer) {
+	private int getCountOfAnswer(Long balanceGameIdx, BalanceGameAnswer answer) {
 		return jpaQueryFactory
 			.select(balanceGameHistory)
 			.from(balanceGameHistory)
-			.where(balanceGameHistory.selectAnswer.eq(answer))
+			.where(balanceGameHistory.balanceGameHistoryKey.BalanceGameIdx.eq(balanceGameIdx)
+				.and(balanceGameHistory.selectAnswer.eq(answer)))
 			.fetch().size();
 	}
 

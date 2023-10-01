@@ -65,8 +65,11 @@ public class ChallengeService {
 	}
 
 	//삭제
+	@Transactional(readOnly = false)
 	public void deleteChallenge(Long parentIdx, Long memberChallengeIdx) {
+		log.info("서비스 시작");
 		memberChallengeRepository.deleteById(memberChallengeIdx);
+		log.info("서비스 끝");
 	}
 
 	//부모 챌린지 완료
@@ -74,7 +77,7 @@ public class ChallengeService {
 	public void completeChallenge(Long memberChallengeIdx) {
 		Optional<MemberChallenge> memberChallenge = memberChallengeRepository.findById(memberChallengeIdx);
 
-		memberChallenge.orElseThrow().setStatus(2);
+		memberChallenge.orElseThrow().setStatus(3);
 
 	}
 
@@ -132,7 +135,7 @@ public class ChallengeService {
 	//자식 챌린지 완료 요청
 	public void proposeAcceptChallenge(Long memberChallengeIdx) {
 		Optional<MemberChallenge> memberChallenge = memberChallengeRepository.findById(memberChallengeIdx);
-		memberChallenge.orElseThrow().setStatus(3);
+		memberChallenge.orElseThrow().setStatus(2);
 	}
 
 	//공통
@@ -142,7 +145,6 @@ public class ChallengeService {
 		log.info("service selectMemberChallenge");
 		List<MemberChallenge> memberChallengeList = new ArrayList<>();
 		if (status != 5) {
-			//member를 이용하니까 fetch join을 사용해서 member랑 조인하고, memberid가 같은거랑 status가 같은 것을 찾는다.
 			memberChallengeList = memberChallengeRepository.findbyStatusandIdx(
 				status, memberIdx);
 
@@ -153,7 +155,6 @@ public class ChallengeService {
 			log.info("오류 안 남");
 		}
 
-		log.info("zzzzz");
 		return memberChallengeList.stream()
 			.map(MemberChallengeResponseDto::new)
 			.collect(Collectors.toList());
