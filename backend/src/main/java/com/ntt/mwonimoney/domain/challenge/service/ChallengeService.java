@@ -136,7 +136,7 @@ public class ChallengeService {
 	@Transactional(readOnly = false)
 	public void proposeAcceptChallenge(Long memberChallengeIdx) {
 		Optional<MemberChallenge> memberChallenge = memberChallengeRepository.findById(memberChallengeIdx);
-		memberChallenge.orElseThrow().setStatus(2);
+		memberChallenge.orElseThrow().setStatus(1);
 	}
 
 	//공통
