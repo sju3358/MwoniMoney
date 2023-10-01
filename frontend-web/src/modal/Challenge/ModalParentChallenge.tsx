@@ -3,6 +3,14 @@ import * as React from "react";
 import styled from "styled-components";
 import Modal from "@mui/material/Modal";
 
+//recoil
+import { useRecoilState } from "recoil";
+import { newChallenge } from "../../states/ChallengeState";
+import { isProposeChallenge } from "../../states/ChallengeState";
+
+//axios
+import { api } from "../../apis/Api";
+
 interface ModalBackPops {
   height?: string;
 }
@@ -99,9 +107,91 @@ const ModalParentChallenge: React.FC<ModalProps> = ({
   set_open,
 }) => {
   console.log(useState_open + "455654");
+
+  const [newChallengeData, setNewChallengeData] = useRecoilState(newChallenge);
+  const [isProposeState, setisProposeState] =
+    useRecoilState(isProposeChallenge);
+
+  /**
+   * 자식 uuid
+   */
+  const ChildUuid = "d3a58e6c-14d7-4b3a-b58f-982aafc9836b";
+
+  const handleSubmit = () => {
+    if (newChallengeData.category.length < 1) {
+      alert("챌린지 카테고리가 없습니다.");
+      return;
+    }
+    if (newChallengeData.title.length < 1) {
+      alert("챌린지 부제가 없습니다.");
+      return;
+    }
+    if (newChallengeData.memo.length < 1) {
+      alert("챌린지 제목이 없습니다.");
+      return;
+    }
+    if (newChallengeData.reward < 100) {
+      alert("100원보다 크게 설정해주세요");
+      return;
+    }
+    if (newChallengeData.endTime.length < 1) {
+      alert("마감기한이 없습니다.");
+      return;
+    }
+    // NewChallengeData에 uuid랑 status설정하기
+    const PostData = {
+      childUuid: ChildUuid,
+      title: newChallengeData.title,
+      category: newChallengeData.category,
+      memo: newChallengeData.memo,
+      reward: newChallengeData.reward,
+      status: 0,
+      endTime: new Date(newChallengeData.endTime).toISOString(),
+    };
+    console.log(PostData);
+
+    api
+      .post("/v1/challenges", PostData)
+      .then((response) => {
+        // 성공적으로 요청이 완료된 경우 처리할 로직
+        console.log("POST 요청 성공:", response.data);
+        set_open(false);
+        console.log("onclick_Close");
+        handleClearNewChallenge();
+        setisProposeState(true);
+      })
+      .catch((error) => {
+        // 요청이 실패한 경우 처리할 로직
+        if (error.response) {
+          // 서버에서 응답이 왔지만, 응답 상태 코드가 실패인 경우
+          console.error("POST 요청 실패 - 응답 데이터:", error.response.data);
+        } else if (error.request) {
+          // 서버로 요청을 보내지 못한 경우
+          console.error("POST 요청 실패 - 요청을 보낼 수 없음");
+        } else {
+          // 요청 준비 과정에서 에러가 발생한 경우
+          console.error("POST 요청 실패 - 요청 준비 중 에러 발생");
+        }
+      });
+  };
+
+  //NewChallengeData 초기화하기
+  const handleClearNewChallenge = () => {
+    setNewChallengeData({
+      childUuid: "",
+      title: "",
+      category: "",
+      memo: "",
+      reward: 0,
+      status: 0,
+      endTime: "",
+    });
+  };
+
   const handleClose = () => {
     set_open(false);
     console.log("onclick_Close");
+    handleClearNewChallenge();
   };
   console.log(useState_open);
   return (
@@ -118,7 +208,7 @@ const ModalParentChallenge: React.FC<ModalProps> = ({
             {modal_content}
           </ModalContent>
           <ModalTopBottom justify="space-around">
-            <ModalBtn onClick={handleClose}>{modal_btn1}</ModalBtn>
+            <ModalBtn onClick={handleSubmit}>{modal_btn1}</ModalBtn>
             <ModalBtn back_color="#f5f3ed" onClick={handleClose}>
               {modal_btn2}
             </ModalBtn>
