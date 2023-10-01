@@ -33,15 +33,30 @@ export const Category = styled.div<CategoryProps>`
 `;
 
 function ChallengeCategory() {
+  const handleSearch = (searchString: string) => {
+    console.log(searchString + "클릭됨");
+  };
   return (
     <CategoryContainer>
-      <Category backcolor="#ffffff" width="20%">
+      <Category
+        backcolor="#ffffff"
+        width="20%"
+        onClick={() => handleSearch("all")}
+      >
         모두
       </Category>
-      <Category backcolor="#fcdf92" width="20%">
+      <Category
+        backcolor="#fcdf92"
+        width="20%"
+        onClick={() => handleSearch("ing")}
+      >
         진행중
       </Category>
-      <Category backcolor="#d1d1d1" width="20%">
+      <Category
+        backcolor="#d1d1d1"
+        width="20%"
+        onClick={() => handleSearch("propose")}
+      >
         제안대기
       </Category>
     </CategoryContainer>
