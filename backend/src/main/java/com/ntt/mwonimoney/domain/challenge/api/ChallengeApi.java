@@ -31,13 +31,12 @@ public class ChallengeApi {
 
 	private final JwtTokenProvider jwtTokenProvider;
 	private final MemberAuthService memberAuthService;
-	// private final MemberService memberService;
-
 	private final ChallengeService challengeService;
 
-	// 부모
-
-	//부모님이 writechallenge
+	/**
+	 * 부모
+	 */
+	//부모님이 챌린지 생성
 	@PostMapping("/challenges")
 	public ResponseEntity writeChallenge(
 		@RequestHeader("Authorization") String accessToken,
@@ -49,60 +48,74 @@ public class ChallengeApi {
 
 		MemberChallengeResponseDto responseData = challengeService.writeChallenge(challengeRequestDto, parentIdx,
 			childIdx);
+
 		return ResponseEntity.ok().body(responseData);
 	}
 
 	//부모 챌린지 삭제
 	@DeleteMapping("/challenges/{memberChallengeIdx}")
-	public ResponseEntity deleteChallenge(@PathVariable Long memberChallengeIdx,
-		@RequestHeader("Authorization") String accessToken) {
+	public ResponseEntity deleteChallenge(@RequestHeader("Authorization") String accessToken,
+		@PathVariable Long memberChallengeIdx) {
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 
 		Long parentIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
+
 		challengeService.deleteChallenge(parentIdx, memberChallengeIdx);
 		return ResponseEntity.ok().build();
 	}
 
 	//부모 챌린지 완료
 	@PatchMapping("/challenges/{memberChallengeIdx}")
-	public ResponseEntity CompleteChallenge(@PathVariable Long memberChallengeIdx) {
-
+	public ResponseEntity CompleteChallenge(@RequestHeader("Authorization") String accessToken,
+		@PathVariable Long memberChallengeIdx) {
 		challengeService.completeChallenge(memberChallengeIdx);
+
 		return ResponseEntity.ok().build();
 	}
 
 	//부모 챌린지 거절
 	@PatchMapping("/challenges/{memberChallengeIdx}/reject")
-	public ResponseEntity RejectChallenge(@PathVariable Long memberChallengeIdx) {
+	public ResponseEntity RejectChallenge(@RequestHeader("Authorization") String accessToken,
+		@PathVariable Long memberChallengeIdx) {
 		challengeService.rejectChallenge(memberChallengeIdx);
+
 		return ResponseEntity.ok().build();
 	}
 
 	//부모 챌린지 승인
 	@PatchMapping("/challenges/{memberChallengeIdx}/accept")
-	public ResponseEntity AcceptChallenge(@PathVariable Long memberChallengeIdx) {
+	public ResponseEntity AcceptChallenge(@RequestHeader("Authorization") String accessToken,
+		@PathVariable Long memberChallengeIdx) {
 		challengeService.acceptChallenge(memberChallengeIdx);
+
 		return ResponseEntity.ok().build();
 	}
 
-	//자식
+	/**
+	 * 자식
+	 */
 	//자식 챌린지 생성 요청
 	@PostMapping("/challenges/propose")
 	public ResponseEntity ProposeChallenge(@RequestHeader("Authorization") String accessToken,
 		@RequestBody ChallengeRequestDto challengeRequestDto) {
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+
 		Long parentIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 		Long childIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
+
 		MemberChallengeResponseDto responseData = challengeService.proposeChallenge(challengeRequestDto, parentIdx,
 			childIdx);
 		log.info("responseData : {}", responseData);
+
 		return ResponseEntity.ok().body(responseData);
 	}
 
 	//자식 챌린지 완료 요청
 	@PatchMapping("/challenges/propose/{memberChallengeIdx}")
-	public ResponseEntity ProposeAcceptChallenge(@PathVariable Long memberChallengeIdx) {
+	public ResponseEntity ProposeAcceptChallenge(@RequestHeader("Authorization") String accessToken,
+		@PathVariable Long memberChallengeIdx) {
 		challengeService.proposeAcceptChallenge(memberChallengeIdx);
+
 		return ResponseEntity.ok().build();
 	}
 
@@ -111,22 +124,19 @@ public class ChallengeApi {
 	@GetMapping("/challenges")
 	public ResponseEntity SelectMemberChallenge(@RequestHeader("Authorization") String accessToken,
 		@RequestParam(name = "status") Integer status, @RequestParam(name = "extramemberUuid") String extramemberUuid) {
-		log.info("부모 자식 챌린지 조회 시작");
-		log.info("status : {}", status);
-		log.info("status : {}", extramemberUuid);
-
 		Long memberIdx;
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
-		log.info("memberUUID : {}", memberUUID);
 
 		if (extramemberUuid.equals("none")) {
-			//자식일때
+			//accessToken은 자식꺼, extramemberUuid == none
 			memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 			log.info("memberIdx : {}", memberIdx);
 		} else {
+			//accessToken은 부모꺼, extramemberUuid == 자식Uuid
 			memberIdx = memberAuthService.getMemberAuthInfo(extramemberUuid)
 				.getMemberIdx();
 		}
+
 		log.info("서비스 시작");
 		List<MemberChallengeResponseDto> responseData = challengeService.selectMemberChallenge(
 			status, memberIdx);
