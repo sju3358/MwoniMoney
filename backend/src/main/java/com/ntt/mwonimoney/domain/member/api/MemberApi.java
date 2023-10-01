@@ -71,9 +71,13 @@ public class MemberApi {
 		@RequestHeader("Authorization") String accessToken,
 		@RequestBody ChangeMemberRoleRequest request) {
 
+		log.info("멤버 역할 변경 요청 시작 : ", request.getMemberRole().name());
+
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 
 		memberService.changeMemberRole(memberUUID, request.getMemberRole());
+
+		log.info("멤버 역할 변경 요청 끝");
 
 		return ResponseEntity.ok().build();
 
