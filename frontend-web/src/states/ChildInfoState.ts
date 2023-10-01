@@ -2,7 +2,7 @@ import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist({
-  key: "userState",
+  key: "childState",
   storage: localStorage,
 });
 
@@ -20,7 +20,7 @@ export interface userDataProps {
 }
 
 export const userDataState = atom<userDataProps>({
-  key: "userDataState",
+  key: "childDataState",
   default: {
     idx: 0,
     uuid: "",
