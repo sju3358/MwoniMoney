@@ -7,12 +7,11 @@ import { TextBox } from "../../components/Common/About/AboutText";
 import { api } from "../../apis/Api";
 import { WhiteBox1 } from "../../components/Common/About/AboutWhilteContainer";
 import { ModalBtn } from "../ModalBtn1";
-import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 
 function MypageModal() {
   const [open, setOpen] = React.useState(false);
-  const [userData, setUserData] = useRecoilState(userDataState);
-  const [userCheck, setUserCheck] = useRecoilState(userCheckState);
+  const [userData] = useRecoilState(userDataState);
+  const [userCheck] = useRecoilState(userCheckState);
 
   const name = userData.name;
   const birth = userData.birthday;

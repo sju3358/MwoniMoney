@@ -14,20 +14,19 @@ import InputInfo from "./InputInfo";
 import Notifications from "./Notifications";
 import FAQ from "./FAQ";
 
-import { userCheckState, userDataState } from "../../../states/UserInfoState";
+import { userAccountState, userDataState } from "../../../states/UserInfoState";
 import MypageModal from "../../../modal/Mypage/MypageModal";
+
 function MypageCompo() {
   const [userData, setUserData] = useRecoilState(userDataState);
-  const [userCheck, setUserCheck] = useRecoilState(userCheckState);
-
-  const account = "000-000-0000";
+  const [userAccount, setUserAccount] = useRecoilState(userAccountState);
+  const account = userAccount.account;
   const name = userData.name; // api연결시 자녀1 이름으로 매핑
   const birth = userData.birthday;
   const email = userData.email;
-  const memberRole = userData.memberRole;
 
-  console.log(userData);
-  console.log(userCheck);
+  // console.log(userData);
+  // console.log(userCheck);
 
   return (
     <MainContainer>
