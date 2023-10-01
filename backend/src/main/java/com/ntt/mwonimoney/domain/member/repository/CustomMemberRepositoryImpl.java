@@ -96,7 +96,7 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 	}
 
 	@Override
-	public void changeAndSaveMemberRole(Long memberIdx, MemberRole memberRole) {
+	public Optional<Member> changeAndSaveMemberRole(Long memberIdx, MemberRole memberRole) {
 		Member result = jpaQueryFactory
 			.select(member)
 			.from(member)
@@ -107,7 +107,7 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 			throw new IllegalArgumentException("게스트만 변경 가능");
 		else {
 
-			Member memberRoleChanged = result;
+			Member memberRoleChanged = null;
 			if (memberRole.equals(MemberRole.CHILD)) {
 				memberRoleChanged = Child.builder()
 					.status(1)
@@ -117,6 +117,9 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 					.socialProvider(result.getSocialProvider())
 					.socialId(result.getSocialId())
 					.email(result.getEmail())
+					.creditScore(0)
+					.quizReward(0)
+					.quizRewardRemain(0)
 					.build();
 			}
 
@@ -135,6 +138,7 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 			em.remove(result);
 			em.flush();
 			em.persist(memberRoleChanged);
+			return Optional.of(memberRoleChanged);
 		}
 	}
 }

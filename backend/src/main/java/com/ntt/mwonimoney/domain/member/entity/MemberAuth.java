@@ -33,4 +33,8 @@ public class MemberAuth {
 			.memberRefreshToken(memberRefreshToken)
 			.build();
 	}
+
+	public void changeMemberIdx(Long memberIdx) {
+		this.memberIdx = memberIdx;
+	}
 }
