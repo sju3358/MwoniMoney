@@ -6,6 +6,7 @@ import ChallengeList, {
 } from "../Common/Challenge/ChallengeList";
 import ChallengeTitle from "../Common/Challenge/ChallengeTitle";
 import { MainContainer } from "../Common/Main/Main";
+import { Text } from "../Common/About/AboutText";
 
 //axios
 import { api } from "../../apis/Api";
@@ -56,7 +57,13 @@ function Challenge(props: ChallengeProps) {
   return (
     <MainContainer>
       {props.ismain === "Y" ? (
-        <></>
+        <>
+          {ChallengeData.length > 0 ? (
+            <Text>현재 진행중인 챌린지에요!</Text>
+          ) : (
+            <></>
+          )}
+        </>
       ) : (
         <>
           <ChallengeCategory />
