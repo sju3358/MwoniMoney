@@ -4,7 +4,7 @@ import { Container } from "../About/AboutContainer";
 import { EmogiBox } from "../About/AboutEmogi";
 import Childeyes from "../../../assests/image/main/Childeyes.png";
 import RegistChild from "../../../modal/ChildCreate";
-import {ModalBody3} from "../../../modal/ModalImg";
+import { ModalBody3 } from "../../../modal/ModalImg";
 import AddChildImg from "../../../assests/image/main/Addchild.png";
 
 interface ChildProps {
@@ -28,6 +28,11 @@ export const Child = styled.div<ChildProps>`
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
 `;
+
+interface ChildCardProps {
+  childName: string;
+  onClick: () => void; // onClick 속성 추가
+}
 
 function AddChild() {
   const [open, setOpen] = React.useState(false);
@@ -59,9 +64,13 @@ function AddChild() {
   );
 }
 
-function ChildCard() {
+function ChildCard({ childName, onClick }: ChildCardProps) {
+  // 클릭 이벤트 핸들러
+  const handleClick = () => {
+    onClick(); // 클릭 시 onClick 함수 호출
+  };
   return (
-    <Child>
+    <Child onClick={handleClick}>
       <Container width="100%" height="65%">
         <Container width="80%" height="90%" radius="50%" backcolor="#fcdf92">
           <EmogiBox width="70%" height="70%" backImg={Childeyes} />
@@ -74,7 +83,7 @@ function ChildCard() {
         fontw="bold"
         fonts="1.2em"
       >
-        딸
+        {childName} {/* Props로 받은 childName을 여기에 사용 */}
       </Container>
     </Child>
   );
