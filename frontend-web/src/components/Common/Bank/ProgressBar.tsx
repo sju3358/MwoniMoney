@@ -57,9 +57,9 @@ interface ProgressBarProps {
   front_height?: string;
   back_color?: string;
   front_color?: string;
-  left_count?: string;
-  right_count?: string;
-  front_percent?: string;
+  left_count?: number;
+  right_count?: number;
+  front_percent?: number;
   my_status?: string;
 }
 

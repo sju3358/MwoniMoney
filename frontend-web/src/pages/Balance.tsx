@@ -62,6 +62,7 @@ interface BalanceDataItem {
   balanceGameStatus: string;
   countOfLeftAnswer: number;
   countOfRightAnswer: number;
+  news: string;
 }
 
 function Balance() {
@@ -86,7 +87,7 @@ function Balance() {
   return (
     <MainContainer>
       {isLoading ? (
-        <ProgressModal />
+        <div>Loading...</div>
       ) : (
         <>
           {balanceData &&
@@ -97,11 +98,14 @@ function Balance() {
               .map((item, index) => (
                 <BalanceContainer key={index} height="40%">
                   <BalanceCompo
+                    news={item.news}
                     showText={true}
                     showImg={true}
                     questionText={item.question}
                     buyText={item.leftAnswer}
                     notBuyText={item.rightAnswer}
+                    countOfLeftAnswer={item.countOfLeftAnswer}
+                    countOfRightAnswer={item.countOfRightAnswer}
                   />
                 </BalanceContainer>
               ))}
@@ -127,7 +131,11 @@ function Balance() {
                       >
                         {item.question}
                       </Text>
-                      <IntoBalanceResult />
+                      <IntoBalanceResult
+                        news={item.news}
+                        countOfLeftAnswer={item.countOfLeftAnswer}
+                        countOfRightAnswer={item.countOfRightAnswer}
+                      />
                     </TextContainer>
                   </WhiteBox>
                 </ListContainer>

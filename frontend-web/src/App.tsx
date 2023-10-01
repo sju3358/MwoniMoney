@@ -115,12 +115,6 @@ function App() {
               userUuidState ? <GoalCreate /> : <Navigate to="/LoginPage" />
             }
           />
-          <Route
-            path="ProgressModal"
-            element={
-              userUuidState ? <ProgressModal /> : <Navigate to="/LoginPage" />
-            }
-          />
           <Route path="/oauth/redirect" element={<LoginRedirect />} />
           <Route path="/oauth/QrLoginRedirect" element={<QrLoginRedirect />} />
 
