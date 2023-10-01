@@ -129,6 +129,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			member.getMemberRole().name());
 
 		memberAuthRepository.deleteById(memberUUID);
+		log.info("기존 로그인정보 삭제");
 
 		MemberAuth newMemberLoginInfo = MemberAuth
 			.builder()
@@ -138,6 +139,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			.build();
 
 		memberAuthRepository.save(newMemberLoginInfo);
+		log.info("로그인 정보 저장");
 
 		return tokenInfo;
 	}
