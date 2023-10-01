@@ -17,9 +17,9 @@ import { api } from "../../apis/Api";
 import { useRecoilState } from "recoil";
 import { ChallengeStore } from "../../states/ChallengeState";
 import { isProposeChallenge } from "../../states/ChallengeState";
-//카테고리 버튼 클릭 
+//카테고리 버튼 클릭
 import { isButtonChallenge } from "../../states/ChallengeState";
-//카테고리 조회 
+//카테고리 조회
 import {
   isCategoryChallenge,
   whichCategoryChallenge,
@@ -92,25 +92,47 @@ function Challenge(props: ChallengeProps) {
         </>
       ) : (
         <>
+          <ChallengeTitle />
           <ChallengeCategory />
           <ChallengeAdd />
         </>
       )}
       <ChallengeListContainer>
-        <>
-          {ChallengeData.length > 0 ? (
-            <>
-              {ChallengeData.map((challenge) => (
-                <ChallengeList
-                  data={challenge}
-                  key={challenge.memberChallengeIdx}
-                />
-              ))}
-            </>
-          ) : (
-            <>챌린지를 제안해주세요!!</>
-          )}
-        </>
+        {props.ismain === "Y" ? (
+          <>
+            {ChallengeData.length > 0 ? (
+              <>
+                {ChallengeData.slice(0, 3).map((challenge) => (
+                  <ChallengeList
+                    data={challenge}
+                    key={challenge.memberChallengeIdx}
+                  />
+                ))}
+                {ChallengeData.length > 3 && (
+                  <Text>그 외의 챌린지도 더 있어요!</Text>
+                )}
+              </>
+            ) : (
+              <Text>현재 진행중인 챌린지가 없어요. 챌린지를 제안해주세요!</Text>
+            )}
+          </>
+        ) : (
+          //메인 아닐 때
+          <>
+            {ChallengeData.length > 0 ? (
+              <>
+                {ChallengeData.map((challenge) => (
+                  <ChallengeList
+                    data={challenge}
+                    key={challenge.memberChallengeIdx}
+                  />
+                ))}
+              </>
+            ) : (
+              <>챌린지를 제안해주세요!!</>
+            )}
+          </>
+        )}
       </ChallengeListContainer>
     </MainContainer>
   );

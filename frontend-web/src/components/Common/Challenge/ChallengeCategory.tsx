@@ -25,6 +25,8 @@ interface CategoryProps {
 }
 
 export const Category = styled.div<CategoryProps>`
+  // 그림자
+  // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   width: ${(props) => props.width};
   height: 60%;
   border-top-left-radius: 20% 40%;
