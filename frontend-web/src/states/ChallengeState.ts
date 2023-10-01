@@ -47,6 +47,7 @@ export const ChallengeStore = atom<getChallenge[]>({
   default: [],
 });
 
+// 챌린지를 제안/생성했는지
 export const isProposeChallenge = atom<boolean>({
   key: "is_propose_challenge",
   default: false,
@@ -56,4 +57,16 @@ export const isProposeChallenge = atom<boolean>({
 export const isButtonChallenge = atom<boolean>({
   key: "is_button_challenge",
   default: false,
+});
+
+//챌린지 카테고리 버튼이 클릭되어있는지
+export const isCategoryChallenge = atom<boolean>({
+  key: "is_category_challenge",
+  default: false,
+});
+
+//챌린지 카테고리 버튼이 클릭되어있는지
+export const whichCategoryChallenge = atom<number>({
+  key: "which_category_challenge",
+  default: 0,
 });
