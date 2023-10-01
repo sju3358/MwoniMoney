@@ -20,24 +20,25 @@ os.environ["OPENAI_API_KEY"] = secret.get("OPENAI_API_KEY")
 
 @api_view(['GET'])
 def answer(request):
-    question = request.data.get('question', '')
-    birth_year = request.data.get('birthYear', '')
+    question = request.data.get('question')
+    birthYear = request.data.get('birthYear')
+
+    nowYear = datetime.now().year
+    userYear = nowYear - int(birthYear) + 1
     
-    now_year = datetime.now().year
-    user_year = now_year - int(birth_year) + 1
-    if user_year < 14:
-        level_en = 'Child'
+    if userYear < 14:
+        level = 'Child'
     else:
-        level_en = 'Student'
+        level = 'Student'
 
     embedding = OpenAIEmbeddings()
 
-    vector_db = FAISS.load_local(f"vector/{level_en}", embedding)
-    answer_text = get_response_from_query(vector_db, question, level_en)
+    vectorDb = FAISS.load_local(f"vector/{level}", embedding)
+    answerText = get_response_from_query(vectorDb, question, level)
     
-    response_data = {'answer': answer_text}
+    responseData = {'answer': answerText}
     
-    return Response(response_data, status = status.HTTP_200_OK)
+    return Response(responseData, status = status.HTTP_200_OK)
 
 def get_response_from_query(vector_db, query, target):
     docs = vector_db.similarity_search(query, 3)

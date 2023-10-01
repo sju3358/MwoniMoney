@@ -96,7 +96,7 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 	}
 
 	@Override
-	public void changeAndSaveMemberRole(Long memberIdx, MemberRole memberRole) {
+	public Optional<Member> changeAndSaveMemberRole(Long memberIdx, MemberRole memberRole) {
 		Member result = jpaQueryFactory
 			.select(member)
 			.from(member)
@@ -107,22 +107,27 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 			throw new IllegalArgumentException("게스트만 변경 가능");
 		else {
 
-			Member memberRoleChanged = result;
+			Member memberRoleChanged = null;
 			if (memberRole.equals(MemberRole.CHILD)) {
 				memberRoleChanged = Child.builder()
 					.status(1)
+					.uuid(result.getUuid())
 					.name(result.getName())
 					.nickname(result.getNickname())
 					.birthday(result.getBirthday())
 					.socialProvider(result.getSocialProvider())
 					.socialId(result.getSocialId())
 					.email(result.getEmail())
+					.creditScore(0)
+					.quizReward(0)
+					.quizRewardRemain(0)
 					.build();
 			}
 
 			if (memberRole.equals(MemberRole.PARENT)) {
 				memberRoleChanged = Parent.builder()
 					.status(1)
+					.uuid(result.getUuid())
 					.name(result.getName())
 					.nickname(result.getNickname())
 					.birthday(result.getBirthday())
@@ -135,6 +140,7 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 			em.remove(result);
 			em.flush();
 			em.persist(memberRoleChanged);
+			return Optional.of(memberRoleChanged);
 		}
 	}
 }
