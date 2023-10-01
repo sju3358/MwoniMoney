@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { Category } from "./ChallengeCategory";
+import { Text } from "../About/AboutText";
 
 //recoil
 import { getChallenge } from "../../../states/ChallengeState";
 import { userDataState } from "../../../states/UserInfoState";
 import { useRecoilState } from "recoil";
+import { isButtonChallenge } from "../../../states/ChallengeState";
 
 //axios
 import { api } from "../../../apis/Api";
@@ -115,11 +117,15 @@ function ChallengeList({ data }: Props) {
   //자식의 memberChallengeidx
   const memberChallengeIdx = data.memberChallengeIdx;
 
+  //챌린지 리스트의 버튼이 클릭되어있는지
+  const [isButtonState, setIsButtonState] = useRecoilState(isButtonChallenge);
+
   const handleAccept = () => {
     api
-      .patch(`/challenges/${memberChallengeIdx}/accept`)
+      .patch(`/v1/challenges/${memberChallengeIdx}/accept`)
       .then((response) => {
         console.log("부모 챌린지 수락");
+        setIsButtonState(true);
       })
       .catch((error) => {
         console.log(error);
@@ -127,9 +133,10 @@ function ChallengeList({ data }: Props) {
   };
   const handleReject = () => {
     api
-      .patch(`/challenges/${memberChallengeIdx}/reject`)
+      .patch(`/v1/challenges/${memberChallengeIdx}/reject`)
       .then((response) => {
         console.log("부모 챌린지 거절");
+        setIsButtonState(true);
       })
       .catch((error) => {
         console.log(error);
@@ -139,9 +146,10 @@ function ChallengeList({ data }: Props) {
     if (role === "PARENT") {
       //부모 완료 api
       api
-        .patch(`/challenges/${memberChallengeIdx}`)
+        .patch(`/v1/challenges/${memberChallengeIdx}`)
         .then((response) => {
           console.log("부모 챌린지 완료 요청 완료 처리");
+          setIsButtonState(true);
         })
         .catch((error) => {
           console.log(error);
@@ -149,9 +157,10 @@ function ChallengeList({ data }: Props) {
     } else {
       //자식 완료 요청 api
       api
-        .patch(`/challenges/propose/${memberChallengeIdx}`)
+        .patch(`/v1/challenges/propose/${memberChallengeIdx}`)
         .then((response) => {
           console.log("자식 : 챌린지 완료 요청 완료 처리");
+          setIsButtonState(true);
         })
         .catch((error) => {
           console.log(error);
@@ -160,9 +169,10 @@ function ChallengeList({ data }: Props) {
   };
   const handleDelete = () => {
     api
-      .delete(`/challenges/${memberChallengeIdx}`)
+      .delete(`/v1/challenges/${memberChallengeIdx}`)
       .then((response) => {
         console.log("챌린지 삭제");
+        setIsButtonState(true);
       })
       .catch((error) => {
         console.log(error);
@@ -176,76 +186,97 @@ function ChallengeList({ data }: Props) {
         <CategoryTag>
           {data.status === 0 && (
             <Category backcolor="#fcdf92" width="80%">
-              진행중
+              <Text fontsize="0.7rem" marginL="0%" fontweight="700">
+                진행중
+              </Text>
             </Category>
           )}
           {data.status === 1 && (
             <Category backcolor="#d1d1d1" width="80%">
-              완료대기
+              <Text fontsize="0.7rem" marginL="0%" fontweight="700">
+                완료대기
+              </Text>
             </Category>
           )}
           {data.status === 2 && (
             <Category backcolor="#d1d1d1" width="80%">
-              제안대기
+              <Text fontsize="0.7rem" marginL="0%" fontweight="700">
+                제안대기
+              </Text>
             </Category>
           )}
           {data.status === 3 && (
             <Category backcolor="#B9DEB3" width="80%">
-              완료
+              <Text fontsize="0.7rem" marginL="0%" fontweight="700">
+                완료
+              </Text>
             </Category>
           )}
-          {data.status === 5 && (
+          {data.status === 4 && (
             <Category backcolor="#FFA27E" width="80%">
-              거절
+              <Text fontsize="0.7rem" marginL="0%" fontweight="700">
+                거절
+              </Text>
             </Category>
           )}
         </CategoryTag>
         <DeadLine> {formattedDate}</DeadLine>
       </ListTitle>
-      <ListBtn>
-        {/* {role === "CHILD" ? ( */}
-        {role === "PARENT" ? (
-          //PARENT
-          <>
-            {(data.status === 0 ||
-              data.status === 3 ||
-              data.status === 4 ||
-              data.status === 5) && (
-              <>
-                <ChallengeBtn backcolor="#f4f4f4" onClick={handleDelete}>
-                  삭제
-                </ChallengeBtn>
-              </>
-            )}
-            {data.status === 1 && (
-              <>
-                <ChallengeBtn backcolor="#fbd56e" onClick={handleComplete}>
-                  완료
-                </ChallengeBtn>
-              </>
-            )}
-            {data.status === 2 && (
-              <>
-                <ChallengeBtn backcolor="#fbd56e" onClick={handleAccept}>
-                  수락
-                </ChallengeBtn>
-                <ChallengeBtn backcolor="#f4f4f4" onClick={handleReject}>
-                  거절
-                </ChallengeBtn>
-              </>
-            )}
-          </>
-        ) : (
-          //CHILD
-          <>
-            {data.status === 0 && (
-              <ChallengeBtn backcolor="#fbd56e" onClick={handleComplete}>
+
+      {/* {role === "CHILD" ? ( */}
+      {role === "PARENT" ? (
+        //PARENT
+        <>
+          {(data.status === 0 ||
+            data.status === 3 ||
+            data.status === 4 ||
+            data.status === 5) && (
+            <ListBtn style={{ justifyContent: "flex-end" }}>
+              <ChallengeBtn
+                backcolor="#f4f4f4"
+                onClick={handleDelete}
+                style={{ margin: "0% 7% 0% 0%" }}
+              >
+                삭제
+              </ChallengeBtn>
+            </ListBtn>
+          )}
+          {data.status === 1 && (
+            <ListBtn style={{ justifyContent: "flex-end" }}>
+              <ChallengeBtn
+                backcolor="#fbd56e"
+                onClick={handleComplete}
+                style={{ margin: "0% 7% 0% 0%" }}
+              >
                 완료
               </ChallengeBtn>
-            )}
-          </>
-        )}
-      </ListBtn>
+            </ListBtn>
+          )}
+          {data.status === 2 && (
+            <ListBtn>
+              <ChallengeBtn backcolor="#fbd56e" onClick={handleAccept}>
+                수락
+              </ChallengeBtn>
+              <ChallengeBtn backcolor="#f4f4f4" onClick={handleReject}>
+                거절
+              </ChallengeBtn>
+            </ListBtn>
+          )}
+        </>
+      ) : (
+        //CHILD
+        <ListBtn style={{ justifyContent: "flex-end" }}>
+          {data.status === 0 && (
+            <ChallengeBtn
+              backcolor="#fbd56e"
+              onClick={handleComplete}
+              style={{ margin: "0% 7% 0% 0%" }}
+            >
+              완료
+            </ChallengeBtn>
+          )}
+        </ListBtn>
+      )}
     </ListComponent>
   );
 }

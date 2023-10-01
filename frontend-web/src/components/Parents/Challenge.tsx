@@ -14,6 +14,7 @@ import { api } from "../../apis/Api";
 import { useRecoilState } from "recoil";
 import { ChallengeStore } from "../../states/ChallengeState";
 import { isProposeChallenge } from "../../states/ChallengeState";
+import { isButtonChallenge } from "../../states/ChallengeState";
 
 function Challenge() {
   const status_value = 5;
@@ -23,6 +24,7 @@ function Challenge() {
   const [ChallengeData, setChallengeData] = useRecoilState(ChallengeStore);
   const [isProposeState, setisProposeState] =
     useRecoilState(isProposeChallenge);
+  const [isButtonState, setIsButtonState] = useRecoilState(isButtonChallenge);
 
   useEffect(() => {
     api
@@ -34,6 +36,7 @@ function Challenge() {
         console.log("GET 요청 성공:", response.data);
         setChallengeData(response.data);
         setisProposeState(false);
+        setIsButtonState(false);
       })
       .catch((error) => {
         // 요청이 실패한 경우 처리할 로직
@@ -48,7 +51,7 @@ function Challenge() {
           console.error("GET 요청 실패 - 요청 준비 중 에러 발생");
         }
       });
-  }, [isProposeState]);
+  }, [isProposeState, isButtonState]);
 
   return (
     <MainContainer>
