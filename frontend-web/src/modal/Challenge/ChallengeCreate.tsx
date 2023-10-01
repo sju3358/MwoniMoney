@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { useRecoilState } from "recoil";
@@ -82,6 +82,15 @@ function CreateChallenge() {
     효도: ["부모님 안아드리기", "부모님에게 사랑한다하기"],
   };
 
+  const [minDate, setMinDate] = useState<string>("");
+
+  useEffect(() => {
+    const today = new Date();
+    today.setDate(today.getDate() + 1);
+    const minDateString = today.toISOString().split("T")[0];
+    setMinDate(minDateString);
+  }, []);
+
   return (
     <ContentBox>
       <InputDiv>
@@ -131,6 +140,7 @@ function CreateChallenge() {
           value={newChallengeData.reward}
           placeholder="상금"
           onChange={handleChangeState}
+          // style={{ textAlign: "end" }}
         />
       </InputDiv>
       <InputDiv>
@@ -139,9 +149,11 @@ function CreateChallenge() {
           name="endTime"
           value={newChallengeData.endTime}
           placeholder="끝나는 날짜"
+          min={minDate}
           onChange={handleChangeState}
         />
       </InputDiv>
+
       <>
         <div>확인용</div>
         <span>{newChallengeData.category}</span>
