@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @Entity
 @Table(name = "fin_account")
 @Getter
@@ -41,7 +40,6 @@ public class FinAccount extends CommonEntity {
 	@OneToMany(mappedBy = "finAccount")
 	private List<FinAccountTransaction> finAccountTransactionList = new ArrayList<>();
 
-
 	@Builder
 	public FinAccount(String number, FinAccountStatus status, FinAccountType type){
 		this.number = number;
@@ -51,10 +49,11 @@ public class FinAccount extends CommonEntity {
 
 	public FinAccountDto convertToDto(){
 		return FinAccountDto.builder()
-			.idx(this.idx)
-			.number(this.number)
-			.status(this.status)
-			.type(this.type)
-			.build();
+				.idx(this.idx)
+				.number(this.number)
+				.status(this.status)
+				.type(this.type)
+				.build();
 	}
 }
+
