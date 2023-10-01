@@ -112,9 +112,30 @@ const ModalChildrenChallenge: React.FC<ModalProps> = ({
     useRecoilState(isProposeChallenge);
 
   const handleSubmit = () => {
+    if (newChallengeData.category.length < 1) {
+      alert("챌린지 카테고리가 없습니다.");
+      return;
+    }
+    if (newChallengeData.title.length < 1) {
+      alert("챌린지 부제가 없습니다.");
+      return;
+    }
+    if (newChallengeData.memo.length < 1) {
+      alert("챌린지 제목이 없습니다.");
+      return;
+    }
+    if (newChallengeData.reward < 100) {
+      alert("100원보다 크게 설정해주세요");
+      return;
+    }
+    if (newChallengeData.endTime.length < 1) {
+      alert("마감기한이 없습니다.");
+      return;
+    }
+
     // NewChallengeData에 uuid랑 status설정하기
     const PostData = {
-      childUuid: "string",
+      childUuid: "none",
       title: newChallengeData.title,
       category: newChallengeData.category,
       memo: newChallengeData.memo,
