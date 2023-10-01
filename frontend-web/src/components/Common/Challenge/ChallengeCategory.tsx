@@ -34,7 +34,24 @@ export const Category = styled.div<CategoryProps>`
 
 function ChallengeCategory() {
   const handleSearch = (searchString: string) => {
-    console.log(searchString + "클릭됨");
+    let status;
+    switch (searchString) {
+      case "all":
+        status = 5;
+        console.log("All 클릭됨");
+        break;
+      case "ing":
+        status = 0;
+        console.log("미완료  클릭됨");
+        break;
+      case "propose":
+        status = 2;
+        console.log("제안 대기 클릭됨");
+        break;
+      default:
+        status = -1; 
+        console.log("기본 동작");
+    }
   };
   return (
     <CategoryContainer>
