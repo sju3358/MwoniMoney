@@ -75,6 +75,9 @@ interface BalanceCompoProps {
   questionText: string; // Add prop for question text
   buyText: string; // Add prop for "산다" text
   notBuyText: string; // Add prop for "안산다" text
+  news: string;
+  countOfLeftAnswer?: number;
+  countOfRightAnswer?: number;
 }
 
 function BalanceCompo({
@@ -83,6 +86,7 @@ function BalanceCompo({
   questionText,
   buyText,
   notBuyText,
+  news, // props로부터 news를 받아옴
 }: BalanceCompoProps) {
   const handleClick = () => {
     console.log("버튼이 클릭되었습니다!");
@@ -107,7 +111,7 @@ function BalanceCompo({
         <Container height="53%" flexDirection="column">
           <EmogiBox backImg={`${Newspaper}`} width="45%" height="100%" />
           <Click>
-            <News />
+            <News news={news} /> {/* 수정된 부분 */}
           </Click>
         </Container>
         <Container height="15%">
