@@ -12,6 +12,7 @@ from langchain.prompts.chat import (
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import serializers
 from datetime import datetime
 
 with open("secret.json") as secret_file:
@@ -20,8 +21,10 @@ os.environ["OPENAI_API_KEY"] = secret.get("OPENAI_API_KEY")
 
 @api_view(['GET'])
 def answer(request):
-    question = request.data.get('question', '')
-    birth_year = request.data.get('birthYear', '')
+    serializer = MyDataSerializer(data=request.data)
+    if serializer.is_valid():
+        question = serializer.validated_data.get('question')
+        birth_year = serializer.validated_data.get('birthYear')
     print(f"[여기!!!!!] question : {question}")
     print(f"[여기!!!!!] birth_year : {birth_year}")
     now_year = datetime.now().year
@@ -70,3 +73,7 @@ def get_response_from_query(vector_db, query, target):
     response = chain.run(question = query, docs = docs_page_content, target = target)
     response = response.replace("\n", "")
     return response
+
+class MyDataSerializer(serializers.Serializer):
+    question = serializers.CharField()
+    birthYear = serializers.CharField()
