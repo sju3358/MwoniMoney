@@ -22,6 +22,7 @@ os.environ["OPENAI_API_KEY"] = secret.get("OPENAI_API_KEY")
 def answer(request):
     question = request.data.get('question', '')
     birth_year = request.data.get('birthYear', '')
+    print(f"[여기!!!!!] question : {question}")
     print(f"[여기!!!!!] birth_year : {birth_year}")
     now_year = datetime.now().year
     user_year = now_year - int(birth_year) + 1
