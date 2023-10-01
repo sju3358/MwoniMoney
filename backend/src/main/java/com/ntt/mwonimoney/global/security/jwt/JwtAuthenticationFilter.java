@@ -41,9 +41,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		ServletException,
 		IOException {
 
+		String token = resolveToken(request);
+		if (token == null) {
+			log.info("토큰이 없음");
+			chain.doFilter(request, response);
+			return;
+		}
+
 		try {
 			log.info("JWT Authentication Filter Start");
-			String token = resolveToken(request);
 			String validateToken = jwtTokenProvider.validateToken(token);
 
 			if (validateToken.equals("valid")) {
@@ -98,11 +104,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private String resolveToken(HttpServletRequest request) {
 		String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-
-		if (!StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_TYPE))
-			throw new NullValueException("토큰이 비어있습니다");
-
-		return bearerToken.substring(7);
+		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_TYPE)) {
+			return bearerToken.substring(7);
+		}
+		return null;
 	}
 
 	private Token refreshTokenAndGetToken(HttpServletRequest request) {
