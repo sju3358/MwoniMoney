@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import GoalCreate from "../../assests/image/GoalCreate.png";
 import { Text, TextBox } from "../Common/About/AboutText";
 import { Img, ImgBox } from "../../components/Common/About/AboutEmogi";
@@ -8,68 +7,16 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userAccountState } from "../../states/UserInfoState";
 import { GoalMoneyState } from "../../states/GoalMoneyState";
-
-const InputInfo = styled.input`
-  background-color: transparent;
-  border: none;
-  // border: 1px solid red;
-  border-bottom: 1px solid #969696;
-  width: 85%;
-  height: 50px;
-  font-size: 1em;
-  outline: none;
-  margin: 5% 0% 5% 0%; /* 각 Input 사이의 간격을 조절할 수 있는 margin 설정 */
-  padding-left: 5%;
-`;
-
-interface BtnProps {
-  width?: string;
-  height?: string;
-  backcolor?: string;
-  fontSize?: string;
-}
-
-const Btn = styled.button<BtnProps>`
-  width: ${(props) => (props.width ? props.width : "100%")};
-  height: ${(props) => (props.height ? props.height : "70%")};
-  font-size: ${(props) => (props.fontSize ? props.fontSize : "1.7em")};
-  background-color: ${(props) =>
-    props.backcolor ? props.backcolor : "#fbd56e"};
-  border-radius: 10px;
-  font-weight: bold;
-  margin: 5%;
-  border: 0;
-  padding: 5px;
-`;
-interface InputListProps {
-  title: string;
-  placeholder: string;
-}
-
-function InputList(props: InputListProps) {
-  const { title, placeholder } = props; // props를 디스트럭처링하여 사용
-
-  return (
-    <Container height="33%" flexDirection="column">
-      <Container height="50%">
-        <TextBox>{title}</TextBox>
-      </Container>
-      <Container height="50%" overflowy="hidden">
-        <Container height="100%" width="75%" overflowy="hidden">
-          <InputInfo type="text" placeholder={placeholder} />
-        </Container>
-        <Container height="100%" width="25%">
-          <Btn fontSize="1.2em">저장</Btn>
-        </Container>
-      </Container>
-    </Container>
-  );
-}
+import { Btn, InputList } from "../Common/GoalMoney/GoalMoneyStyle";
+import GoalModal from "../../modal/GoalMoney/GoalModal";
+import { ModalState } from "../../states/ModalState";
+import { api, api_ver2 } from "../../apis/Api";
 
 export default function CreatGoal() {
   const [inputValue, setInputValue] = useState("");
   const [userAccount, setUserAccount] = useRecoilState(userAccountState);
   const [goalMoney, setGoalMoney] = useRecoilState(GoalMoneyState);
+  const [open, setOpen] = useRecoilState(ModalState);
 
   const navigate = useNavigate();
   const rate = "0.1"; //은행이 정한 이자율
@@ -78,8 +25,56 @@ export default function CreatGoal() {
     navigate("/GoalMoney");
   };
 
+  // 모달 열리는 클릭 이벤트
+  const hanldeModal = () => {
+    setOpen(true);
+  };
+
+  // axios 날리는
+  const handleAxios = () => {
+    const jsonData = {
+      goalName: goalMoney.goalName,
+      goalMoney: goalMoney.goalMoney,
+      saveRatio: goalMoney.saveRatio,
+    };
+
+    const formData = new FormData();
+    formData.append(
+      "info",
+      new Blob([JSON.stringify(jsonData)], { type: "application/json" })
+    );
+
+    formData.append(
+      "image",
+      new Blob([JSON.stringify(jsonData)], { type: "application/json" }),
+      goalMoney.image
+    );
+
+    console.log(formData);
+
+    api_ver2
+      .post("v1/members/small-account", formData, {
+        headers: {
+          "Contest-Type": "multipart/form-data",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        alert("짜금통을 생성했습니다.");
+        navigate("/GoalMoney");
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("짜금통 생성에 실패했습니다.");
+      });
+  };
+  // 출력문
+  // console.log(goalMoney);
+  // console.log(open);
+
   return (
     <Container height="100vh" flexDirection="column">
+      <GoalModal goalModal_open={open} />
       {/* 짜금통 타이틀 */}
       <Container height="20%" flexDirection="column" overflowy="auto">
         <Container height="77%" overflowy="hidden">
@@ -93,7 +88,7 @@ export default function CreatGoal() {
           </TextBox>
         </Container>
         <Container height="23%">
-          <Text fontsize="0.9rem">
+          <Text fontsize="1rem">
             갖고 싶은 물건을 위해 열심히 저축해보아요!
           </Text>
         </Container>
@@ -101,7 +96,7 @@ export default function CreatGoal() {
       {/* 이미지 삽입 */}
       <Container height="25%" overflowy="hidden">
         <ImgBox>
-          <Img src={GoalCreate} />
+          <Img src={GoalCreate} onClick={hanldeModal} />
         </ImgBox>
       </Container>
       {/* InputList : 입력받는 자리*/}
@@ -109,11 +104,20 @@ export default function CreatGoal() {
         <InputList
           title="물건명"
           placeholder="가지고 싶은 물건을 적어보세요."
+          type="text"
+          id="goalName"
         />
-        <InputList title="물건금액" placeholder="물건금액" />
+        <InputList
+          title="물건금액"
+          placeholder="물건금액"
+          type="number"
+          id="goalMoney"
+        />
         <InputList
           title="정기용돈 출금 비율"
           placeholder="정기용돈에서 몇 % 저금할 건가요?"
+          type="number"
+          id="saveRatio"
         />
       </Container>
       {/* 은행이자율과 입금계좌에 대한 정보칸 */}
@@ -157,7 +161,7 @@ export default function CreatGoal() {
       </Container>
       {/* 버튼 : axios 작동함 */}
       <Container height="10%" overflowy="hidden">
-        <Btn>생성</Btn>
+        <Btn onClick={handleAxios}>생성</Btn>
         <Btn backcolor="#ffffff" onClick={handleClose}>
           취소
         </Btn>
