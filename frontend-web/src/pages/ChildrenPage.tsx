@@ -75,7 +75,10 @@ function ChildrenPage() {
       <Container height="50%" overflowy="hidden">
         <Quiz />
       </Container>
-      <Container height="50%">
+      <Container height="50%" flexDirection="column">
+        <Container height="30%">
+          <TextBox height="100%">챌린지</TextBox>
+        </Container>
         <Challenge ismain="Y" />
       </Container>
     </MainContainer>
