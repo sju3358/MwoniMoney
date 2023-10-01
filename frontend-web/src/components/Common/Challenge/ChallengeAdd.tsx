@@ -9,6 +9,10 @@ import { Container } from "../About/AboutContainer";
 import ModalChildrenChallenge from "../../../modal/Challenge/ModalChildrenChallenge";
 import ModalParentChallenge from "../../../modal/Challenge/ModalParentChallenge";
 
+//
+import { userDataState } from "../../../states/UserInfoState";
+import { useRecoilState } from "recoil";
+
 const AddContainer = styled.button`
   border: 1px solid black;
   width: 100%;
@@ -28,8 +32,9 @@ const Add = styled.div`
 `;
 
 function ChallengeAdd() {
-  //number = 1 : 부모 , number = 0 : 자식
-  const role: number = 0;
+  const [userData, setUserData] = useRecoilState(userDataState);
+  const role = userData.memberRole;
+
   const [open, setOpen] = React.useState(false);
   console.log(open + "33");
   const handleOpen = (e: any) => {
@@ -45,7 +50,7 @@ function ChallengeAdd() {
       >
         <EmogiBox backImg={AddChildImg} width="100%" height="100%" />
       </button>
-      {role === 1 ? (
+      {role === "PARENT" ? (
         <ModalParentChallenge
           useState_open={open}
           set_open={setOpen}
