@@ -11,24 +11,44 @@ import { Text } from "../Common/About/AboutText";
 //axios
 import { api } from "../../apis/Api";
 
-//리코일
+/**
+ * recoil
+ */
 import { useRecoilState } from "recoil";
 import { ChallengeStore } from "../../states/ChallengeState";
 import { isProposeChallenge } from "../../states/ChallengeState";
+//카테고리 버튼 클릭 
 import { isButtonChallenge } from "../../states/ChallengeState";
+//카테고리 조회 
+import {
+  isCategoryChallenge,
+  whichCategoryChallenge,
+} from "../../states/ChallengeState";
 
 interface ChallengeProps {
   ismain: string;
 }
 
 function Challenge(props: ChallengeProps) {
-  const status_value = 5;
-  const extramemberUuid_value = "none";
-
   const [ChallengeData, setChallengeData] = useRecoilState(ChallengeStore);
   const [isProposeState, setisProposeState] =
     useRecoilState(isProposeChallenge);
   const [isButtonState, setIsButtonState] = useRecoilState(isButtonChallenge);
+
+  const extramemberUuid_value = "none";
+  //카테고리 버튼
+  const [isCategoryState, setisCategoryState] =
+    useRecoilState(isCategoryChallenge);
+  const [whichCategoryState, setwhichCategoryState] = useRecoilState(
+    whichCategoryChallenge
+  );
+
+  let status_value: number;
+  if (isCategoryState) {
+    status_value = whichCategoryState;
+  } else {
+    status_value = 5;
+  }
 
   useEffect(() => {
     api
@@ -40,7 +60,7 @@ function Challenge(props: ChallengeProps) {
         console.log("GET 요청 성공:", response.data);
         setChallengeData(response.data);
         /**
-         * 
+         *
          */
         setisProposeState(false);
         setIsButtonState(false);
@@ -58,7 +78,7 @@ function Challenge(props: ChallengeProps) {
           console.error("GET 요청 실패 - 요청 준비 중 에러 발생");
         }
       });
-  }, [isProposeState, isButtonState]);
+  }, [isProposeState, isButtonState, whichCategoryState]);
 
   return (
     <MainContainer>
