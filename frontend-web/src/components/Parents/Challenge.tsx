@@ -10,14 +10,21 @@ import { MainContainer } from "../Common/Main/Main";
 //axios
 import { api } from "../../apis/Api";
 
-//리코일
+/**
+ * recoil
+ */
 import { useRecoilState } from "recoil";
 import { ChallengeStore } from "../../states/ChallengeState";
 import { isProposeChallenge } from "../../states/ChallengeState";
+//카테고리 버튼 클릭
 import { isButtonChallenge } from "../../states/ChallengeState";
+//카테고리 조회
+import {
+  isCategoryChallenge,
+  whichCategoryChallenge,
+} from "../../states/ChallengeState";
 
 function Challenge() {
-  const status_value = 5;
   //값 어떻게 가져올지 생각하기!!
   const extramemberUuid_value = "d3a58e6c-14d7-4b3a-b58f-982aafc9836b";
 
@@ -25,6 +32,19 @@ function Challenge() {
   const [isProposeState, setisProposeState] =
     useRecoilState(isProposeChallenge);
   const [isButtonState, setIsButtonState] = useRecoilState(isButtonChallenge);
+  //카테고리 버튼
+  const [isCategoryState, setisCategoryState] =
+    useRecoilState(isCategoryChallenge);
+  const [whichCategoryState, setwhichCategoryState] = useRecoilState(
+    whichCategoryChallenge
+  );
+
+  let status_value: number;
+  if (isCategoryState) {
+    status_value = whichCategoryState;
+  } else {
+    status_value = 5;
+  }
 
   useEffect(() => {
     api
@@ -51,7 +71,7 @@ function Challenge() {
           console.error("GET 요청 실패 - 요청 준비 중 에러 발생");
         }
       });
-  }, [isProposeState, isButtonState]);
+  }, [isProposeState, isButtonState, whichCategoryState]);
 
   return (
     <MainContainer>

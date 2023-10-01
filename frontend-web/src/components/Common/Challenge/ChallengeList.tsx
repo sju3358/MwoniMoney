@@ -26,6 +26,8 @@ export const ChallengeListContainer = styled.div`
 `;
 
 export const ListComponent = styled.div`
+  // 그림자
+  // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   // border: 1px solid red;
   background-color: #ffffff;
   width: 90%;
@@ -88,6 +90,8 @@ interface BtnProps {
 }
 
 const ChallengeBtn = styled.div<BtnProps>`
+  // 그림자
+  // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   width: 35%;
   height: 70%;
   border-radius: 5%;
