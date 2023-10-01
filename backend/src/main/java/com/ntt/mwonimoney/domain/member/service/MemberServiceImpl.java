@@ -59,13 +59,13 @@ public class MemberServiceImpl implements MemberService {
 	 * change MemberRole
 	 * return : changed Member's idx
 	 */
-	public void changeMemberRole(Long memberIdx, MemberRole memberRole) {
+	public void changeMemberRole(String memberUUID, MemberRole memberRole) {
 
-		Member changedMember = memberRepository.changeAndSaveMemberRole(memberIdx, memberRole)
-			.orElseThrow(() -> new NoSuchElementException("멤버 역할 변경 오류"));
-
-		MemberAuth memberAuth = memberAuthRepository.findMemberAuthByMemberUUID(changedMember.getUuid())
+		MemberAuth memberAuth = memberAuthRepository.findById(memberUUID)
 			.orElseThrow(() -> new NoSuchElementException("로그인이 안되어있습니다."));
+
+		Member changedMember = memberRepository.changeAndSaveMemberRole(memberAuth.getMemberIdx(), memberRole)
+			.orElseThrow(() -> new NoSuchElementException("멤버 역할 변경 오류"));
 
 		memberAuth.changeMemberIdx(changedMember.getIdx());
 

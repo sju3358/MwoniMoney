@@ -73,9 +73,7 @@ public class MemberApi {
 
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 
-		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
-
-		memberService.changeMemberRole(memberIdx, request.getMemberRole());
+		memberService.changeMemberRole(memberUUID, request.getMemberRole());
 
 		return ResponseEntity.ok().build();
 

@@ -114,7 +114,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 		String memberUUID = jwtTokenProvider.getMemberUUID(refreshToken);
 
-		MemberAuth memberLoginInfo = memberAuthRepository.findMemberAuthByMemberUUID(memberUUID)
+		MemberAuth memberLoginInfo = memberAuthRepository.findById(memberUUID)
 			.orElseThrow(() -> new NoSuchElementException("로그인이 되어있지 않습니다."));
 
 		if (!Objects.equals(memberLoginInfo.getMemberRefreshToken(), refreshToken)) {
