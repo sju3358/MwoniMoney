@@ -1,6 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
+//recoil
+import { useRecoilState } from "recoil";
+import {
+  isCategoryChallenge,
+  whichCategoryChallenge,
+} from "../../../states/ChallengeState";
+
 const CategoryContainer = styled.div`
   // border: 1px solid black;
   width: 100%;
@@ -33,23 +40,30 @@ export const Category = styled.div<CategoryProps>`
 `;
 
 function ChallengeCategory() {
+  const [isCategoryState, setisCategoryState] =
+    useRecoilState(isCategoryChallenge);
+  const [whichCategoryState, setwhichCategoryState] = useRecoilState(
+    whichCategoryChallenge
+  );
   const handleSearch = (searchString: string) => {
+    setisCategoryState(true);
+
     let status;
     switch (searchString) {
       case "all":
-        status = 5;
+        setwhichCategoryState(5);
         console.log("All 클릭됨");
         break;
       case "ing":
-        status = 0;
+        setwhichCategoryState(0);
         console.log("미완료  클릭됨");
         break;
       case "propose":
-        status = 2;
+        setwhichCategoryState(2);
         console.log("제안 대기 클릭됨");
         break;
       default:
-        status = -1; 
+        status = -1;
         console.log("기본 동작");
     }
   };
