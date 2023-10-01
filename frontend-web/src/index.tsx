@@ -11,11 +11,11 @@ if (rootElement) {
   const root = CreateDOM.createRoot(rootElement);
 
   root.render(
-    <React.StrictMode>
-      <Router>
-        <App />
-      </Router>
-    </React.StrictMode>
+    // <React.StrictMode>
+    <Router>
+      <App />
+    </Router>
+    // </React.StrictMode>
   );
 } else {
   console.error("Cannot find the 'root' element in the DOM.");

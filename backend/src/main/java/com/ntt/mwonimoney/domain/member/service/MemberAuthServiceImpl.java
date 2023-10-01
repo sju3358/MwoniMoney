@@ -42,7 +42,7 @@ public class MemberAuthServiceImpl implements MemberAuthService {
 	@Override
 	@Transactional
 	public void logout(String memberUUID) {
-		MemberAuth memberAuth = memberAuthRepository.findMemberAuthByMemberUUID(memberUUID)
+		MemberAuth memberAuth = memberAuthRepository.findById(memberUUID)
 			.orElseThrow(() -> new NoSuchElementException());
 		memberAuthRepository.delete(memberAuth);
 	}
