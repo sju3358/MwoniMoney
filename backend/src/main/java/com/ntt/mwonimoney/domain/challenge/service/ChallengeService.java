@@ -133,6 +133,7 @@ public class ChallengeService {
 	}
 
 	//자식 챌린지 완료 요청
+	@Transactional(readOnly = false)
 	public void proposeAcceptChallenge(Long memberChallengeIdx) {
 		Optional<MemberChallenge> memberChallenge = memberChallengeRepository.findById(memberChallengeIdx);
 		memberChallenge.orElseThrow().setStatus(2);
