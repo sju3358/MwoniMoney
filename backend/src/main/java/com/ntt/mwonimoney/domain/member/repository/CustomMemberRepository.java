@@ -13,5 +13,5 @@ public interface CustomMemberRepository {
 
 	Optional<? extends Member> findMemberBySocialId(String socialId);
 
-	void changeAndSaveMemberRole(Long memberIdx, MemberRole memberRole);
+	Optional<Member> changeAndSaveMemberRole(Long memberIdx, MemberRole memberRole);
 }

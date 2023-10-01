@@ -7,8 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ntt.mwonimoney.domain.member.api.request.MemberInfoChangeRequest;
 import com.ntt.mwonimoney.domain.member.entity.Member;
+import com.ntt.mwonimoney.domain.member.entity.MemberAuth;
 import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
+import com.ntt.mwonimoney.domain.member.repository.MemberAuthRepository;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepository memberRepository;
+	private final MemberAuthRepository memberAuthRepository;
 
 	@Override
 	public MemberDto getMemberInfo(Long memberIdx) {
@@ -52,9 +55,22 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	@Transactional
+	/**
+	 * change MemberRole
+	 * return : changed Member's idx
+	 */
 	public void changeMemberRole(Long memberIdx, MemberRole memberRole) {
 
-		memberRepository.changeAndSaveMemberRole(memberIdx, memberRole);
+		Member changedMember = memberRepository.changeAndSaveMemberRole(memberIdx, memberRole)
+			.orElseThrow(() -> new NoSuchElementException("멤버 역할 변경 오류"));
+
+		MemberAuth memberAuth = memberAuthRepository.findMemberAuthByMemberUUID(changedMember.getUuid())
+			.orElseThrow(() -> new NoSuchElementException("로그인이 안되어있습니다."));
+
+		memberAuth.changeMemberIdx(changedMember.getIdx());
+
+		memberAuthRepository.save(memberAuth);
+
 	}
 
 }
