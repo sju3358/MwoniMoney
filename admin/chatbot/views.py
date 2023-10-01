@@ -12,7 +12,6 @@ from langchain.prompts.chat import (
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework import serializers
 from datetime import datetime
 
 with open("secret.json") as secret_file:
@@ -21,12 +20,9 @@ os.environ["OPENAI_API_KEY"] = secret.get("OPENAI_API_KEY")
 
 @api_view(['GET'])
 def answer(request):
-    serializer = MyDataSerializer(data=request.data)
-    if serializer.is_valid():
-        question = serializer.validated_data.get('question')
-        birth_year = serializer.validated_data.get('birthYear')
-    print(f"[여기!!!!!] question : {question}")
-    print(f"[여기!!!!!] birth_year : {birth_year}")
+    question = request.data.get('question')
+    birth_year = request.data.get('birth_year')
+
     now_year = datetime.now().year
     user_year = now_year - int(birth_year) + 1
     if user_year < 14:
@@ -34,12 +30,12 @@ def answer(request):
     else:
         level_en = 'Student'
 
-    embedding = OpenAIEmbeddings()
+    # embedding = OpenAIEmbeddings()
 
-    vector_db = FAISS.load_local(f"vector/{level_en}", embedding)
-    answer_text = get_response_from_query(vector_db, question, level_en)
+    # vector_db = FAISS.load_local(f"vector/{level_en}", embedding)
+    # answer_text = get_response_from_query(vector_db, question, level_en)
     
-    response_data = {'answer': answer_text}
+    response_data = {'answer': question}
     
     return Response(response_data, status = status.HTTP_200_OK)
 
@@ -73,7 +69,3 @@ def get_response_from_query(vector_db, query, target):
     response = chain.run(question = query, docs = docs_page_content, target = target)
     response = response.replace("\n", "")
     return response
-
-class MyDataSerializer(serializers.Serializer):
-    question = serializers.CharField()
-    birthYear = serializers.CharField()
