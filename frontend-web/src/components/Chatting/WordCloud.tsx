@@ -28,7 +28,7 @@ export default function WordCloud({ balanceGameIdx = 1 }) {
     } else {
       setFlag(flag + 1);
     }
-  }, 20000);
+  }, 180000);
 
   return (
     <div>
