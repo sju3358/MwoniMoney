@@ -51,3 +51,9 @@ export const isProposeChallenge = atom<boolean>({
   key: "is_propose_challenge",
   default: false,
 });
+
+//챌린지의 버튼이 클릭되어있는지
+export const isButtonChallenge = atom<boolean>({
+  key: "is_button_challenge",
+  default: false,
+});

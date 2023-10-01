@@ -15,6 +15,7 @@ import { api } from "../../apis/Api";
 import { useRecoilState } from "recoil";
 import { ChallengeStore } from "../../states/ChallengeState";
 import { isProposeChallenge } from "../../states/ChallengeState";
+import { isButtonChallenge } from "../../states/ChallengeState";
 
 interface ChallengeProps {
   ismain: string;
@@ -27,6 +28,7 @@ function Challenge(props: ChallengeProps) {
   const [ChallengeData, setChallengeData] = useRecoilState(ChallengeStore);
   const [isProposeState, setisProposeState] =
     useRecoilState(isProposeChallenge);
+  const [isButtonState, setIsButtonState] = useRecoilState(isButtonChallenge);
 
   useEffect(() => {
     api
@@ -37,7 +39,11 @@ function Challenge(props: ChallengeProps) {
         // 성공적으로 요청이 완료된 경우 처리할 로직
         console.log("GET 요청 성공:", response.data);
         setChallengeData(response.data);
+        /**
+         * 
+         */
         setisProposeState(false);
+        setIsButtonState(false);
       })
       .catch((error) => {
         // 요청이 실패한 경우 처리할 로직
@@ -52,7 +58,7 @@ function Challenge(props: ChallengeProps) {
           console.error("GET 요청 실패 - 요청 준비 중 에러 발생");
         }
       });
-  }, [isProposeState]);
+  }, [isProposeState, isButtonState]);
 
   return (
     <MainContainer>
