@@ -6,7 +6,7 @@ import { userDataState } from "../../states/UserInfoState";
 
 import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
 
-import { api } from "../../apis/Api";
+import api from "../../apis/Api";
 import moment from "moment";
 
 export default function Chatting({ balanceGameIdx = 1 }) {

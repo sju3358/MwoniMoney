@@ -10,7 +10,8 @@ import { GoalMoneyState } from "../../states/GoalMoneyState";
 import { Btn, InputList } from "../Common/GoalMoney/GoalMoneyStyle";
 import GoalModal from "../../modal/GoalMoney/GoalModal";
 import { ModalState } from "../../states/ModalState";
-import { api, api_ver2 } from "../../apis/Api";
+import api from "../../apis/Api";
+import api_ver2 from "../../apis/ApiForMultiPart";
 
 export default function CreatGoal() {
   const [inputValue, setInputValue] = useState("");

@@ -1,17 +1,13 @@
 import axios from "axios";
 import { API_BASE_URL } from "./Url";
 
-let instance = axios.create({
+let api = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
-instance.interceptors.request.use(
+api.interceptors.request.use(
   (config) => {
-    config.headers["Authorization-TOKEN"] =
-      localStorage.getItem("access_token");
+    config.headers.Authorization = localStorage.getItem("access_token");
     return config;
   },
   (error) => {
@@ -20,4 +16,4 @@ instance.interceptors.request.use(
   }
 );
 
-export default instance;
+export default api;
