@@ -14,7 +14,7 @@ import { ChildCard } from "../components/Common/Main/ChildCard";
 import GoalForMain from "../components/Common/GoalMoney/GoalMoneyForMain";
 import { useRecoilState } from "recoil";
 import axios, { AxiosResponse } from "axios";
-import { api } from "../apis/Api";
+import api from "../apis/Api";
 import {
   childDataState,
   childDataProps,

@@ -9,7 +9,7 @@ import { userCheckState, userDataState } from "../../../states/UserInfoState";
 import { Container } from "../About/AboutContainer";
 import { useRecoilState } from "recoil";
 import { ModalBtn } from "../../../modal/ModalBtn1";
-import { api } from "../../../apis/Api";
+import api from "../../../apis/Api";
 
 import { useNavigate } from "react-router";
 
