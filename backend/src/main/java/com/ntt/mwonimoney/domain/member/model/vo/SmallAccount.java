@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SmallAccount {
 
-	static String S3ImageUrl = "https://mwonimoney.s3.ap-northeast-2.amazonaws.com/goal/";
-
 	@Column(name = "smallaccount_goalmoney")
 	private int goalMoney;
 
@@ -24,13 +22,4 @@ public class SmallAccount {
 
 	@Column(name = "smallaccount_saveratio")
 	private int saveRatio;
-
-	public SmallAccount createResponseData() {
-		return new SmallAccount(
-			this.getGoalMoney(),
-			this.goalName,
-			S3ImageUrl + this.imageFilename,
-			this.saveRatio
-		);
-	}
 }

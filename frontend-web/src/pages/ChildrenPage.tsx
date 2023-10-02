@@ -65,6 +65,7 @@ function ChildrenPage() {
       {/*주요기능 컴포넌트 컨테이너*/}
       <Container height="50%">
         <BalanceCompo
+          balanceIdx={1}
           news="임시 뉴스"
           showText={true}
           showImg={true}
