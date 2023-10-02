@@ -1,9 +1,9 @@
 package com.ntt.mwonimoney.domain.account.service;
 
+import com.amazonaws.Response;
 import com.ntt.mwonimoney.domain.account.api.request.*;
-import com.ntt.mwonimoney.domain.account.api.response.NHApiCheckOpenFinAccountDirectResponse;
-import com.ntt.mwonimoney.domain.account.api.response.NHApiOpenFinAccountDirectResponse;
-import com.ntt.mwonimoney.domain.account.api.response.NHOpenVirtualAccountResponse;
+import com.ntt.mwonimoney.domain.account.api.response.*;
+import com.ntt.mwonimoney.domain.account.entity.FinAccountTransaction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -49,9 +49,28 @@ public class NHApiService {
     }
 
     public void transfer(NHApiDrawingTransferRequest drawingTransferRequest, NHApiReceivedTransferAccountNumberRequest receivedTransferAccountNumberRequest) {
+        String drawingTransferUrl = "https://developers.nonghyup.com/DrawingTransfer.nh";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("accept", "application/json");
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<NHApiDrawingTransferRequest> drawingTransferRequestHttpEntity = new HttpEntity<>(drawingTransferRequest, headers);
+        ResponseEntity<NHApiDrawingTransferResponse> drawingTransferResponseResponseEntity = restTemplate.exchange(drawingTransferUrl, HttpMethod.POST, drawingTransferRequestHttpEntity, NHApiDrawingTransferResponse.class);
+        NHApiDrawingTransferResponse drawingTransferResponse = drawingTransferResponseResponseEntity.getBody();
+
+        String receivedTransferAccountNumberUrl = "https://developers.nonghyup.com/ReceivedTransferAccountNumber.nh";
+
+        HttpEntity<NHApiReceivedTransferAccountNumberRequest> receivedTransferAccountNumberRequestHttpEntity = new HttpEntity<>(receivedTransferAccountNumberRequest, headers);
+        ResponseEntity<NHApiReceivedTransferAccountNumberResponse> receivedTransferAccountNumberResponseResponseEntity
+                = restTemplate.exchange(receivedTransferAccountNumberUrl, HttpMethod.POST, receivedTransferAccountNumberRequestHttpEntity, NHApiReceivedTransferAccountNumberResponse.class);
+        NHApiReceivedTransferAccountNumberResponse receivedTransferAccountNumberResponse = receivedTransferAccountNumberResponseResponseEntity.getBody();
+
     }
 
     public String istunoGenerator(){
         return Integer.toString((int)(Math.random()*100000000));
     }
+
+
 }
