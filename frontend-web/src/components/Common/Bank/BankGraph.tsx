@@ -7,9 +7,10 @@ import { GaugeChart } from "../About/AboutChart";
 interface LoanImpoProps {
   title: string;
   content: number;
+  isloan: boolean;
 }
 
-function LoanImpo({ title, content }: LoanImpoProps) {
+function LoanImpo({ title, content, isloan }: LoanImpoProps) {
   return (
     <Container width="50%" height="100%" flexDirection="column">
       <TextBox
@@ -20,9 +21,25 @@ function LoanImpo({ title, content }: LoanImpoProps) {
       >
         {title}
       </TextBox>
-      <TextBox height="70%" fontSize="1em" justifyContent="center" marginL="0%">
-        {content} 원
-      </TextBox>
+      {isloan === true ? (
+        <TextBox
+          height="70%"
+          fontSize="1em"
+          justifyContent="center"
+          marginL="0%"
+        >
+          {content}%
+        </TextBox>
+      ) : (
+        <TextBox
+          height="70%"
+          fontSize="1em"
+          justifyContent="center"
+          marginL="0%"
+        >
+          {content}점
+        </TextBox>
+      )}
     </Container>
   );
 }
@@ -44,8 +61,8 @@ function BankGraph({ creditScore, color }: BankGraphProps) {
       </Container>
       {/**금리, 신용점수 */}
       <Container height="25%">
-        <LoanImpo title="대출금리" content={1000} />
-        <LoanImpo title="신용점수" content={1000} />
+        <LoanImpo title="대출금리" content={1} isloan={true} />
+        <LoanImpo title="신용점수" content={1000} isloan={false} />
       </Container>
     </WhiteBox1>
   );
