@@ -45,19 +45,15 @@ export default function CreatGoal() {
       new Blob([JSON.stringify(jsonData)], { type: "application/json" })
     );
 
-    formData.append(
-      "image",
-      new Blob([JSON.stringify(jsonData)], { type: "application/json" }),
-      goalMoney.image
-    );
+    formData.append("image", goalMoney.image);
 
     console.log(formData);
 
     api_ver2
       .post("v1/members/small-account", formData, {
         headers: {
-          "Contest-Type": "multipart/form-data",
-          Authorization: "Bearer " + localStorage.getItem("token"),
+          // "Contest-Type": "multipart/form-data",
+          // Authorization: "Bearer " + localStorage.getItem("token"),
         },
       })
       .then((response) => {
