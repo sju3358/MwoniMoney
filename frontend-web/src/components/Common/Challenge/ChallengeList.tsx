@@ -15,6 +15,9 @@ import api from "../../../apis/Api";
 //router
 import { useNavigate } from "react-router-dom";
 
+//util
+import { dateFormat } from "../utils";
+
 export const ChallengeListContainer = styled.div`
   // border: 1px solid black;
   width: 100%;
@@ -110,16 +113,6 @@ interface Props {
 
 function ChallengeList({ data }: Props) {
   const navigate = useNavigate();
-
-  const formatDate = (origindate: string) => {
-    const date = new Date(origindate);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 2자리로 포맷팅
-    const day = date.getDate().toString().padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-  const formattedDate = formatDate(data.endTime);
-
   const [userData, setUserData] = useRecoilState(userDataState);
   const role = userData.memberRole;
 
@@ -260,7 +253,7 @@ function ChallengeList({ data }: Props) {
             </Category>
           )}
         </CategoryTag>
-        <DeadLine> {formattedDate}</DeadLine>
+        <DeadLine> ~ {dateFormat(data.endTime)}</DeadLine>
       </ListTitle>
 
       {/* {role === "CHILD" ? ( */}
