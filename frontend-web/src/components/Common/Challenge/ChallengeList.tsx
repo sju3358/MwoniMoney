@@ -181,9 +181,13 @@ function ChallengeList({ data }: Props) {
           setIsButtonState(true);
         })
         .catch((error) => {
-          console.log(error);
           if (error.response.data === "로그인 되어있지 않습니다.") {
             navigate("/LoginPage");
+          } else if (error.response.data === "챌린지 기록이 없습니다.") {
+            alert("이미 지워진 챌린지입니다.");
+            window.location.reload();
+          } else {
+            console.log(error);
           }
         });
     }
