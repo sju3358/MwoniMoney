@@ -71,8 +71,8 @@ export const InputDateInfo = styled.input`
 
 export const SelectBox = styled.select`
   border: none;
-  border: 1px solid rgba(131, 129, 129, 0.851);
-  // border-bottom: 1px solid black;
+  // border: 1px solid rgba(131, 129, 129, 0.851);
+  border-bottom: 1px solid black;
   width: 100%;
   height: 50%;
   font-size: 1.3em;

@@ -7,6 +7,7 @@ import ChallengeList, {
 import ChallengeTitle from "../Common/Challenge/ChallengeTitle";
 import { MainContainer } from "../Common/Main/Main";
 import { Text } from "../Common/About/AboutText";
+import { useNavigate } from "react-router-dom";
 
 //axios
 import api from "../../apis/Api";
@@ -30,6 +31,8 @@ interface ChallengeProps {
 }
 
 function Challenge(props: ChallengeProps) {
+  const navigate = useNavigate();
+
   const [ChallengeData, setChallengeData] = useRecoilState(ChallengeStore);
   const [isProposeState, setisProposeState] =
     useRecoilState(isProposeChallenge);
@@ -67,6 +70,9 @@ function Challenge(props: ChallengeProps) {
       })
       .catch((error) => {
         // 요청이 실패한 경우 처리할 로직
+        if (error.response.data === "로그인 되어있지 않습니다.") {
+          navigate("/LoginPage");
+        }
         if (error.response) {
           // 서버에서 응답이 왔지만, 응답 상태 코드가 실패인 경우
           console.error("GET 요청 실패 - 응답 데이터:", error.response.data);
