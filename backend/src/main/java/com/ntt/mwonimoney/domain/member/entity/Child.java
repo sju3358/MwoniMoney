@@ -99,7 +99,7 @@ public class Child extends Member {
 			.creditScore(this.creditScore)
 			.quizRewardRemain(this.quizRewardRemain)
 			.quizReward(this.quizReward)
-			.smallAccount(this.smallAccount == null ? null : smallAccount.createVo())
+			.smallAccount(this.smallAccount == null ? null : smallAccount.createResponseData())
 			.build();
 	}
 

@@ -11,3 +11,6 @@ cloud:
     credentials:
       secret-key: Qjr8GXYkmVG9qn6HpTsXfG10lpIL8LM5PSrhWQF3
       access-key: AKIARU537MT6TLAF5CEH
+
+
+aws.s3.image.goal.url: https://mwonimoney.s3.ap-northeast-2.amazonaws.com/goal/
