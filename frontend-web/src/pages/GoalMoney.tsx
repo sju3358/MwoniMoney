@@ -15,7 +15,7 @@ import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { GoalCheckState, GoalMoneyState } from "../states/GoalMoneyState";
 import { DetailReport } from "../components/Common/GoalMoney/GoalMoneyStyle";
-import { api } from "../apis/Api";
+import api from "../apis/Api";
 
 const MainContainer = styled.div`
   // border: 1px solid black;

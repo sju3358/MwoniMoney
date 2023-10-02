@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import ReactWordcloud from "react-wordcloud";
-import { api } from "../../apis/Api";
+import api from "../../apis/Api";
 import { useState } from "react";
 export default function WordCloud({ balanceGameIdx = 1 }) {
   const [words, setWords] = useState([]);

@@ -9,7 +9,7 @@ import { MainContainer } from "../Common/Main/Main";
 import { Text } from "../Common/About/AboutText";
 
 //axios
-import { api } from "../../apis/Api";
+import api from "../../apis/Api";
 
 /**
  * recoil

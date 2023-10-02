@@ -10,7 +10,7 @@ import { useRecoilState } from "recoil";
 import { isButtonChallenge } from "../../../states/ChallengeState";
 
 //axios
-import { api } from "../../../apis/Api";
+import api from "../../../apis/Api";
 
 //router
 import { useNavigate } from "react-router-dom";

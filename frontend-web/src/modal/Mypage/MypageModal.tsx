@@ -4,7 +4,7 @@ import Modal from "@mui/material/Modal";
 import { userCheckState, userDataState } from "../../states/UserInfoState";
 import { Container } from "../../components/Common/About/AboutContainer";
 import { TextBox } from "../../components/Common/About/AboutText";
-import { api } from "../../apis/Api";
+import api from "../../apis/Api";
 import { WhiteBox1 } from "../../components/Common/About/AboutWhilteContainer";
 import { ModalBtn } from "../ModalBtn1";
 
