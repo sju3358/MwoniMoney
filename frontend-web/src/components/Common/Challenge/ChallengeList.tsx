@@ -12,6 +12,9 @@ import { isButtonChallenge } from "../../../states/ChallengeState";
 //axios
 import { api } from "../../../apis/Api";
 
+//router
+import { useNavigate } from "react-router-dom";
+
 export const ChallengeListContainer = styled.div`
   // border: 1px solid black;
   width: 100%;
@@ -106,6 +109,8 @@ interface Props {
 }
 
 function ChallengeList({ data }: Props) {
+  const navigate = useNavigate();
+
   const formatDate = (origindate: string) => {
     const date = new Date(origindate);
     const year = date.getFullYear();
@@ -133,6 +138,9 @@ function ChallengeList({ data }: Props) {
       })
       .catch((error) => {
         console.log(error);
+        if (error.response.data === "로그인 되어있지 않습니다.") {
+          navigate("/LoginPage");
+        }
       });
   };
   const handleReject = () => {
@@ -144,6 +152,9 @@ function ChallengeList({ data }: Props) {
       })
       .catch((error) => {
         console.log(error);
+        if (error.response.data === "로그인 되어있지 않습니다.") {
+          navigate("/LoginPage");
+        }
       });
   };
   const handleComplete = () => {
@@ -157,6 +168,9 @@ function ChallengeList({ data }: Props) {
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.data === "로그인 되어있지 않습니다.") {
+            navigate("/LoginPage");
+          }
         });
     } else {
       //자식 완료 요청 api
@@ -168,6 +182,9 @@ function ChallengeList({ data }: Props) {
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.data === "로그인 되어있지 않습니다.") {
+            navigate("/LoginPage");
+          }
         });
     }
   };
@@ -180,6 +197,9 @@ function ChallengeList({ data }: Props) {
       })
       .catch((error) => {
         console.log(error);
+        if (error.response.data === "로그인 되어있지 않습니다.") {
+          navigate("/LoginPage");
+        }
       });
   };
 
