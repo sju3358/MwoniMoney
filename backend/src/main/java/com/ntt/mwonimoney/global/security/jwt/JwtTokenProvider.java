@@ -33,9 +33,9 @@ public class JwtTokenProvider {
 
 	private static final String AUTHORITIES_KEY = "Auth";
 	private static final String BEARER_TYPE = "Bearer";
-	private static final long ACCESS_TOKEN_EXPIRE_TIME = 20 * 1000L; // 30분
-	private static final long REFRESH_TOKEN_EXPIRE_TIME = 30 * 24 * 60 * 60 * 1000L; // 한달
-	private static final int REFRESH_TOKEN_EXPIRE_TIME_COOKIE = 12 * 30 * 24 * 60 * 60; // 12개월
+	private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;
+	private static final long REFRESH_TOKEN_EXPIRE_TIME = 30 * 24 * 60 * 60 * 1000L;
+	private static final int REFRESH_TOKEN_EXPIRE_TIME_COOKIE = 365 * 24 * 60 * 60;
 	private final Key key;
 
 	public JwtTokenProvider(@Value("${jwt.key}") String secret) {
