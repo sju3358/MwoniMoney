@@ -75,9 +75,13 @@ public class Child extends Member {
 		int creditScore,
 		int quizRewardRemain,
 		int quizReward,
-		SmallAccount smallAccount) {
+		SmallAccount smallAccount,
+		String challengeAlarm,
+		String balanceAlarm,
+		String smallAcountAlarm) {
 
-		super(status, uuid, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD);
+		super(status, uuid, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD, challengeAlarm,
+			balanceAlarm, smallAcountAlarm);
 
 		this.quizRewardRemain = quizRewardRemain;
 		this.creditScore = creditScore;
@@ -100,6 +104,9 @@ public class Child extends Member {
 			.quizRewardRemain(this.quizRewardRemain)
 			.quizReward(this.quizReward)
 			.smallAccount(this.smallAccount == null ? null : smallAccount)
+			.challengeAlarm(this.getChallengeAlarm())
+			.balanceAlarm(this.getBalanceAlarm())
+			.smallAcountAlarm(this.getSmallAcountAlarm())
 			.build();
 	}
 

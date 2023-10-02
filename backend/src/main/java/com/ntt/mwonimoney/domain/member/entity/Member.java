@@ -63,8 +63,17 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "member_role")
 	private MemberRole memberRole;
 
-	@Column(name = "FCMToken", length = 300)
+	@Column(name = "FCMToken")
 	private String FCMToken;
+
+	@Column(name = "challenge_alarm")
+	private String challengeAlarm;
+
+	@Column(name = "balance_alarm")
+	private String balanceAlarm;
+
+	@Column(name = "smallAcount_alarm")
+	private String smallAcountAlarm;
 
 	public void changeMemberEmail(String email) {
 		this.email = email;
@@ -84,7 +93,8 @@ public abstract class Member extends CommonEntity {
 
 	protected Member(int status, String memberUUID, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
-		String socialId, String email, MemberRole memberRole) {
+		String socialId, String email, MemberRole memberRole, String challengeAlarm, String balanceAlarm,
+		String smallAcountAlarm) {
 		if (memberUUID == null || memberUUID.isEmpty())
 			this.uuid = UUID.randomUUID().toString();
 		else
@@ -97,6 +107,9 @@ public abstract class Member extends CommonEntity {
 		this.socialId = socialId;
 		this.email = email;
 		this.memberRole = memberRole;
+		this.challengeAlarm = challengeAlarm;
+		this.balanceAlarm = balanceAlarm;
+		this.smallAcountAlarm = smallAcountAlarm;
 	}
 
 	public MemberDto convertToDto() {
