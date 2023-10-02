@@ -50,7 +50,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		}
 
 		try {
-
 			String validateToken = jwtTokenProvider.validateToken(token);
 			if (validateToken.equals("valid")) {
 				log.info("jwt 인증 성공");
@@ -68,6 +67,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 					JwtTokenProvider.getRefreshTokenExpireTimeCookie());
 
 				response.setHeader("x-access-token", tokenInfo.getAccessToken());
+				log.info("x-access-token : {}", tokenInfo.getAccessToken());
 
 				Authentication authentication = jwtTokenProvider.getAuthentication(
 					tokenInfo.getAccessToken());
@@ -120,7 +120,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			throw new ExpiredTokenException("리프레쉬 토큰이 만료되었습니다");
 
 		String memberUUID = jwtTokenProvider.getMemberUUID(refreshToken);
-
 		MemberAuth memberLoginInfo = memberAuthRepository.findById(memberUUID)
 			.orElseThrow(() -> new NoSuchElementException("로그인이 되어있지 않습니다."));
 
@@ -131,9 +130,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 		Member member = memberRepository.findMemberByIdx(memberLoginInfo.getMemberIdx())
 			.orElseThrow(() -> new NoSuchElementException("멤버정보가 존재하지 않습니다."));
-
-		Token tokenInfo = jwtTokenProvider.createToken(member.getUuid(), member.getSocialId(),
-			member.getMemberRole().name());
+		Token tokenInfo = jwtTokenProvider.createToken(member.getUuid(), member.getMemberRole().name());
 
 		memberAuthRepository.deleteById(memberUUID);
 		log.info("기존 로그인정보 삭제");
