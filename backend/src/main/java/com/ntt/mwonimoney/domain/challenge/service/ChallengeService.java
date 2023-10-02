@@ -2,6 +2,7 @@ package com.ntt.mwonimoney.domain.challenge.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -77,8 +78,8 @@ public class ChallengeService {
 	public void completeChallenge(Long memberChallengeIdx) {
 		Optional<MemberChallenge> memberChallenge = memberChallengeRepository.findById(memberChallengeIdx);
 
-		memberChallenge.orElseThrow().setStatus(3);
-
+		MemberChallenge challenge = memberChallenge.orElseThrow(() -> new NoSuchElementException("챌린지 기록이 없습니다."));
+		challenge.setStatus(3);
 	}
 
 	//부모 챌린지 거절
@@ -86,7 +87,8 @@ public class ChallengeService {
 	public void rejectChallenge(Long memberChallengeIdx) {
 		Optional<MemberChallenge> memberChallenge = memberChallengeRepository.findById(memberChallengeIdx);
 
-		memberChallenge.orElseThrow().setStatus(4);
+		MemberChallenge challenge = memberChallenge.orElseThrow(() -> new NoSuchElementException("챌린지 기록이 없습니다."));
+		challenge.setStatus(4);
 
 	}
 
@@ -95,7 +97,9 @@ public class ChallengeService {
 	public void acceptChallenge(Long memberChallengeIdx) {
 		Optional<MemberChallenge> memberChallenge = memberChallengeRepository.findById(memberChallengeIdx);
 
-		memberChallenge.orElseThrow().setStatus(0);
+		MemberChallenge challenge = memberChallenge.orElseThrow(() -> new NoSuchElementException("챌린지 기록이 없습니다."));
+		challenge.setStatus(0);
+		// memberChallenge.orElseThrow().setStatus(0);
 	}
 
 	//자식
@@ -136,7 +140,10 @@ public class ChallengeService {
 	@Transactional(readOnly = false)
 	public void proposeAcceptChallenge(Long memberChallengeIdx) {
 		Optional<MemberChallenge> memberChallenge = memberChallengeRepository.findById(memberChallengeIdx);
-		memberChallenge.orElseThrow().setStatus(1);
+
+		MemberChallenge challenge = memberChallenge.orElseThrow(() -> new NoSuchElementException("챌린지 기록이 없습니다."));
+		challenge.setStatus(1);
+		// memberChallenge.orElseThrow().setStatus(1);
 	}
 
 	//공통
