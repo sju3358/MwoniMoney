@@ -1,13 +1,13 @@
 import axios from "axios";
 import { API_BASE_URL } from "./Url";
 
-let api = axios.create({
+let instance = axios.create({
   baseURL: API_BASE_URL,
 });
 
-api.interceptors.request.use(
+instance.interceptors.request.use(
   (config) => {
-    config.headers.Authorization = localStorage.getItem("access_token");
+    config.headers.Authorization = "Bearer " + localStorage.getItem("token");
     return config;
   },
   (error) => {
@@ -16,4 +16,4 @@ api.interceptors.request.use(
   }
 );
 
-export default api;
+export default instance;
