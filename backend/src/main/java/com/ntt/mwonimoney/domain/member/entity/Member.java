@@ -66,6 +66,10 @@ public abstract class Member extends CommonEntity {
 	@Column(name = "FCMToken", length = 300)
 	private String FCMToken;
 
+	public void activateMember() {
+		this.status = 1;
+	}
+
 	public void changeMemberEmail(String email) {
 		this.email = email;
 	}

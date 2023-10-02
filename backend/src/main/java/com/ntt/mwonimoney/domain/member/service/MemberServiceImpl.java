@@ -70,6 +70,9 @@ public class MemberServiceImpl implements MemberService {
 
 		if (request.getBirthday().isPresent())
 			member.changeMemberBirthday(request.getBirthday().get());
+
+		member.activateMember();
+
 	}
 
 	@Override
