@@ -8,9 +8,14 @@ import { WhiteBox1 } from "../About/AboutWhilteContainer";
 import AboutCard from "../About/AboutCard";
 import MoneyTable from "./MoneyTable";
 import Income from "../../../assests/image/MoneyPage/MoneyBag.png";
+import { useRecoilState } from "recoil";
+import { childDataState, childDataProps } from "../../../states/ChildInfoState";
 
 function MoneyPage() {
-  const child = "민재";
+  const [selectedChild, setSelectedChild] =
+    useRecoilState<childDataProps>(childDataState);
+
+  const child = selectedChild.name;
   const inCome = 100000;
   const outCome = 129000;
   return (
