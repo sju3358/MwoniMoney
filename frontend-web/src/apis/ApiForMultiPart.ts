@@ -7,12 +7,22 @@ let instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    console.log("인터셉터");
     config.headers.Authorization = "Bearer " + localStorage.getItem("token");
     return config;
   },
   (error) => {
     console.log(error);
+    return Promise.reject(error);
+  }
+);
+
+instance.interceptors.response.use(
+  (response) => {
+    const newAccessToken = response.headers["x-access-token"];
+    if (newAccessToken != null) localStorage.setItem("token", newAccessToken);
+    return response;
+  },
+  (error) => {
     return Promise.reject(error);
   }
 );
