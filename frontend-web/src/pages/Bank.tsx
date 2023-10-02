@@ -9,9 +9,12 @@ import LoanList from "../components/Common/Bank/LoanList";
 import LoanAdd from "../components/Common/Bank/LoanAdd";
 import { userDataState } from "../states/UserInfoState";
 import { useRecoilState } from "recoil";
+import { childDataState, childDataProps } from "../states/ChildInfoState";
 
 function Bank() {
-  const childName = "지현";
+  const [selectedChild, setSelectedChild] =
+    useRecoilState<childDataProps>(childDataState);
+  const childName = selectedChild.name;
   const debt = 100000;
   const score = 50;
   //number = 1 : 부모 , number = 0 : 자식
