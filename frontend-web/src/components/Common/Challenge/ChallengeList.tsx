@@ -243,6 +243,18 @@ function ChallengeList({ data }: Props) {
               </Text>
             </Category>
           )}
+          {data.status === 5 && (
+            <Category backcolor="#656565" width="80%">
+              <Text
+                color="white"
+                fontsize="0.7rem"
+                marginL="0%"
+                fontweight="700"
+              >
+                만료
+              </Text>
+            </Category>
+          )}
         </CategoryTag>
         <DeadLine> {formattedDate}</DeadLine>
       </ListTitle>
