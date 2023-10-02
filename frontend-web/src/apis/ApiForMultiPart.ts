@@ -3,9 +3,7 @@ import { API_BASE_URL } from "./Url";
 
 let instance = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  headers: {},
 });
 
 instance.interceptors.request.use(
