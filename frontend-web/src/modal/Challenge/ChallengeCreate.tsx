@@ -38,7 +38,9 @@ export const InputInfo = styled.input`
 
 export const InputDateInfo = styled.input`
   width: 100%;
-  border: 1px solid rgba(131, 129, 129, 0.851);
+  border: none;
+  border-bottom: 1px solid rgba(131, 129, 129, 0.851);
+  // border: 1px solid rgba(131, 129, 129, 0.851);
   // border: 1px solid #fbd56e;
   padding: 10px;
   // background-color: white;
