@@ -19,7 +19,12 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => {
     const newAccessToken = response.headers["x-access-token"];
-    if (newAccessToken != null) localStorage.setItem("token", newAccessToken);
+    if (
+      newAccessToken != null ||
+      newAccessToken != undefined ||
+      newAccessToken != ""
+    )
+      localStorage.setItem("token", newAccessToken);
     return response;
   },
   (error) => {
