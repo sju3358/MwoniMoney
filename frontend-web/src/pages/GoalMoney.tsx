@@ -31,7 +31,7 @@ function GoalMoney() {
   const [goalMoney, setGoalMoney] = useRecoilState(GoalMoneyState);
   const [goalCheck, setGoalCheck] = useRecoilState(GoalCheckState);
   // get 받아서 다시 recoil에 넣기
-  api.get("v1/members/small-account", {});
+  // api.get("v1/members/small-account", {});
 
   const name = userData.name;
   const item = goalMoney.goalName;
