@@ -1,5 +1,7 @@
 package com.ntt.mwonimoney.domain.member.model.vo;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import jakarta.persistence.Column;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,6 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SmallAccount {
+
+	@Value("${aws.s3.image.goal.url}")
+	static String S3ImageUrl;
 
 	@Column(name = "smallaccount_goalmoney")
 	private int goalMoney;
@@ -23,11 +28,11 @@ public class SmallAccount {
 	@Column(name = "smallaccount_saveratio")
 	private int saveRatio;
 
-	public SmallAccount createVo() {
+	public SmallAccount createResponseData() {
 		return new SmallAccount(
 			this.getGoalMoney(),
 			this.goalName,
-			this.imageFilename,
+			S3ImageUrl + this.imageFilename,
 			this.saveRatio
 		);
 	}
