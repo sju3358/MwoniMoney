@@ -3,6 +3,7 @@ import { API_BASE_URL } from "./Url";
 
 let instance = axios.create({
   baseURL: API_BASE_URL,
+  withCredentials: true,
 });
 
 instance.interceptors.request.use(
@@ -16,20 +17,22 @@ instance.interceptors.request.use(
   }
 );
 
-// instance.interceptors.response.use(
-//   (response) => {
-//     const newAccessToken = response.headers["x-access-token"];
-//     if (
-//       newAccessToken != null ||
-//       newAccessToken != undefined ||
-//       newAccessToken != ""
-//     )
-//       localStorage.setItem("token", newAccessToken);
-//     return response;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
+instance.interceptors.response.use(
+  (response) => {
+    console.log("인터셉터 헤더 : ", response.headers["x-access-token"]);
+    const newAccessToken = response.headers["x-access-token"];
+    if (
+      newAccessToken != null &&
+      newAccessToken != undefined &&
+      newAccessToken != ""
+    ) {
+      localStorage.setItem("token", newAccessToken);
+    }
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default instance;
