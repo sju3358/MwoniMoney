@@ -1,7 +1,5 @@
 package com.ntt.mwonimoney.domain.member.model.vo;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import jakarta.persistence.Column;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,8 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SmallAccount {
 
-	@Value("${aws.s3.image.goal.url}")
-	static String S3ImageUrl;
+	static String S3ImageUrl = "https://mwonimoney.s3.ap-northeast-2.amazonaws.com/goal/";
 
 	@Column(name = "smallaccount_goalmoney")
 	private int goalMoney;
