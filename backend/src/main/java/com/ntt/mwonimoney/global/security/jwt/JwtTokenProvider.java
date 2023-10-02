@@ -151,7 +151,9 @@ public class JwtTokenProvider {
 
 	public String getMemberUUID(String accessToken) {
 		StringTokenizer st = new StringTokenizer(accessToken);
-		st.nextToken();
+
+		if (st.countTokens() >= 2)
+			st.nextToken();
 
 		String jwtToken = st.nextToken();
 
