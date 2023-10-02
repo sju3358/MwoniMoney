@@ -8,12 +8,14 @@ import { recoilPersist } from "recoil-persist";
 
 interface newLoan {
   childUuid: string;
-  title: string;
-  category: string;
-  memo: string;
-  reward: number;
+  title: string; //대출명
+  memo: string; //내용
+  debt: number; //대출금
+  endTime: string; //상환날짜
+  everykey: string; //매달,매주
+  everyvalue: string; //string or number
+  rate: number; //대출금리
   status: number;
-  endTime: string;
 }
 
 //input에서 넣은 post용 데이터
@@ -22,11 +24,13 @@ export const newLoan = atom<newLoan>({
   default: {
     childUuid: "",
     title: "",
-    category: "",
     memo: "",
-    reward: 0,
-    status: 0,
+    debt: 0,
     endTime: "",
+    everykey: "",
+    everyvalue: "",
+    rate: 0,
+    status: 0,
   },
   // effects_UNSTABLE: [persistAtom],
 });
