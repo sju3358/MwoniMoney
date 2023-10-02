@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-@RedisHash(value = "member_auth", timeToLive = 3600000)
+@RedisHash(value = "member_auth", timeToLive = 2600000)
 public class MemberAuth {
 
 	@Id
