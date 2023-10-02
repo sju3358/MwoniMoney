@@ -118,7 +118,6 @@ function CreateChallenge() {
 
   useEffect(() => {
     const today = new Date();
-    today.setDate(today.getDate() + 1);
     const minDateString = today.toISOString().split("T")[0];
     setMinDate(minDateString);
   }, []);
