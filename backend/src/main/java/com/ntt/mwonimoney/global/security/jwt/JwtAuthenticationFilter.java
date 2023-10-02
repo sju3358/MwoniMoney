@@ -41,31 +41,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		ServletException,
 		IOException {
 
-		String token = resolveToken(request);
-		if (token == null) {
-			log.info("토큰이 없음");
-			chain.doFilter(request, response);
-			return;
-		}
-
 		try {
 			log.info("JWT Authentication Filter Start");
-			String validateToken = jwtTokenProvider.validateToken(token);
+			String token = resolveToken(request);
 
+			if (token == null) {
+				log.info("토큰이 없음");
+				throw new NullValueException("토큰이 존재하지 않음");
+			}
+
+			String validateToken = jwtTokenProvider.validateToken(token);
 			if (validateToken.equals("valid")) {
 				log.info("jwt 인증 성공");
 				Authentication authentication = jwtTokenProvider.getAuthentication(token);
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			} else if (validateToken.equals("isExpired")) {
-
 				Token tokenInfo = refreshTokenAndGetToken(request);
 
 				CookieUtil.deleteCookie(request, response,
 					OAuth2AuthorizationRequestBasedOnCookieRepository.REFRESH_TOKEN);
+
 				CookieUtil.addCookie(response,
 					OAuth2AuthorizationRequestBasedOnCookieRepository.REFRESH_TOKEN,
 					tokenInfo.getRefreshToken(),
 					JwtTokenProvider.getRefreshTokenExpireTimeCookie());
+
 				response.setHeader("x-access-token", tokenInfo.getAccessToken());
 
 				Authentication authentication = jwtTokenProvider.getAuthentication(
@@ -104,14 +104,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private String resolveToken(HttpServletRequest request) {
 		String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+
 		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_TYPE)) {
 			return bearerToken.substring(7);
 		}
+
 		return null;
 	}
 
 	private Token refreshTokenAndGetToken(HttpServletRequest request) {
-
 		String refreshToken = getRefreshTokenFromCookie(request);
 
 		if (!jwtTokenProvider.getIsExipired(refreshToken))

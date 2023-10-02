@@ -115,7 +115,16 @@ const ModalParentChallenge: React.FC<ModalProps> = ({
   /**
    * 자식 uuid
    */
-  const ChildUuid = "d3a58e6c-14d7-4b3a-b58f-982aafc9836b";
+  let ChildUuid: string | null = null;
+  const childStateString: string | null = localStorage.getItem("childState");
+
+  if (childStateString !== null) {
+    const childState = JSON.parse(childStateString);
+    ChildUuid = childState.childDataState.uuid;
+    console.log(ChildUuid);
+  } else {
+    console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
+  }
 
   const handleSubmit = () => {
     if (newChallengeData.category.length < 1) {
