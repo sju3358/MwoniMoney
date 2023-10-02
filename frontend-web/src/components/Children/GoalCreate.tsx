@@ -10,7 +10,7 @@ import { GoalMoneyState } from "../../states/GoalMoneyState";
 import { Btn, InputList } from "../Common/GoalMoney/GoalMoneyStyle";
 import GoalModal from "../../modal/GoalMoney/GoalModal";
 import { ModalState } from "../../states/ModalState";
-import api from "../../apis/Api";
+// import api from "../../apis/Api";
 import api_ver2 from "../../apis/ApiForMultiPart";
 
 export default function CreatGoal() {
@@ -44,17 +44,25 @@ export default function CreatGoal() {
       "info",
       new Blob([JSON.stringify(jsonData)], { type: "application/json" })
     );
+    // console.log(formData.get("info"));
+    // 이미지를 Recoil 상태에서 가져오기
+    const image = goalMoney.image;
+    // 이미지를 Blob으로 변환
+    const blob = new Blob([image], { type: "image/jpeg" });
 
-    formData.append("image", goalMoney.image);
+    // FormData에 추가
+    formData.append("image", blob, "Dongdong.png");
+    console.log(formData.get("image"));
 
-    console.log(formData);
+    // console.log(formData);
+    // console.log("image 출력");
 
     api_ver2
       .post("v1/members/small-account", formData, {
-        headers: {
-          // "Contest-Type": "multipart/form-data",
-          // Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+        // headers: {
+        // "Contest-Type": "multipart/form-data",
+        // Authorization: "Bearer " + localStorage.getItem("token"),
+        // },
       })
       .then((response) => {
         alert("짜금통을 생성했습니다.");
