@@ -98,6 +98,7 @@ function Balance() {
               .map((item, index) => (
                 <BalanceContainer key={index} height="40%">
                   <BalanceCompo
+                    balanceIdx={item.idx}
                     news={item.news}
                     showText={true}
                     showImg={true}
