@@ -9,7 +9,7 @@ import { newChallenge } from "../../states/ChallengeState";
 import { isProposeChallenge } from "../../states/ChallengeState";
 
 //axios
-import { api } from "../../apis/Api";
+import api from "../../apis/Api";
 
 interface ModalBackPops {
   height?: string;

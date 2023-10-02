@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
-import { api } from "../apis/Api";
+import api from "../apis/Api";
 
 import {
   MainContainer,

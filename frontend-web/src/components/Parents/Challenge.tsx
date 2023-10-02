@@ -8,7 +8,7 @@ import ChallengeTitle from "../Common/Challenge/ChallengeTitle";
 import { MainContainer } from "../Common/Main/Main";
 
 //axios
-import { api } from "../../apis/Api";
+import api from "../../apis/Api";
 
 /**
  * recoil
