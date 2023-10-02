@@ -1,18 +1,21 @@
 package com.ntt.mwonimoney.domain.account.api;
 
 import com.ntt.mwonimoney.domain.account.api.request.*;
-import com.ntt.mwonimoney.domain.account.api.response.NHApiCheckOpenFinAccountDirectResponse;
-import com.ntt.mwonimoney.domain.account.api.response.NHApiOpenFinAccountDirectResponse;
-import com.ntt.mwonimoney.domain.account.api.response.NHOpenVirtualAccountResponse;
+import com.ntt.mwonimoney.domain.account.api.response.*;
 import com.ntt.mwonimoney.domain.account.entity.FinAccount;
+import com.ntt.mwonimoney.domain.account.entity.FinAccountStatus;
+import com.ntt.mwonimoney.domain.account.entity.FinAccountTransaction;
 import com.ntt.mwonimoney.domain.account.entity.FinAccountType;
-import com.ntt.mwonimoney.domain.account.model.dto.FinAccountDto;
-import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransferRequest;
+import com.ntt.mwonimoney.domain.account.model.dto.*;
+import com.ntt.mwonimoney.domain.account.service.FinAccountTransactionService;
 import com.ntt.mwonimoney.domain.account.service.NHApiService;
 import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
 import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
 import com.ntt.mwonimoney.domain.member.service.MemberService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,11 +36,13 @@ import java.util.Optional;
 @RequestMapping("/api/v1")
 public class FinAccountApi {
 
-    private final NHApiService nhApiService;
-    private final FinAccountService finAccountService;
     private final MemberAuthService memberAuthService;
     private final MemberService memberService;
     private final JwtTokenProvider jwtTokenProvider;
+
+    private final NHApiService nhApiService;
+    private final FinAccountService finAccountService;
+    private final FinAccountTransactionService finAccountTransactionService;
 
     @GetMapping("/accounts")
     public ResponseEntity getFinAccount(@RequestHeader("Authorization") String accessToken) {
@@ -112,7 +117,25 @@ public class FinAccountApi {
         NHApiCheckOpenFinAccountDirectResponse checkOpenFinAccountDirectResponse = nhApiService.getcheckOpenFinAccountDirect(checkOpenFinAccountDirectRequest);
 
         // 2-3. 계좌 저장
-        finAccountService.saveFinAccount(checkOpenFinAccountDirectResponse);
+
+        FinAccount newFinAccount = null;
+        if(checkOpenFinAccountDirectResponse.getFinAcno() != null) {
+            newFinAccount = FinAccount.builder()
+//                .number("3020000008999")
+                    .number(accountNumber)
+                    .finAcno(checkOpenFinAccountDirectResponse.getFinAcno())
+                    .status(FinAccountStatus.ACTIVATE)
+                    .type(FinAccountType.GENERAL)
+                    .build();
+        }else{
+            newFinAccount = FinAccount.builder()
+                    .number(accountNumber)
+                    .finAcno("00820100020640000000000016235")
+                    .status(FinAccountStatus.ACTIVATE)
+                    .type(FinAccountType.GENERAL)
+                    .build();
+        }
+        finAccountService.saveFinAccount(newFinAccount);
 
         return ResponseEntity.ok().build();
     }
@@ -134,7 +157,7 @@ public class FinAccountApi {
         // 2-1. 예치금 관리용 가상계좌 발급
         NHApiRequestHeader openVirtualAccountHeader = NHApiRequestHeader.builder()
                 .ApiNm("OpenVirtualAccount")
-                .IsTuno("201911290000000001")
+                .IsTuno(nhApiService.istunoGenerator())
                 .build();
 
         NHOpenVirtualAccountRequest openVirtualAccountRequest = NHOpenVirtualAccountRequest.builder()
@@ -168,32 +191,78 @@ public class FinAccountApi {
         FinAccount receiverFinAccount = finAccountService.getFinAccountByMemberAndType(finAccountTransferRequest.getReceiverIdx(), FinAccountType.GENERAL).orElseThrow();
 
         // 3. NHDevelopers의 출금이체 -> 농협입금이체
+        // 3-1. 출금이체
         NHApiRequestHeader drawingTransferHeader = NHApiRequestHeader.builder()
                 .ApiNm("DrawingTransfer")
-                .IsTuno("201911290000000001")
+                .IsTuno(nhApiService.istunoGenerator())
                 .build();
         NHApiDrawingTransferRequest drawingTransferRequest = NHApiDrawingTransferRequest.builder()
                 .requestHeader(drawingTransferHeader)
-//                .FinAcno(senderFinAccount.getFinAcno())
-//                .Tram(finAccountTransferRequest.getPrice())
+                .FinAcno(senderFinAccount.getFinAcno())
+                .Tram(Integer.toString(finAccountTransferRequest.getPrice()))
                 .DractOtlt(finAccountTransferRequest.getSenderContent())
                 .MractOtlt(finAccountTransferRequest.getReceiverContent())
                 .build();
 
         NHApiRequestHeader receivedTransferAccountNumberHeader = NHApiRequestHeader.builder()
                 .ApiNm("ReceivedTransferAccountNumber")
-                .IsTuno("201911290000000001")
+                .IsTuno(nhApiService.istunoGenerator())
                 .build();
         NHApiReceivedTransferAccountNumberRequest receivedTransferAccountNumberRequest = NHApiReceivedTransferAccountNumberRequest.builder()
                 .requestHeader(receivedTransferAccountNumberHeader)
                 .bncdType(BncdType.TYPE_011)
-//                .Acno(senderFinAccount.getAcno())
-//                .Tram(finAccountTransferRequest.getPrice())
+                .Acno(senderFinAccount.getNumber())
+                .Tram(Integer.toString(finAccountTransferRequest.getPrice()))
                 .DractOtlt(finAccountTransferRequest.getSenderContent())
                 .MractOtlt(finAccountTransferRequest.getReceiverContent())
                 .build();
 
         nhApiService.transfer(drawingTransferRequest, receivedTransferAccountNumberRequest);
+
+        FinAccountTransaction finAccountTransaction = FinAccountTransaction.builder()
+//                .money()
+//                .balance()
+//                .memo()
+//                .time()
+                .build();
+        finAccountTransactionService.save(finAccountTransaction);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/accounts/{finAccountIdx}/transactions")
+    public ResponseEntity getTransactionList(@PathVariable Long finAccountIdx, @RequestBody FinAccountTransactionListRequest request){
+        FinAccountTransactionListRequestType type = request.getType();
+        PageToScroll pageToScroll = request.getPageToScroll();
+
+        Slice<FinAccountTransaction> list = null;
+        Pageable pageable = PageRequest.of(pageToScroll.getPage(), pageToScroll.getSize());;
+
+        if(type == FinAccountTransactionListRequestType.INCOME){
+            list = finAccountTransactionService.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx,0,pageable);
+        }else if(type == FinAccountTransactionListRequestType.OUTCOME){
+            list = finAccountTransactionService.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx,0, pageable);
+        }else{
+            list = finAccountTransactionService.findByFinAccount(finAccountIdx, pageable);
+        }
+
+        return ResponseEntity.ok().body(list);
+    }
+
+    @PatchMapping("/accounts/{finAccountIdx}/transactions/{transactionIdx}")
+    public ResponseEntity updateTransaction(@PathVariable Long finAccountIdx, @PathVariable Long transactionIdx, @RequestBody String memoToUpdate){
+        FinAccountTransaction finAccountTransactionToUpdate = finAccountTransactionService.findById(transactionIdx).orElseThrow();
+
+        FinAccountTransaction finAccountTransactionUpdated = FinAccountTransaction.builder()
+                .id(finAccountTransactionToUpdate.getId())
+                .money(finAccountTransactionToUpdate.getMoney())
+                .balance(finAccountTransactionToUpdate.getBalance())
+                .memo(memoToUpdate)
+                .time(finAccountTransactionToUpdate.getTime())
+                .build();
+        finAccountTransactionUpdated.addFinAccount(finAccountTransactionToUpdate.getFinAccount());
+
+        finAccountTransactionService.save(finAccountTransactionUpdated);
 
         return ResponseEntity.ok().build();
     }

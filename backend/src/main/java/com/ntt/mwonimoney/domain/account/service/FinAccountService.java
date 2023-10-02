@@ -38,10 +38,6 @@ public class FinAccountService {
         return finAccountRepository.findFinAccountByMemberAndType(memberIdx, finAccountType);
     }
 
-    public FinAccount saveFinAccount(NHApiCheckOpenFinAccountDirectResponse checkOpenFinAccountDirectResponse) {
-        return null;
-    }
-
     public FinAccount saveSmallAccount(NHOpenVirtualAccountResponse openVirtualAccountResponse) {
         return null;
     }
