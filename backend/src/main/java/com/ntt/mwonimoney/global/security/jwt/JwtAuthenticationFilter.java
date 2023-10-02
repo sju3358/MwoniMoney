@@ -40,15 +40,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws
 		ServletException,
 		IOException {
+		log.info("JWT Authentication Filter Start");
+		String token = resolveToken(request);
+
+		if (token == null) {
+			log.info("토큰이 없음");
+			chain.doFilter(request, response);
+			return;
+		}
 
 		try {
-			log.info("JWT Authentication Filter Start");
-			String token = resolveToken(request);
-
-			if (token == null) {
-				log.info("토큰이 없음");
-				throw new NullValueException("토큰이 존재하지 않음");
-			}
 
 			String validateToken = jwtTokenProvider.validateToken(token);
 			if (validateToken.equals("valid")) {
