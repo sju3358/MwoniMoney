@@ -63,7 +63,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 			.birthday("0000-00-00")
 			.email(userInfo.getEmail())
 			.socialProvider(socialProvider)
-			.status((byte)1)
+			.status(0)
 			.build();
 
 		memberRepository.saveAndFlush(member);
