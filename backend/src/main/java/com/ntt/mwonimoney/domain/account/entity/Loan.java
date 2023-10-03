@@ -41,8 +41,11 @@ public class Loan {
     @Column(name = "loan_deadline")
     private LocalDateTime deadline;
 
+    @Column(name = "loan_rate")
+    private Double rate;
+
     @Builder
-    public Loan(Long lender, Long borrower, LoanStatus status, String name, String content, int amount, LocalDateTime deadline){
+    public Loan(Long lender, Long borrower, LoanStatus status, String name, String content, int amount, LocalDateTime deadline, Double rate){
         this.lender = lender;
         this.borrower = borrower;
         this.status = status;
@@ -50,6 +53,7 @@ public class Loan {
         this.content = content;
         this.amount = amount;
         this.deadline = deadline;
+        this.rate = rate;
     }
 
 }
