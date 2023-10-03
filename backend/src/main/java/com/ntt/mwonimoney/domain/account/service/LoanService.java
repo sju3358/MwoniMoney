@@ -67,7 +67,7 @@ public class LoanService {
         loan.changeStatus(status);
     }
 
-    public void changeAmount(Loan loan, int amount){
-        loan.changeAmount(amount);
+    public void changeBalance(Loan loan, int amount){
+        loan.changeBalacne(amount);
     }
 }
