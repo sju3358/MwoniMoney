@@ -30,7 +30,7 @@ public class FCMServiceImpl implements FCMService {
 	@Override
 	@Transactional
 	public void updateFCMToken(FCMTokenRequest fcmTokenRequest) {
-		MemberAuth memberAuth = memberAuthRepository.findMemberAuthByMemberUUID(fcmTokenRequest.getUserUUID())
+		MemberAuth memberAuth = memberAuthRepository.findById(fcmTokenRequest.getUserUUID())
 			.orElseThrow();
 		Member member = memberRepository.findMemberByIdx(memberAuth.getMemberIdx()).orElseThrow();
 		member.updateFCMToken(fcmTokenRequest.getFirebaseToken());

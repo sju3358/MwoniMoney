@@ -52,10 +52,10 @@ public class ChildrenServiceImpl implements ChildrenService {
 	public List<ChildDto> getChildren(String parentUUID) {
 		List<Child> childrenEntity = childrenRepository.findChildren(parentUUID);
 
-		List<ChildDto> children = new ArrayList<>();
-
-		if (children.isEmpty() == true)
+		if (childrenEntity.isEmpty() == true)
 			throw new NoSuchElementException("자식들이 존재하지 않습니다");
+
+		List<ChildDto> children = new ArrayList<>();
 
 		for (Child childEntity : childrenEntity)
 			children.add(childEntity.convertToDto());
@@ -79,5 +79,12 @@ public class ChildrenServiceImpl implements ChildrenService {
 			.orElseThrow(() -> new NoSuchElementException("해당 부모 아이 관계가 존재하지 않습니다"));
 
 		childrenRepository.delete(children);
+	}
+
+	@Override
+	public boolean isMyParent(String parentUUID, String childUUID) {
+		ChildrenKey childrenKey = new ChildrenKey(parentUUID, childUUID);
+		return
+			childrenRepository.findChildrenByChildrenKey(childrenKey).isEmpty() != true;
 	}
 }

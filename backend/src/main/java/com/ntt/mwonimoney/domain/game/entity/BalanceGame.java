@@ -30,6 +30,9 @@ public class BalanceGame {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idx;
 
+	@Column(name = "balance_news")
+	private String news;
+
 	@Column(name = "balance_question")
 	private String question;
 
@@ -47,17 +50,17 @@ public class BalanceGame {
 	@Column(name = "create_time", updatable = false)
 	private LocalDateTime createTime;
 
-	public void endBalanceGame(){
+	public void endBalanceGame() {
 		this.balanceGameStatus = BalanceGameStatus.END;
 	}
+
 	public void runBalanceGame() {
 		this.balanceGameStatus = BalanceGameStatus.RUNNING;
 	}
 
-
-
 	@Builder
-	public BalanceGame(String question, String leftAnswer, String rightAnswer) {
+	public BalanceGame(String news, String question, String leftAnswer, String rightAnswer) {
+		this.news = news;
 		this.question = question;
 		this.leftAnswer = leftAnswer;
 		this.rightAnswer = rightAnswer;
@@ -67,9 +70,11 @@ public class BalanceGame {
 	public BalanceGameDto convertToDto() {
 		return BalanceGameDto.builder()
 			.idx(this.idx)
+			.news(this.news)
 			.question(this.question)
 			.leftAnswer(this.leftAnswer)
 			.rightAnswer(this.rightAnswer)
+			.balanceGameStatus(this.balanceGameStatus)
 			.build();
 	}
 

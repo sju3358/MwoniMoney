@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 @Slf4j
 public class WebSecurityConfig {
@@ -41,7 +41,9 @@ public class WebSecurityConfig {
 	private final MemberAuthRepository memberAuthRepository;
 	private final MemberAuthService memberAuthService;
 	private static final String[] GET_LIST = {"/api/oauth2/authorization", "/api/login/oauth2/code/**",
-		"/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**", "/api-docs/swagger-config"};
+		"/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**", "/api-docs/swagger-config", "/api/v1/balances/*/chatting"};
+
+	private static final String[] POST_LIST = {"/api/v1/balances/*/chatting"};
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -53,6 +55,8 @@ public class WebSecurityConfig {
 				.accessDeniedHandler(tokenAccessDeniedHandler))
 			.sessionManagement(c -> c.sessionCreationPolicy((SessionCreationPolicy.STATELESS)))
 			.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, GET_LIST)
+				.permitAll()
+				.requestMatchers(HttpMethod.POST, POST_LIST)
 				.permitAll()
 				.requestMatchers("/**")
 				.hasAnyRole("PARENT", "CHILD", "GUEST")

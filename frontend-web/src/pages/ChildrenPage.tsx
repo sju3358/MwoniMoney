@@ -64,13 +64,24 @@ function ChildrenPage() {
 
       {/*주요기능 컴포넌트 컨테이너*/}
       <Container height="50%">
-        <BalanceCompo />
+        <BalanceCompo
+          balanceIdx={1}
+          news="임시 뉴스"
+          showText={true}
+          showImg={true}
+          questionText="ABC 기업의 주식을 구매하시겠습니까?"
+          buyText="산다"
+          notBuyText="안산다"
+        />
       </Container>
       <Container height="50%" overflowy="hidden">
         <Quiz />
       </Container>
-      <Container height="50%">
-        <Challenge />
+      <Container height="50%" flexDirection="column">
+        <Container height="30%">
+          <TextBox height="100%">챌린지</TextBox>
+        </Container>
+        <Challenge ismain="Y" />
       </Container>
     </MainContainer>
   );
