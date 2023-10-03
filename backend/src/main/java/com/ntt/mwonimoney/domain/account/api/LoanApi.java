@@ -43,6 +43,7 @@ public class LoanApi {
             String childUUID = jwtTokenProvider.getMemberUUID(accessToken);
             childIdx = memberAuthService.getMemberAuthInfo(childUUID).getMemberIdx();
         }
+        PageToScroll pageToScroll = loanListRequestDto.getPageToScroll();
         Pageable pageable = PageRequest.of(pageToScroll.getPage(), pageToScroll.getSize());
         Slice<Loan> loanList = loanService.findByBorrowerAndStatus(childIdx, loanListRequestDto.getLoanListRequestStatus(), pageable);
 
