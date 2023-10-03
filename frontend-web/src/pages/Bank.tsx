@@ -36,7 +36,7 @@ function Bank() {
     if (userStateString !== null) {
       const userState = JSON.parse(userStateString);
       childName = userState.userDataState.nickname;
-      console.log(childName);
+      // console.log(childName);
     } else {
       console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
     }
