@@ -31,7 +31,7 @@ public class LoanApi {
     private final LoanService loanService;
 
     @GetMapping("/loans")
-    public ResponseEntity getLoanList(@RequestHeader("Authorization") String accessToken, @RequestBody LoanListRequestDto loanListRequestDto, @ModelAttribute PageToScroll pageToScroll) {
+    public ResponseEntity getLoanList(@RequestHeader("Authorization") String accessToken, LoanListRequestDto loanListRequestDto) {
         LoanMemberType loanMemberType = loanListRequestDto.getLoanMemberType();
 
         Long childIdx = null;
@@ -43,7 +43,8 @@ public class LoanApi {
             String childUUID = jwtTokenProvider.getMemberUUID(accessToken);
             childIdx = memberAuthService.getMemberAuthInfo(childUUID).getMemberIdx();
         }
-        Pageable pageable = PageRequest.of(pageToScroll.getPage(), pageToScroll.getSize());
+
+        Pageable pageable = PageRequest.of(loanListRequestDto.getPage(), loanListRequestDto.getSize());
         Slice<Loan> loanList = loanService.findByBorrowerAndStatus(childIdx, loanListRequestDto.getLoanListRequestStatus(), pageable);
 
         return ResponseEntity.ok().body(loanList);
