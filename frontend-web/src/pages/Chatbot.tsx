@@ -71,7 +71,7 @@ const App: React.FC = () => {
         setLoading(false);
 
         // 메시지 목록에 챗봇 응답 추가
-        setMessages([...messages, botMessage]);
+        setMessages((prevMessages) => [...prevMessages, botMessage]); // 기존 메시지에 새로운 메시지 추가
       } catch (error) {
         // 오류 처리
         console.error("Error sending message:", error);
@@ -115,19 +115,13 @@ const App: React.FC = () => {
               }}
             >
               <ListItemText
-                primary={
-                  <span
-                    style={{
-                      background:
-                        message.sender === "user" ? "#007bff" : "transparent",
-                      color: message.sender === "user" ? "#fff" : "#000",
-                      borderRadius: "4px",
-                      padding: "8px 12px",
-                    }}
-                  >
-                    {message.sender === "user" ? "You" : "Bot"}
-                  </span>
-                }
+                primary={message.sender === "user" ? "You" : "Bot"}
+                primaryTypographyProps={{
+                  style: {
+                    fontWeight: "bold",
+                    color: message.sender === "user" ? "#007bff" : "#000",
+                  },
+                }}
                 secondary={message.text}
               />
             </ListItem>

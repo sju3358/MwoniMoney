@@ -8,11 +8,11 @@ import { TextBox, Text } from "../About/AboutText";
 
 function ChatbotLink() {
   const navigate = useNavigate();
-  const goQr = () => {
-    navigate("/Qr");
+  const goChatbot = () => {
+    navigate("/Chatbot");
   };
   return (
-    <WhiteBox1 height="90%" onClick={goQr}>
+    <WhiteBox1 height="90%" onClick={goChatbot}>
       <Container
         height="100%"
         width="65%"
