@@ -31,10 +31,10 @@ public class LoanApi {
     private final LoanService loanService;
 
     @GetMapping("/loans")
-    public ResponseEntity getLoanList(@RequestHeader("Authorization") String accessToken, @RequestBody LoanListRequestDto loanListRequestDto, @ModelAttribute PageToScroll pageToScroll) {
+    public ResponseEntity getLoanList(@RequestHeader("Authorization") String accessToken, LoanListRequestDto loanListRequestDto) {
         LoanMemberType loanMemberType = loanListRequestDto.getLoanMemberType();
 
-        Long childIdx;
+        Long childIdx = null;
 
         // 돈 빌려준 사람(부모)의 경우
         if(loanMemberType == LoanMemberType.LENDER){
@@ -43,7 +43,8 @@ public class LoanApi {
             String childUUID = jwtTokenProvider.getMemberUUID(accessToken);
             childIdx = memberAuthService.getMemberAuthInfo(childUUID).getMemberIdx();
         }
-        Pageable pageable = PageRequest.of(pageToScroll.getPage(), pageToScroll.getSize());
+
+        Pageable pageable = PageRequest.of(loanListRequestDto.getPage(), loanListRequestDto.getSize());
         Slice<Loan> loanList = loanService.findByBorrowerAndStatus(childIdx, loanListRequestDto.getLoanListRequestStatus(), pageable);
 
         return ResponseEntity.ok().body(loanList);
@@ -96,51 +97,22 @@ public class LoanApi {
             newAmount = 0;
             newStatus = LoanStatus.PAID;
         }
-        Loan repaidLoan = Loan
-                .builder()
-                .lender(loanToRepay.getLender())
-                .borrower(loanToRepay.getBorrower())
-                .status(newStatus)
-                .name(loanToRepay.getName())
-                .content(loanToRepay.getContent())
-                .amount(newAmount)
-                .deadline(loanToRepay.getDeadline())
-                .build(); // 코드치기
-        loanService.save(repaidLoan);
+        loanService.changeStatus(loanToRepay, newStatus);
+        loanService.changeAmount(loanToRepay, newAmount);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/loans/approval/{loanIdx}")
     public ResponseEntity approveLoan(@RequestHeader("Authorization") String accessToken, @PathVariable Long loanIdx){
         Loan loanToApprove = loanService.findById(loanIdx).orElseThrow();
-        Loan approvedLoan = Loan
-                .builder()
-                .lender(loanToApprove.getLender())
-                .borrower(loanToApprove.getBorrower())
-                .status(LoanStatus.APPROVAL)
-                .name(loanToApprove.getName())
-                .content(loanToApprove.getContent())
-                .amount(loanToApprove.getAmount())
-                .deadline(loanToApprove.getDeadline())
-                .build(); // 코드치기
-        loanService.save(approvedLoan);
+        loanService.changeStatus(loanToApprove, LoanStatus.APPROVAL);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/loans/rejection/{loanIdx}")
     public ResponseEntity rejectLoan(@RequestHeader("Authorization") String accessToken, @PathVariable Long loanIdx){
         Loan loanToReject = loanService.findById(loanIdx).orElseThrow();
-        Loan rejectedLoan = Loan
-                .builder()
-                .lender(loanToReject.getLender())
-                .borrower(loanToReject.getBorrower())
-                .status(LoanStatus.REJECTION)
-                .name(loanToReject.getName())
-                .content(loanToReject.getContent())
-                .amount(loanToReject.getAmount())
-                .deadline(loanToReject.getDeadline())
-                .build(); // 코드치기
-        loanService.save(rejectedLoan);
+        loanService.changeStatus(loanToReject, LoanStatus.REJECTION);
         return ResponseEntity.ok().build();
     }
 }
