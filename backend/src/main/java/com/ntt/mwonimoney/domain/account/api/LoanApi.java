@@ -59,10 +59,12 @@ public class LoanApi {
     public ResponseEntity createLoan(@RequestHeader("Authorization") String accessToken, @RequestBody CreateLoanRequest createLoanRequest){
         String parentUUID = jwtTokenProvider.getMemberUUID(accessToken);
         Long parentIdx = memberAuthService.getMemberAuthInfo(parentUUID).getMemberIdx();
+        Long childIdx = memberAuthService.getMemberAuthInfo(createLoanRequest.getBorrowerUUID()).getMemberIdx();
+
         // 1. loan 생성
         Loan loan = Loan.builder()
                 .lender(parentIdx)
-                .borrower(createLoanRequest.getBorrower())
+                .borrower(childIdx)
                 .status(createLoanRequest.getStatus())
                 .name(createLoanRequest.getName())
                 .content(createLoanRequest.getContent())

@@ -64,5 +64,9 @@ public class FinAccount extends CommonEntity {
 		this.member = member;
 //		member.addFinAccount(this);
 	}
+
+	public void changeStatus(FinAccountStatus status){
+		this.status = status;
+	}
 }
 
