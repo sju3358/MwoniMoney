@@ -16,22 +16,20 @@ import lombok.NoArgsConstructor;
 public class Parent extends Member {
 
 	@Builder
-	public Parent(byte status, String name, String nickname, String birthday, SocialProvider socialProvider,
+	public Parent(int status, String uuid, String name, String nickname, String birthday, SocialProvider socialProvider,
 		String socialId, String email) {
-		super(status, name, nickname, birthday, socialProvider, socialId, email, MemberRole.PARENT);
+		super(status, uuid, name, nickname, birthday, socialProvider, socialId, email, MemberRole.PARENT);
 	}
 
 	@Override
 	public ParentDto convertToDto() {
 		return ParentDto.builder()
-			.idx(this.getIdx())
 			.uuid(this.getUuid())
 			.status(this.getStatus())
 			.name(this.getName())
 			.nickname(this.getNickname())
 			.birthday(this.getBirthday())
 			.socialProvider(this.getSocialProvider())
-			.socialId(this.getSocialId())
 			.memberRole(this.getMemberRole())
 			.build();
 	}

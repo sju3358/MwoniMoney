@@ -1,21 +1,21 @@
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import App from './App';
-import CreateDOM from 'react-dom/client';
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import App from "./App";
+import CreateDOM from "react-dom/client";
 
-// DOM ¿ä¼Ò¸¦ Ã£¾Æ º¯¼ö¿¡ ÇÒ´ç
-const rootElement = document.getElementById('root');
+// DOM ï¿½ï¿½Ò¸ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò´ï¿½
+const rootElement = document.getElementById("root");
 
-// rootElement°¡ nullÀÌ ¾Æ´Ñ °æ¿ì¿¡¸¸ ¾ÖÇÃ¸®ÄÉÀÌ¼ÇÀ» ·»´õ¸µÇÕ´Ï´Ù.
+// rootElementï¿½ï¿½ nullï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
 if (rootElement) {
   const root = CreateDOM.createRoot(rootElement);
 
   root.render(
-    <React.StrictMode>
-      <Router>
-        <App />
-      </Router>
-    </React.StrictMode>
+    // <React.StrictMode>
+    <Router>
+      <App />
+    </Router>
+    // </React.StrictMode>
   );
 } else {
   console.error("Cannot find the 'root' element in the DOM.");

@@ -13,6 +13,7 @@ import com.ntt.mwonimoney.domain.member.entity.Parent;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 
 	private final JPAQueryFactory jpaQueryFactory;
+	private final EntityManager em;
 
 	@Override
 	public Optional<? extends Member> findMemberByIdx(Long memberIdx) {
@@ -91,5 +93,54 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 			return Optional.of((Parent)memberEntity);
 
 		return Optional.empty();
+	}
+
+	@Override
+	public Optional<Member> changeAndSaveMemberRole(Long memberIdx, MemberRole memberRole) {
+		Member result = jpaQueryFactory
+			.select(member)
+			.from(member)
+			.where(member.idx.eq(memberIdx))
+			.fetchOne();
+
+		if (result.getMemberRole().equals(MemberRole.GUEST) != true)
+			throw new IllegalArgumentException("게스트만 변경 가능");
+		else {
+
+			Member memberRoleChanged = null;
+			if (memberRole.equals(MemberRole.CHILD)) {
+				memberRoleChanged = Child.builder()
+					.status(1)
+					.uuid(result.getUuid())
+					.name(result.getName())
+					.nickname(result.getNickname())
+					.birthday(result.getBirthday())
+					.socialProvider(result.getSocialProvider())
+					.socialId(result.getSocialId())
+					.email(result.getEmail())
+					.creditScore(0)
+					.quizReward(0)
+					.quizRewardRemain(0)
+					.build();
+			}
+
+			if (memberRole.equals(MemberRole.PARENT)) {
+				memberRoleChanged = Parent.builder()
+					.status(1)
+					.uuid(result.getUuid())
+					.name(result.getName())
+					.nickname(result.getNickname())
+					.birthday(result.getBirthday())
+					.socialProvider(result.getSocialProvider())
+					.socialId(result.getSocialId())
+					.email(result.getEmail())
+					.build();
+			}
+
+			em.remove(result);
+			em.flush();
+			em.persist(memberRoleChanged);
+			return Optional.of(memberRoleChanged);
+		}
 	}
 }
