@@ -75,5 +75,9 @@ public class FinAccount extends CommonEntity {
 	}
 
 	public void changeRemain(Long remain){this.remain = remain;}
+
+	public void addFinAccountTransaction(FinAccountTransaction finAccountTransaction) {
+		this.finAccountTransactionList.add(finAccountTransaction);
+	}
 }
 
