@@ -5,6 +5,7 @@ import static com.ntt.mwonimoney.domain.member.entity.QMember.*;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ntt.mwonimoney.domain.member.entity.Child;
 import com.ntt.mwonimoney.domain.member.entity.Guest;
@@ -96,6 +97,7 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 	}
 
 	@Override
+	@Transactional
 	public Optional<Member> changeAndSaveMemberRole(Long memberIdx, MemberRole memberRole) {
 		Member result = jpaQueryFactory
 			.select(member)
