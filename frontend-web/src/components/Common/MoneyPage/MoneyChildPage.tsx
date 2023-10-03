@@ -9,13 +9,12 @@ import AboutCard from "../About/AboutCard";
 import MoneyTable from "./MoneyTable";
 import Income from "../../../assests/image/MoneyPage/MoneyBag.png";
 import { useRecoilState } from "recoil";
-import { childDataState, childDataProps } from "../../../states/ChildInfoState";
+import { userDataState } from "../../../states/UserInfoState";
 
-function MoneyPage() {
-  const [selectedChild, setSelectedChild] =
-    useRecoilState<childDataProps>(childDataState);
-
-  const child = selectedChild.name;
+function MoneyParentsPage() {
+  const [userData, setUserData] = useRecoilState(userDataState);
+  console.log("왜안들어옴?");
+  const child = userData.name;
   const inCome = 100000;
   const outCome = 129000;
   return (
@@ -91,4 +90,4 @@ function MoneyPage() {
   );
 }
 
-export default MoneyPage;
+export default MoneyParentsPage;
