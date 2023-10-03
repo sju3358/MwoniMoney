@@ -45,7 +45,17 @@ public class NHApiService {
     }
 
     public NHOpenVirtualAccountResponse getOpenVirtualAccount(NHOpenVirtualAccountRequest openVirtualAccountRequest) {
-        return null;
+        String openVirtualAccountUrl = "https://developers.nonghyup.com/OpenVirtualAccount.nh";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("accept", "application/json");
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<NHOpenVirtualAccountRequest> requestEntity = new HttpEntity<>(openVirtualAccountRequest, headers);
+        ResponseEntity<NHOpenVirtualAccountResponse> response = restTemplate.exchange(openVirtualAccountUrl, HttpMethod.POST, requestEntity, NHOpenVirtualAccountResponse.class);
+        NHOpenVirtualAccountResponse openVirtualAccountResponse = response.getBody();
+
+        return openVirtualAccountResponse;
     }
 
     public void transfer(NHApiDrawingTransferRequest drawingTransferRequest, NHApiReceivedTransferAccountNumberRequest receivedTransferAccountNumberRequest) {

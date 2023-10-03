@@ -2,7 +2,9 @@ package com.ntt.mwonimoney.domain.account.api;
 
 import com.ntt.mwonimoney.domain.account.entity.Loan;
 import com.ntt.mwonimoney.domain.account.entity.LoanStatus;
+import com.ntt.mwonimoney.domain.account.model.dto.CreateLoanRequest;
 import com.ntt.mwonimoney.domain.account.model.dto.LoanListRequestDto;
+import com.ntt.mwonimoney.domain.account.model.dto.LoanMemberType;
 import com.ntt.mwonimoney.domain.account.model.dto.PageToScroll;
 import com.ntt.mwonimoney.domain.account.service.LoanService;
 import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
@@ -30,13 +32,21 @@ public class LoanApi {
 
     @GetMapping("/loans")
     public ResponseEntity getLoanList(@RequestHeader("Authorization") String accessToken, @RequestBody LoanListRequestDto loanListRequestDto, PageToScroll pageToScroll) {
-        String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
-        Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
+        LoanMemberType loanMemberType = loanListRequestDto.getLoanMemberType();
 
-        MemberDto memberInfo = memberService.getMemberInfo(memberIdx);
-        Pageable pageable = PageRequest.of(pageToScroll.getPage(), pageToScroll.getSize());;
-        Slice<Loan> loanList = loanService.findByMemberTypeAndStatus(loanListRequestDto, pageable);
-        return ResponseEntity.ok().build();
+        Long childIdx;
+
+        // 돈 빌려준 사람(부모)의 경우
+        if(loanMemberType == LoanMemberType.LENDER){
+            childIdx = memberAuthService.getMemberAuthInfo(loanListRequestDto.getChildUUID()).getMemberIdx();
+        }else{
+            String childUUID = jwtTokenProvider.getMemberUUID(accessToken);
+            childIdx = memberAuthService.getMemberAuthInfo(childUUID).getMemberIdx();
+        }
+        Pageable pageable = PageRequest.of(pageToScroll.getPage(), pageToScroll.getSize());
+        Slice<Loan> loanList = loanService.findByBorrowerAndStatus(childIdx, loanListRequestDto.getLoanListRequestStatus(), pageable);
+
+        return ResponseEntity.ok().body(loanList);
     }
 
     @GetMapping("/loans/{loanIdx}")
@@ -46,8 +56,20 @@ public class LoanApi {
     }
 
     @PostMapping("/loans")
-    public ResponseEntity createLoan(@RequestHeader("Authorization") String accessToken, @RequestBody Loan loan){
+    public ResponseEntity createLoan(@RequestHeader("Authorization") String accessToken, @RequestBody CreateLoanRequest createLoanRequest){
+        String parentUUID = jwtTokenProvider.getMemberUUID(accessToken);
+        Long parentIdx = memberAuthService.getMemberAuthInfo(parentUUID).getMemberIdx();
         // 1. loan 생성
+        Loan loan = Loan.builder()
+                .lender(parentIdx)
+                .borrower(createLoanRequest.getBorrower())
+                .status(createLoanRequest.getStatus())
+                .name(createLoanRequest.getName())
+                .content(createLoanRequest.getContent())
+                .amount(createLoanRequest.getAmount())
+                .deadline(createLoanRequest.getDeadline())
+                .rate(createLoanRequest.getRate())
+                .build();
         loanService.save(loan);
         // 2. 부모 -> 자녀 이체
 //        nhApiService.transfer();
