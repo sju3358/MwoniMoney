@@ -84,7 +84,7 @@ public class LoanApi {
 		return ResponseEntity.ok().build();
 	}
 
-    @PutMapping("/loans/repay/{loanIdx}")
+    @PostMapping("/loans/repay/{loanIdx}")
     public ResponseEntity repayLoan(@RequestHeader("Authorization") String accessToken,
                                     @PathVariable Long loanIdx,
                                     @RequestBody int payment){
