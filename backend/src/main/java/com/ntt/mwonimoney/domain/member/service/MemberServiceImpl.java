@@ -53,6 +53,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public Long getMemberIdx(String memberUuid) {
+		return memberRepository.findMemberIdxByUuid(memberUuid);
+	}
+
+	@Override
 	@Transactional
 	public void editMember(MemberInfoChangeRequest request, Long memberIdx) {
 
@@ -70,6 +75,9 @@ public class MemberServiceImpl implements MemberService {
 
 		if (request.getBirthday().isPresent())
 			member.changeMemberBirthday(request.getBirthday().get());
+
+		member.activateMember();
+
 	}
 
 	@Override
