@@ -20,6 +20,7 @@ import { LoanStore } from "../states/LoanState";
 import { isButtonLoan } from "../states/LoanState";
 //카테고리 조회
 import { isCategoryLoan, whichCategoryLoan } from "../states/LoanState";
+import { isProposeLoan } from "../states/LoanState";
 
 //axios
 import api from "../apis/Api";
@@ -32,12 +33,18 @@ function Bank() {
   const [selectedChild, setSelectedChild] =
     useRecoilState<childDataProps>(childDataState);
   let childName: string | null = null;
+  let childUuid: string | null = null;
+  let loanMemberType = "";
   const [userData, setUserData] = useRecoilState(userDataState);
   const role = userData.memberRole;
   const userStateString: string | null = localStorage.getItem("userState");
+
   if (role === "PARENT") {
     childName = selectedChild.name;
+    childUuid = selectedChild.uuid;
+    loanMemberType = "LENDER";
   } else {
+    loanMemberType = "BORROWER";
     if (userStateString !== null) {
       const userState = JSON.parse(userStateString);
       childName = userState.userDataState.name;
@@ -60,7 +67,8 @@ function Bank() {
   const [isCategoryState, setisCategoryState] = useRecoilState(isCategoryLoan);
   const [whichCategoryState, setwhichCategoryState] =
     useRecoilState(whichCategoryLoan);
-
+  const [isProposeState, setisProposeState] = useRecoilState(isProposeLoan);
+  const [isButtonState, setIsButtonState] = useRecoilState(isButtonLoan);
   let status_value: string;
   if (isCategoryState) {
     status_value = whichCategoryState;
@@ -69,18 +77,24 @@ function Bank() {
   }
 
   //get axios로 loan list로 받아오기
+  const page = 0;
+  const size = 10;
+
   useEffect(() => {
+    console.log(status_value);
     api
-      .get("/v1/loans")
+      .get(
+        `/v1/loans?page=${page}&size=${size}&loanListRequestStatus=${status_value}&loanMemberType=${loanMemberType}&childUUID=${childUuid}`
+      )
       .then((response) => {
         // 성공적으로 요청이 완료된 경우 처리할 로직
-        console.log("GET 요청 성공:", response.data);
-        setLoanData(response.data);
+        console.log("GET 요청 성공:", response.data.content);
+        setLoanData(response.data.content);
         /**
          *
          */
-        // setisProposeState(false);
-        // setIsButtonState(false);
+        setisProposeState(false);
+        setIsButtonState(false);
       })
       .catch((error) => {
         // 요청이 실패한 경우 처리할 로직
@@ -95,8 +109,7 @@ function Bank() {
           console.error("GET 요청 실패 - 요청 준비 중 에러 발생");
         }
       });
-  }, [whichCategoryState]);
-  // }, [isProposeState, isButtonState, whichCategoryState]);
+  }, [isProposeState, isButtonState, whichCategoryState]);
 
   return (
     <>
@@ -134,7 +147,7 @@ function Bank() {
           {LoanData.length > 0 ? (
             <>
               {LoanData.map((loan) => (
-                <LoanList data={loan} key={loan.loanIdx} />
+                <LoanList data={loan} key={loan.idx} />
               ))}
             </>
           ) : (
