@@ -56,7 +56,7 @@ public class Loan {
         this.name = name;
         this.content = content;
         this.amount = amount;
-        this.balance =amoun;
+        this.balance = amount;
         this.deadline = deadline;
         this.rate = rate;
     }
