@@ -60,7 +60,7 @@ public class LoanApi {
         String parentUUID = jwtTokenProvider.getMemberUUID(accessToken);
         Long parentIdx = memberAuthService.getMemberAuthInfo(parentUUID).getMemberIdx();
         Long childIdx = memberAuthService.getMemberAuthInfo(createLoanRequest.getBorrowerUUID()).getMemberIdx();
-        
+
         // 1. loan 생성
         Loan loan = Loan.builder()
                 .lender(parentIdx)
