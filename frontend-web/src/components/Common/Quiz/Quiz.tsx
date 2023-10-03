@@ -196,31 +196,7 @@ export default function Quiz() {
                 width="40%"
                 justifyContent="space-between"
               >
-                <EmogiBox
-                  backImg={`${None}`}
-                  width={`${width}`}
-                  height={`${width + 10}`}
-                />
-                <EmogiBox
-                  backImg={`${None}`}
-                  width={`${width}`}
-                  height={`${width + 10}`}
-                />
-                <EmogiBox
-                  backImg={`${None}`}
-                  width={`${width}`}
-                  height={`${width + 10}`}
-                />
-                <EmogiBox
-                  backImg={`${None}`}
-                  width={`${width}`}
-                  height={`${width + 10}`}
-                />
-                <EmogiBox
-                  backImg={`${None}`}
-                  width={`${width}`}
-                  height={`${width + 10}`}
-                />
+                <div>4번문제(총5개)</div>
               </Container>
               <Container height="100%" width="5%" />
             </Container>

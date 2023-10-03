@@ -19,7 +19,7 @@ function GoalModal(props: GoalModalProps) {
   const [img, setImg] = useState("");
 
   const handleChange = (e: any) => {
-    setImg(e.target.value);
+    setImg(e.target.files[0]);
   };
   const handleClose = () => {
     setOpen(false);
@@ -55,7 +55,7 @@ function GoalModal(props: GoalModalProps) {
             justifyContent="center"
             align="center"
           >
-            <input type="file" onChange={handleChange} />
+            <input type="file" accept="image/*" onChange={handleChange} />
           </Container>
           <Container height="20%" justifyContent="space-around">
             <ModalBtn modalBtn_width="35%" onClick={handleSave}>
