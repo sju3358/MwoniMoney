@@ -134,7 +134,7 @@ function Bank() {
           {LoanData.length > 0 ? (
             <>
               {LoanData.map((loan) => (
-                <LoanList data={loan} key={loan.memberLoanIdx} />
+                <LoanList data={loan} key={loan.loanIdx} />
               ))}
             </>
           ) : (
