@@ -16,9 +16,13 @@ import com.ntt.mwonimoney.domain.account.model.dto.PageToScroll;
 import com.ntt.mwonimoney.domain.account.service.FinAccountService;
 import com.ntt.mwonimoney.domain.account.service.FinAccountTransactionService;
 import com.ntt.mwonimoney.domain.account.service.NHApiService;
+import com.ntt.mwonimoney.domain.member.api.request.SmallAccountRequest;
 import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
+import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
+import com.ntt.mwonimoney.domain.member.service.ChildService;
 import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
 import com.ntt.mwonimoney.domain.member.service.MemberService;
+import com.ntt.mwonimoney.domain.member.util.S3Manager;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +32,9 @@ import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Slf4j
@@ -37,9 +43,12 @@ import java.util.Optional;
 @RequestMapping("/api/v1")
 public class FinAccountApi {
 
+	private final S3Manager s3Manager;
+
 	private final MemberAuthService memberAuthService;
 	private final MemberService memberService;
 	private final JwtTokenProvider jwtTokenProvider;
+	private final ChildService childService;
 
 	private final NHApiService nhApiService;
 	private final FinAccountService finAccountService;
@@ -52,15 +61,13 @@ public class FinAccountApi {
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
 		FinAccountType finAccountType = FinAccountType.valueOf(type);
-
-		FinAccount finAccount = null;
+		Optional<FinAccount> finAccount = null;
 //        // 2. 사용자의 계좌를 조회
 		if (finAccountType == FinAccountType.GENERAL) {
-			finAccount = finAccountService.getFinAccountByMemberAndType(memberIdx, FinAccountType.GENERAL).orElseThrow();
+			finAccount = finAccountService.getFinAccountByMemberAndType(memberIdx, FinAccountType.GENERAL);
 		} else {
-			finAccount = finAccountService.getFinAccountByMemberAndType(memberIdx, FinAccountType.SMALL).orElseThrow();
+			finAccount = finAccountService.getFinAccountByMemberAndType(memberIdx, FinAccountType.SMALL);
 		}
-
 		return ResponseEntity.ok().body(finAccount);
 	}
 
@@ -115,11 +122,10 @@ public class FinAccountApi {
 			checkOpenFinAccountDirectRequest);
 
 		// 2-3. 계좌 저장
-
 		FinAccount newFinAccount = null;
 		if (checkOpenFinAccountDirectResponse.getFinAcno() != null) {
 			newFinAccount = FinAccount.builder()
-				//                .number("3020000008999")
+//				                .number("3020000008999")
 				.number(accountNumber)
 				.finAcno(checkOpenFinAccountDirectResponse.getFinAcno())
 				.status(FinAccountStatus.ACTIVATE)
@@ -133,15 +139,27 @@ public class FinAccountApi {
 				.type(FinAccountType.GENERAL)
 				.build();
 		}
+
 		finAccountService.save(newFinAccount);
 
 		return ResponseEntity.ok().build();
 	}
 
 	@PostMapping("/accounts/small-account")
-	public ResponseEntity openSmallAccount(@RequestHeader("Authorization") String accessToken) {
+	public ResponseEntity openSmallAccount(@RequestHeader("Authorization") String accessToken,
+										   @RequestPart(value = "info") SmallAccountRequest request,
+										   @RequestPart(value = "image") MultipartFile file) throws IOException{
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
+
+		String goalImageUrl = s3Manager.saveGoalImage(file)[1];
+		SmallAccount smallAccount = childService.addSmallAccountInfo(
+				memberIdx,
+				request.getGoalMoney(),
+				request.getGoalName(),
+				goalImageUrl,
+				request.getSaveRatio());
+
 
 		MemberDto memberInfo = memberService.getMemberInfo(memberIdx);
 
@@ -168,13 +186,14 @@ public class FinAccountApi {
 			openVirtualAccountRequest);
 
         // 2-2. 짜금통 계좌로 저장
-        FinAccount smallAccount = FinAccount.builder()
+        FinAccount finAccount = FinAccount.builder()
 				.number(openVirtualAccountResponse.getVran())
 				.finAcno("")
 				.status(FinAccountStatus.ACTIVATE)
 				.type(FinAccountType.SMALL)
 				.build();
-        finAccountService.save(smallAccount);
+
+        finAccountService.save(finAccount);
 
 		return ResponseEntity.ok().build();
 	}
@@ -249,7 +268,6 @@ public class FinAccountApi {
 
 		Slice<FinAccountTransaction> list = null;
 		Pageable pageable = PageRequest.of(pageToScroll.getPage(), pageToScroll.getSize());
-		;
 
 		if (type == FinAccountTransactionListRequestType.INCOME) {
 			list = finAccountTransactionService.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, 0, pageable);
