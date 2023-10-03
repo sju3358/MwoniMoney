@@ -1,24 +1,10 @@
 package com.ntt.mwonimoney.domain.account.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.ntt.mwonimoney.domain.account.model.dto.FinAccountDto;
+
 import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.global.common.entity.CommonEntity;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -88,8 +74,10 @@ public class FinAccount extends CommonEntity {
 		this.status = status;
 	}
 
-	public void changeRemain(Long remain) {
-		this.remain = remain;
+	public void changeRemain(Long remain){this.remain = remain;}
+
+	public void addFinAccountTransaction(FinAccountTransaction finAccountTransaction) {
+		this.finAccountTransactionList.add(finAccountTransaction);
 	}
 }
 

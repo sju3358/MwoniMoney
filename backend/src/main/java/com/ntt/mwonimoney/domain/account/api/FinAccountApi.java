@@ -282,10 +282,10 @@ public class FinAccountApi {
 		nhApiService.transfer(drawingTransferRequest, receivedTransferAccountNumberRequest);
 
 		FinAccountTransaction finAccountTransaction = FinAccountTransaction.builder()
-			//                .money()
-			//                .balance()
-			//                .memo()
-			//                .time()
+//			                .money()
+//			                .balance()
+//			                .memo()
+//			                .time()
 			.build();
 		finAccountTransactionService.save(finAccountTransaction);
 
@@ -293,8 +293,7 @@ public class FinAccountApi {
 	}
 
 	@GetMapping("/accounts/transactions")
-	public ResponseEntity getTransactionList(@RequestHeader("Authorization") String accessToken,
-		@RequestBody FinAccountTransactionListRequest request) {
+	public ResponseEntity getTransactionList(@RequestHeader("Authorization") String accessToken, FinAccountTransactionListRequest request) {
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 

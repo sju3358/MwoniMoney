@@ -4,14 +4,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ntt.mwonimoney.domain.account.api.response.LoanTotalResponse;
 import com.ntt.mwonimoney.domain.account.entity.Loan;
@@ -91,10 +84,10 @@ public class LoanApi {
 		return ResponseEntity.ok().build();
 	}
 
-	@PatchMapping("/loans/repay/{loanIdx}")
-	public ResponseEntity repayLoan(@RequestHeader("Authorization") String accessToken,
-		@PathVariable Long loanIdx,
-		@RequestBody int payment) {
+    @PostMapping("/loans/repay/{loanIdx}")
+    public ResponseEntity repayLoan(@RequestHeader("Authorization") String accessToken,
+                                    @PathVariable Long loanIdx,
+                                    @RequestBody int payment){
 
 		Loan loanToRepay = loanService.findById(loanIdx).orElseThrow();
 
