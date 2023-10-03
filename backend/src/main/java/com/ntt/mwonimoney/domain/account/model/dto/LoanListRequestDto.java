@@ -9,6 +9,5 @@ import lombok.*;
 public class LoanListRequestDto {
     private LoanListRequestStatus loanListRequestStatus;
     private LoanMemberType loanMemberType;
-    private PageToScroll pageToScroll;
     private String childUUID;
 }
