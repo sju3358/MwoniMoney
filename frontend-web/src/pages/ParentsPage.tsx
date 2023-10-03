@@ -93,16 +93,21 @@ function ParentsPage() {
           flexDirection="column"
           align="start"
         >
-          <Text>현재 {selectedChild?.name || "아이를 선택해 주세요!"}는</Text>
-          {/* Assuming you have an allowance property in the childDataState */}
-          <Text>
-            매달{" "}
-            {selectedChild?.allowance !== undefined
-              ? selectedChild.allowance
-              : ""}
-            원을{" "}
-          </Text>
-          <Text>받고 있어요!</Text>
+          {selectedChild?.name ? (
+            <>
+              <Text>현재 {selectedChild.name}는</Text>
+              <Text>
+                매달{" "}
+                {selectedChild?.allowance !== undefined
+                  ? selectedChild.allowance
+                  : ""}
+                원을{" "}
+              </Text>
+              <Text>받고 있어요!</Text>
+            </>
+          ) : (
+            <Text>아이를 선택해 주세요!</Text>
+          )}
         </Container>
         <TextEmojiBox>
           <Emoji url={`${Money}`} width="80%" height="50%" />

@@ -88,7 +88,7 @@ function BalanceCompo({
 
   const handleClick = (selectAnswer: string) => {
     patchAnswer(balanceIdx, selectAnswer); // Call patchAnswer with balanceIdx and selectAnswer
-    window.alert("답변이 선택되었습니다!"); // Show an alert message
+    window.alert("답변이 선택되었습니다!!"); // Show an alert message
   };
 
   const navigateClick = () => {
