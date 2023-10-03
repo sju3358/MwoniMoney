@@ -38,13 +38,13 @@ function ChallengeTitle() {
   const [userData, setUserData] = useRecoilState(userDataState);
   const role = userData.memberRole;
 
-  let nickname: string | null = null;
+  let name: string | null = null;
   const childStateString: string | null = localStorage.getItem("childState");
 
   if (childStateString !== null) {
     const childState = JSON.parse(childStateString);
-    nickname = childState.childDataState.nickname;
-    console.log(nickname);
+    name = childState.childDataState.name;
+    console.log(name);
   } else {
     console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
   }
@@ -52,7 +52,7 @@ function ChallengeTitle() {
   return (
     <TitleContainer>
       {role === "PARENT" ? (
-        <TitleBox width="70%">{nickname}의 챌린지</TitleBox>
+        <TitleBox width="70%">{name}의 챌린지</TitleBox>
       ) : (
         <TitleBox width="70%">나의 챌린지</TitleBox>
       )}

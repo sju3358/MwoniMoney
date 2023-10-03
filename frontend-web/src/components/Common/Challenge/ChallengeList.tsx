@@ -4,9 +4,9 @@ import { Category } from "./ChallengeCategory";
 import { Text } from "../About/AboutText";
 
 //recoil
+import { useRecoilState } from "recoil";
 import { getChallenge } from "../../../states/ChallengeState";
 import { userDataState } from "../../../states/UserInfoState";
-import { useRecoilState } from "recoil";
 import { isButtonChallenge } from "../../../states/ChallengeState";
 
 //axios
