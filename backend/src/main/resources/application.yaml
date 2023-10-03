@@ -3,8 +3,8 @@ spring:
     include: JPA,MariaDB,MongoDB,Oauth,Redis,Swagger,S3
   servlet:
     multipart:
-      max-file-size: 1024MB
-      max-request-size: 1024MB
+      max-file-size: 50MB
+      max-request-size: 50MB
 logging:
   level:
     org.springframework.security: debug

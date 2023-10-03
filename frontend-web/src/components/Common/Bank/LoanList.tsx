@@ -25,7 +25,7 @@ import { useNavigate } from "react-router-dom";
 
 export const ListBtn = styled.div`
   // border: 1px solid black;
-  width: 100%;
+  width: 80%;
   height: 50%;
   display: flex;
   justify-content: space-around;
@@ -41,7 +41,7 @@ function LoanList({ data }: Props) {
   const role = userData.memberRole;
 
   //자식의 memberLoanidx
-  const LoanIdx = data.loanIdx;
+  const LoanIdx = data.idx;
 
   //챌린지 리스트의 버튼이 클릭되어있는지
   const [isButtonState, setIsButtonState] = useRecoilState(isButtonLoan);
@@ -95,7 +95,7 @@ function LoanList({ data }: Props) {
       <Container height="40%">
         <ListTitle>
           <TextBox width="50%" marginL="0%" fontSize="1.2em" height="100%">
-            {data.memo}
+            {data.content}
           </TextBox>
           <CategoryTag>
             {data.status === "APPROVAL" && (
@@ -112,7 +112,7 @@ function LoanList({ data }: Props) {
                 </Text>
               </Category>
             )}
-            {data.status === "WAITING" && (
+            {data.status === "WATING" && (
               <Category backcolor="#d1d1d1" width="90%" height="90%">
                 <Text fontsize="0.9rem" marginL="0%" fontweight="700">
                   제안대기
@@ -134,7 +134,7 @@ function LoanList({ data }: Props) {
               </Category>
             )} */}
           </CategoryTag>
-          <DeadLine>~ {dateFormat(data.endTime)}</DeadLine>
+          <DeadLine>~ {dateFormat(data.deadline)}</DeadLine>
         </ListTitle>
       </Container>
       <Container height="20%">
@@ -145,16 +145,16 @@ function LoanList({ data }: Props) {
           <></>
         ) : (
           <>
-            자식
             {data.status === "APPROVAL" && (
               <Button
                 content="돈 갚기"
                 width="50%"
                 fontS="1.2em"
                 height="70%"
+                click={handleRepay}
               />
             )}
-            {data.status === "WAITING" && (
+            {data.status === "WATING" && (
               <ListBtn>
                 <Button
                   content="수락"
@@ -164,6 +164,7 @@ function LoanList({ data }: Props) {
                   click={handleAccept}
                 />
                 <Button
+                  backcolor="#f4f4f4"
                   content="거절"
                   width="50%"
                   fontS="1.2em"

@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class FCMRequest {
-	Long memberIdx;
+	String memberUuid;
 	String title;
 	String content;
 }

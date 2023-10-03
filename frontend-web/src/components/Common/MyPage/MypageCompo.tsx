@@ -17,6 +17,7 @@ import MypageModal from "../../../modal/Mypage/MypageModal";
 
 import { userAccountState, userDataState } from "../../../states/UserInfoState";
 import api from "../../../apis/Api";
+import api_ver2 from "../../../apis/ApiForMultiPart";
 
 function MypageCompo() {
   const [userData, setUserData] = useRecoilState(userDataState);
@@ -25,22 +26,44 @@ function MypageCompo() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("v1/members", {});
-        const receivedData = response.data;
-        // console.log(receivedData);
-        setUserData((prev) => ({
-          ...prev,
-          name: receivedData.name,
-          birthday: receivedData.birthday,
-          memberRole: receivedData.memberRole,
-          status: receivedData.member_status,
-          email: receivedData.email,
-        }));
-        // console.log(receivedData.email);
+        await api
+          .get("v1/members")
+          .then((response) => {
+            const receivedData = response.data;
+
+            setUserData((prev) => ({
+              ...prev,
+              name: receivedData.name,
+              birthday: receivedData.birthday,
+              memberRole: receivedData.memberRole,
+              status: receivedData.member_status,
+              email: receivedData.email,
+            }));
+          })
+          .catch((error) => {
+            console.log("내정보 조회 " + error);
+          });
+
+        // 계좌번호 get하기
+        await api_ver2
+          .get("v1/accounts", {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+            params: { type: "GENERAL" },
+          })
+          .then((response2) => {
+            const receivedData2 = response2.data;
+            console.log(receivedData2);
+          })
+          .catch((error) => {
+            console.log("계좌조회 " + error);
+          });
       } catch (error) {
         console.error(error);
       }
     };
+
     fetchData();
   }, []);
   const account = userAccount.account;
@@ -73,6 +96,7 @@ function MypageCompo() {
               계좌번호
             </TextBox>
           </Container>
+
           <Container
             flexDirection="column"
             height="75%"
