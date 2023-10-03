@@ -35,5 +35,9 @@ public class FinAccountTransactionService {
 //        return finAccountTransactionRepository.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, price, pageable);
     }
 
+    public void changeMemo(FinAccountTransaction finAccountTransaction, String memo){
+        finAccountTransaction.changeMemo(memo);
+    }
+
 
 }
