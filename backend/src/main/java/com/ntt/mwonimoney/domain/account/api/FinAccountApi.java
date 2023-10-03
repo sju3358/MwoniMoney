@@ -1,6 +1,7 @@
 package com.ntt.mwonimoney.domain.account.api;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -328,10 +329,35 @@ public class FinAccountApi {
 		Long finAccountIdx = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, finAccountType, FinAccountStatus.ACTIVATE).orElseThrow().getIdx();
 		log.info("finAccountIdx = {}", finAccountIdx);
 
-		List<FinAccountTransaction> list = queryFactory
-				.selectFrom(QFinAccountTransaction.finAccountTransaction)
-				.where(QFinAccountTransaction.finAccountTransaction.finAccount.idx.eq(finAccountIdx))
-				.fetch();
+		List<FinAccountTransaction> list = null; // 초기화
+
+		if (type == FinAccountTransactionListRequestType.GENERAL) {
+			list = queryFactory
+					.selectFrom(QFinAccountTransaction.finAccountTransaction)
+					.where(
+							QFinAccountTransaction.finAccountTransaction.finAccount.idx.eq(finAccountIdx)
+									.and(QFinAccount.finAccount.type.eq(finAccountType))
+					)
+					.fetch();
+		} else if (type == FinAccountTransactionListRequestType.INCOME) {
+			list = queryFactory
+					.selectFrom(QFinAccountTransaction.finAccountTransaction)
+					.where(
+							QFinAccountTransaction.finAccountTransaction.finAccount.idx.eq(finAccountIdx)
+									.and(QFinAccount.finAccount.type.eq(finAccountType))
+									.and(QFinAccountTransaction.finAccountTransaction.money.gt(0))
+					)
+					.fetch();
+		} else if (type == FinAccountTransactionListRequestType.OUTCOME) {
+			list = queryFactory
+					.selectFrom(QFinAccountTransaction.finAccountTransaction)
+					.where(
+							QFinAccountTransaction.finAccountTransaction.finAccount.idx.eq(finAccountIdx)
+									.and(QFinAccount.finAccount.type.eq(finAccountType))
+									.and(QFinAccountTransaction.finAccountTransaction.money.lt(0))
+					)
+					.fetch();
+		}
 
 		List<FinAccountTransactionDto2> result = list.stream().map(transaction -> FinAccountTransactionDto2.builder()
 						.money(transaction.getMoney())
@@ -343,6 +369,7 @@ public class FinAccountApi {
 
 		return ResponseEntity.ok().body(result);
 	}
+
 
 	@PatchMapping("/accounts/{finAccountIdx}/transactions/{transactionIdx}")
 	public ResponseEntity updateTransaction(@PathVariable Long finAccountIdx, @PathVariable Long transactionIdx,
