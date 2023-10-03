@@ -96,6 +96,7 @@ public class FinAccountApi {
 		finAccountResponse.setRemain(finAccount.getRemain());
 		finAccountResponse.setNumber(finAccount.getNumber());
 		finAccountResponse.setCreatedDay(finAccount.getCreateTime().toLocalDate());
+		finAccountResponse.setStatus(finAccount.getStatus().toString());
 		finAccountResponse.setFinAccountTransactionDtos(finAccountTransactionDtos);
 
 		return ResponseEntity.ok().body(finAccountResponse);
@@ -282,10 +283,10 @@ public class FinAccountApi {
 		nhApiService.transfer(drawingTransferRequest, receivedTransferAccountNumberRequest);
 
 		FinAccountTransaction finAccountTransaction = FinAccountTransaction.builder()
-//			                .money()
-//			                .balance()
-//			                .memo()
-//			                .time()
+			//			                .money()
+			//			                .balance()
+			//			                .memo()
+			//			                .time()
 			.build();
 		finAccountTransactionService.save(finAccountTransaction);
 
@@ -293,7 +294,8 @@ public class FinAccountApi {
 	}
 
 	@GetMapping("/accounts/transactions")
-	public ResponseEntity getTransactionList(@RequestHeader("Authorization") String accessToken, FinAccountTransactionListRequest request) {
+	public ResponseEntity getTransactionList(@RequestHeader("Authorization") String accessToken,
+		FinAccountTransactionListRequest request) {
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 

@@ -13,6 +13,7 @@ public class FinAccountResponse {
 	private String number;
 	private Long remain;
 	private LocalDate createdDay;
+	private String status;
 	private List<FinAccountTransactionDto> finAccountTransactionDtos;
 
 	public FinAccountResponse() {
