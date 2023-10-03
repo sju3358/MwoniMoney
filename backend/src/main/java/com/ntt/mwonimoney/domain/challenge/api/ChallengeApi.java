@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ntt.mwonimoney.domain.challenge.api.request.ChallengeRequestDto;
 import com.ntt.mwonimoney.domain.challenge.api.response.MemberChallengeResponseDto;
 import com.ntt.mwonimoney.domain.challenge.service.ChallengeService;
+import com.ntt.mwonimoney.domain.member.entity.Parent;
+import com.ntt.mwonimoney.domain.member.repository.ChildrenRepository;
 import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
 import com.ntt.mwonimoney.domain.member.service.MemberService;
+import com.ntt.mwonimoney.global.fcm.model.FCMRequest;
+import com.ntt.mwonimoney.global.fcm.service.FCMService;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -32,8 +36,10 @@ public class ChallengeApi {
 
 	private final JwtTokenProvider jwtTokenProvider;
 	private final MemberAuthService memberAuthService;
+	private final ChildrenRepository childrenRepository;
 	private final ChallengeService challengeService;
 	private final MemberService memberService;
+	private final FCMService fcmService;
 
 	/**
 	 * 부모
@@ -102,12 +108,22 @@ public class ChallengeApi {
 		@RequestBody ChallengeRequestDto challengeRequestDto) {
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 
-		Long parentIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 		Long childIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
-		MemberChallengeResponseDto responseData = challengeService.proposeChallenge(challengeRequestDto, parentIdx,
+		MemberChallengeResponseDto responseData = challengeService.proposeChallenge(challengeRequestDto,
 			childIdx);
 		log.info("responseData : {}", responseData);
+
+		List<Parent> parents = childrenRepository.findParents(memberUUID);
+		for (Parent parent : parents) {
+			FCMRequest fcmRequest = FCMRequest.builder()
+				.memberUuid(parent.getUuid())
+				.title("챌린지 요청")
+				.content("아이가 챌린지 생성을 요청했어요")
+				.build();
+
+			fcmService.sendNotificationByToken(fcmRequest);
+		}
 
 		return ResponseEntity.ok().body(responseData);
 	}
@@ -117,6 +133,19 @@ public class ChallengeApi {
 	public ResponseEntity ProposeAcceptChallenge(@RequestHeader("Authorization") String accessToken,
 		@PathVariable Long memberChallengeIdx) {
 		challengeService.proposeAcceptChallenge(memberChallengeIdx);
+
+		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+
+		List<Parent> parents = childrenRepository.findParents(memberUUID);
+		for (Parent parent : parents) {
+			FCMRequest fcmRequest = FCMRequest.builder()
+				.memberUuid(parent.getUuid())
+				.title("챌린지 완료")
+				.content("아이가 챌린지를 완료 했어요")
+				.build();
+
+			fcmService.sendNotificationByToken(fcmRequest);
+		}
 
 		return ResponseEntity.ok().build();
 	}
