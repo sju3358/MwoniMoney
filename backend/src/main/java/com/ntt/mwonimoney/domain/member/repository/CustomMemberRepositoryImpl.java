@@ -121,6 +121,9 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 					.creditScore(0)
 					.quizReward(0)
 					.quizRewardRemain(0)
+					.balanceAlarm("Y")
+					.challengeAlarm("Y")
+					.smallAcountAlarm("Y")
 					.build();
 			}
 
@@ -134,6 +137,9 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 					.socialProvider(result.getSocialProvider())
 					.socialId(result.getSocialId())
 					.email(result.getEmail())
+					.balanceAlarm("Y")
+					.challengeAlarm("Y")
+					.smallAcountAlarm("Y")
 					.build();
 			}
 
@@ -142,5 +148,15 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 			em.persist(memberRoleChanged);
 			return Optional.of(memberRoleChanged);
 		}
+	}
+
+	@Override
+	public Long findMemberIdxByUuid(String memberUUID) {
+		return jpaQueryFactory
+			.select(member.idx)
+			.from(member)
+			.where(member.uuid.eq(memberUUID))
+			.fetchOne();
+
 	}
 }

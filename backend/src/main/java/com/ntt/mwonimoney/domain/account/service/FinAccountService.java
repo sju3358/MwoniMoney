@@ -3,6 +3,7 @@ package com.ntt.mwonimoney.domain.account.service;
 import com.ntt.mwonimoney.domain.account.api.response.NHApiCheckOpenFinAccountDirectResponse;
 import com.ntt.mwonimoney.domain.account.api.response.NHOpenVirtualAccountResponse;
 import com.ntt.mwonimoney.domain.account.entity.FinAccount;
+import com.ntt.mwonimoney.domain.account.entity.FinAccountStatus;
 import com.ntt.mwonimoney.domain.account.entity.FinAccountType;
 import com.ntt.mwonimoney.domain.account.repository.FinAccountRepository;
 import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
@@ -30,7 +31,7 @@ public class FinAccountService {
         return finAccountRepository.findById(finAccountIdx);
     }
 
-    public FinAccount saveFinAccount(FinAccount finAccount) {
+    public FinAccount save(FinAccount finAccount) {
         return finAccountRepository.save(finAccount);
     }
 
@@ -38,11 +39,10 @@ public class FinAccountService {
         return finAccountRepository.findFinAccountByMemberAndType(memberIdx, finAccountType);
     }
 
-    public FinAccount saveSmallAccount(NHOpenVirtualAccountResponse openVirtualAccountResponse) {
-        return null;
-    }
+    public void closeSmallAccount(Long smallAccountIdx) {
 
-    public FinAccount closeSmallAccount() {
-        return null;
+        FinAccount smallAccountToUpdate = finAccountRepository.findById(smallAccountIdx).orElseThrow();
+        smallAccountToUpdate.changeStatus(FinAccountStatus.DEACTIVATE);
+
     }
 }

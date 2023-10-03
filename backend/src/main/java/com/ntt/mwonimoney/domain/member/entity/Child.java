@@ -40,6 +40,17 @@ public class Child extends Member {
 		this.smallAccount = accountInfo;
 	}
 
+	public void changeCreditScore(int creditScoreToAdd) {
+		int nextCreditScore = this.creditScore + creditScoreToAdd;
+
+		if (0 <= nextCreditScore && nextCreditScore <= 100)
+			this.creditScore = nextCreditScore;
+		else if (nextCreditScore < 0)
+			throw new IllegalArgumentException("신용등급의 최저 점수는 0점입니다");
+		else if (nextCreditScore > 100)
+			throw new IllegalArgumentException("신용등급의 최저 점수는 100점입니다");
+	}
+
 	public void deleteSmallAccount() {
 		this.smallAccount = null;
 	}
@@ -75,9 +86,13 @@ public class Child extends Member {
 		int creditScore,
 		int quizRewardRemain,
 		int quizReward,
-		SmallAccount smallAccount) {
+		SmallAccount smallAccount,
+		String challengeAlarm,
+		String balanceAlarm,
+		String smallAcountAlarm) {
 
-		super(status, uuid, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD);
+		super(status, uuid, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD, challengeAlarm,
+			balanceAlarm, smallAcountAlarm);
 
 		this.quizRewardRemain = quizRewardRemain;
 		this.creditScore = creditScore;
@@ -100,6 +115,9 @@ public class Child extends Member {
 			.quizRewardRemain(this.quizRewardRemain)
 			.quizReward(this.quizReward)
 			.smallAccount(this.smallAccount == null ? null : smallAccount)
+			.challengeAlarm(this.getChallengeAlarm())
+			.balanceAlarm(this.getBalanceAlarm())
+			.smallAcountAlarm(this.getSmallAcountAlarm())
 			.build();
 	}
 
