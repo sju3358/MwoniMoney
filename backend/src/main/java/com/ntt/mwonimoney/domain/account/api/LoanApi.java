@@ -91,14 +91,14 @@ public class LoanApi {
             return ResponseEntity.internalServerError().build();
         }
 
-        int newAmount = loanToRepay.getAmount() - payment;
+        int newBalance = loanToRepay.getBalance() - payment;
         LoanStatus newStatus = loanToRepay.getStatus();
-        if(newAmount <= 0){
-            newAmount = 0;
+        if(newBalance <= 0){
+            newBalance = 0;
             newStatus = LoanStatus.PAID;
         }
         loanService.changeStatus(loanToRepay, newStatus);
-        loanService.changeAmount(loanToRepay, newAmount);
+        loanService.changeBalance(loanToRepay, newBalance);
         return ResponseEntity.ok().build();
     }
 
