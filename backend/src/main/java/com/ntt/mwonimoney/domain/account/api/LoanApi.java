@@ -1,5 +1,6 @@
 package com.ntt.mwonimoney.domain.account.api;
 
+import com.ntt.mwonimoney.domain.account.entity.RepayLoanRequest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -84,10 +85,11 @@ public class LoanApi {
 		return ResponseEntity.ok().build();
 	}
 
-    @PostMapping("/loans/repay/{loanIdx}")
+    @PatchMapping("/loans/repay/{loanIdx}")
     public ResponseEntity repayLoan(@RequestHeader("Authorization") String accessToken,
                                     @PathVariable Long loanIdx,
-                                    @RequestBody int payment){
+                                    @RequestBody RepayLoanRequest repayLoanRequest){
+		int payment = repayLoanRequest.getPayment();
 
 		Loan loanToRepay = loanService.findById(loanIdx).orElseThrow();
 
