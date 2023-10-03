@@ -88,7 +88,7 @@ function BalanceCompo({
 
   const handleClick = (selectAnswer: string) => {
     patchAnswer(balanceIdx, selectAnswer); // Call patchAnswer with balanceIdx and selectAnswer
-    window.alert("답변이 선택되었습니다!"); // Show an alert message
+    window.alert("답변이 선택되었습니다!!"); // Show an alert message
   };
 
   const navigateClick = () => {
@@ -102,14 +102,14 @@ function BalanceCompo({
       </Container>
       <WhiteBox1 height="75%" marginB="5%" flexDirection="column">
         <Container height="10%" justifyContent="end">
-          {showImg && (
+          {showImg ? (
             <EmogiBox
               backImg={`${LeftArrow}`}
               width="7%"
               height="100%"
-              onClick={navigateClick} // Call navigateClick 함수
+              onClick={navigateClick}
             />
-          )}
+          ) : null}
         </Container>
         <Container height="53%" flexDirection="column">
           <EmogiBox backImg={`${Newspaper}`} width="45%" height="100%" />
