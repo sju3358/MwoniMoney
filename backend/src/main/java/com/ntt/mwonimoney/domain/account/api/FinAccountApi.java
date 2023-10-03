@@ -3,7 +3,11 @@ package com.ntt.mwonimoney.domain.account.api;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import com.ntt.mwonimoney.domain.account.entity.*;
+import com.ntt.mwonimoney.domain.account.model.dto.*;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,14 +32,6 @@ import com.ntt.mwonimoney.domain.account.api.request.NHApiRequestHeader;
 import com.ntt.mwonimoney.domain.account.api.response.FinAccountResponse;
 import com.ntt.mwonimoney.domain.account.api.response.NHApiCheckOpenFinAccountDirectResponse;
 import com.ntt.mwonimoney.domain.account.api.response.NHApiOpenFinAccountDirectResponse;
-import com.ntt.mwonimoney.domain.account.entity.FinAccount;
-import com.ntt.mwonimoney.domain.account.entity.FinAccountStatus;
-import com.ntt.mwonimoney.domain.account.entity.FinAccountTransaction;
-import com.ntt.mwonimoney.domain.account.entity.FinAccountType;
-import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionDto;
-import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionListRequest;
-import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionListRequestType;
-import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransferRequest;
 import com.ntt.mwonimoney.domain.account.repository.FinAccountTransactionRepository;
 import com.ntt.mwonimoney.domain.account.service.FinAccountService;
 import com.ntt.mwonimoney.domain.account.service.FinAccountTransactionService;
@@ -69,6 +65,8 @@ public class FinAccountApi {
 	private final FinAccountService finAccountService;
 	private final FinAccountTransactionService finAccountTransactionService;
 	private final FinAccountTransactionRepository finAccountTransactionRepository;
+	private final JPAQueryFactory queryFactory;
+
 
 	@GetMapping("/accounts")
 	public ResponseEntity getFinAccount(@RequestHeader("Authorization") String accessToken,
@@ -293,29 +291,57 @@ public class FinAccountApi {
 		return ResponseEntity.ok().build();
 	}
 
+//	@GetMapping("/accounts/transactions")
+//	public ResponseEntity getTransactionList(@RequestHeader("Authorization") String accessToken,
+//											 FinAccountTransactionListRequest request) {
+//		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+//		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
+//
+//		FinAccountTransactionListRequestType type = request.getType();
+//		FinAccountType finAccountType = request.getFinAccountType();
+//
+//		Long finAccountIdx = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, finAccountType,
+//				FinAccountStatus.ACTIVATE).orElseThrow().getIdx();
+//
+//		List<FinAccountTransaction> list = null;
+//
+//		if (type == FinAccountTransactionListRequestType.INCOME) {
+//			//			list = finAccountTransactionService.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, 0);
+//		} else if (type == FinAccountTransactionListRequestType.OUTCOME) {
+//			//			list = finAccountTransactionService.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, 0, pageable);
+//		} else {
+//			//			list = finAccountTransactionService.findByFinAccount(finAccountIdx, pageable);
+//		}
+//
+//		return ResponseEntity.ok().body(list);
+//	}
+
 	@GetMapping("/accounts/transactions")
-	public ResponseEntity getTransactionList(@RequestHeader("Authorization") String accessToken,
-											 FinAccountTransactionListRequest request) {
+	public ResponseEntity<List<FinAccountTransactionDto2>> getTransactionList(@RequestHeader("Authorization") String accessToken, @RequestBody FinAccountTransactionListRequest request) {
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
 		FinAccountTransactionListRequestType type = request.getType();
 		FinAccountType finAccountType = request.getFinAccountType();
+		log.info("type = {}", type);
+		log.info("finAccountType = {}", finAccountType);
+		Long finAccountIdx = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, finAccountType, FinAccountStatus.ACTIVATE).orElseThrow().getIdx();
+		log.info("finAccountIdx = {}", finAccountIdx);
 
-		Long finAccountIdx = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, finAccountType,
-				FinAccountStatus.ACTIVATE).orElseThrow().getIdx();
+		List<FinAccountTransaction> list = queryFactory
+				.selectFrom(QFinAccountTransaction.finAccountTransaction)
+				.where(QFinAccountTransaction.finAccountTransaction.finAccount.idx.eq(finAccountIdx))
+				.fetch();
 
-		List<FinAccountTransaction> list = null;
+		List<FinAccountTransactionDto2> result = list.stream().map(transaction -> FinAccountTransactionDto2.builder()
+						.money(transaction.getMoney())
+						.balance(transaction.getBalance())
+						.memo(transaction.getMemo())
+						.time(transaction.getTime())
+						.build())
+				.collect(Collectors.toList());
 
-		if (type == FinAccountTransactionListRequestType.INCOME) {
-			//			list = finAccountTransactionService.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, 0);
-		} else if (type == FinAccountTransactionListRequestType.OUTCOME) {
-			//			list = finAccountTransactionService.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, 0, pageable);
-		} else {
-			//			list = finAccountTransactionService.findByFinAccount(finAccountIdx, pageable);
-		}
-
-		return ResponseEntity.ok().body(list);
+		return ResponseEntity.ok().body(result);
 	}
 
 	@PatchMapping("/accounts/{finAccountIdx}/transactions/{transactionIdx}")
