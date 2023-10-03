@@ -22,7 +22,7 @@ function LoanAdd() {
       <ModalLoan
         useState_open={open}
         set_open={setOpen}
-        modal_title="챌린지 만들기"
+        modal_title="대출 생성하기"
         modal_content={<LoanProposal />}
         modal_btn1="생성"
         modal_btn2="취소"
