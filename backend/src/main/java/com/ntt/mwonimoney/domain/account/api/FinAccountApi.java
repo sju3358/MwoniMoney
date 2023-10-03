@@ -1,29 +1,7 @@
 package com.ntt.mwonimoney.domain.account.api;
 
-import java.util.Optional;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.ntt.mwonimoney.domain.account.api.request.BncdType;
-import com.ntt.mwonimoney.domain.account.api.request.DrtrRgynStatus;
-import com.ntt.mwonimoney.domain.account.api.request.NHApiCheckOpenFinAccountDirectRequest;
-import com.ntt.mwonimoney.domain.account.api.request.NHApiDrawingTransferRequest;
-import com.ntt.mwonimoney.domain.account.api.request.NHApiOpenFinAccountDirectRequest;
-import com.ntt.mwonimoney.domain.account.api.request.NHApiReceivedTransferAccountNumberRequest;
-import com.ntt.mwonimoney.domain.account.api.request.NHApiRequestHeader;
-import com.ntt.mwonimoney.domain.account.api.request.NHOpenVirtualAccountRequest;
+import com.ntt.mwonimoney.domain.account.api.request.*;
 import com.ntt.mwonimoney.domain.account.api.response.NHApiCheckOpenFinAccountDirectResponse;
 import com.ntt.mwonimoney.domain.account.api.response.NHApiOpenFinAccountDirectResponse;
 import com.ntt.mwonimoney.domain.account.api.response.NHOpenVirtualAccountResponse;
@@ -42,9 +20,16 @@ import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
 import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
 import com.ntt.mwonimoney.domain.member.service.MemberService;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -60,35 +45,27 @@ public class FinAccountApi {
 	private final FinAccountService finAccountService;
 	private final FinAccountTransactionService finAccountTransactionService;
 
-	@GetMapping("/accounts")
-	public ResponseEntity getFinAccount(@RequestHeader("Authorization") String accessToken) {
-		//        // 1. 사용자 정보를 body에서 꺼냄
+    @GetMapping("/accounts")
+    public ResponseEntity getFinAccount(@RequestHeader("Authorization") String accessToken, @RequestParam(name = "type", required = true) String type) {
+//        // 1. 사용자 정보를 body에서 꺼냄
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
-		//        // 2. 사용자의 계좌를 조회
-		Optional<FinAccount> finAccount = finAccountService.getFinAccountByMemberAndType(memberIdx,
-			FinAccountType.GENERAL);
+		FinAccountType finAccountType = FinAccountType.valueOf(type);
 
-		return ResponseEntity.ok().body(finAccount);
-	}
-
-	@GetMapping("/accounts/small-account")
-	public ResponseEntity getSmallAccount(@RequestHeader("Authorization") String accessToken) {
-		// 1. 사용자 정보를 body에서 꺼냄
-		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
-		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
-
-		// 2. 사용자의 짜금통 계좌를 조회
-		Optional<FinAccount> finAccount = finAccountService.getFinAccountByMemberAndType(memberIdx,
-			FinAccountType.SMALL);
+		FinAccount finAccount = null;
+//        // 2. 사용자의 계좌를 조회
+		if (finAccountType == FinAccountType.GENERAL) {
+			finAccount = finAccountService.getFinAccountByMemberAndType(memberIdx, FinAccountType.GENERAL).orElseThrow();
+		} else {
+			finAccount = finAccountService.getFinAccountByMemberAndType(memberIdx, FinAccountType.SMALL).orElseThrow();
+		}
 
 		return ResponseEntity.ok().body(finAccount);
 	}
 
 	@PostMapping("/accounts")
-	public ResponseEntity openFinAccount(@RequestHeader("Authorization") String accessToken,
-		@RequestBody String accountNumber) {
+	public ResponseEntity openFinAccount(@RequestHeader("Authorization") String accessToken, @RequestBody String accountNumber) {
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
@@ -156,7 +133,7 @@ public class FinAccountApi {
 				.type(FinAccountType.GENERAL)
 				.build();
 		}
-		finAccountService.saveFinAccount(newFinAccount);
+		finAccountService.save(newFinAccount);
 
 		return ResponseEntity.ok().build();
 	}
@@ -169,9 +146,9 @@ public class FinAccountApi {
 		MemberDto memberInfo = memberService.getMemberInfo(memberIdx);
 
 		// 1. 계좌가 있는 경우 error
-		Optional<FinAccount> smallAccount = finAccountService.getFinAccountByMemberAndType(memberIdx,
+		Optional<FinAccount> smallAccountBefo = finAccountService.getFinAccountByMemberAndType(memberIdx,
 			FinAccountType.SMALL);
-		if (smallAccount.isPresent()) {
+		if (smallAccountBefo.isPresent()) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 
@@ -190,9 +167,9 @@ public class FinAccountApi {
 		NHOpenVirtualAccountResponse openVirtualAccountResponse = nhApiService.getOpenVirtualAccount(
 			openVirtualAccountRequest);
 
-		// 2-2. 짜금통 계좌로 저장
-		finAccountService.saveSmallAccount(openVirtualAccountResponse);
-
+        // 2-2. 짜금통 계좌로 저장
+        FinAccount smallAccount = FinAccount.builder().build();
+        finAccountService.save(smallAccount);
 		return ResponseEntity.ok().build();
 	}
 

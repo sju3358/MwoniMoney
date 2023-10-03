@@ -2,9 +2,8 @@ package com.ntt.mwonimoney.domain.account.service;
 
 import com.ntt.mwonimoney.domain.account.entity.Loan;
 import com.ntt.mwonimoney.domain.account.entity.LoanStatus;
-import com.ntt.mwonimoney.domain.account.model.dto.LoanListRequestDto;
 import com.ntt.mwonimoney.domain.account.model.dto.LoanListRequestStatus;
-import com.ntt.mwonimoney.domain.account.model.dto.MemberType;
+import com.ntt.mwonimoney.domain.account.model.dto.LoanMemberType;
 import com.ntt.mwonimoney.domain.account.repository.LoanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -21,25 +20,34 @@ public class LoanService {
 
     private final LoanRepository loanRepository;
 
-    public Slice<Loan> findByMemberTypeAndStatus(LoanListRequestDto loanListRequestDto, Pageable pageable) {
-        MemberType memberType = loanListRequestDto.getMemberType();
-        LoanListRequestStatus loanListRequestStatus = loanListRequestDto.getLoanListRequestStatus();
+    public Slice<Loan> findByMemberTypeAndStatus(LoanMemberType memberType, LoanListRequestStatus loanListRequestStatus, Long memberIdx, Pageable pageable) {
         LoanStatus loanStatus = convertLoanListRequestStatusToLoanStatus(loanListRequestStatus);
 
-        if(memberType == MemberType.BORROWER){
+        if(memberType == LoanMemberType.BORROWER){
             if(loanListRequestStatus != LoanListRequestStatus.GENERAL){
-                return loanRepository.findByStatusAndBorrower(loanStatus, loanListRequestDto.getMemberIdx(), pageable);
+                return loanRepository.findByStatusAndBorrower(loanStatus, memberIdx, pageable);
             }else{
-                return loanRepository.findByBorrower(loanListRequestDto.getMemberIdx(), pageable);
+                return loanRepository.findByBorrower(memberIdx, pageable);
             }
         }else{
             if(loanListRequestStatus != LoanListRequestStatus.GENERAL){
-                return loanRepository.findByStatusAndLender(loanStatus, loanListRequestDto.getMemberIdx(), pageable);
+                return loanRepository.findByStatusAndLender(loanStatus, memberIdx, pageable);
             }else{
-                return loanRepository.findByLender(loanListRequestDto.getMemberIdx(), pageable);
+                return loanRepository.findByLender(memberIdx, pageable);
             }
         }
     }
+
+    public Slice<Loan> findByBorrowerAndStatus(Long borrower, LoanListRequestStatus loanListRequestStatus, Pageable pageable){
+        LoanStatus loanStatus = convertLoanListRequestStatusToLoanStatus(loanListRequestStatus);
+
+        if(loanListRequestStatus != LoanListRequestStatus.GENERAL){
+            return loanRepository.findByStatusAndBorrower(loanStatus, borrower, pageable);
+        }else{
+            return loanRepository.findByBorrower(borrower, pageable);
+        }
+    }
+
     public Optional<Loan> findById(Long loanIdx){
         return loanRepository.findById(loanIdx);
     }
