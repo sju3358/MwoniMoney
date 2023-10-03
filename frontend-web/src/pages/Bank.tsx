@@ -20,7 +20,7 @@ import { LoanStore } from "../states/LoanState";
 import { isButtonLoan } from "../states/LoanState";
 //카테고리 조회
 import { isCategoryLoan, whichCategoryLoan } from "../states/LoanState";
-import { isProposeLoan } from "../states/LoanState";
+import { isProposeLoan, isRepayLoan } from "../states/LoanState";
 
 //axios
 import api from "../apis/Api";
@@ -68,6 +68,7 @@ function Bank() {
   const [whichCategoryState, setwhichCategoryState] =
     useRecoilState(whichCategoryLoan);
   const [isProposeState, setisProposeState] = useRecoilState(isProposeLoan);
+  const [isRepayState, setisRepayState] = useRecoilState(isRepayLoan);
   const [isButtonState, setIsButtonState] = useRecoilState(isButtonLoan);
   let status_value: string;
   if (isCategoryState) {
@@ -109,7 +110,7 @@ function Bank() {
           console.error("GET 요청 실패 - 요청 준비 중 에러 발생");
         }
       });
-  }, [isProposeState, isButtonState, whichCategoryState]);
+  }, [isProposeState, isButtonState, whichCategoryState, isRepayState]);
 
   return (
     <>
