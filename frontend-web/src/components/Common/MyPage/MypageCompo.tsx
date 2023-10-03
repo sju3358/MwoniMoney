@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Emoji,
   MainContainer,
@@ -13,20 +13,40 @@ import { useRecoilState } from "recoil";
 import InputInfo from "./InputInfo";
 import Notifications from "./Notifications";
 import FAQ from "./FAQ";
+import MypageModal from "../../../modal/Mypage/MypageModal";
 
 import { userAccountState, userDataState } from "../../../states/UserInfoState";
-import MypageModal from "../../../modal/Mypage/MypageModal";
+import api from "../../../apis/Api";
 
 function MypageCompo() {
   const [userData, setUserData] = useRecoilState(userDataState);
   const [userAccount, setUserAccount] = useRecoilState(userAccountState);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get("v1/members", {});
+        const receivedData = response.data;
+        // console.log(receivedData);
+        setUserData((prev) => ({
+          ...prev,
+          name: receivedData.name,
+          birthday: receivedData.birthday,
+          memberRole: receivedData.memberRole,
+          status: receivedData.member_status,
+          email: receivedData.email,
+        }));
+        // console.log(receivedData.email);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
   const account = userAccount.account;
   const name = userData.name; // api연결시 자녀1 이름으로 매핑
   const birth = userData.birthday;
   const email = userData.email;
-
-  // console.log(userData);
-  // console.log(userCheck);
 
   return (
     <MainContainer>

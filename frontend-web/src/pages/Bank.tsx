@@ -16,6 +16,11 @@ import { childDataState, childDataProps } from "../states/ChildInfoState";
 //loan
 import { LoanStore } from "../states/LoanState";
 
+//카테고리 버튼 클릭
+import { isButtonLoan } from "../states/LoanState";
+//카테고리 조회
+import { isCategoryLoan, whichCategoryLoan } from "../states/LoanState";
+
 //axios
 import api from "../apis/Api";
 
@@ -35,7 +40,7 @@ function Bank() {
   } else {
     if (userStateString !== null) {
       const userState = JSON.parse(userStateString);
-      childName = userState.userDataState.nickname;
+      childName = userState.userDataState.name;
       console.log(childName);
     } else {
       console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
@@ -51,11 +56,22 @@ function Bank() {
    * loanList값
    */
   const [LoanData, setLoanData] = useRecoilState(LoanStore);
+  //카테고리 버튼
+  const [isCategoryState, setisCategoryState] = useRecoilState(isCategoryLoan);
+  const [whichCategoryState, setwhichCategoryState] =
+    useRecoilState(whichCategoryLoan);
+
+  let status_value: string;
+  if (isCategoryState) {
+    status_value = whichCategoryState;
+  } else {
+    status_value = "GENERAL";
+  }
 
   //get axios로 loan list로 받아오기
   useEffect(() => {
     api
-      .get("url보내기")
+      .get("/v1/loans")
       .then((response) => {
         // 성공적으로 요청이 완료된 경우 처리할 로직
         console.log("GET 요청 성공:", response.data);
@@ -79,7 +95,7 @@ function Bank() {
           console.error("GET 요청 실패 - 요청 준비 중 에러 발생");
         }
       });
-  }, []);
+  }, [whichCategoryState]);
   // }, [isProposeState, isButtonState, whichCategoryState]);
 
   return (
@@ -118,7 +134,7 @@ function Bank() {
           {LoanData.length > 0 ? (
             <>
               {LoanData.map((loan) => (
-                <LoanList data={loan} key={loan.memberLoanIdx} />
+                <LoanList data={loan} key={loan.loanIdx} />
               ))}
             </>
           ) : (
