@@ -16,7 +16,8 @@ function InputInfo({ title, info, placeholder, id }: InputImfoProps) {
   const [userData, setUserData] = useRecoilState(userDataState);
   const [userCheck, setUserCheck] = useRecoilState(userCheckState);
   const [inputValue, setInputValue] = useState("");
-  console.log(userCheck);
+
+  //member를 get해서 status? 값으로 정보 받았는지 확인하기
 
   const handleInputChange = (e: any) => {
     setInputValue(e.target.value);

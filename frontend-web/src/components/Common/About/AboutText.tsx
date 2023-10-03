@@ -57,6 +57,7 @@ export const Text = styled.div<TextProps>`
   padding: ${(props) => (props.padding ? props.padding : "0%")};
   text-align: ${(props) => (props.textalign ? props.textalign : "")};
   margin-left: ${(props) => (props.marginL ? props.marginL : "7%")};
+  overflow: hidden;
 `;
 
 export const InputBox = styled.input<TextProps>`
