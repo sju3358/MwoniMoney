@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ntt.mwonimoney.domain.challenge.api.request.ChallengeRequestDto;
 import com.ntt.mwonimoney.domain.challenge.api.response.MemberChallengeResponseDto;
+import com.ntt.mwonimoney.domain.challenge.repository.MemberChallengeRepository;
 import com.ntt.mwonimoney.domain.challenge.service.ChallengeService;
 import com.ntt.mwonimoney.domain.member.entity.Parent;
 import com.ntt.mwonimoney.domain.member.repository.ChildrenRepository;
@@ -35,8 +36,9 @@ import lombok.extern.slf4j.Slf4j;
 public class ChallengeApi {
 
 	private final JwtTokenProvider jwtTokenProvider;
-	private final MemberAuthService memberAuthService;
 	private final ChildrenRepository childrenRepository;
+	private final MemberChallengeRepository memberChallengeRepository;
+	private final MemberAuthService memberAuthService;
 	private final ChallengeService challengeService;
 	private final MemberService memberService;
 	private final FCMService fcmService;
@@ -57,6 +59,14 @@ public class ChallengeApi {
 		MemberChallengeResponseDto responseData = challengeService.writeChallenge(challengeRequestDto, parentIdx,
 			childIdx);
 
+		FCMRequest fcmRequest = FCMRequest.builder()
+			.memberUuid(challengeRequestDto.getChildUuid())
+			.title("챌린지 생성")
+			.content("부모님께서 챌린지를 생성하셨어요")
+			.build();
+
+		fcmService.sendNotificationByToken(fcmRequest);
+
 		return ResponseEntity.ok().body(responseData);
 	}
 
@@ -69,6 +79,16 @@ public class ChallengeApi {
 		Long parentIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
 		challengeService.deleteChallenge(parentIdx, memberChallengeIdx);
+
+		String childUuid = memberChallengeRepository.findById(memberChallengeIdx).orElseThrow().getMember().getUuid();
+
+		FCMRequest fcmRequest = FCMRequest.builder()
+			.memberUuid(childUuid)
+			.title("챌린지 삭제")
+			.content("부모님께서 챌린지를 삭제하셨어요")
+			.build();
+
+		fcmService.sendNotificationByToken(fcmRequest);
 		return ResponseEntity.ok().build();
 	}
 
@@ -78,6 +98,16 @@ public class ChallengeApi {
 		@PathVariable Long memberChallengeIdx) {
 		challengeService.completeChallenge(memberChallengeIdx);
 
+		String childUuid = memberChallengeRepository.findById(memberChallengeIdx).orElseThrow().getMember().getUuid();
+
+		FCMRequest fcmRequest = FCMRequest.builder()
+			.memberUuid(childUuid)
+			.title("챌린지 완료")
+			.content("부모님께서 챌린지를 완료하셨어요")
+			.build();
+
+		fcmService.sendNotificationByToken(fcmRequest);
+
 		return ResponseEntity.ok().build();
 	}
 
@@ -86,6 +116,16 @@ public class ChallengeApi {
 	public ResponseEntity RejectChallenge(@RequestHeader("Authorization") String accessToken,
 		@PathVariable Long memberChallengeIdx) {
 		challengeService.rejectChallenge(memberChallengeIdx);
+
+		String childUuid = memberChallengeRepository.findById(memberChallengeIdx).orElseThrow().getMember().getUuid();
+
+		FCMRequest fcmRequest = FCMRequest.builder()
+			.memberUuid(childUuid)
+			.title("챌린지 거절")
+			.content("부모님께서 챌린지를 거절하셨어요")
+			.build();
+
+		fcmService.sendNotificationByToken(fcmRequest);
 
 		return ResponseEntity.ok().build();
 	}
@@ -119,7 +159,7 @@ public class ChallengeApi {
 			FCMRequest fcmRequest = FCMRequest.builder()
 				.memberUuid(parent.getUuid())
 				.title("챌린지 요청")
-				.content("아이가 챌린지 생성을 요청했어요")
+				.content("자녀가 챌린지 생성을 요청했어요")
 				.build();
 
 			fcmService.sendNotificationByToken(fcmRequest);
@@ -141,7 +181,7 @@ public class ChallengeApi {
 			FCMRequest fcmRequest = FCMRequest.builder()
 				.memberUuid(parent.getUuid())
 				.title("챌린지 완료")
-				.content("아이가 챌린지를 완료 했어요")
+				.content("자녀가 챌린지를 완료했어요")
 				.build();
 
 			fcmService.sendNotificationByToken(fcmRequest);
