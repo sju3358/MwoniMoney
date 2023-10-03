@@ -90,7 +90,7 @@ export default function RoleSelect() {
     try {
       api
         .post("/v1/members/role", {
-          memberRole: userData.memberRole,
+          memberRole: selectedValue,
         })
         .catch((e) => {
           console.log(e);
