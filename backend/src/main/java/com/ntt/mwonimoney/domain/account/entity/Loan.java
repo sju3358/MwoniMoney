@@ -27,6 +27,7 @@ public class Loan {
     private Long borrower;
 
     @Column(name = "loan_status")
+    @Enumerated(EnumType.STRING)
     private LoanStatus status;
 
     @Column(name = "loan_name")
@@ -54,6 +55,14 @@ public class Loan {
         this.amount = amount;
         this.deadline = deadline;
         this.rate = rate;
+    }
+
+    public void changeStatus(LoanStatus status){
+        this.status = status;
+    }
+
+    public void changeAmount(int amount){
+        this.amount = amount;
     }
 
 }

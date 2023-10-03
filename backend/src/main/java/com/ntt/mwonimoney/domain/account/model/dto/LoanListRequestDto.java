@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class LoanListRequestDto {
+public class LoanListRequestDto extends PageToScroll{
     private LoanListRequestStatus loanListRequestStatus;
     private LoanMemberType loanMemberType;
     private String childUUID;
