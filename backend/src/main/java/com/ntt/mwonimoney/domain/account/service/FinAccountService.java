@@ -30,16 +30,12 @@ public class FinAccountService {
         return finAccountRepository.findById(finAccountIdx);
     }
 
-    public FinAccount saveFinAccount(FinAccount finAccount) {
+    public FinAccount save(FinAccount finAccount) {
         return finAccountRepository.save(finAccount);
     }
 
     public Optional<FinAccount> getFinAccountByMemberAndType(Long memberIdx, FinAccountType finAccountType){
         return finAccountRepository.findFinAccountByMemberAndType(memberIdx, finAccountType);
-    }
-
-    public FinAccount saveSmallAccount(NHOpenVirtualAccountResponse openVirtualAccountResponse) {
-        return null;
     }
 
     public FinAccount closeSmallAccount() {
