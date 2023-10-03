@@ -161,14 +161,14 @@ public class FinAccountApi {
 				request.getSaveRatio());
 
 
-		MemberDto memberInfo = memberService.getMemberInfo(memberIdx);
+//		MemberDto memberInfo = memberService.getMemberInfo(memberIdx);
 
 		// 1. 계좌가 있는 경우 error
-		Optional<FinAccount> smallAccountBefo = finAccountService.getFinAccountByMemberAndType(memberIdx,
-			FinAccountType.SMALL);
-		if (smallAccountBefo.isPresent()) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-		}
+//		Optional<FinAccount> smallAccountBefo = finAccountService.getFinAccountByMemberAndType(memberIdx,
+//			FinAccountType.SMALL);
+//		if (smallAccountBefo.isPresent()) {
+//			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+//		}
 
 		// 2. 계좌가 없는 경우 save
 		// 2-1. 예치금 관리용 가상계좌 발급
@@ -186,14 +186,14 @@ public class FinAccountApi {
 //			openVirtualAccountRequest);
 
         // 2-2. 짜금통 계좌로 저장
-        FinAccount finAccount = FinAccount.builder()
-//				.number(openVirtualAccountResponse.getVran())
-				.finAcno("")
-				.status(FinAccountStatus.ACTIVATE)
-				.type(FinAccountType.SMALL)
-				.build();
-
-        finAccountService.save(finAccount);
+//        FinAccount finAccount = FinAccount.builder()
+////				.number(openVirtualAccountResponse.getVran())
+//				.finAcno("")
+//				.status(FinAccountStatus.ACTIVATE)
+//				.type(FinAccountType.SMALL)
+//				.build();
+//
+//        finAccountService.save(finAccount);
 
 		return ResponseEntity.ok().build();
 	}
