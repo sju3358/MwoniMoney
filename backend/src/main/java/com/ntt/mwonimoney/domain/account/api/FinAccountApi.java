@@ -285,7 +285,7 @@ public class FinAccountApi {
 	@GetMapping("/accounts/small-account/{finAccountIdx}/remain")
 	public ResponseEntity getRemain(@PathVariable Long finAccountIdx){
 		Long remain = finAccountService.getRemain(finAccountIdx);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok().body(remain);
 	}
 
 }
