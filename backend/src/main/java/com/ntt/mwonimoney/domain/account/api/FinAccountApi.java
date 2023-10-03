@@ -251,10 +251,10 @@ public class FinAccountApi {
 		nhApiService.transfer(drawingTransferRequest, receivedTransferAccountNumberRequest);
 
 		FinAccountTransaction finAccountTransaction = FinAccountTransaction.builder()
-			//                .money()
-			//                .balance()
-			//                .memo()
-			//                .time()
+//			                .money()
+//			                .balance()
+//			                .memo()
+//			                .time()
 			.build();
 		finAccountTransactionService.save(finAccountTransaction);
 
