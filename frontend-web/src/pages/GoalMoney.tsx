@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { Container } from "../components/Common/About/AboutContainer";
 import { WhiteBox } from "../components/Common/About/AboutWhilteContainer";
-import { Img, ImgBox } from "../components/Common/About/AboutEmogi";
+import { EmogiBox, ImgBox } from "../components/Common/About/AboutEmogi";
 import { Text, TextBox } from "../components/Common/About/AboutText";
 
 import Item from "../assests/image/Item.png";
@@ -27,21 +27,67 @@ const MainContainer = styled.div`
 `;
 
 function GoalMoney() {
-  const [userData] = useRecoilState(userDataState);
+  const [userData, setUserData] = useRecoilState(userDataState);
   const [goalMoney, setGoalMoney] = useRecoilState(GoalMoneyState);
   const [goalCheck, setGoalCheck] = useRecoilState(GoalCheckState);
   // get 받아서 다시 recoil에 넣기
-  // api.get("v1/members/small-account", {});
+  useEffect(() => {
+    if (goalCheck.goalState) {
+      const fetchData = async () => {
+        try {
+          const response = await api.get("v1/members", {});
+          const receivedData = response.data;
+          setGoalMoney((prev) => ({
+            ...prev,
+            goalName: receivedData.smallAccount.goalName,
+            goalBalance: receivedData.smallAccount.goalBalance,
+            goalMoney: receivedData.smallAccount.goalMoney,
+            saveRatio: receivedData.smallAccount.saveRatio,
+            image: receivedData.smallAccount.imageFilename,
+          }));
+          // console.log(receivedData);
+          setGoalCheck((prev) => ({
+            ...prev,
+            goalState: true,
+          }));
+          setUserData((prev) => ({
+            ...prev,
+            memberRole: receivedData.memberRole,
+          }));
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchData();
+    }
+  }, []);
+
+  const deleteGoal = async () => {
+    try {
+      await api.delete("v1/members/small-account", {});
+      setGoalCheck((prev) => ({
+        ...prev,
+        goalState: false,
+      }));
+      alert("짜금통이 해지되었습니다.");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const name = userData.name;
+  const role = userData.memberRole;
   const item = goalMoney.goalName;
   const money = goalMoney.goalMoney;
   const date = goalMoney.goalStartDate;
+  const img =
+    // "https://mwonimoney.s3.ap-northeast-2.amazonaws.com/goal/" +
+    goalMoney.image;
   const rate = goalMoney.saveRatio;
-  const num = money / goalMoney.goalBalance; //지금까지 모은 금액
   const goalBalance = goalMoney.goalBalance; //지금까지 모은 금액
+  const num = money / goalMoney.goalBalance; //지금까지 모은 금액
   const goalPoint = num / 100;
-  const role = userData.memberRole;
+
   // 함수를 위한 변수s
   const navigate = useNavigate();
   const GoCreatGoal = () => {
@@ -50,8 +96,8 @@ function GoalMoney() {
     }
   };
   // 출력문
-  console.log(goalMoney);
-  console.log(goalCheck);
+  // console.log(goalMoney);
+  // console.log(goalCheck);
   return (
     <MainContainer>
       <Container height="5%" />
@@ -64,12 +110,7 @@ function GoalMoney() {
           justifycontent="center"
           alignitems="center"
         >
-          {goalCheck.goalName ||
-          goalCheck.goalBalance ||
-          goalCheck.goalMoney ||
-          goalCheck.goalStartDate ||
-          goalCheck.image ||
-          goalCheck.saveRatio === false ? (
+          {goalCheck.goalState === false ? (
             <Container
               height="100%"
               onClick={GoCreatGoal}
@@ -86,14 +127,36 @@ function GoalMoney() {
               )}
             </Container>
           ) : (
-            <ImgBox>
-              <Img src={`${Item}`} width="80%" height="80%" />
-            </ImgBox>
+            <EmogiBox
+              backImg={`${img}`}
+              width="100%"
+              height="100%"
+              borderA="100px"
+            />
           )}
         </WhiteBox>
       </Container>
       <Container height="25%" flexDirection="column">
-        {role === "PARENT" ? (
+        {goalCheck.goalState === false ? (
+          <>
+            <Text
+              fontsize="1.3rem"
+              fontweight="700"
+              marginL="0%"
+              textalign="center"
+            >
+              가지고 싶은 물건이 있다면
+            </Text>
+            <Text
+              fontsize="1.3rem"
+              fontweight="700"
+              marginL="0%"
+              textalign="center"
+            >
+              짜금통계좌를 개설해보세요.
+            </Text>
+          </>
+        ) : role === "PARENT" ? (
           <>
             <Text fontsize="1.5rem" fontweight="700" padding="0% 0% 5% 0%">
               {name}님이
@@ -140,21 +203,27 @@ function GoalMoney() {
           </Container>
         </WhiteBox>
       </Container>
-      <Container height="60%">
+      <Container height="40%">
         <WhiteBox>
-          <Container height="10%">
+          <Container height="5%" />
+          <Container height="15%">
             <TextBox height="100%">저금내역</TextBox>
           </Container>
-          <Container height="90%" flexDirection="column" overflowy="auto">
+          <Container height="80%" flexDirection="column" overflowy="auto">
             <History />
             <History />
           </Container>
         </WhiteBox>
       </Container>
-      {role === "PARENT" ? (
+      {role === "CHILD" ? (
         <>
           <Container height="10%">
-            <Btn backcolor="rgba(255, 255, 255, 0.50)" width="90%" height="70%">
+            <Btn
+              backcolor="rgba(255, 255, 255, 0.50)"
+              width="90%"
+              height="70%"
+              onClick={deleteGoal}
+            >
               해제
             </Btn>
           </Container>

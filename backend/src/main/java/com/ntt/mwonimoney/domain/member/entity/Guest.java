@@ -17,8 +17,10 @@ public class Guest extends Member {
 
 	@Builder
 	public Guest(int status, String uuid, String name, String nickname, String birthday, SocialProvider socialProvider,
-		String socialId, String email) {
-		super(status, uuid, name, nickname, birthday, socialProvider, socialId, email, MemberRole.GUEST);
+		String socialId, String email, String challengeAlarm, String balanceAlarm,
+		String smallAcountAlarm) {
+		super(status, uuid, name, nickname, birthday, socialProvider, socialId, email, MemberRole.GUEST, challengeAlarm,
+			balanceAlarm, smallAcountAlarm);
 	}
 
 	public GuestDto convertToDto() {
@@ -30,6 +32,7 @@ public class Guest extends Member {
 			.birthday(this.getBirthday())
 			.socialProvider(this.getSocialProvider())
 			.memberRole(this.getMemberRole())
+			.email(this.getEmail())
 			.build();
 	}
 }

@@ -4,6 +4,7 @@ interface EmogiBoxProps {
   width?: string;
   height?: string;
   backImg: string;
+  borderA?: string;
 }
 
 export const EmogiBox = styled.div<EmogiBoxProps>`
@@ -13,6 +14,7 @@ export const EmogiBox = styled.div<EmogiBoxProps>`
   height: ${(props) => (props.height ? props.height : "80%")};
   background-image: url(${(props) => props.backImg});
   background-size: 100% 100%;
+  border-radius: ${(props) => props.borderA};
 `;
 
 //img (화살표, O,x답)

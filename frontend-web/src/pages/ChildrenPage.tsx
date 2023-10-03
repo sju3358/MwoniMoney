@@ -22,6 +22,7 @@ import { userDataState } from "../states/UserInfoState";
 import { useNavigate } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import api from "../apis/Api";
+import Chatbot from "../components/Common/Main/Chatbot";
 
 export const getBalance = (): Promise<AxiosResponse> => {
   // axios 요청을 보낼 때 Authorization 헤더 설정
@@ -96,7 +97,7 @@ function ChildrenPage() {
           align="start"
         >
           <Container height="30%">
-            <TextBox height="100%">{userName}는 지금</TextBox>
+            <TextBox height="100%">{userName}님은 지금</TextBox>
           </Container>
           <Container height="20%">
             <TextBox fontSize="1.1em" marginL="10%" height="100%" width="95%">
@@ -136,6 +137,9 @@ function ChildrenPage() {
       </Container>
       <Container height="50%" overflowy="hidden">
         <Quiz />
+      </Container>
+      <Container height="30%">
+        <Chatbot />
       </Container>
       <Container height="50%" flexDirection="column">
         <Container height="30%">

@@ -36,11 +36,17 @@ function ParentsPage() {
   // Use the childDataState atom to manage selectedChild
   const [selectedChild, setSelectedChild] =
     useRecoilState<childDataProps>(childDataState);
+
   useEffect(() => {
     console.log("postRegisterChild");
     postRegisterChild()
       .then((response) => {
         setChildData(response.data);
+
+        // Set the selectedChild to the first child if available
+        if (response.data.length > 0) {
+          handleChildCardClick(response.data[0].uuid);
+        }
       })
       .catch((childError) => {
         console.error(" 오류:", childError);
