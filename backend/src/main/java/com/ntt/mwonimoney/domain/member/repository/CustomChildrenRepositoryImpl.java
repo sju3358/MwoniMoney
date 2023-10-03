@@ -2,6 +2,7 @@ package com.ntt.mwonimoney.domain.member.repository;
 
 import static com.ntt.mwonimoney.domain.member.entity.QChild.*;
 import static com.ntt.mwonimoney.domain.member.entity.QChildren.*;
+import static com.ntt.mwonimoney.domain.member.entity.QParent.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ntt.mwonimoney.domain.member.entity.Child;
 import com.ntt.mwonimoney.domain.member.entity.Children;
+import com.ntt.mwonimoney.domain.member.entity.Parent;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -37,6 +39,22 @@ public class CustomChildrenRepositoryImpl implements CustomChildrenRepository {
 			return Optional.empty();
 
 		return Optional.of(result.getChild());
+	}
+
+	@Override
+	public List<Parent> findParents(String childUUID) {
+		List<Children> childEntityList = jpaQueryFactory
+			.select(children)
+			.from(children)
+			.where(children.childrenKey.childUUID.eq(childUUID))
+			.join(children.parent, parent)
+			.fetch();
+
+		List<Parent> parentEntityList = new ArrayList<>();
+		for (Children childrenEntity : childEntityList)
+			parentEntityList.add(childrenEntity.getParent());
+
+		return parentEntityList;
 	}
 
 	@Override

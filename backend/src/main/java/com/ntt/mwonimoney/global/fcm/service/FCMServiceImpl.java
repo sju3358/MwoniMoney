@@ -17,8 +17,10 @@ import com.ntt.mwonimoney.global.fcm.api.request.FCMTokenRequest;
 import com.ntt.mwonimoney.global.fcm.model.FCMRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class FCMServiceImpl implements FCMService {
@@ -37,8 +39,9 @@ public class FCMServiceImpl implements FCMService {
 		memberRepository.save(member);
 	}
 
-	public String sendNotificationByToken(FCMRequest fcmRequest) {
-		Optional<Member> member = (Optional<Member>)memberRepository.findMemberByIdx(fcmRequest.getMemberIdx());
+	@Override
+	public void sendNotificationByToken(FCMRequest fcmRequest) {
+		Optional<Member> member = (Optional<Member>)memberRepository.findMemberByUuid(fcmRequest.getMemberUuid());
 
 		if (member.isPresent()) {
 			if (member.get().getFCMToken() != null) {
@@ -59,15 +62,15 @@ public class FCMServiceImpl implements FCMService {
 					.build();
 				try {
 					firebaseMessaging.send(message);
-					return "알림 전송 성공 : " + fcmRequest.getMemberIdx();
+					log.info("알림 전송 성공");
 				} catch (FirebaseMessagingException e) {
 					e.printStackTrace();
-					return "알림 전송 실패 : " + fcmRequest.getMemberIdx();
+					log.info("알림 전송 실패");
 				}
 			} else {
-				return "Firebase Token이 존재하지 않음 : " + fcmRequest.getMemberIdx();
+				log.info("Firebase Token이 존재하지 않음");
 			}
 		} else
-			return "유저가 존재하지 않음";
+			log.info("유저가 존재하지 않음");
 	}
 }

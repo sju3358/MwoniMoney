@@ -1,5 +1,6 @@
 package com.ntt.mwonimoney.domain.account.model.dto;
 
+import com.ntt.mwonimoney.domain.account.entity.FinAccountType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FinAccountTransactionListRequest {
-    PageToScroll pageToScroll;
     FinAccountTransactionListRequestType type;
+    FinAccountType finAccountType;
 }
