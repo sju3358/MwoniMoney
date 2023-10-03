@@ -34,13 +34,15 @@ export const newLoan = atom<newLoan>({
 });
 
 export interface getLoan {
-  loanIdx: number;
-  memberIdx: number;
-  memo: string;
-  borrow: number;
+  amount: number;
+  borrower: number;
+  content: string;
+  deadline: string;
+  idx: number;
+  lender: number;
+  name: string;
+  rate: number;
   status: string;
-  endTime: any;
-  createdTime: any;
 }
 
 export const LoanStore = atom<getLoan[]>({
