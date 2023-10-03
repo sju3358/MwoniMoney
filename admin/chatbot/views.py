@@ -1,5 +1,6 @@
 import os
 import json
+from corsheaders.decorators import cors_headers
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import LLMChain
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -18,6 +19,7 @@ with open("secret.json") as secret_file:
     secret = json.load(secret_file)
 os.environ["OPENAI_API_KEY"] = secret.get("OPENAI_API_KEY")
 
+@cors_headers()
 @api_view(['POST'])
 def question(request):
     question = request.data.get('question')
