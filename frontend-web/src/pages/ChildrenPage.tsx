@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Emoji,
   MainContainer,
@@ -17,17 +17,30 @@ import Challenge from "../components/Children/Challenge";
 import Coin from "../assests/image/main/Coin.png";
 
 // 함수
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import api from "../apis/Api";
+import { useRecoilState } from "recoil";
+import { userDataState } from "../states/UserInfoState";
 
 function ChildrenPage() {
-  const navigate = useNavigate();
-  const goBank = () => {
-    navigate("/Bank");
-  };
-  const goMoneyPage = () => {
-    navigate("/MoneyPage");
-  };
-  const userName = "지현이";
+  const [useData, setUserData] = useRecoilState(userDataState);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get("v1/members", {});
+        const receivedData = response.data;
+        console.log(receivedData.smallAccount);
+        setUserData((prev) => ({
+          ...prev,
+          name: receivedData.name,
+        }));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+  const userName = useData.name;
   const asset = "100,000원";
   const debt = "10,000원";
   return (
@@ -41,7 +54,7 @@ function ChildrenPage() {
           align="start"
         >
           <Container height="30%">
-            <TextBox height="100%">{userName}는 지금</TextBox>
+            <TextBox height="100%">{userName}님은 지금</TextBox>
           </Container>
           <Container height="20%">
             <TextBox fontSize="1.1em" marginL="10%" height="100%" width="95%">
