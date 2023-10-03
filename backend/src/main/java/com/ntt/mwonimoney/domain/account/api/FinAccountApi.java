@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -64,9 +65,9 @@ public class FinAccountApi {
 		Optional<FinAccount> finAccount = null;
 //        // 2. 사용자의 계좌를 조회
 		if (finAccountType == FinAccountType.GENERAL) {
-			finAccount = finAccountService.getFinAccountByMemberAndType(memberIdx, FinAccountType.GENERAL);
+			finAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, FinAccountType.GENERAL, FinAccountStatus.ACTIVATE);
 		} else {
-			finAccount = finAccountService.getFinAccountByMemberAndType(memberIdx, FinAccountType.SMALL);
+			finAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, FinAccountType.SMALL, FinAccountStatus.ACTIVATE);
 		}
 		return ResponseEntity.ok().body(finAccount);
 	}
@@ -79,8 +80,8 @@ public class FinAccountApi {
 		MemberDto memberInfo = memberService.getMemberInfo(memberIdx);
 
 		// 1. 계좌가 있는 경우 error
-		Optional<FinAccount> finAccount = finAccountService.getFinAccountByMemberAndType(memberIdx,
-			FinAccountType.GENERAL);
+		Optional<FinAccount> finAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx,
+			FinAccountType.GENERAL, FinAccountStatus.ACTIVATE);
 		if (finAccount.isPresent()) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
@@ -140,7 +141,7 @@ public class FinAccountApi {
 				.build();
 		}
 
-		finAccountService.save(newFinAccount);
+		finAccountService.save(newFinAccount, memberIdx);
 
 		return ResponseEntity.ok().build();
 	}
@@ -161,14 +162,14 @@ public class FinAccountApi {
 				request.getSaveRatio());
 
 
-//		MemberDto memberInfo = memberService.getMemberInfo(memberIdx);
+		MemberDto memberInfo = memberService.getMemberInfo(memberIdx);
 
 		// 1. 계좌가 있는 경우 error
-//		Optional<FinAccount> smallAccountBefo = finAccountService.getFinAccountByMemberAndType(memberIdx,
-//			FinAccountType.SMALL);
-//		if (smallAccountBefo.isPresent()) {
-//			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-//		}
+		Optional<FinAccount> smallAccountBefo = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx,
+			FinAccountType.SMALL, FinAccountStatus.ACTIVATE);
+		if (smallAccountBefo.isPresent()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
 
 		// 2. 계좌가 없는 경우 save
 		// 2-1. 예치금 관리용 가상계좌 발급
@@ -186,14 +187,14 @@ public class FinAccountApi {
 //			openVirtualAccountRequest);
 
         // 2-2. 짜금통 계좌로 저장
-//        FinAccount finAccount = FinAccount.builder()
-////				.number(openVirtualAccountResponse.getVran())
+        FinAccount finAccount = FinAccount.builder()
+//				.number(openVirtualAccountResponse.getVran())
 //				.finAcno("")
-//				.status(FinAccountStatus.ACTIVATE)
-//				.type(FinAccountType.SMALL)
-//				.build();
-//
-//        finAccountService.save(finAccount);
+				.status(FinAccountStatus.ACTIVATE)
+				.type(FinAccountType.SMALL)
+				.build();
+
+        finAccountService.save(finAccount, memberIdx);
 
 		return ResponseEntity.ok().build();
 	}
@@ -213,12 +214,12 @@ public class FinAccountApi {
 		Long senderIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
 		// 1. 송금자 finAccount를 찾는다., 없는 경우 error
-		FinAccount senderFinAccount = finAccountService.getFinAccountByMemberAndType(senderIdx, FinAccountType.GENERAL)
+		FinAccount senderFinAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(senderIdx, FinAccountType.GENERAL, FinAccountStatus.ACTIVATE)
 			.orElseThrow();
 
 		// 2. 수취인 finAccount를 찾는다., 없는 경우 error
-		FinAccount receiverFinAccount = finAccountService.getFinAccountByMemberAndType(
-			finAccountTransferRequest.getReceiverIdx(), FinAccountType.GENERAL).orElseThrow();
+		FinAccount receiverFinAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(
+			finAccountTransferRequest.getReceiverIdx(), FinAccountType.GENERAL, FinAccountStatus.ACTIVATE).orElseThrow();
 
 		// 3. NHDevelopers의 출금이체 -> 농협입금이체
 		// 3-1. 출금이체
@@ -260,21 +261,24 @@ public class FinAccountApi {
 		return ResponseEntity.ok().build();
 	}
 
-	@GetMapping("/accounts/{finAccountIdx}/transactions")
-	public ResponseEntity getTransactionList(@PathVariable Long finAccountIdx,
-		@RequestBody FinAccountTransactionListRequest request) {
-		FinAccountTransactionListRequestType type = request.getType();
-		PageToScroll pageToScroll = request.getPageToScroll();
+	@GetMapping("/accounts/transactions")
+	public ResponseEntity getTransactionList(@RequestHeader("Authorization") String accessToken, @RequestBody FinAccountTransactionListRequest request) {
+		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
-		Slice<FinAccountTransaction> list = null;
-		Pageable pageable = PageRequest.of(pageToScroll.getPage(), pageToScroll.getSize());
+		FinAccountTransactionListRequestType type = request.getType();
+		FinAccountType finAccountType = request.getFinAccountType();
+
+		Long finAccountIdx = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, finAccountType, FinAccountStatus.ACTIVATE).orElseThrow().getIdx();
+
+		List<FinAccountTransaction> list = null;
 
 		if (type == FinAccountTransactionListRequestType.INCOME) {
-			list = finAccountTransactionService.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, 0, pageable);
+//			list = finAccountTransactionService.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, 0);
 		} else if (type == FinAccountTransactionListRequestType.OUTCOME) {
-			list = finAccountTransactionService.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, 0, pageable);
+//			list = finAccountTransactionService.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, 0, pageable);
 		} else {
-			list = finAccountTransactionService.findByFinAccount(finAccountIdx, pageable);
+//			list = finAccountTransactionService.findByFinAccount(finAccountIdx, pageable);
 		}
 
 		return ResponseEntity.ok().body(list);
