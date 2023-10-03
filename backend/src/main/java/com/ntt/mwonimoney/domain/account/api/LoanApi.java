@@ -31,7 +31,7 @@ public class LoanApi {
     private final LoanService loanService;
 
     @GetMapping("/loans")
-    public ResponseEntity getLoanList(@RequestHeader("Authorization") String accessToken, @RequestBody LoanListRequestDto loanListRequestDto, @ModelAttribute PageToScroll pageToScroll) {
+    public ResponseEntity getLoanList(@RequestHeader("Authorization") String accessToken, @RequestBody LoanListRequestDto loanListRequestDto, @RequestParam PageToScroll pageToScroll) {
         LoanMemberType loanMemberType = loanListRequestDto.getLoanMemberType();
 
         Long childIdx;
