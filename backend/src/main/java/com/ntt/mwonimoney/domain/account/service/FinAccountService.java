@@ -45,4 +45,9 @@ public class FinAccountService {
         smallAccountToUpdate.changeStatus(FinAccountStatus.DEACTIVATE);
 
     }
+
+    public Long getRemain(Long finAccountIdx){
+        FinAccount finAccount = finAccountRepository.findById(finAccountIdx).orElseThrow();
+        return finAccount.getRemain();
+    }
 }
