@@ -39,17 +39,10 @@ public class FinAccountService {
         return finAccountRepository.findFinAccountByMemberAndType(memberIdx, finAccountType);
     }
 
-    public FinAccount closeSmallAccount(FinAccount smallAccountToUpdate) {
-        FinAccount smallAccountUpdated = FinAccount.builder()
-                .idx(smallAccountToUpdate.getIdx())
-                .number(smallAccountToUpdate.getNumber())
-                .finAcno(smallAccountToUpdate.getFinAcno())
-                .status(FinAccountStatus.DEACTIVATE)
-                .type(FinAccountType.SMALL)
-                .member(smallAccountToUpdate.getMember())
-                .finAccountTransactionList(smallAccountToUpdate.getFinAccountTransactionList())
-                .build();
+    public void closeSmallAccount(Long smallAccountIdx) {
 
-        return finAccountRepository.save(smallAccountToUpdate);
+        FinAccount smallAccountToUpdate = finAccountRepository.findById(smallAccountIdx).orElseThrow();
+        smallAccountToUpdate.changeStatus(FinAccountStatus.DEACTIVATE);
+
     }
 }
