@@ -112,7 +112,7 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 			Member memberRoleChanged = null;
 			if (memberRole.equals(MemberRole.CHILD)) {
 				memberRoleChanged = Child.builder()
-					.status(1)
+					.status(result.getStatus())
 					.uuid(result.getUuid())
 					.name(result.getName())
 					.nickname(result.getNickname())
@@ -129,7 +129,7 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 					.build();
 			} else if (memberRole.equals(MemberRole.PARENT)) {
 				memberRoleChanged = Parent.builder()
-					.status(1)
+					.status(result.getStatus())
 					.uuid(result.getUuid())
 					.name(result.getName())
 					.nickname(result.getNickname())
