@@ -101,7 +101,7 @@ function Balance() {
                     balanceIdx={item.idx}
                     news={item.news}
                     showText={true}
-                    showImg={true}
+                    showImg={false}
                     questionText={item.question}
                     buyText={item.leftAnswer}
                     notBuyText={item.rightAnswer}

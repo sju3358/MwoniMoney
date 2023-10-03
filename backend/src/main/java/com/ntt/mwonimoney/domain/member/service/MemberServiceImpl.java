@@ -100,4 +100,14 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 
+	@Override
+	@Transactional
+	public void changeAlarm(String alarmName, String memberUuid) {
+		MemberAuth memberAuth = memberAuthRepository.findById(memberUuid)
+			.orElseThrow(() -> new NoSuchElementException("로그인이 안되어있습니다."));
+
+		Member member = memberRepository.findMemberByIdx(memberAuth.getMemberIdx()).orElseThrow();
+
+		member.updateAlarm(alarmName);
+	}
 }

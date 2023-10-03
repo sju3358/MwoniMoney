@@ -56,4 +56,12 @@ public class Loan {
         this.rate = rate;
     }
 
+    public void changeStatus(LoanStatus status){
+        this.status = status;
+    }
+
+    public void changeAmount(int amount){
+        this.amount = amount;
+    }
+
 }
