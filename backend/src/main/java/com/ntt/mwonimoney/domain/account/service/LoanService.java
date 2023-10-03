@@ -62,4 +62,12 @@ public class LoanService {
         else if(loanListRequestStatus == LoanListRequestStatus.WATING) return LoanStatus.WATING;
         return null;
     }
+
+    public void changeStatus(Loan loan, LoanStatus status){
+        loan.changeStatus(status);
+    }
+
+    public void changeAmount(Loan loan, int amount){
+        loan.changeAmount(amount);
+    }
 }
