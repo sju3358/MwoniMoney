@@ -30,36 +30,42 @@ function GoalMoney() {
   const [userData, setUserData] = useRecoilState(userDataState);
   const [goalMoney, setGoalMoney] = useRecoilState(GoalMoneyState);
   const [goalCheck, setGoalCheck] = useRecoilState(GoalCheckState);
+
   // get 받아서 다시 recoil에 넣기
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("v1/members");
-        const receivedData = response.data;
+        await api
+          .get("v1/members")
+          .then((response) => {
+            const receivedData = response.data;
 
-        setGoalMoney((prev) => ({
-          ...prev,
-          goalName: receivedData.smallAccount.goalName,
-          goalBalance: receivedData.smallAccount.goalBalance,
-          goalMoney: receivedData.smallAccount.goalMoney,
-          saveRatio: receivedData.smallAccount.saveRatio,
-          image: receivedData.smallAccount.imageFilename,
-        }));
+            setGoalMoney((prev) => ({
+              ...prev,
+              goalName: receivedData.smallAccount.goalName,
+              goalBalance: receivedData.smallAccount.goalBalance,
+              goalMoney: receivedData.smallAccount.goalMoney,
+              saveRatio: receivedData.smallAccount.saveRatio,
+              image: receivedData.smallAccount.imageFilename,
+            }));
 
-        setGoalCheck((prev) => ({
-          ...prev,
-          goalState: true,
-        }));
+            setGoalCheck((prev) => ({
+              ...prev,
+              goalState: true,
+            }));
 
-        setUserData((prev) => ({
-          ...prev,
-          memberRole: receivedData.memberRole,
-        }));
+            setUserData((prev) => ({
+              ...prev,
+              memberRole: receivedData.memberRole,
+            }));
+          })
+          .catch((error) => {
+            console.log("계좌조회 " + error);
+          });
       } catch (error) {
         console.error(error);
       }
     };
-
     fetchData();
   }, []);
 
