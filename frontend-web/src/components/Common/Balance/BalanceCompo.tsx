@@ -9,6 +9,8 @@ import { Container } from "../About/AboutContainer";
 import { EmogiBox } from "../About/AboutEmogi";
 import axios, { AxiosResponse } from "axios";
 import api from "../../../apis/Api";
+import { useNavigate } from "react-router-dom"; // useNavigate 추가
+import { Routes, Route } from "react-router-dom"; // Routes와 Route 추가
 
 interface ImgProps {
   width?: string | null;
@@ -82,9 +84,15 @@ function BalanceCompo({
   news,
   balanceIdx,
 }: BalanceCompoProps) {
+  const navigate = useNavigate(); // useNavigate 훅 사용
+
   const handleClick = (selectAnswer: string) => {
     patchAnswer(balanceIdx, selectAnswer); // Call patchAnswer with balanceIdx and selectAnswer
     window.alert("답변이 선택되었습니다!"); // Show an alert message
+  };
+
+  const navigateClick = () => {
+    navigate("/balance"); // 클릭 시 '/balance'로 이동
   };
 
   return (
@@ -99,7 +107,7 @@ function BalanceCompo({
               backImg={`${LeftArrow}`}
               width="7%"
               height="100%"
-              onClick={() => handleClick("LEFT")} // Call handleClick with "LEFT"
+              onClick={navigateClick} // Call navigateClick 함수
             />
           )}
         </Container>

@@ -17,8 +17,10 @@ public class Parent extends Member {
 
 	@Builder
 	public Parent(int status, String uuid, String name, String nickname, String birthday, SocialProvider socialProvider,
-		String socialId, String email) {
-		super(status, uuid, name, nickname, birthday, socialProvider, socialId, email, MemberRole.PARENT);
+		String socialId, String email, String challengeAlarm, String balanceAlarm,
+		String smallAcountAlarm) {
+		super(status, uuid, name, nickname, birthday, socialProvider, socialId, email, MemberRole.PARENT,
+			challengeAlarm, balanceAlarm, smallAcountAlarm);
 	}
 
 	@Override
@@ -31,6 +33,9 @@ public class Parent extends Member {
 			.birthday(this.getBirthday())
 			.socialProvider(this.getSocialProvider())
 			.memberRole(this.getMemberRole())
+			.challengeAlarm(this.getChallengeAlarm())
+			.balanceAlarm(this.getBalanceAlarm())
+			.smallAcountAlarm(this.getSmallAcountAlarm())
 			.build();
 	}
 }

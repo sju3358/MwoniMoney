@@ -14,6 +14,4 @@ public interface ChildrenService {
 
 	void removeChild(String parentUUID, String childUUID);
 
-	boolean isMyParent(String parentUUID, String childUUID);
-
 }
