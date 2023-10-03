@@ -7,30 +7,28 @@ import { recoilPersist } from "recoil-persist";
 // });
 
 interface newLoan {
-  childUuid: string;
-  title: string; //대출명
-  memo: string; //내용
-  debt: number; //대출금
-  endTime: string; //상환날짜
-  everykey: string; //매달,매주
-  everyvalue: string; //string or number
+  borrowerUUID: string;
+  status: string;
+  name: string; //대출명
+  content: string; //내용
+  amount: number; //대출금
+  deadline: string; //상환날짜
   rate: number; //대출금리
-  status: number;
+  // everykey: string; //매달,매주
+  // everyvalue: string; //string or number
 }
 
 //input에서 넣은 post용 데이터
 export const newLoan = atom<newLoan>({
   key: "new_loan",
   default: {
-    childUuid: "",
-    title: "",
-    memo: "",
-    debt: 0,
-    endTime: "",
-    everykey: "",
-    everyvalue: "",
+    borrowerUUID: "",
+    status: "",
+    name: "",
+    content: "",
+    amount: 0,
+    deadline: "",
     rate: 0,
-    status: 0,
   },
   // effects_UNSTABLE: [persistAtom],
 });
@@ -106,13 +104,13 @@ export const isButtonLoan = atom<boolean>({
 });
 
 //챌린지 카테고리 버튼이 클릭되어있는지
-export const isCategoryloan = atom<boolean>({
+export const isCategoryLoan = atom<boolean>({
   key: "is_category_loan",
   default: false,
 });
 
 //챌린지 카테고리 버튼이 클릭되어있는지
-export const whichCategoryLoan = atom<number>({
+export const whichCategoryLoan = atom<string>({
   key: "which_category_loan",
-  default: -1,
+  default: "",
 });
