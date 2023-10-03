@@ -18,7 +18,7 @@ with open("secret.json") as secret_file:
     secret = json.load(secret_file)
 os.environ["OPENAI_API_KEY"] = secret.get("OPENAI_API_KEY")
 
-@api_view(['POST'])
+@api_view(['GET'])
 def answer(request):
     question = request.data.get('question')
     birthYear = request.data.get('birthYear')
