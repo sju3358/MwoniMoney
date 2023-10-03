@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class LoanService {
 
     private final LoanRepository loanRepository;
@@ -61,5 +61,13 @@ public class LoanService {
         else if(loanListRequestStatus == LoanListRequestStatus.REJECTION) return LoanStatus.REJECTION;
         else if(loanListRequestStatus == LoanListRequestStatus.WATING) return LoanStatus.WATING;
         return null;
+    }
+
+    public void changeStatus(Loan loan, LoanStatus status){
+        loan.changeStatus(status);
+    }
+
+    public void changeAmount(Loan loan, int amount){
+        loan.changeAmount(amount);
     }
 }
