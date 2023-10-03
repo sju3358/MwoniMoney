@@ -97,7 +97,8 @@ public abstract class Member extends CommonEntity {
 
 	protected Member(int status, String memberUUID, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
-		String socialId, String email, MemberRole memberRole) {
+		String socialId, String email, MemberRole memberRole, String challengeAlarm, String balanceAlarm,
+		String smallAcountAlarm) {
 		if (memberUUID == null || memberUUID.isEmpty())
 			this.uuid = UUID.randomUUID().toString();
 		else
@@ -110,6 +111,9 @@ public abstract class Member extends CommonEntity {
 		this.socialId = socialId;
 		this.email = email;
 		this.memberRole = memberRole;
+		this.challengeAlarm = challengeAlarm;
+		this.balanceAlarm = balanceAlarm;
+		this.smallAcountAlarm = smallAcountAlarm;
 	}
 
 	public MemberDto convertToDto() {
