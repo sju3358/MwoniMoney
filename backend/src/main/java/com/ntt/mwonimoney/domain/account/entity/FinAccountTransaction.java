@@ -32,7 +32,7 @@ public class FinAccountTransaction extends CommonEntity {
     private LocalDateTime time;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fin_account_idx")
+    @JoinColumn(name = "fin_account_id")
     private FinAccount finAccount;
 
     @Builder
@@ -46,6 +46,6 @@ public class FinAccountTransaction extends CommonEntity {
 
     public void addFinAccount(FinAccount finAccount){
         this.finAccount = finAccount;
-//        finAccount.addFinAccountTransaction(this);
+        finAccount.addFinAccountTransaction(this);
     }
 }
