@@ -124,4 +124,22 @@ public abstract class Member extends CommonEntity {
 		this.FCMToken = FCMToken;
 	}
 
+	public void updateAlarm(String alarmName) {
+		if (alarmName.equals("challengeAlarm")) {
+			if (this.challengeAlarm.equals("Y"))
+				this.challengeAlarm = "N";
+			else
+				this.challengeAlarm = "Y";
+		} else if (alarmName.equals("balanceAlarm")) {
+			if (this.balanceAlarm.equals("Y"))
+				this.balanceAlarm = "N";
+			else
+				this.balanceAlarm = "Y";
+		} else if (alarmName.equals("smallAcountAlarm")) {
+			if (this.smallAcountAlarm.equals("Y"))
+				this.smallAcountAlarm = "N";
+			else
+				this.smallAcountAlarm = "Y";
+		}
+	}
 }
