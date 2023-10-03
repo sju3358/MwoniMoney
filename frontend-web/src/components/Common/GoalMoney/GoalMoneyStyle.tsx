@@ -88,6 +88,7 @@ function InputList(props: InputListProps) {
       ...goalMoney,
       [id]: inputValue,
     }));
+    console.log(goalMoney);
     setGoalCheck((prevGoalCheck) => ({
       ...prevGoalCheck,
       [`${id}Check`]: true, // Update the specific property you want
