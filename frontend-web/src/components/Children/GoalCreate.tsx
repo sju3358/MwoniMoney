@@ -3,7 +3,7 @@ import GoalCreate from "../../assests/image/GoalCreate.png";
 import { Text, TextBox } from "../Common/About/AboutText";
 import { Img, ImgBox } from "../../components/Common/About/AboutEmogi";
 import { Container } from "../Common/About/AboutContainer";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userAccountState } from "../../states/UserInfoState";
 import { GoalMoneyState } from "../../states/GoalMoneyState";
@@ -31,6 +31,8 @@ export default function CreatGoal() {
     setOpen(true);
   };
 
+  console.log(goalMoney);
+
   // axios 날리는
   const handleAxios = () => {
     const jsonData = {
@@ -38,6 +40,8 @@ export default function CreatGoal() {
       goalMoney: goalMoney.goalMoney,
       saveRatio: goalMoney.saveRatio,
     };
+    // console.log(jsonData);
+    // console.log(goalMoney.goalName);
 
     const formData = new FormData();
     formData.append(
@@ -52,18 +56,19 @@ export default function CreatGoal() {
 
     // FormData에 추가
     formData.append("image", blob, "img.jpg");
-    console.log(formData.get("image"));
 
-    // console.log(formData);
-    // console.log("image 출력");
+    console.log(formData);
+    // console.log(formData.get("image"));
 
     api_ver2
-      .post("v1/members/small-account", formData, {
+      .post(
+        "v1/accounts/small-account",
+        formData
         // headers: {
         // "Contest-Type": "multipart/form-data",
         // Authorization: "Bearer " + localStorage.getItem("token"),
         // },
-      })
+      )
       .then((response) => {
         alert("짜금통을 생성했습니다.");
         navigate("/GoalMoney");

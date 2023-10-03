@@ -24,7 +24,7 @@ function InputInfo({ title, info, placeholder, id }: InputImfoProps) {
       try {
         const response = await api.get("v1/members", {});
         const receivedData = response.data;
-        console.log(receivedData.email);
+        // console.log(receivedData.email);
         setUserData((prev) => ({
           ...prev,
           status: receivedData.member_status,
