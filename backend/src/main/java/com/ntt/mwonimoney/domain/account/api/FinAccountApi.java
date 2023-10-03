@@ -172,22 +172,22 @@ public class FinAccountApi {
 
 		// 2. 계좌가 없는 경우 save
 		// 2-1. 예치금 관리용 가상계좌 발급
-		NHApiRequestHeader openVirtualAccountHeader = NHApiRequestHeader.builder()
-			.ApiNm("OpenVirtualAccount")
-			.IsTuno(nhApiService.istunoGenerator())
-			.build();
-
-		NHOpenVirtualAccountRequest openVirtualAccountRequest = NHOpenVirtualAccountRequest.builder()
-			.requestHeader(openVirtualAccountHeader)
-			.Dpnm(memberInfo.getName())
-			.build();
-
-		NHOpenVirtualAccountResponse openVirtualAccountResponse = nhApiService.getOpenVirtualAccount(
-			openVirtualAccountRequest);
+//		NHApiRequestHeader openVirtualAccountHeader = NHApiRequestHeader.builder()
+//			.ApiNm("OpenVirtualAccount")
+//			.IsTuno(nhApiService.istunoGenerator())
+//			.build();
+//
+//		NHOpenVirtualAccountRequest openVirtualAccountRequest = NHOpenVirtualAccountRequest.builder()
+//			.requestHeader(openVirtualAccountHeader)
+//			.Dpnm(memberInfo.getName())
+//			.build();
+//
+//		NHOpenVirtualAccountResponse openVirtualAccountResponse = nhApiService.getOpenVirtualAccount(
+//			openVirtualAccountRequest);
 
         // 2-2. 짜금통 계좌로 저장
         FinAccount finAccount = FinAccount.builder()
-				.number(openVirtualAccountResponse.getVran())
+//				.number(openVirtualAccountResponse.getVran())
 				.finAcno("")
 				.status(FinAccountStatus.ACTIVATE)
 				.type(FinAccountType.SMALL)
