@@ -143,4 +143,14 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 			return Optional.of(memberRoleChanged);
 		}
 	}
+
+	@Override
+	public Long findMemberIdxByUuid(String memberUUID) {
+		return jpaQueryFactory
+			.select(member.idx)
+			.from(member)
+			.where(member.uuid.eq(memberUUID))
+			.fetchOne();
+
+	}
 }
