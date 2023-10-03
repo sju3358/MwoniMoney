@@ -20,3 +20,4 @@ public class FinAccountDto {
 
 	private FinAccountType type;
 }
+
