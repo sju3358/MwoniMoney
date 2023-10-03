@@ -104,7 +104,7 @@ public class ChallengeService {
 
 	//자식
 	// 자식 챌린지 생성
-	public MemberChallengeResponseDto proposeChallenge(ChallengeRequestDto challengeRequestDto, Long parentIdx,
+	public MemberChallengeResponseDto proposeChallenge(ChallengeRequestDto challengeRequestDto,
 		Long childIdx) {
 		//카테고리번호 조회
 		Challenge challenge = challengeRepository.findChallenge(challengeRequestDto.getTitle(),
