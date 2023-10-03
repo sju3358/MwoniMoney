@@ -118,6 +118,7 @@ public class Child extends Member {
 			.challengeAlarm(this.getChallengeAlarm())
 			.balanceAlarm(this.getBalanceAlarm())
 			.smallAcountAlarm(this.getSmallAcountAlarm())
+			.email(this.getEmail())
 			.build();
 	}
 
