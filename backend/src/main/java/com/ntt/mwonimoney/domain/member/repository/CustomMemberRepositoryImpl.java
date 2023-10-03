@@ -125,9 +125,7 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 					.challengeAlarm("Y")
 					.smallAcountAlarm("Y")
 					.build();
-			}
-
-			if (memberRole.equals(MemberRole.PARENT)) {
+			} else if (memberRole.equals(MemberRole.PARENT)) {
 				memberRoleChanged = Parent.builder()
 					.status(1)
 					.uuid(result.getUuid())
@@ -141,6 +139,9 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 					.challengeAlarm("Y")
 					.smallAcountAlarm("Y")
 					.build();
+			} else {
+				throw new IllegalArgumentException(
+					result.getMemberRole().name() + "에서 " + memberRoleChanged.getMemberRole() + "으로 변경 불가능합니다.");
 			}
 
 			em.remove(result);
