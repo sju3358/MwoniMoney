@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import styled from "styled-components";
 
 interface BtnProps {
@@ -27,11 +27,25 @@ interface ButtonProps {
   height?: string;
   backcolor?: string;
   fontS?: string;
+  click?: MouseEventHandler<HTMLDivElement>;
 }
 
-function Button({ content, width, height, backcolor, fontS }: ButtonProps) {
+function Button({
+  content,
+  width,
+  height,
+  backcolor,
+  fontS,
+  click,
+}: ButtonProps) {
   return (
-    <Btn width={width} height={height} backcolor={backcolor} fontS={fontS}>
+    <Btn
+      width={width}
+      height={height}
+      backcolor={backcolor}
+      fontS={fontS}
+      onClick={click}
+    >
       {content}
     </Btn>
   );

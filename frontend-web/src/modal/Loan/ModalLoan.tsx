@@ -116,51 +116,63 @@ const ModalLoan: React.FC<ModalProps> = ({
   const [isProposeState, setisProposeState] = useRecoilState(isProposeLoan);
 
   const handleSubmit = () => {
-    if (newLoanData.title.length < 1) {
+    if (newLoanData.name.length < 1) {
       alert("대출명이 없습니다.");
       return;
     }
-    if (newLoanData.memo.length < 1) {
+    if (newLoanData.content.length < 1) {
       alert("내용이 없습니다.");
       return;
     }
-    if (newLoanData.debt < 100) {
+    if (newLoanData.amount < 100) {
       alert("100원보다 크게 설정해주세요");
       return;
     }
-    if (newLoanData.endTime.length < 1) {
+    if (newLoanData.deadline.length < 1) {
       alert("마감기한이 없습니다.");
       return;
     }
-    if (newLoanData.everykey.length < 1) {
-      alert("매달, 매주를 선택해주세요");
-      return;
-    }
-    if (newLoanData.everyvalue.length < 1) {
-      alert("날을 선택해주세요");
-      return;
-    }
+    // if (newLoanData.everykey.length < 1) {
+    //   alert("매달, 매주를 선택해주세요");
+    //   return;
+    // }
+    // if (newLoanData.everyvalue.length < 1) {
+    //   alert("날을 선택해주세요");
+    //   return;
+    // }
     if (newLoanData.rate < 0.1) {
       alert("대출금리를 0.1보다 크게 선택해주세요");
       return;
     }
 
     // NewLoanData에 uuid랑 status설정하기
+    /**
+     * 자식 uuid
+     */
+    let ChildUuid: string | null = null;
+    const childStateString: string | null = localStorage.getItem("childState");
+
+    if (childStateString !== null) {
+      const childState = JSON.parse(childStateString);
+      ChildUuid = childState.childDataState.uuid;
+      console.log(ChildUuid);
+    } else {
+      console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
+    }
+
     const PostData = {
-      childUuid: "none",
-      title: newLoanData.title,
-      memo: newLoanData.memo,
-      debt: newLoanData.debt,
-      endTime: new Date(newLoanData.endTime).toISOString(),
-      everykey: newLoanData.everykey,
-      everyvalue: newLoanData.everyvalue,
+      borrowerUUID: ChildUuid,
+      status: "WATING",
+      name: newLoanData.name,
+      content: newLoanData.content,
+      amount: newLoanData.amount,
+      deadline: new Date(newLoanData.deadline).toISOString(),
       rate: newLoanData.rate,
-      status: 0,
     };
     console.log(PostData);
 
     api
-      .post("", PostData)
+      .post("/v1/loans", PostData)
       .then((response) => {
         // 성공적으로 요청이 완료된 경우 처리할 로직
         console.log("POST 요청 성공:", response.data);
@@ -199,15 +211,13 @@ const ModalLoan: React.FC<ModalProps> = ({
   //NewLoanData 초기화하기
   const handleClearNewLoan = () => {
     setNewLoanData({
-      childUuid: "",
-      title: "",
-      memo: "",
-      debt: 0,
-      endTime: "",
-      everykey: "",
-      everyvalue: "",
+      borrowerUUID: "",
+      status: "",
+      name: "",
+      content: "",
+      amount: 0,
+      deadline: "",
       rate: 0,
-      status: 0,
     });
   };
 
