@@ -6,7 +6,7 @@ import { Container } from "../About/AboutContainer";
 import { EmogiBox } from "../About/AboutEmogi";
 import { TextBox, Text } from "../About/AboutText";
 
-function Chatbot() {
+function ChatbotLink() {
   const navigate = useNavigate();
   const goQr = () => {
     navigate("/Qr");
@@ -31,4 +31,4 @@ function Chatbot() {
   );
 }
 
-export default Chatbot;
+export default ChatbotLink;
