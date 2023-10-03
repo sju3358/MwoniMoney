@@ -8,6 +8,7 @@ import lombok.*;
 @Builder
 public class LoanListRequestDto {
     private LoanListRequestStatus loanListRequestStatus;
-    private MemberType memberType;
-    private Long memberIdx;
+    private LoanMemberType loanMemberType;
+    private PageToScroll pageToScroll;
+    private String childUUID;
 }

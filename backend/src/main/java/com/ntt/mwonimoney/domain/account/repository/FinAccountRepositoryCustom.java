@@ -9,5 +9,4 @@ import java.util.Optional;
 
 public interface FinAccountRepositoryCustom {
     public Optional<FinAccount> findFinAccountByMemberAndType(Long memberIdx, FinAccountType finAccountType);
-
 }

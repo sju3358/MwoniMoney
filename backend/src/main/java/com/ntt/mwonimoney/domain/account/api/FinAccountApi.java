@@ -9,9 +9,7 @@ import com.ntt.mwonimoney.domain.account.entity.FinAccountType;
 import com.ntt.mwonimoney.domain.account.model.dto.*;
 import com.ntt.mwonimoney.domain.account.service.FinAccountTransactionService;
 import com.ntt.mwonimoney.domain.account.service.NHApiService;
-import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
-import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
 import com.ntt.mwonimoney.domain.member.service.MemberService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +25,6 @@ import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -45,26 +42,20 @@ public class FinAccountApi {
     private final FinAccountTransactionService finAccountTransactionService;
 
     @GetMapping("/accounts")
-    public ResponseEntity getFinAccount(@RequestHeader("Authorization") String accessToken) {
+    public ResponseEntity getFinAccount(@RequestHeader("Authorization") String accessToken, @RequestParam(name = "type", required = true) String type) {
 //        // 1. 사용자 정보를 body에서 꺼냄
         String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
         Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
+        FinAccountType finAccountType = FinAccountType.valueOf(type);
+
+        Optional<FinAccount> finAccount = null;
 //        // 2. 사용자의 계좌를 조회
-        Optional<FinAccount> finAccount = finAccountService.getFinAccountByMemberAndType(memberIdx, FinAccountType.GENERAL);
-
-        return ResponseEntity.ok().body(finAccount);
-    }
-
-
-    @GetMapping("/accounts/small-account")
-    public ResponseEntity getSmallAccount(@RequestHeader("Authorization") String accessToken) {
-        // 1. 사용자 정보를 body에서 꺼냄
-        String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
-        Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
-
-        // 2. 사용자의 짜금통 계좌를 조회
-        Optional<FinAccount> finAccount = finAccountService.getFinAccountByMemberAndType(memberIdx, FinAccountType.SMALL);
+        if(finAccountType == FinAccountType.GENERAL){
+            finAccount = finAccountService.getFinAccountByMemberAndType(memberIdx, FinAccountType.GENERAL);
+        }else{
+            finAccount = finAccountService.getFinAccountByMemberAndType(memberIdx, FinAccountType.SMALL);
+        }
 
         return ResponseEntity.ok().body(finAccount);
     }
@@ -135,7 +126,7 @@ public class FinAccountApi {
                     .type(FinAccountType.GENERAL)
                     .build();
         }
-        finAccountService.saveFinAccount(newFinAccount);
+        finAccountService.save(newFinAccount);
 
         return ResponseEntity.ok().build();
     }
@@ -148,8 +139,8 @@ public class FinAccountApi {
         MemberDto memberInfo = memberService.getMemberInfo(memberIdx);
 
         // 1. 계좌가 있는 경우 error
-        Optional<FinAccount> smallAccount = finAccountService.getFinAccountByMemberAndType(memberIdx, FinAccountType.SMALL);
-        if(smallAccount.isPresent()){
+        Optional<FinAccount> smallAccountBefo = finAccountService.getFinAccountByMemberAndType(memberIdx, FinAccountType.SMALL);
+        if(smallAccountBefo.isPresent()){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
@@ -168,7 +159,8 @@ public class FinAccountApi {
         NHOpenVirtualAccountResponse openVirtualAccountResponse = nhApiService.getOpenVirtualAccount(openVirtualAccountRequest);
 
         // 2-2. 짜금통 계좌로 저장
-        finAccountService.saveSmallAccount(openVirtualAccountResponse);
+        FinAccount smallAccount = FinAccount.builder().build();
+        finAccountService.save(smallAccount);
 
         return ResponseEntity.ok().build();
     }
