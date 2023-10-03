@@ -38,7 +38,7 @@ public class LoanApi {
 
         // 돈 빌려준 사람(부모)의 경우
         if(loanMemberType == LoanMemberType.LENDER){
-            childIdx = memberAuthService.getMemberAuthInfo(loanListRequestDto.getChildUUID()).getMemberIdx();
+            childIdx = memberService.getMemberIdx(loanListRequestDto.getChildUUID());
         }else{
             String childUUID = jwtTokenProvider.getMemberUUID(accessToken);
             childIdx = memberAuthService.getMemberAuthInfo(childUUID).getMemberIdx();
