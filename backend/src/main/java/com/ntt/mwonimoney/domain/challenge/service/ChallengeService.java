@@ -13,7 +13,7 @@ import com.ntt.mwonimoney.domain.challenge.api.request.ChallengeRequestDto;
 import com.ntt.mwonimoney.domain.challenge.api.response.MemberChallengeResponseDto;
 import com.ntt.mwonimoney.domain.challenge.entity.Challenge;
 import com.ntt.mwonimoney.domain.challenge.entity.MemberChallenge;
-import com.ntt.mwonimoney.domain.challenge.repository.ChallengeRepositiry;
+import com.ntt.mwonimoney.domain.challenge.repository.ChallengeRepository;
 import com.ntt.mwonimoney.domain.challenge.repository.MemberChallengeRepository;
 import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(readOnly = true)
 @Slf4j
 public class ChallengeService {
-	private final ChallengeRepositiry challengeRepository;
+	private final ChallengeRepository challengeRepository;
 	private final MemberChallengeRepository memberChallengeRepository;
 	private final MemberRepository memberRepository;
 
