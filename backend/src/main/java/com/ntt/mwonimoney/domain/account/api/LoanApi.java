@@ -52,7 +52,7 @@ public class LoanApi {
     @GetMapping("/loans/{loanIdx}")
     public ResponseEntity getLoan(@RequestHeader("Authorization") String accessToken, @PathVariable Long loanIdx){
         Loan loan = loanService.findById(loanIdx).orElseThrow();
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(loan);
     }
 
     @PostMapping("/loans")
