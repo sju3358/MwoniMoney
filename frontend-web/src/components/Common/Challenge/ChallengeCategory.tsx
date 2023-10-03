@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 //recoil
@@ -41,14 +41,41 @@ export const Category = styled.div<CategoryProps>`
   font-weight: bold;
 `;
 
+interface CategoryBtnProps {
+  backcolor: string;
+  width: string;
+  isActive: boolean;
+}
+export const CategoryBtn = styled.button<CategoryBtnProps>`
+  // 그림자
+  // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  border: ${(props) => (props.isActive ? "none" : "1px solid #BBBBBB")};
+  width: ${(props) => props.width};
+  height: 60%;
+  border-top-left-radius: 20% 40%;
+  border-top-right-radius: 20% 40%;
+  border-bottom-left-radius: 20% 40%;
+  border-bottom-right-radius: 20% 40%;
+  background-color: ${(props) => (props.isActive ? props.backcolor : "white")};
+  margin-right: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+`;
+
 function ChallengeCategory() {
   const [isCategoryState, setisCategoryState] =
     useRecoilState(isCategoryChallenge);
   const [whichCategoryState, setwhichCategoryState] = useRecoilState(
     whichCategoryChallenge
   );
+  //선택된 버튼 비활
+  const [activeButton, setActiveButton] = useState("all");
+
   const handleSearch = (searchString: string) => {
     setisCategoryState(true);
+    setActiveButton(searchString);
 
     let status;
     switch (searchString) {
@@ -71,27 +98,30 @@ function ChallengeCategory() {
   };
   return (
     <CategoryContainer>
-      <Category
+      <CategoryBtn
         backcolor="#ffffff"
         width="20%"
+        isActive={activeButton === "all"}
         onClick={() => handleSearch("all")}
       >
         모두
-      </Category>
-      <Category
+      </CategoryBtn>
+      <CategoryBtn
         backcolor="#fcdf92"
         width="20%"
+        isActive={activeButton === "ing"}
         onClick={() => handleSearch("ing")}
       >
         진행중
-      </Category>
-      <Category
+      </CategoryBtn>
+      <CategoryBtn
         backcolor="#d1d1d1"
         width="20%"
+        isActive={activeButton === "propose"}
         onClick={() => handleSearch("propose")}
       >
         제안대기
-      </Category>
+      </CategoryBtn>
     </CategoryContainer>
   );
 }

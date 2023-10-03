@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "../About/AboutContainer";
 import LoanProposal from "../../../modal/LoanProposal";
-import {ModalBody3} from "../../../modal/ModalImg";
+import ModalLoan from "../../../modal/Loan/ModalLoan";
 import { EmogiBox } from "../History";
 import AddChildImg from "../../../assests/image/AddBox.png";
 
@@ -19,7 +19,7 @@ function LoanAdd() {
       >
         <EmogiBox backImg={AddChildImg} width="100%" height="100%" />
       </button>
-      <ModalBody3
+      <ModalLoan
         useState_open={open}
         set_open={setOpen}
         modal_title="챌린지 만들기"

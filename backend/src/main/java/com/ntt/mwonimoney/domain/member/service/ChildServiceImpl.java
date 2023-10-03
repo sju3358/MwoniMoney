@@ -91,4 +91,16 @@ public class ChildServiceImpl implements ChildService {
 			.orElseThrow(() -> new NoSuchElementException("부모가 아닙니다"));
 	}
 
+	@Override
+	@Transactional
+	public void changeChildCreditScore(String childUUID, int scoreToAdd) {
+		Member child = memberRepository.findMemberByUuid(childUUID)
+			.orElseThrow(() -> new NoSuchElementException("회원 정보가 존재하지 않습니다"));
+
+		if (child.getMemberRole().equals(MemberRole.CHILD) != true)
+			throw new IllegalArgumentException("자녀 회원만 변경 가능합니다");
+
+		((Child)child).changeCreditScore(scoreToAdd);
+	}
+
 }

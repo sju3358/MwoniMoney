@@ -255,10 +255,10 @@ function ChallengeList({ data }: Props) {
         </CategoryTag>
         <DeadLine> ~ {dateFormat(data.endTime)}</DeadLine>
       </ListTitle>
-
-      {/* {role === "CHILD" ? ( */}
+      {/* <Text fontsize="1rem" marginL="5%">
+        보상 : {data.reward}원
+      </Text> */}
       {role === "PARENT" ? (
-        //PARENT
         <>
           {(data.status === 0 ||
             data.status === 3 ||

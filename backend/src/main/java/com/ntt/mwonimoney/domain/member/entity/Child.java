@@ -40,6 +40,17 @@ public class Child extends Member {
 		this.smallAccount = accountInfo;
 	}
 
+	public void changeCreditScore(int creditScoreToAdd) {
+		int nextCreditScore = this.creditScore + creditScoreToAdd;
+
+		if (0 <= nextCreditScore && nextCreditScore <= 100)
+			this.creditScore = nextCreditScore;
+		else if (nextCreditScore < 0)
+			throw new IllegalArgumentException("신용등급의 최저 점수는 0점입니다");
+		else if (nextCreditScore > 100)
+			throw new IllegalArgumentException("신용등급의 최저 점수는 100점입니다");
+	}
+
 	public void deleteSmallAccount() {
 		this.smallAccount = null;
 	}

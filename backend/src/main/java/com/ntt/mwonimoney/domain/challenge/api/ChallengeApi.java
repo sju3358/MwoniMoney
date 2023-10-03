@@ -18,6 +18,7 @@ import com.ntt.mwonimoney.domain.challenge.api.request.ChallengeRequestDto;
 import com.ntt.mwonimoney.domain.challenge.api.response.MemberChallengeResponseDto;
 import com.ntt.mwonimoney.domain.challenge.service.ChallengeService;
 import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
+import com.ntt.mwonimoney.domain.member.service.MemberService;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class ChallengeApi {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final MemberAuthService memberAuthService;
 	private final ChallengeService challengeService;
+	private final MemberService memberService;
 
 	/**
 	 * 부모
@@ -133,8 +135,7 @@ public class ChallengeApi {
 			log.info("memberIdx : {}", memberIdx);
 		} else {
 			//accessToken은 부모꺼, extramemberUuid == 자식Uuid
-			memberIdx = memberAuthService.getMemberAuthInfo(extramemberUuid)
-				.getMemberIdx();
+			memberIdx = memberService.getMemberIdx(extramemberUuid);
 		}
 
 		log.info("서비스 시작");
@@ -144,3 +145,5 @@ public class ChallengeApi {
 		return ResponseEntity.ok().body(responseData);
 	}
 }
+
+
