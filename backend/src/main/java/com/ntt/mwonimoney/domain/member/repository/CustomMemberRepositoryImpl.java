@@ -5,6 +5,7 @@ import static com.ntt.mwonimoney.domain.member.entity.QMember.*;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ntt.mwonimoney.domain.member.entity.Child;
 import com.ntt.mwonimoney.domain.member.entity.Guest;
@@ -96,6 +97,7 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 	}
 
 	@Override
+	@Transactional
 	public Optional<Member> changeAndSaveMemberRole(Long memberIdx, MemberRole memberRole) {
 		Member result = jpaQueryFactory
 			.select(member)
@@ -110,7 +112,7 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 			Member memberRoleChanged = null;
 			if (memberRole.equals(MemberRole.CHILD)) {
 				memberRoleChanged = Child.builder()
-					.status(1)
+					.status(result.getStatus())
 					.uuid(result.getUuid())
 					.name(result.getName())
 					.nickname(result.getNickname())
@@ -125,11 +127,9 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 					.challengeAlarm("Y")
 					.smallAcountAlarm("Y")
 					.build();
-			}
-
-			if (memberRole.equals(MemberRole.PARENT)) {
+			} else if (memberRole.equals(MemberRole.PARENT)) {
 				memberRoleChanged = Parent.builder()
-					.status(1)
+					.status(result.getStatus())
 					.uuid(result.getUuid())
 					.name(result.getName())
 					.nickname(result.getNickname())
@@ -141,6 +141,9 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 					.challengeAlarm("Y")
 					.smallAcountAlarm("Y")
 					.build();
+			} else {
+				throw new IllegalArgumentException(
+					result.getMemberRole().name() + "에서 " + memberRoleChanged.getMemberRole() + "으로 변경 불가능합니다.");
 			}
 
 			em.remove(result);

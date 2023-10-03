@@ -30,4 +30,6 @@ public abstract class MemberDto {
 
 	private String smallAcountAlarm;
 
+	private String email;
+
 }

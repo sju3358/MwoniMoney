@@ -32,6 +32,7 @@ public class Guest extends Member {
 			.birthday(this.getBirthday())
 			.socialProvider(this.getSocialProvider())
 			.memberRole(this.getMemberRole())
+			.email(this.getEmail())
 			.build();
 	}
 }
