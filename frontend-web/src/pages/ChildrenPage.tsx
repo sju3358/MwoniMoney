@@ -22,7 +22,7 @@ import { userDataState } from "../states/UserInfoState";
 import { useNavigate } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import api from "../apis/Api";
-import Chatbot from "../components/Common/Main/Chatbot";
+import ChatbotLink from "../components/Common/Main/ChatbotLink";
 
 export const getBalance = (): Promise<AxiosResponse> => {
   // axios 요청을 보낼 때 Authorization 헤더 설정
@@ -139,7 +139,7 @@ function ChildrenPage() {
         <Quiz />
       </Container>
       <Container height="30%">
-        <Chatbot />
+        <ChatbotLink />
       </Container>
       <Container height="50%" flexDirection="column">
         <Container height="30%">
