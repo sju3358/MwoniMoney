@@ -324,16 +324,7 @@ public class FinAccountApi {
 		FinAccountTransaction finAccountTransactionToUpdate = finAccountTransactionService.findById(transactionIdx)
 			.orElseThrow();
 
-		FinAccountTransaction finAccountTransactionUpdated = FinAccountTransaction.builder()
-			.id(finAccountTransactionToUpdate.getId())
-			.money(finAccountTransactionToUpdate.getMoney())
-			.balance(finAccountTransactionToUpdate.getBalance())
-			.memo(memoToUpdate)
-			.time(finAccountTransactionToUpdate.getTime())
-			.build();
-		finAccountTransactionUpdated.addFinAccount(finAccountTransactionToUpdate.getFinAccount());
-
-		finAccountTransactionService.save(finAccountTransactionUpdated);
+		finAccountTransactionService.changeMemo(finAccountTransactionToUpdate, memoToUpdate);
 
 		return ResponseEntity.ok().build();
 	}
