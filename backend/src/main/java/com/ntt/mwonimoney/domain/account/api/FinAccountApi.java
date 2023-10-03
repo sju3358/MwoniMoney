@@ -182,8 +182,7 @@ public class FinAccountApi {
 	@PatchMapping("/accounts/small-account/{finAccountIdx}")
 	public ResponseEntity closeSmallAccount(@PathVariable Long finAccountIdx) {
 
-		FinAccount finAccountToUpdate = finAccountService.getFinAccountByIdx(finAccountIdx).orElseThrow();
-		finAccountService.closeSmallAccount(finAccountToUpdate);
+		finAccountService.closeSmallAccount(finAccountIdx);
 
 		return ResponseEntity.ok().build();
 	}
