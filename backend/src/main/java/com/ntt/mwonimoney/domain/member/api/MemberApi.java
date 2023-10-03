@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ntt.mwonimoney.domain.member.api.request.ChangeMemberRoleRequest;
@@ -81,5 +82,15 @@ public class MemberApi {
 
 		return ResponseEntity.ok().build();
 
+	}
+
+	@PatchMapping("/members/alarm")
+	public ResponseEntity changeAlarm(@RequestHeader("Authorization") String accessToken,
+		@RequestParam String alarmName) {
+		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+
+		memberService.changeAlarm(alarmName, memberUUID);
+
+		return ResponseEntity.ok().build();
 	}
 }

@@ -13,4 +13,6 @@ public interface MemberService {
 	public void editMember(MemberInfoChangeRequest request, Long memberIdx);
 
 	public void changeMemberRole(String memberUUID, MemberRole memberRole);
+
+	public void changeAlarm(String alarmName, String memberUuid);
 }
