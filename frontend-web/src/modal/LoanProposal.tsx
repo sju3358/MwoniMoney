@@ -79,38 +79,42 @@ export const InputDateInfo = styled.input`
 function LoanProposal() {
   const [newLoanData, setNewLoanData] = useRecoilState(newLoan);
 
-  const [selectedFrequency, setSelectedFrequency] = React.useState(""); // 첫 번째 SelectBox의 선택한 값
-  const [selectedDay, setSelectedDay] = React.useState(""); // 두 번째 SelectBox의 선택한 값
+  // const [selectedFrequency, setSelectedFrequency] = React.useState(""); // 첫 번째 SelectBox의 선택한 값
+  // const [selectedDay, setSelectedDay] = React.useState(""); // 두 번째 SelectBox의 선택한 값
 
-  const handleFrequencyChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setSelectedFrequency(event.target.value);
-  };
+  // const handleFrequencyChange = (
+  //   event: React.ChangeEvent<HTMLSelectElement>
+  // ) => {
+  //   setSelectedFrequency(event.target.value);
+  // };
 
-  const handleDayChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedDay(event.target.value);
-  };
+  // const handleDayChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  //   setSelectedDay(event.target.value);
+  // };
 
   //input창 handle
   const handleChangeState = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ) => {
     const { name, value } = e.target;
+    setNewLoanData({
+      ...newLoanData,
+      [name]: value,
+    });
 
-    if (name === "everykey") {
-      // 카테고리가 변경되면 해당하는 종류를 설정하고
-      // 종류 옵션도 업데이트
-      setSelectedFrequency("");
-      setSelectedDay("");
-    } else {
-      setNewLoanData({
-        ...newLoanData,
-        [name]: value,
-        everykey: selectedFrequency,
-        everyvalue: selectedDay,
-      });
-    }
+    // if (name === "everykey") {
+    //   // 카테고리가 변경되면 해당하는 종류를 설정하고
+    //   // 종류 옵션도 업데이트
+    //   // setSelectedFrequency("");
+    //   // setSelectedDay("");
+    // } else {
+    //   setNewLoanData({
+    //     ...newLoanData,
+    //     [name]: value,
+    //     // everykey: selectedFrequency,
+    //     // everyvalue: selectedDay,
+    //   });
+    // }
   };
 
   const [minDate, setMinDate] = useState<string>("");
@@ -125,8 +129,8 @@ function LoanProposal() {
       <InputDiv>
         <InputInfo
           type="text"
-          name="title"
-          value={newLoanData.title}
+          name="name"
+          value={newLoanData.name}
           placeholder="대출명"
           onChange={handleChangeState}
         ></InputInfo>
@@ -134,8 +138,8 @@ function LoanProposal() {
       <InputDiv>
         <InputInfo
           type="text"
-          name="memo"
-          value={newLoanData.memo}
+          name="content"
+          value={newLoanData.content}
           placeholder="내용"
           onChange={handleChangeState}
         ></InputInfo>
@@ -143,8 +147,8 @@ function LoanProposal() {
       <InputDiv>
         <InputInfo
           type="number"
-          name="debt"
-          value={newLoanData.debt}
+          name="amount"
+          value={newLoanData.amount}
           placeholder="대출금"
           onChange={handleChangeState}
         />
@@ -152,16 +156,15 @@ function LoanProposal() {
       <InputDiv style={{ alignItems: "center" }}>
         <InputDateInfo
           type="date"
-          name="endTime"
-          value={newLoanData.endTime}
+          name="deadline"
+          value={newLoanData.deadline}
           placeholder="끝나는 날짜를 입력해주세요"
           min={minDate}
           onChange={handleChangeState}
           required
         />
       </InputDiv>
-      <InputDiv>
-        {/* 첫 번째 SelectBox */}
+      {/* <InputDiv>
         <SelectBox
           name="everykey"
           value={selectedFrequency}
@@ -172,7 +175,7 @@ function LoanProposal() {
           <option value="매달">매달</option>
         </SelectBox>
 
-        {/* 두 번째 SelectBox */}
+
         <SelectBox
           name="everyvalue"
           value={selectedDay}
@@ -200,7 +203,7 @@ function LoanProposal() {
             </>
           )}
         </SelectBox>
-      </InputDiv>
+      </InputDiv> */}
       <InputDiv>
         <InputInfo
           type="number"
@@ -212,13 +215,13 @@ function LoanProposal() {
       </InputDiv>
       <>
         <div>확인용</div>
-        <span>{newLoanData.title}</span>
-        <span>{newLoanData.memo}</span>
-        <span>{newLoanData.debt}</span>
-        <span>{newLoanData.endTime}</span>
-        <span>{selectedFrequency}</span>
-        <span>{selectedDay}</span>
+        <span>{newLoanData.name}</span>
+        <span>{newLoanData.content}</span>
+        <span>{newLoanData.amount}</span>
+        <span>{newLoanData.deadline}</span>
         <span>{newLoanData.rate}</span>
+        {/* <span>{selectedFrequency}</span>
+        <span>{selectedDay}</span> */}
       </>
     </ContentBox>
   );
