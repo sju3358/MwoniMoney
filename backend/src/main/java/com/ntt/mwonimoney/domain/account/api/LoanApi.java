@@ -97,22 +97,22 @@ public class LoanApi {
             newAmount = 0;
             newStatus = LoanStatus.PAID;
         }
-        loanToRepay.changeStatus(newStatus);
-        loanToRepay.changeAmount(newAmount);
+        loanService.changeStatus(loanToRepay, newStatus);
+        loanService.changeAmount(loanToRepay, newAmount);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/loans/approval/{loanIdx}")
     public ResponseEntity approveLoan(@RequestHeader("Authorization") String accessToken, @PathVariable Long loanIdx){
         Loan loanToApprove = loanService.findById(loanIdx).orElseThrow();
-        loanToApprove.changeStatus(LoanStatus.APPROVAL);
+        loanService.changeStatus(loanToApprove, LoanStatus.APPROVAL);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/loans/rejection/{loanIdx}")
     public ResponseEntity rejectLoan(@RequestHeader("Authorization") String accessToken, @PathVariable Long loanIdx){
         Loan loanToReject = loanService.findById(loanIdx).orElseThrow();
-        loanToReject.changeStatus(LoanStatus.REJECTION);
+        loanService.changeStatus(loanToReject, LoanStatus.REJECTION);
         return ResponseEntity.ok().build();
     }
 }
