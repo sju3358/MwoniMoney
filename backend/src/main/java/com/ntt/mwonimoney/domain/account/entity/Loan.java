@@ -39,6 +39,9 @@ public class Loan {
     @Column(name = "loan_amount")
     private int amount;
 
+    @Column(name = "loan_balance")
+    private int balance;
+
     @Column(name = "loan_deadline")
     private LocalDateTime deadline;
 
@@ -53,6 +56,7 @@ public class Loan {
         this.name = name;
         this.content = content;
         this.amount = amount;
+        this.balance = 0;
         this.deadline = deadline;
         this.rate = rate;
     }
@@ -61,8 +65,8 @@ public class Loan {
         this.status = status;
     }
 
-    public void changeAmount(int amount){
-        this.amount = amount;
+    public void changeBalacne(int balance){
+        this.balance = balance;
     }
 
 }
