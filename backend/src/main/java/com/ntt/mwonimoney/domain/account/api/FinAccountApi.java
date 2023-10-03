@@ -168,14 +168,22 @@ public class FinAccountApi {
 			openVirtualAccountRequest);
 
         // 2-2. 짜금통 계좌로 저장
-        FinAccount smallAccount = FinAccount.builder().build();
+        FinAccount smallAccount = FinAccount.builder()
+				.number(openVirtualAccountResponse.getVran())
+				.finAcno("")
+				.status(FinAccountStatus.ACTIVATE)
+				.type(FinAccountType.SMALL)
+				.build();
         finAccountService.save(smallAccount);
+
 		return ResponseEntity.ok().build();
 	}
 
 	@PatchMapping("/accounts/small-account/{finAccountIdx}")
 	public ResponseEntity closeSmallAccount(@PathVariable Long finAccountIdx) {
-		finAccountService.closeSmallAccount();
+
+		finAccountService.closeSmallAccount(finAccountIdx);
+
 		return ResponseEntity.ok().build();
 	}
 
