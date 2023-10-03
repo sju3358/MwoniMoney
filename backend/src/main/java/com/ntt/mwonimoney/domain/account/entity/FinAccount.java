@@ -47,12 +47,13 @@ public class FinAccount extends CommonEntity {
 	private List<FinAccountTransaction> finAccountTransactionList = new ArrayList<>();
 
 	@Builder
-	public FinAccount(String number, String finAcno, FinAccountStatus status, FinAccountType type, Long remain){
+	public FinAccount(String number, String finAcno, FinAccountStatus status, FinAccountType type, Long remain, Member member){
 		this.number = number;
 		this.finAcno = finAcno;
 		this.status = status;
 		this.type = type;
 		this.remain = remain;
+		this.member = member;
 	}
 
 	public FinAccountDto convertToDto(){
