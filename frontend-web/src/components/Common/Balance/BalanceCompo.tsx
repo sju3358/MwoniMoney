@@ -102,14 +102,14 @@ function BalanceCompo({
       </Container>
       <WhiteBox1 height="75%" marginB="5%" flexDirection="column">
         <Container height="10%" justifyContent="end">
-          {showImg && (
+          {showImg ? (
             <EmogiBox
               backImg={`${LeftArrow}`}
               width="7%"
               height="100%"
-              onClick={navigateClick} // Call navigateClick 함수
+              onClick={navigateClick}
             />
-          )}
+          ) : null}
         </Container>
         <Container height="53%" flexDirection="column">
           <EmogiBox backImg={`${Newspaper}`} width="45%" height="100%" />
