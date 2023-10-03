@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class CreateLoanRequest {
-    private Long borrower;
+    private String borrowerUUID;
     private LoanStatus status;
     private String name;
     private String content;
