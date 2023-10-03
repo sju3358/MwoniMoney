@@ -4,7 +4,6 @@ package com.ntt.mwonimoney.domain.account.api;
 import com.ntt.mwonimoney.domain.account.api.request.*;
 import com.ntt.mwonimoney.domain.account.api.response.NHApiCheckOpenFinAccountDirectResponse;
 import com.ntt.mwonimoney.domain.account.api.response.NHApiOpenFinAccountDirectResponse;
-import com.ntt.mwonimoney.domain.account.api.response.NHOpenVirtualAccountResponse;
 import com.ntt.mwonimoney.domain.account.entity.*;
 import com.ntt.mwonimoney.domain.account.model.dto.*;
 import com.ntt.mwonimoney.domain.account.service.FinAccountService;
@@ -21,9 +20,6 @@ import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -283,7 +279,7 @@ public class FinAccountApi {
 //	}
 
 	@GetMapping("/accounts/transactions")
-	public ResponseEntity<List<FinAccountTransactionDto>> getTransactionList(@RequestHeader("Authorization") String accessToken, @RequestBody FinAccountTransactionListRequest request) {
+	public ResponseEntity<List<FinAccountTransactionDto2>> getTransactionList(@RequestHeader("Authorization") String accessToken, @RequestBody FinAccountTransactionListRequest request) {
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
@@ -299,7 +295,7 @@ public class FinAccountApi {
 				.where(QFinAccountTransaction.finAccountTransaction.finAccount.idx.eq(finAccountIdx))
 				.fetch();
 
-		List<FinAccountTransactionDto> result = list.stream().map(transaction -> FinAccountTransactionDto.builder()
+		List<FinAccountTransactionDto2> result = list.stream().map(transaction -> FinAccountTransactionDto2.builder()
 						.money(transaction.getMoney())
 						.balance(transaction.getBalance())
 						.memo(transaction.getMemo())

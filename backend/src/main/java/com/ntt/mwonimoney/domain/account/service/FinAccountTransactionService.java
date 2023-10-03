@@ -30,8 +30,13 @@ public class FinAccountTransactionService {
         return finAccountTransactionRepository.findByFinAccountIdx(finAccountIdx, pageable);
     }
 
-    public Slice<FinAccountTransaction> findByFinAccountIdxAndMoneyGreaterThanEqual(Long finAccountIdx, int price, Pageable pageable){
-        return finAccountTransactionRepository.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, price, pageable);
+    public List<FinAccountTransaction> findByFinAccountIdxAndMoneyGreaterThanEqual(Long finAccountIdx, int price, Pageable pageable){
+        return null;
+//        return finAccountTransactionRepository.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, price, pageable);
+    }
+
+    public void changeMemo(FinAccountTransaction finAccountTransaction, String memo){
+        finAccountTransaction.changeMemo(memo);
     }
 
 
