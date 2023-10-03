@@ -106,7 +106,7 @@ const ModalChildrenChallenge: React.FC<ModalProps> = ({
   useState_open,
   set_open,
 }) => {
-  console.log(useState_open + "455654");
+  // console.log(useState_open + "455654");
   const [newChallengeData, setNewChallengeData] = useRecoilState(newChallenge);
   const [isProposeState, setisProposeState] =
     useRecoilState(isProposeChallenge);
