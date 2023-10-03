@@ -35,8 +35,11 @@ function MypageModal() {
         email: userData.email,
         birthday: userData.birthday,
         memberRole: userData.memberRole,
+        // status : s
       });
+      // console.log(email);
       setOpen(false);
+
       alert("axios 성공");
     } catch (error) {
       alert("axios 실패");

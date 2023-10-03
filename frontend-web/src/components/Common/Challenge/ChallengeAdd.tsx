@@ -36,11 +36,11 @@ function ChallengeAdd() {
   const role = userData.memberRole;
 
   const [open, setOpen] = React.useState(false);
-  console.log(open + "33");
+  // console.log(open + "33");
   const handleOpen = (e: any) => {
     e.preventDefault();
     setOpen(true);
-    console.log(open + "111");
+    // console.log(open + "111");
   };
   return (
     <Container height="10%">
