@@ -27,6 +27,7 @@ public class Loan {
     private Long borrower;
 
     @Column(name = "loan_status")
+    @Enumerated(EnumType.STRING)
     private LoanStatus status;
 
     @Column(name = "loan_name")
