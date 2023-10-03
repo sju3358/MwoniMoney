@@ -15,11 +15,17 @@ import Challenge from "../components/Children/Challenge";
 
 //이미지
 import Coin from "../assests/image/main/Coin.png";
+import { useRecoilState } from "recoil";
 
+import { userDataState } from "../states/UserInfoState";
 // 함수
 import { useNavigate } from "react-router-dom";
+import axios, { AxiosResponse } from "axios";
+import api from "../apis/Api";
 
 function ChildrenPage() {
+  const [userData, setUserData] = useRecoilState(userDataState);
+
   const navigate = useNavigate();
   const goBank = () => {
     navigate("/Bank");
@@ -27,7 +33,7 @@ function ChildrenPage() {
   const goMoneyPage = () => {
     navigate("/MoneyPage");
   };
-  const userName = "지현이";
+  const userName = userData.name;
   const asset = "100,000원";
   const debt = "10,000원";
   return (
