@@ -23,6 +23,10 @@ import api from "../../../apis/Api";
 
 import { useNavigate } from "react-router-dom";
 
+//repay
+// import LoanRepay from "./LoanRepay";
+import ModalPayLoan from "../../../modal/Loan/ModalPayLoan";
+
 export const ListBtn = styled.div`
   // border: 1px solid black;
   width: 80%;
@@ -75,19 +79,12 @@ function LoanList({ data }: Props) {
         }
       });
   };
-  const handleRepay = () => {
-    api
-      .patch(`/v1/loans/repay/${LoanIdx}`)
-      .then((response) => {
-        console.log("자식 대출돈 입금");
-        setIsButtonState(true);
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error.response.data === "로그인 되어있지 않습니다.") {
-          navigate("/LoginPage");
-        }
-      });
+
+  /////// Repay모달
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = (e: any) => {
+    e.preventDefault();
+    setOpen(true);
   };
 
   return (
@@ -146,13 +143,26 @@ function LoanList({ data }: Props) {
         ) : (
           <>
             {data.status === "APPROVAL" && (
-              <Button
-                content="돈 갚기"
-                width="50%"
-                fontS="1.2em"
-                height="70%"
-                click={handleRepay}
-              />
+              <>
+                <Button
+                  content="돈 갚기"
+                  width="50%"
+                  fontS="1.2em"
+                  height="70%"
+                  click={handleOpen}
+                />
+                <ModalPayLoan
+                  loanidx={LoanIdx}
+                  balance={data.balance}
+                  useState_open={open}
+                  set_open={setOpen}
+                  modal_title="대출 갚기"
+                  // modal_content={<LoanRepay />}
+                  modal_btn1="생성"
+                  modal_btn2="취소"
+                  btn_justify="space-around"
+                />
+              </>
             )}
             {data.status === "WATING" && (
               <ListBtn>
