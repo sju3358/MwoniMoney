@@ -31,7 +31,7 @@ public class LoanApi {
     private final LoanService loanService;
 
     @GetMapping("/loans")
-    public ResponseEntity getLoanList(@RequestHeader("Authorization") String accessToken, @RequestBody LoanListRequestDto loanListRequestDto, PageToScroll pageToScroll) {
+    public ResponseEntity getLoanList(@RequestHeader("Authorization") String accessToken, @RequestBody LoanListRequestDto loanListRequestDto, @RequestParam PageToScroll pageToScroll) {
         LoanMemberType loanMemberType = loanListRequestDto.getLoanMemberType();
 
         Long childIdx;
@@ -52,15 +52,15 @@ public class LoanApi {
     @GetMapping("/loans/{loanIdx}")
     public ResponseEntity getLoan(@RequestHeader("Authorization") String accessToken, @PathVariable Long loanIdx){
         Loan loan = loanService.findById(loanIdx).orElseThrow();
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(loan);
     }
 
     @PostMapping("/loans")
     public ResponseEntity createLoan(@RequestHeader("Authorization") String accessToken, @RequestBody CreateLoanRequest createLoanRequest){
         String parentUUID = jwtTokenProvider.getMemberUUID(accessToken);
         Long parentIdx = memberAuthService.getMemberAuthInfo(parentUUID).getMemberIdx();
-        Long childIdx = memberAuthService.getMemberAuthInfo(createLoanRequest.getBorrowerUUID()).getMemberIdx();
-        
+//        Long childIdx = memberAuthService.getMemberAuthInfo(createLoanRequest.getBorrowerUUID()).getMemberIdx();
+        Long childIdx = memberService.getMemberIdx(createLoanRequest.getBorrowerUUID());
         // 1. loan 생성
         Loan loan = Loan.builder()
                 .lender(parentIdx)

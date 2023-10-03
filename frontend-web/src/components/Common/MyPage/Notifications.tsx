@@ -83,7 +83,7 @@ function Notifications() {
               color="primary"
             />
           </TextBox>
-          <TextBox
+          {/* <TextBox
             height="20%"
             fontSize="1em"
             fontWeight="normal"
@@ -99,7 +99,7 @@ function Notifications() {
               onChange={handleChange("allowanceChecked")}
               color="primary"
             />
-          </TextBox>
+          </TextBox> */}
         </Container>
       </WhiteBox1>
     </Container>

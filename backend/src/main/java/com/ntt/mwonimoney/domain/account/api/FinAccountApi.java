@@ -182,8 +182,7 @@ public class FinAccountApi {
 	@PatchMapping("/accounts/small-account/{finAccountIdx}")
 	public ResponseEntity closeSmallAccount(@PathVariable Long finAccountIdx) {
 
-		FinAccount finAccountToUpdate = finAccountService.getFinAccountByIdx(finAccountIdx).orElseThrow();
-		finAccountService.closeSmallAccount(finAccountToUpdate);
+		finAccountService.closeSmallAccount(finAccountIdx);
 
 		return ResponseEntity.ok().build();
 	}
@@ -281,6 +280,12 @@ public class FinAccountApi {
 		finAccountTransactionService.save(finAccountTransactionUpdated);
 
 		return ResponseEntity.ok().build();
+	}
+
+	@GetMapping("/accounts/small-account/{finAccountIdx}/remain")
+	public ResponseEntity getRemain(@PathVariable Long finAccountIdx){
+		Long remain = finAccountService.getRemain(finAccountIdx);
+		return ResponseEntity.ok().body(remain);
 	}
 
 }

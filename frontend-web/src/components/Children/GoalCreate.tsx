@@ -51,7 +51,7 @@ export default function CreatGoal() {
     const blob = new Blob([image], { type: "image/jpeg" });
 
     // FormData에 추가
-    formData.append("image", blob, "Dongdong.png");
+    formData.append("image", blob, "img.jpg");
     console.log(formData.get("image"));
 
     // console.log(formData);

@@ -16,7 +16,6 @@ import java.util.List;
 @Table(name = "fin_account")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 public class FinAccount extends CommonEntity {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,13 +36,24 @@ public class FinAccount extends CommonEntity {
 	@Column(name = "fin_account_type")
 	private FinAccountType type;
 
+	@Column(name = "fin_account_remain")
+	private Long remain;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_idx")
 	private Member member;
 
 	@OneToMany(mappedBy = "finAccount")
-	@Builder.Default
 	private List<FinAccountTransaction> finAccountTransactionList = new ArrayList<>();
+
+	@Builder
+	public FinAccount(String number, String finAcno, FinAccountStatus status, FinAccountType type, Long remain){
+		this.number = number;
+		this.finAcno = finAcno;
+		this.status = status;
+		this.type = type;
+		this.remain = remain;
+	}
 
 	public FinAccountDto convertToDto(){
 		return FinAccountDto.builder()
@@ -58,5 +68,11 @@ public class FinAccount extends CommonEntity {
 		this.member = member;
 //		member.addFinAccount(this);
 	}
+
+	public void changeStatus(FinAccountStatus status){
+		this.status = status;
+	}
+
+	public void changeRemain(Long remain){this.remain = remain;}
 }
 
