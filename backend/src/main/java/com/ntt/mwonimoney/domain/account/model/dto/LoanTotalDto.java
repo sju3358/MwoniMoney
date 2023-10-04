@@ -8,5 +8,6 @@ import lombok.Data;
 public class LoanTotalDto {
 	private Long totalAmount;
 	private Long totalInterest;
+	private Long totalBalance;
 	private Double avgInterest;
 }

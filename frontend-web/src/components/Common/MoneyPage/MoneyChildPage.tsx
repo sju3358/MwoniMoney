@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container } from "../About/AboutContainer";
 import { TextBox } from "../About/AboutText";
 import { EmogiBox } from "../About/AboutEmogi";
@@ -10,13 +10,40 @@ import MoneyTable from "./MoneyTable";
 import Income from "../../../assests/image/MoneyPage/MoneyBag.png";
 import { useRecoilState } from "recoil";
 import { userDataState } from "../../../states/UserInfoState";
+import api from "../../../apis/Api";
+import axios, { AxiosResponse } from "axios";
+import api_ver2 from "../../../apis/ApiForMultiPart";
+
+interface FinAccountTransactionListRequest {
+  memberUUID: string;
+  type: string;
+  finAccountType: string;
+}
+
+export const getTransactions = (
+  accessToken: string,
+  request: FinAccountTransactionListRequest
+): Promise<AxiosResponse> => {
+  // axios 요청을 보낼 때 Authorization 헤더와 요청 본문 설정
+  return api.get("/v1/accounts/transactions", {
+    data: request, // 요청 본문에 데이터를 넣어줍니다.
+  });
+};
 
 function MoneyParentsPage() {
   const [userData, setUserData] = useRecoilState(userDataState);
-  console.log("왜안들어옴?");
+  const [type, setType] = useState<string>("GENERAL");
+
   const child = userData.name;
   const inCome = 100000;
   const outCome = 129000;
+
+  const transactionRequest: FinAccountTransactionListRequest = {
+    memberUUID: userData.uuid,
+    type: type, // 클릭한 카테고리에 따라 type이 업데이트됩니다.
+    finAccountType: "GENERAL",
+  };
+
   return (
     <>
       {/* 맨 상단 타이틀 */}
@@ -52,19 +79,58 @@ function MoneyParentsPage() {
         />
       </Container>
       {/* 지출내역 리스트 */}
-      <Container height="53%">
-        <WhiteBox1 flexDirection="column" height="95%">
+      <Container height="53%" style={{ minHeight: "400px" }}>
+        <WhiteBox1
+          flexDirection="column"
+          height="95%"
+          style={{ overflowY: "auto" }}
+        >
           {/* 제목 */}
           <Container height="13%">
             <TextBox height="100%">지출내역</TextBox>
           </Container>
           {/* 카테고리 */}
           <Container height="13%" justifyContent="start">
-            <Category backcolor="#f4f4f4">전체</Category>
-            <Category backcolor="#b9deb3">수익</Category>
-            <Category backcolor="#ffa27e">지출</Category>
+            {/* 각 카테고리를 클릭할 때 type이 업데이트됩니다. */}
+            <Category
+              backcolor="#f4f4f4"
+              onClick={() => setType("GENERAL")}
+              style={{ cursor: "pointer" }}
+            >
+              전체
+            </Category>
+            <Category
+              backcolor="#b9deb3"
+              onClick={() => setType("INCOME")}
+              style={{ cursor: "pointer" }}
+            >
+              수익
+            </Category>
+            <Category
+              backcolor="#ffa27e"
+              onClick={() => setType("OUTCOME")}
+              style={{ cursor: "pointer" }}
+            >
+              지출
+            </Category>
           </Container>
-          <Container height="70%" flexDirection="column">
+          <Container
+            style={{ border: "1px solid red" }}
+            height="500px"
+            flexDirection="column"
+          >
+            <MoneyTable
+              emogi={`${Income}`}
+              expense_detail="지출내역"
+              expense_date="지출날짜"
+              spending={100000}
+            />
+            <MoneyTable
+              emogi={`${Income}`}
+              expense_detail="지출내역"
+              expense_date="지출날짜"
+              spending={100000}
+            />
             <MoneyTable
               emogi={`${Income}`}
               expense_detail="지출내역"

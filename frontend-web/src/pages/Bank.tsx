@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "../components/Common/About/AboutContainer";
 import { TextBox } from "../components/Common/About/AboutText";
 import GoGoalMoney from "../components/Common/Bank/GoGoalMoney";
@@ -20,7 +20,7 @@ import { LoanStore } from "../states/LoanState";
 import { isButtonLoan } from "../states/LoanState";
 //카테고리 조회
 import { isCategoryLoan, whichCategoryLoan } from "../states/LoanState";
-import { isProposeLoan } from "../states/LoanState";
+import { isProposeLoan, isRepayLoan } from "../states/LoanState";
 
 //axios
 import api from "../apis/Api";
@@ -34,30 +34,37 @@ function Bank() {
     useRecoilState<childDataProps>(childDataState);
   let childName: string | null = null;
   let childUuid: string | null = null;
+  let score: number | null = null;
   let loanMemberType = "";
   const [userData, setUserData] = useRecoilState(userDataState);
   const role = userData.memberRole;
   const userStateString: string | null = localStorage.getItem("userState");
+  const childStateString: string | null = localStorage.getItem("childState");
+  //신용점수
 
   if (role === "PARENT") {
+    if (childStateString !== null) {
+      const childState = JSON.parse(childStateString);
+      score = childState.childDataState.creditScore;
+      console.log(score);
+    } else {
+      console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
+    }
     childName = selectedChild.name;
     childUuid = selectedChild.uuid;
     loanMemberType = "LENDER";
   } else {
     loanMemberType = "BORROWER";
+    childUuid = "none";
     if (userStateString !== null) {
       const userState = JSON.parse(userStateString);
       childName = userState.userDataState.name;
+      score = userState.userDataState.creditscore;
       console.log(childName);
     } else {
       console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
     }
   }
-
-  //
-  const debt = 10000;
-  //신용점수
-  const score = 50;
 
   /**
    * loanList값
@@ -68,8 +75,10 @@ function Bank() {
   const [whichCategoryState, setwhichCategoryState] =
     useRecoilState(whichCategoryLoan);
   const [isProposeState, setisProposeState] = useRecoilState(isProposeLoan);
+  const [isRepayState, setisRepayState] = useRecoilState(isRepayLoan);
   const [isButtonState, setIsButtonState] = useRecoilState(isButtonLoan);
   let status_value: string;
+
   if (isCategoryState) {
     status_value = whichCategoryState;
   } else {
@@ -80,8 +89,32 @@ function Bank() {
   const page = 0;
   const size = 10;
 
+  //
+  const debt = 10000;
+
+  const [totalData, setTotalData] = useState({
+    avgInterest: 0,
+    totalAmount: 0,
+    totalBalance: 0,
+    totalInterest: 0,
+  });
+
   useEffect(() => {
     console.log(status_value);
+    api
+      .get(`/v1/loans/total?childUuid=${childUuid}`)
+      .then((res) => {
+        console.log(res);
+        setTotalData({
+          avgInterest: res.data.avgInterest,
+          totalAmount: res.data.totalAmount,
+          totalBalance: res.data.totalBalance,
+          totalInterest: res.data.totalInterest,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     api
       .get(
         `/v1/loans?page=${page}&size=${size}&loanListRequestStatus=${status_value}&loanMemberType=${loanMemberType}&childUUID=${childUuid}`
@@ -109,14 +142,15 @@ function Bank() {
           console.error("GET 요청 실패 - 요청 준비 중 에러 발생");
         }
       });
-  }, [isProposeState, isButtonState, whichCategoryState]);
+  }, [isProposeState, isButtonState, whichCategoryState, isRepayState]);
 
   return (
     <>
       {/* Title */}
       <Container height="15%" flexDirection="column">
         <TextBox>현재 {childName}님은</TextBox>
-        <TextBox>{moneyFormat(debt)}만큼의</TextBox>
+        {/* <TextBox>{moneyFormat(totalData.totalBalance)}만큼의</TextBox> */}
+        <TextBox>{moneyFormat(totalData.totalBalance)}만큼의</TextBox>
         <TextBox>빚이 있어요!</TextBox>
       </Container>
 
@@ -127,11 +161,18 @@ function Bank() {
 
       {/* GraphContainer */}
       <Container height="55%" overflowy="hidden">
-        <BankGraph creditScore={score} color="#5963e6" />
+        <BankGraph
+          avgInterest={totalData.avgInterest}
+          creditScore={score}
+          color="#5963e6"
+        />
       </Container>
 
       {/* CardContainer */}
-      <Card />
+      <Card
+        principal={totalData.totalAmount}
+        interest={totalData.totalInterest}
+      />
 
       {/* CategoryContainer */}
       <Container height="10%">
