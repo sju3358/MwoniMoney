@@ -17,32 +17,35 @@ import { useNavigate } from "react-router-dom";
 
 //util
 import { dateFormat } from "../utils";
+import { moneyFormat } from "../utils";
 
 export const ChallengeListContainer = styled.div`
-  // border: 1px solid black;
+  border: 1px solid red;
   width: 100%;
-  height: 55%;
+  // height: 55%;
+  height: 500px;
   overflow-y: auto; /* 세로 스크롤만 생성 */
   overflow-x: hidden; /* 가로 스크롤 제거 */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 5%;
+  margin-top: 10px;
 `;
 
 export const ListComponent = styled.div`
   // 그림자
   // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
-  // border: 1px solid red;
+  border: 1px solid blue;
   background-color: #ffffff;
   width: 90%;
-  height: 30%;
+  height: 500px;
+  // height: 30%;
   border-top-left-radius: 4% 4%;
   border-top-right-radius: 4% 4%;
   border-bottom-left-radius: 4% 4%;
   border-bottom-right-radius: 4% 4%;
-  margin-bottom: 5%;
+  margin-bottom: 10px;
 `;
 
 export const ListTitle = styled.div`
@@ -93,6 +96,7 @@ export const ListBtn = styled.div`
 
 interface BtnProps {
   backcolor: string;
+  afbackcolor: string;
 }
 
 const ChallengeBtn = styled.div<BtnProps>`
@@ -106,6 +110,15 @@ const ChallengeBtn = styled.div<BtnProps>`
   justify-content: space-around;
   font-weight: bold;
   background-color: ${(props) => props.backcolor};
+  &:active {
+    background-color: ${(props) => props.afbackcolor};
+    transform: translate(0em, 0.75em);
+    &::before {
+      box-shadow: 0 0 0 2px $pink-border, 0 0 $pink-shadow;
+      transform: translate3d(0, 0, -1em);
+    }
+  }
+}
 `;
 interface Props {
   data: getChallenge;
@@ -274,9 +287,9 @@ function ChallengeList({ data }: Props) {
         </CategoryTag>
         <DeadLine> ~ {dateFormat(data.endTime)}</DeadLine>
       </ListTitle>
-      {/* <Text fontsize="1rem" marginL="5%">
-        보상 : {data.reward}원
-      </Text> */}
+      <Text fontsize="1rem" marginL="5%">
+        보상 : {moneyFormat(data.reward)}원
+      </Text>
       {role === "PARENT" ? (
         <>
           {(data.status === 0 ||
@@ -285,6 +298,7 @@ function ChallengeList({ data }: Props) {
             data.status === 5) && (
             <ListBtn style={{ justifyContent: "flex-end" }}>
               <ChallengeBtn
+                afbackcolor="#D9D9D9"
                 backcolor="#f4f4f4"
                 onClick={handleDelete}
                 style={{ margin: "0% 7% 0% 0%" }}
@@ -296,6 +310,7 @@ function ChallengeList({ data }: Props) {
           {data.status === 1 && (
             <ListBtn style={{ justifyContent: "flex-end" }}>
               <ChallengeBtn
+                afbackcolor="#C8A23B"
                 backcolor="#fbd56e"
                 onClick={handleComplete}
                 style={{ margin: "0% 7% 0% 0%" }}
@@ -306,10 +321,18 @@ function ChallengeList({ data }: Props) {
           )}
           {data.status === 2 && (
             <ListBtn>
-              <ChallengeBtn backcolor="#fbd56e" onClick={handleAccept}>
+              <ChallengeBtn
+                afbackcolor="#C8A23B"
+                backcolor="#fbd56e"
+                onClick={handleAccept}
+              >
                 수락
               </ChallengeBtn>
-              <ChallengeBtn backcolor="#f4f4f4" onClick={handleReject}>
+              <ChallengeBtn
+                afbackcolor="#D9D9D9"
+                backcolor="#f4f4f4"
+                onClick={handleReject}
+              >
                 거절
               </ChallengeBtn>
             </ListBtn>
@@ -320,6 +343,7 @@ function ChallengeList({ data }: Props) {
         <ListBtn style={{ justifyContent: "flex-end" }}>
           {data.status === 0 && (
             <ChallengeBtn
+              afbackcolor="#fbd56e"
               backcolor="#fbd56e"
               onClick={handleComplete}
               style={{ margin: "0% 7% 0% 0%" }}
