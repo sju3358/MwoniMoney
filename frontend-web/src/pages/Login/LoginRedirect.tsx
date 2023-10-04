@@ -51,6 +51,7 @@ function KakaoLoginRedirect() {
             socialId: response.data.socialId,
             memberRole: response.data.memberRole,
             email: response.data.email,
+            creditscore: response.data.creditScore,
           };
 
           setUserInfo(updatedUserInfo);
