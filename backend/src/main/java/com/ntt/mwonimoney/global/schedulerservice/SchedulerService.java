@@ -1,15 +1,23 @@
-package com.ntt.mwonimoney.domain.challenge.service;
+package com.ntt.mwonimoney.global.schedulerservice;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ntt.mwonimoney.domain.account.entity.FinAccount;
+import com.ntt.mwonimoney.domain.account.entity.FinAccountType;
+import com.ntt.mwonimoney.domain.account.repository.FinAccountRepository;
 import com.ntt.mwonimoney.domain.challenge.entity.MemberChallenge;
 import com.ntt.mwonimoney.domain.challenge.repository.MemberChallengeRepository;
+import com.ntt.mwonimoney.domain.member.entity.Child;
+import com.ntt.mwonimoney.domain.member.entity.Member;
+import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
+import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SchedulerService {
 	private final MemberChallengeRepository memberChallengeRepository;
+	private final MemberRepository memberRepository;
+	private final FinAccountRepository finAccountRepository;
 
 	// 매일 오전 0시 0분마다 실행
 	@Scheduled(cron = "0 0 0 * * *")
@@ -39,6 +49,22 @@ public class SchedulerService {
 		for (MemberChallenge memberChallenge :
 			expirationChallengeList) {
 			memberChallenge.update(5);
+		}
+	}
+
+	@Transactional
+	@Scheduled(cron = "0 0 6 1 * *")
+	public void addAllowance() {
+		List<Member> childList = memberRepository.findAllByMemberRole(MemberRole.CHILD);
+
+		for (Member child : childList) {
+			int reqularAllowance = ((Child)child).getReqularAllowance();
+			Optional<FinAccount> finAccount = finAccountRepository.findFinAccountByMemberIdxAndType(child.getIdx(),
+				FinAccountType.GENERAL);
+
+			if (finAccount.isPresent()) {
+				finAccount.get().changeRemain(finAccount.get().getRemain() + reqularAllowance);
+			}
 		}
 	}
 }
