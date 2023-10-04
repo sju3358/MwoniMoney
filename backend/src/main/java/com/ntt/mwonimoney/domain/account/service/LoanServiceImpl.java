@@ -98,6 +98,7 @@ public class LoanServiceImpl {
 		}
 
 		Double avgInterest = totalRate / (double)cnt;
+		avgInterest = Math.round(avgInterest * 100.0) / 100.0;
 
 		LoanTotalDto loanTotalDto = LoanTotalDto.builder()
 			.totalAmount(totalAmount)
