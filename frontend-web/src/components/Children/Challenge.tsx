@@ -26,6 +26,9 @@ import {
   whichCategoryChallenge,
 } from "../../states/ChallengeState";
 
+//총 데이터
+import { totalChallenge } from "../../states/ChallengeState";
+
 interface ChallengeProps {
   ismain: string;
 }
@@ -51,6 +54,11 @@ function Challenge(props: ChallengeProps) {
     status_value = whichCategoryState;
   } else {
     status_value = 5;
+  }
+  const [totalChallengeData, setTotalChallengeData] =
+    useRecoilState(totalChallenge);
+  if (status_value === 5) {
+    setTotalChallengeData(ChallengeData.length);
   }
 
   useEffect(() => {
@@ -100,7 +108,7 @@ function Challenge(props: ChallengeProps) {
         <>
           <ChallengeTitle />
           <ChallengeCategory />
-          {ChallengeData.length === 4 ? <></> : <ChallengeAdd />}
+          {totalChallengeData === 4 ? <></> : <ChallengeAdd />}
         </>
       )}
       <ChallengeListContainer>
@@ -119,7 +127,7 @@ function Challenge(props: ChallengeProps) {
                 )}
               </>
             ) : (
-              <Text>현재 진행중인 챌린지가 없어요. 챌린지를 제안해주세요!</Text>
+              <Text>챌린지를 제안해주세요!</Text>
             )}
           </>
         ) : (
@@ -135,7 +143,11 @@ function Challenge(props: ChallengeProps) {
                 ))}
               </>
             ) : (
-              <>챌린지를 제안해주세요!!</>
+              <>
+                {status_value === 5 && <>챌린지내역이 없어요.</>}
+                {status_value === 0 && <>진행중인 챌린지가 없어요.</>}
+                {status_value === 2 && <>제안대기중인 챌린지가 없어요.</>}
+              </>
             )}
           </>
         )}

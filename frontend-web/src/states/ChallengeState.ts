@@ -70,3 +70,9 @@ export const whichCategoryChallenge = atom<number>({
   key: "which_category_challenge",
   default: -1,
 });
+
+//총데이터
+export const totalChallenge = atom<number>({
+  key: "totalChallenge",
+  default: 0,
+});
