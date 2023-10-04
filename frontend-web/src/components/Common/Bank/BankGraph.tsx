@@ -62,7 +62,11 @@ function BankGraph({ avgInterest, creditScore, color }: BankGraphProps) {
       </Container>
       {/**금리, 신용점수 */}
       <Container height="25%">
-        <LoanImpo title="대출금리" content={avgInterest} isloan={true} />
+        <LoanImpo
+          title="대출금리"
+          content={parseFloat(avgInterest.toFixed(2))}
+          isloan={true}
+        />
         <LoanImpo title="신용점수" content={creditScore} isloan={false} />
       </Container>
     </WhiteBox1>
