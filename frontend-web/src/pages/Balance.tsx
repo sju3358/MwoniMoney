@@ -68,7 +68,7 @@ function Balance() {
 
   useEffect(() => {
     api
-      .get(`/v1/balances/today`)
+      .get(`/v1/balances?status=RUNNING`)
       .then((response) => {
         setRunningBalanceGameData(response.data);
       })
@@ -104,7 +104,7 @@ function Balance() {
             <BalanceCompo
               balanceIdx={data.idx}
               news={data.news}
-              showText={true}
+              showText={false}
               showImg={false}
               questionText={data.question}
               buyText={data.leftAnswer}
