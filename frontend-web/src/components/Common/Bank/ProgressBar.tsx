@@ -61,6 +61,8 @@ interface ProgressBarProps {
   right_count?: number;
   front_percent?: number;
   my_status?: string;
+  amount?: number;
+  balance?: number;
 }
 
 function ProgressBar(props: ProgressBarProps) {
@@ -71,12 +73,15 @@ function ProgressBar(props: ProgressBarProps) {
     front_height,
     back_color,
     front_color,
+    amount = 0,
+    balance = 0,
   } = props;
-
+  const front_width_v2 = `${((amount - balance) / amount) * 100}%`;
+  console.log(front_width_v2);
   return (
     <BackBar width={back_width} height={back_height} backcolor={back_color}>
       <FrontBar
-        width={front_width}
+        width={front_width_v2}
         height={front_height}
         backcolor={front_color}
       ></FrontBar>

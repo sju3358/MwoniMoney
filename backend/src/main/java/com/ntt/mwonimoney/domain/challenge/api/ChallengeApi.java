@@ -68,68 +68,32 @@ public class ChallengeApi {
 
 	//부모 챌린지 삭제
 	@DeleteMapping("/challenges/{memberChallengeIdx}")
-	public ResponseEntity deleteChallenge(@PathVariable Long memberChallengeIdx,
-		@RequestParam("childUuid") String childUuid) {
-
+	public ResponseEntity deleteChallenge(@PathVariable Long memberChallengeIdx) {
 		challengeServiceImpl.deleteChallenge(memberChallengeIdx);
 
-		FCMRequest fcmRequest = FCMRequest.builder()
-			.memberUuid(childUuid)
-			.title("챌린지 삭제")
-			.content("부모님께서 챌린지를 삭제하셨어요")
-			.build();
-
-		fcmService.sendNotificationByToken(fcmRequest);
 		return ResponseEntity.ok().build();
 	}
 
 	//부모 챌린지 완료
 	@PatchMapping("/challenges/{memberChallengeIdx}")
-	public ResponseEntity CompleteChallenge(@PathVariable Long memberChallengeIdx,
-		@RequestParam("childUuid") String childUuid) {
+	public ResponseEntity CompleteChallenge(@PathVariable Long memberChallengeIdx) {
 		challengeServiceImpl.completeChallenge(memberChallengeIdx);
-
-		FCMRequest fcmRequest = FCMRequest.builder()
-			.memberUuid(childUuid)
-			.title("챌린지 완료")
-			.content("부모님께서 챌린지를 완료하셨어요")
-			.build();
-
-		fcmService.sendNotificationByToken(fcmRequest);
 
 		return ResponseEntity.ok().build();
 	}
 
 	//부모 챌린지 거절
 	@PatchMapping("/challenges/{memberChallengeIdx}/reject")
-	public ResponseEntity RejectChallenge(@PathVariable Long memberChallengeIdx,
-		@RequestParam("childUuid") String childUuid) {
+	public ResponseEntity RejectChallenge(@PathVariable Long memberChallengeIdx) {
 		challengeServiceImpl.rejectChallenge(memberChallengeIdx);
-
-		FCMRequest fcmRequest = FCMRequest.builder()
-			.memberUuid(childUuid)
-			.title("챌린지 거절")
-			.content("부모님께서 챌린지를 거절하셨어요")
-			.build();
-
-		fcmService.sendNotificationByToken(fcmRequest);
 
 		return ResponseEntity.ok().build();
 	}
 
 	//부모 챌린지 승인
 	@PatchMapping("/challenges/{memberChallengeIdx}/accept")
-	public ResponseEntity AcceptChallenge(@PathVariable Long memberChallengeIdx,
-		@RequestParam("childUuid") String childUuid) {
+	public ResponseEntity AcceptChallenge(@PathVariable Long memberChallengeIdx) {
 		challengeServiceImpl.acceptChallenge(memberChallengeIdx);
-
-		FCMRequest fcmRequest = FCMRequest.builder()
-			.memberUuid(childUuid)
-			.title("챌린지 승인")
-			.content("부모님께서 챌린지를 승인하셨어요")
-			.build();
-
-		fcmService.sendNotificationByToken(fcmRequest);
 
 		return ResponseEntity.ok().build();
 	}
