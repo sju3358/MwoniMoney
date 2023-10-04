@@ -49,7 +49,7 @@ public class ChildrenApi {
 	}
 
 	@GetMapping("/children/{child_uuid}")
-	public ResponseEntity<ChildDetailDto> getChildInfoRequest(
+	public ResponseEntity<?> getChildInfoRequest(
 		@RequestHeader("Authorization") String accessToken,
 		@PathVariable("child_uuid") String childUUID) {
 
@@ -57,11 +57,38 @@ public class ChildrenApi {
 
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 
-		ChildDetailDto childDetailDto = childrenService.getChildInfo(memberUUID, childUUID);
+		ChildDto childDto = childrenService.getChildInfo(memberUUID, childUUID);
+
+		if (childDto.getSmallAccount() == null) {
+			return ResponseEntity.ok().body(childDto);
+		}
+
+		ChildDetailDto childDetailDto = ChildDetailDto.builder()
+			.uuid(childDto.getUuid())
+			.status(childDto.getStatus())
+			.name(childDto.getName())
+			.nickname(childDto.getNickname())
+			.birthday(childDto.getBirthday())
+			.socialProvider(childDto.getSocialProvider())
+			.memberRole(childDto.getMemberRole())
+			.creditScore(childDto.getCreditScore())
+			.quizRewardRemain(childDto.getQuizRewardRemain())
+			.quizReward(childDto.getQuizReward())
+			.goalMoney(childDto.getSmallAccount().getGoalMoney())
+			.goalName(childDto.getSmallAccount().getGoalName())
+			.imageFilename(childDto.getSmallAccount().getImageFilename())
+			.regularAllowance(childDto.getRegularAllowance())
+			.challengeAlarm(childDto.getChallengeAlarm())
+			.balanceAlarm(childDto.getBalanceAlarm())
+			.smallAcountAlarm(childDto.getSmallAcountAlarm())
+			.email(childDto.getEmail())
+			.build();
+
 		FinAccountDto finAccountDto = finAccountServiceImplV2.getFinAccount(childDetailDto.getUuid(),
 			FinAccountType.SMALL);
 
 		childDetailDto.setRemain(finAccountDto.getRemain());
+
 		log.info("[자녀 정보 조회 요청 끝]", LocalDateTime.now());
 
 		return ResponseEntity.ok().body(childDetailDto);
