@@ -79,16 +79,6 @@ public class ChallengeApi {
 	public ResponseEntity CompleteChallenge(@PathVariable Long memberChallengeIdx) {
 		challengeServiceImpl.completeChallenge(memberChallengeIdx);
 
-		String childUuid = memberChallengeRepository.findById(memberChallengeIdx).orElseThrow().getMember().getUuid();
-
-		FCMRequest fcmRequest = FCMRequest.builder()
-			.memberUuid(childUuid)
-			.title("챌린지 완료")
-			.content("부모님께서 챌린지를 완료하셨어요")
-			.build();
-
-		fcmService.sendNotificationByToken(fcmRequest);
-
 		return ResponseEntity.ok().build();
 	}
 
