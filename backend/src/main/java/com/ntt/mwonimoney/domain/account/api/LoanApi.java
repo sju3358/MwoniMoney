@@ -1,15 +1,23 @@
 package com.ntt.mwonimoney.domain.account.api;
 
-import com.ntt.mwonimoney.domain.account.entity.RepayLoanRequest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ntt.mwonimoney.domain.account.api.response.LoanTotalResponse;
 import com.ntt.mwonimoney.domain.account.entity.Loan;
 import com.ntt.mwonimoney.domain.account.entity.LoanStatus;
+import com.ntt.mwonimoney.domain.account.entity.RepayLoanRequest;
 import com.ntt.mwonimoney.domain.account.model.dto.CreateLoanRequest;
 import com.ntt.mwonimoney.domain.account.model.dto.LoanListRequestDto;
 import com.ntt.mwonimoney.domain.account.model.dto.LoanMemberType;
@@ -85,10 +93,10 @@ public class LoanApi {
 		return ResponseEntity.ok().build();
 	}
 
-    @PatchMapping("/loans/repay/{loanIdx}")
-    public ResponseEntity repayLoan(@RequestHeader("Authorization") String accessToken,
-                                    @PathVariable Long loanIdx,
-                                    @RequestBody RepayLoanRequest repayLoanRequest){
+	@PatchMapping("/loans/repay/{loanIdx}")
+	public ResponseEntity repayLoan(@RequestHeader("Authorization") String accessToken,
+		@PathVariable Long loanIdx,
+		@RequestBody RepayLoanRequest repayLoanRequest) {
 		int payment = repayLoanRequest.getPayment();
 
 		Loan loanToRepay = loanService.findById(loanIdx).orElseThrow();
@@ -124,17 +132,25 @@ public class LoanApi {
 	}
 
 	@GetMapping("/loans/total")
-	public ResponseEntity getLoanTotal(@RequestHeader("Authorization") String accessToken) {
-		String memberUuid = jwtTokenProvider.getMemberUUID(accessToken);
+	public ResponseEntity getLoanTotal(@RequestHeader("Authorization") String accessToken,
+		@RequestParam("childUuid") String childUuid) {
 
-		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUuid).getMemberIdx();
+		Long memberIdx = 0L;
+		if (childUuid.equals("none")) {
+			String memberUuid = jwtTokenProvider.getMemberUUID(accessToken);
 
-		LoanTotalDto loanTotalDto = loanService.getSumAmount(memberIdx);
+			memberIdx = memberAuthService.getMemberAuthInfo(memberUuid).getMemberIdx();
+		} else {
+			memberIdx = memberService.getMemberIdx(childUuid);
+		}
+
+		LoanTotalDto loanTotalDto = loanService.getLoanTotal(memberIdx);
 
 		LoanTotalResponse loanTotalResponse = LoanTotalResponse.builder()
 			.totalAmount(loanTotalDto.getTotalAmount())
 			.totalInterest(loanTotalDto.getTotalInterest())
 			.avgInterest(loanTotalDto.getAvgInterest())
+			.totalBalance(loanTotalDto.getTotalBalance())
 			.build();
 
 		return ResponseEntity.ok().body(loanTotalResponse);

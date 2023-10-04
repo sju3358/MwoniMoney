@@ -52,8 +52,12 @@ function MoneyParentsPage() {
         />
       </Container>
       {/* 지출내역 리스트 */}
-      <Container height="53%">
-        <WhiteBox1 flexDirection="column" height="95%">
+      <Container height="53%" style={{ minHeight: "400px" }}>
+        <WhiteBox1
+          flexDirection="column"
+          height="95%"
+          style={{ overflowY: "auto" }}
+        >
           {/* 제목 */}
           <Container height="13%">
             <TextBox height="100%">지출내역</TextBox>
@@ -64,7 +68,23 @@ function MoneyParentsPage() {
             <Category backcolor="#b9deb3">수익</Category>
             <Category backcolor="#ffa27e">지출</Category>
           </Container>
-          <Container height="70%" flexDirection="column">
+          <Container
+            style={{ border: "1px solid red" }}
+            height="500px"
+            flexDirection="column"
+          >
+            <MoneyTable
+              emogi={`${Income}`}
+              expense_detail="지출내역"
+              expense_date="지출날짜"
+              spending={100000}
+            />
+            <MoneyTable
+              emogi={`${Income}`}
+              expense_detail="지출내역"
+              expense_date="지출날짜"
+              spending={100000}
+            />
             <MoneyTable
               emogi={`${Income}`}
               expense_detail="지출내역"
