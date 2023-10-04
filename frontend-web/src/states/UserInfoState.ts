@@ -54,6 +54,8 @@ export const userCheckState = atom<userCheckProps>({
 export interface userAccountProps {
   account: string;
   status: string;
+  remain: number;
+  startDate: string;
 }
 
 export const userAccountState = atom<userAccountProps>({
@@ -61,5 +63,7 @@ export const userAccountState = atom<userAccountProps>({
   default: {
     account: "",
     status: "UNKOWN",
+    remain: 0,
+    startDate: "0000-00-00",
   },
 });
