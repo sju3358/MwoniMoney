@@ -29,6 +29,7 @@ import api from "../apis/Api";
 import { moneyFormat } from "../components/Common/utils";
 
 import { totalLoan } from "../states/LoanState";
+import { MainContainer } from "../components/Common/Main/MainStyle";
 
 function Bank() {
   //childName
@@ -151,23 +152,31 @@ function Bank() {
       });
   }, [isProposeState, isButtonState, whichCategoryState, isRepayState]);
 
+  // Container
+  // style={{ overflow: "auto" }}
+  // width="100%"
+  // height="100%"
+  // flexDirection="column"
+
   return (
-    <>
+    <MainContainer>
       {/* Title */}
-      <Container height="15%" flexDirection="column">
-        <TextBox>현재 {childName}님은</TextBox>
+      <Container height="20%" flexDirection="column">
+        <TextBox marginL="9%">현재 {childName}님은</TextBox>
         {/* <TextBox>{moneyFormat(totalData.totalBalance)}만큼의</TextBox> */}
-        <TextBox>{moneyFormat(totalData.totalBalance)}만큼의</TextBox>
-        <TextBox>빚이 있어요!</TextBox>
+        <TextBox marginL="9%">
+          {moneyFormat(totalData.totalBalance)}만큼의
+        </TextBox>
+        <TextBox marginL="9%">빚이 있어요!</TextBox>
       </Container>
 
       {/* GoGoalMoney */}
-      <Container height="20%">
+      <Container height="25%" align="flex-end">
         <GoGoalMoney />
       </Container>
 
       {/* GraphContainer */}
-      <Container height="55%" overflowy="hidden">
+      <Container height="50%" overflowy="hidden">
         <BankGraph
           avgInterest={totalData.avgInterest}
           creditScore={score}
@@ -187,42 +196,47 @@ function Bank() {
       </Container>
       {/* LoanModal */}
       {/* LoanList */}
-      <Container
-        height="60%"
-        flexDirection="column"
-        style={{ border: "1px solid blue" }}
-      >
-        {role === "PARENT" && totalLoanData < 4 ? <LoanAdd /> : <></>}
-        <>
-          {LoanData.length > 0 ? (
-            <>
-              {LoanData.map((loan) => (
-                <LoanList data={loan} key={loan.idx} />
-              ))}
-            </>
-          ) : (
-            <>
-              {status_value === "GENERAL" && (
-                <Container height="80%">
-                  <Text>현재 대출 내역이 없어요.</Text>
-                </Container>
-              )}
-              {status_value === "APPROVAL" && (
-                <Container height="80%">
-                  <Text>현재 진행중인 대출이 없어요.</Text>
-                </Container>
-              )}
-              {status_value === "WATING" && (
-                <Container height="80%">
-                  <Text>현재 제안대기중인 대출이 없어요.</Text>
-                </Container>
-              )}
-            </>
-          )}
-        </>
+      <Container height="80%">
+        <Container
+          height="100%"
+          flexDirection="column"
+          justifyContent="flex-start"
+          // style={{ border: "1px solid blue" }}
+          overflowy="auto"
+          // marginB="100%"
+        >
+          {role === "PARENT" && totalLoanData < 4 ? <LoanAdd /> : <></>}
+          <>
+            {LoanData.length > 0 ? (
+              <>
+                {LoanData.map((loan) => (
+                  <LoanList data={loan} key={loan.idx} />
+                ))}
+              </>
+            ) : (
+              <>
+                {status_value === "GENERAL" && (
+                  <Container height="80%">
+                    <Text>현재 대출 내역이 없어요.</Text>
+                  </Container>
+                )}
+                {status_value === "APPROVAL" && (
+                  <Container height="80%">
+                    <Text>현재 진행중인 대출이 없어요.</Text>
+                  </Container>
+                )}
+                {status_value === "WATING" && (
+                  <Container height="80%">
+                    <Text>현재 제안대기중인 대출이 없어요.</Text>
+                  </Container>
+                )}
+              </>
+            )}
+          </>
+        </Container>
       </Container>
       {/* </div> */}
-    </>
+    </MainContainer>
   );
 }
 

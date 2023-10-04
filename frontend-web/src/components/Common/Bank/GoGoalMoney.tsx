@@ -64,13 +64,19 @@ function GoGoalMoney() {
   };
 
   return (
-    <WhiteBox1 onClick={GoGoalMoney}>
-      <HalfBox width="70%" flexDirection="column">
-        <TextBox fontSize="2em">짜금통</TextBox>
-        <TextBox height="25%" fontSize="1em" fontWeight="normal">
+    <WhiteBox1 height="90%" onClick={GoGoalMoney}>
+      <HalfBox
+        width="70%"
+        flexDirection="column"
+        style={{ padding: "5% 0% 5% 0%" }}
+      >
+        <TextBox marginL="20%" fontSize="2em">
+          짜금통
+        </TextBox>
+        <TextBox marginL="20%" height="25%" fontSize="1em" fontWeight="normal">
           이번주 {childName}님이
         </TextBox>
-        <TextBox height="25%" fontSize="1em" fontWeight="normal">
+        <TextBox marginL="20%" height="25%" fontSize="1em" fontWeight="normal">
           모은 금액을 확인해보세요
         </TextBox>
       </HalfBox>

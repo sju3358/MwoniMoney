@@ -6,6 +6,8 @@ interface BtnProps {
   height?: string;
   backcolor?: string;
   fontS?: string;
+  bordercolor?: string;
+  afbackcolor?: string;
 }
 
 export const Btn = styled.div<BtnProps>`
@@ -19,6 +21,16 @@ export const Btn = styled.div<BtnProps>`
     props.backcolor ? props.backcolor : "#fbd56e"};
   border-radius: 10px;
   font-weight: bold;
+  border: ${(props) => (props.bordercolor ? props.bordercolor : "none")};
+  &:active {
+    background-color: ${(props) =>
+      props.afbackcolor ? props.afbackcolor : props.backcolor};
+    transform: translate(0em, 0.2em);
+    &::before {
+      box-shadow: 0 0 0 2px $pink-border, 0 0 $pink-shadow;
+      transform: translate3d(0, 0, -1em);
+    }
+  }
 `;
 
 interface ButtonProps {
@@ -28,6 +40,8 @@ interface ButtonProps {
   backcolor?: string;
   fontS?: string;
   click?: MouseEventHandler<HTMLDivElement>;
+  bordercolor?: string;
+  afbackcolor?: string;
 }
 
 function Button({
@@ -36,6 +50,8 @@ function Button({
   height,
   backcolor,
   fontS,
+  bordercolor,
+  afbackcolor,
   click,
 }: ButtonProps) {
   return (
@@ -45,6 +61,8 @@ function Button({
       backcolor={backcolor}
       fontS={fontS}
       onClick={click}
+      bordercolor={bordercolor}
+      afbackcolor={afbackcolor}
     >
       {content}
     </Btn>
