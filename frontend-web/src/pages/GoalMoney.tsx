@@ -64,7 +64,7 @@ function GoalMoney() {
             }));
           })
           .catch((error) => {
-            console.log("계좌조회 " + error);
+            console.log(error);
           });
 
         // 계좌번호 get하기
@@ -86,7 +86,7 @@ function GoalMoney() {
             }));
           })
           .catch((error) => {
-            console.log("계좌조회 " + error);
+            console.log(error);
           });
       } catch (error) {
         console.error(error);
