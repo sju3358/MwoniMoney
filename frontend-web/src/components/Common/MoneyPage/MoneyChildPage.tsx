@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "../About/AboutContainer";
 import { TextBox } from "../About/AboutText";
 import { EmogiBox } from "../About/AboutEmogi";
@@ -7,41 +7,96 @@ import { Category } from "../About/AboutCategory";
 import { WhiteBox1 } from "../About/AboutWhilteContainer";
 import AboutCard from "../About/AboutCard";
 import MoneyTable from "./MoneyTable";
-import Income from "../../../assests/image/MoneyPage/MoneyBag.png";
+import Outcome from "../../../assests/image/MoneyPage/MoneyBag.png";
+import Income from "../../../assests/image/MoneyPage/OutCome.png";
 import { useRecoilState } from "recoil";
+import axios from "axios";
 import { userDataState } from "../../../states/UserInfoState";
-import api from "../../../apis/Api";
-import axios, { AxiosResponse } from "axios";
-import api_ver2 from "../../../apis/ApiForMultiPart";
 
-interface FinAccountTransactionListRequest {
-  memberUUID: string;
-  type: string;
-  finAccountType: string;
+// Define the interface for a transaction
+interface Transaction {
+  money: number;
+  balance: number;
+  memo: string;
+  time: string | null;
 }
 
-export const getTransactions = (
-  accessToken: string,
-  request: FinAccountTransactionListRequest
-): Promise<AxiosResponse> => {
-  // axios 요청을 보낼 때 Authorization 헤더와 요청 본문 설정
-  return api.get("/v1/accounts/transactions", {
-    data: request, // 요청 본문에 데이터를 넣어줍니다.
-  });
-};
+function MoneyChildPage() {
+  function formatDate(dateString: string) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
 
-function MoneyParentsPage() {
   const [userData, setUserData] = useRecoilState(userDataState);
-  const [type, setType] = useState<string>("GENERAL");
-
+  console.log("왜안들어옴?");
   const child = userData.name;
-  const inCome = 100000;
-  const outCome = 129000;
+  const [transactionData, setTransactionData] = useState<{
+    finAccountTransactionDto2: Transaction[];
+    totalPlus: number;
+    totalMinus: number;
+  } | null>(null);
+  const [category, setCategory] = useState("GENERAL");
 
-  const transactionRequest: FinAccountTransactionListRequest = {
-    memberUUID: userData.uuid,
-    type: type, // 클릭한 카테고리에 따라 type이 업데이트됩니다.
-    finAccountType: "GENERAL",
+  useEffect(() => {
+    // Define the request body
+    const requestBody = {
+      type: "GENERAL",
+      finAccountType: "GENERAL",
+    };
+
+    // Get the token from localStorage
+    const token = localStorage.getItem("token");
+
+    // Define the headers with Authorization
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    // Make the axios request
+    axios
+      .post(
+        "https://j9b310.p.ssafy.io/api/v2/accounts/transactions/parents",
+        requestBody,
+        { headers }
+      )
+      .then((response) => {
+        // Handle the response data here
+        console.log("Transaction data:", response.data);
+        setTransactionData(response.data);
+      })
+      .catch((error) => {
+        // Handle any errors here
+        console.error("Error fetching transaction data:", error);
+      });
+  }, []);
+
+  // Function to filter data based on the category
+  const filterDataByCategory = (category: string) => {
+    if (transactionData) {
+      if (category === "GENERAL") {
+        // Show all transactions
+        return transactionData.finAccountTransactionDto2;
+      } else if (category === "INCOME") {
+        // Show transactions with positive money values
+        return transactionData.finAccountTransactionDto2.filter(
+          (transaction) => transaction.money > 0
+        );
+      } else if (category === "OUTCOME") {
+        // Show transactions with negative money values
+        return transactionData.finAccountTransactionDto2.filter(
+          (transaction) => transaction.money < 0
+        );
+      }
+    }
+    return [];
+  };
+
+  // Function to handle category clicks
+  const handleCategoryClick = (selectedCategory: string) => {
+    setCategory(selectedCategory);
   };
 
   return (
@@ -69,8 +124,8 @@ function MoneyParentsPage() {
           width="40%"
           title1="수입"
           title2="지출"
-          content1={`+ ${inCome}`}
-          content2={`- ${outCome}`}
+          content1={`+ ${transactionData?.totalPlus || 0}원`} // Display totalPlus with a default value of 0
+          content2={`${transactionData?.totalMinus || 0}원`} // Display totalMinus with a default value of 0
           backcolor1="#b9deb3"
           backcolor2="#ffa27e"
           fontsize1="1.3em"
@@ -91,25 +146,21 @@ function MoneyParentsPage() {
           </Container>
           {/* 카테고리 */}
           <Container height="13%" justifyContent="start">
-            {/* 각 카테고리를 클릭할 때 type이 업데이트됩니다. */}
             <Category
-              backcolor="#f4f4f4"
-              onClick={() => setType("GENERAL")}
-              style={{ cursor: "pointer" }}
+              backcolor={category === "GENERAL" ? "#f4f4f4" : "#ffffff"}
+              onClick={() => handleCategoryClick("GENERAL")}
             >
               전체
             </Category>
             <Category
-              backcolor="#b9deb3"
-              onClick={() => setType("INCOME")}
-              style={{ cursor: "pointer" }}
+              backcolor={category === "INCOME" ? "#b9deb3" : "#ffffff"}
+              onClick={() => handleCategoryClick("INCOME")}
             >
               수익
             </Category>
             <Category
-              backcolor="#ffa27e"
-              onClick={() => setType("OUTCOME")}
-              style={{ cursor: "pointer" }}
+              backcolor={category === "OUTCOME" ? "#ffa27e" : "#ffffff"}
+              onClick={() => handleCategoryClick("OUTCOME")}
             >
               지출
             </Category>
@@ -119,36 +170,19 @@ function MoneyParentsPage() {
             height="500px"
             flexDirection="column"
           >
-            <MoneyTable
-              emogi={`${Income}`}
-              expense_detail="지출내역"
-              expense_date="지출날짜"
-              spending={100000}
-            />
-            <MoneyTable
-              emogi={`${Income}`}
-              expense_detail="지출내역"
-              expense_date="지출날짜"
-              spending={100000}
-            />
-            <MoneyTable
-              emogi={`${Income}`}
-              expense_detail="지출내역"
-              expense_date="지출날짜"
-              spending={100000}
-            />
-            <MoneyTable
-              emogi={`${Income}`}
-              expense_detail="지출내역"
-              expense_date="지출날짜"
-              spending={100000}
-            />
-            <MoneyTable
-              emogi={`${Income}`}
-              expense_detail="지출내역"
-              expense_date="지출날짜"
-              spending={100000}
-            />
+            {filterDataByCategory(category).map(
+              (transaction: Transaction, index: number) => (
+                <MoneyTable
+                  key={index}
+                  emogi={transaction.money > 0 ? `${Income}` : `${Outcome}`}
+                  expense_detail={transaction.memo}
+                  expense_date={
+                    transaction.time ? formatDate(transaction.time) : "N/A"
+                  }
+                  spending={Math.abs(transaction.money)}
+                />
+              )
+            )}
           </Container>
         </WhiteBox1>
       </Container>
@@ -156,4 +190,4 @@ function MoneyParentsPage() {
   );
 }
 
-export default MoneyParentsPage;
+export default MoneyChildPage;
