@@ -32,7 +32,7 @@ export default function WordCloud({ balanceGameIdx = 1 }) {
 
   return (
     <div>
-      <ReactWordcloud words={words} size={[1000, 1000]} />
+      <ReactWordcloud words={words} size={[600, 350]} />
     </div>
   );
 }
