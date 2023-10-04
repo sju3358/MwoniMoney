@@ -7,11 +7,8 @@ import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
 @Data
-
 @SuperBuilder
 public abstract class MemberDto {
-
-	private Long idx;
 
 	private String uuid;
 
@@ -25,8 +22,14 @@ public abstract class MemberDto {
 
 	private SocialProvider socialProvider;
 
-	private String socialId;
-
 	private MemberRole memberRole;
+
+	private String challengeAlarm;
+
+	private String balanceAlarm;
+
+	private String smallAcountAlarm;
+
+	private String email;
 
 }

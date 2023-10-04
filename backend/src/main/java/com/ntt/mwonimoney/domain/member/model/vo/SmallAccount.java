@@ -21,14 +21,5 @@ public class SmallAccount {
 	private String imageFilename;
 
 	@Column(name = "smallaccount_saveratio")
-	private byte saveRatio;
-
-	public SmallAccount createVo() {
-		return new SmallAccount(
-			this.getGoalMoney(),
-			this.goalName,
-			this.imageFilename,
-			this.saveRatio
-		);
-	}
+	private int saveRatio;
 }

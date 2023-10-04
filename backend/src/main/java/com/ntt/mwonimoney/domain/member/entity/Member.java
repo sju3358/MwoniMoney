@@ -2,6 +2,8 @@ package com.ntt.mwonimoney.domain.member.entity;
 
 import java.util.UUID;
 
+import com.ntt.mwonimoney.domain.member.model.dto.GuestDto;
+import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 import com.ntt.mwonimoney.global.common.entity.CommonEntity;
@@ -33,19 +35,19 @@ public abstract class Member extends CommonEntity {
 	private Long idx;
 
 	@Column(name = "member_uuid", unique = true, nullable = false)
-	private String uuid;
+	protected String uuid;
 
 	@Column(name = "member_status", nullable = false)
-	private int status;
+	protected int status;
 
 	@Column(name = "member_name")
-	private String name;
+	protected String name;
 
 	@Column(name = "member_nickname")
-	private String nickname;
+	protected String nickname;
 
 	@Column(name = "member_birthday")
-	private String birthday;
+	protected String birthday;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "member_social_provider")
@@ -55,19 +57,52 @@ public abstract class Member extends CommonEntity {
 	private String socialId;
 
 	@Column(name = "member_email")
-	private String email;
+	protected String email;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "member_role")
 	private MemberRole memberRole;
 
-	@Column(name = "FCMToken", length = 300)
+	@Column(name = "FCMToken")
 	private String FCMToken;
 
-	protected Member(int status, String name, String nickname, String birthday,
+	@Column(name = "challenge_alarm")
+	private String challengeAlarm;
+
+	@Column(name = "balance_alarm")
+	private String balanceAlarm;
+
+	@Column(name = "smallAcount_alarm")
+	private String smallAcountAlarm;
+
+	public void activateMember() {
+		this.status = 1;
+	}
+
+	public void changeMemberEmail(String email) {
+		this.email = email;
+	}
+
+	public void changeMemberBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public void changeMemberNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public void changeMemberName(String name) {
+		this.name = name;
+	}
+
+	protected Member(int status, String memberUUID, String name, String nickname, String birthday,
 		SocialProvider socialProvider,
-		String socialId, String email, MemberRole memberRole) {
-		this.uuid = UUID.randomUUID().toString();
+		String socialId, String email, MemberRole memberRole, String challengeAlarm, String balanceAlarm,
+		String smallAcountAlarm) {
+		if (memberUUID == null || memberUUID.isEmpty())
+			this.uuid = UUID.randomUUID().toString();
+		else
+			this.uuid = memberUUID;
 		this.status = status;
 		this.name = name;
 		this.nickname = nickname;
@@ -76,9 +111,35 @@ public abstract class Member extends CommonEntity {
 		this.socialId = socialId;
 		this.email = email;
 		this.memberRole = memberRole;
+		this.challengeAlarm = challengeAlarm;
+		this.balanceAlarm = balanceAlarm;
+		this.smallAcountAlarm = smallAcountAlarm;
+	}
+
+	public MemberDto convertToDto() {
+		return GuestDto.builder().build();
 	}
 
 	public void updateFCMToken(String FCMToken) {
 		this.FCMToken = FCMToken;
+	}
+
+	public void updateAlarm(String alarmName) {
+		if (alarmName.equals("challengeAlarm")) {
+			if (this.challengeAlarm.equals("Y"))
+				this.challengeAlarm = "N";
+			else
+				this.challengeAlarm = "Y";
+		} else if (alarmName.equals("balanceAlarm")) {
+			if (this.balanceAlarm.equals("Y"))
+				this.balanceAlarm = "N";
+			else
+				this.balanceAlarm = "Y";
+		} else if (alarmName.equals("smallAcountAlarm")) {
+			if (this.smallAcountAlarm.equals("Y"))
+				this.smallAcountAlarm = "N";
+			else
+				this.smallAcountAlarm = "Y";
+		}
 	}
 }

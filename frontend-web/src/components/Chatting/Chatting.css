@@ -1,0 +1,201 @@
+/*채팅 들어있는 박스 하나->이걸로 세로길이 조정 */
+#chat-box {
+  border: 1px solid blue;
+  width: 150%;
+  overflow: auto;
+  height: 100%;
+  padding: 0%;
+  margin: 0%;
+  margin-left: -24%;
+}
+
+/* 메시지 입력란 전체 */
+#typeMsg {
+  border-top: 2px solid #c4c4c4;
+  position: relative;
+  display: flex;
+  border-top: solid 1px rgb(184, 184, 184);
+  width: 100%;
+  justify-content: space-between;
+  :focus {
+    outline: none;
+  }
+}
+
+/* 메세지 입력란 - input */
+#chat-outgoing-msg {
+  background: none;
+  /* border: medium none; */
+  border: 1px solid brown;
+  color: #4c4c4c;
+  font-size: 15px;
+  min-height: 48px;
+  padding: 12px;
+}
+
+/* 메시지 전송버튼 */
+#chat-send {
+  background: #7077ee;
+  border: medium none;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  font-size: 20px;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  right: 10px;
+  top: 4px;
+}
+
+/* 채팅 전송 아이콘 */
+#chat-send-icon {
+  margin-top: 4px;
+}
+
+/* -------------------- 메세지 보내기 -------------------- */
+
+/* 전체 - 세로 */
+#outgoingMsg {
+  overflow: hidden;
+  /* margin: 10px 0; */
+}
+
+/* 전체 - 가로 */
+#sendMsg {
+  float: right;
+  max-width: 60%;
+  min-width: 20%;
+  word-break: break-all;
+}
+
+/* flex : 하위 3개 */
+#sendDataFlex {
+  display: flex;
+  flex-direction: column;
+}
+
+/* flex 하위 : 자신의 프로필 */
+#chat-profile {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+/* 프로필 - 닉네임 */
+#nickName {
+  /* vertical-align: text-bottom; */
+  padding-top: 20px;
+  font-size: 10px;
+}
+
+/* 프로필 - 이미지 */
+#chat-profile-img {
+  width: 40px;
+  height: 40px;
+}
+
+/* flex 하위 - 보낸 메세지 */
+#sendMsgData {
+  background: #7077ee;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  padding: 15px;
+}
+
+/* 작성시간 */
+#timeDate {
+  color: #7b7a7a;
+  /* display: flex; */
+  font-size: 5px;
+  width: 100%;
+  margin: 0px;
+  margin-left: 10px;
+  vertical-align: text-top;
+  text-align: right;
+  padding-top: 3px;
+  padding-right: 20px;
+  background-color: white;
+  margin-bottom: 10px;
+}
+
+/* -------------------- 메세지 받기 -------------------- */
+/* 전체 - 세로 */
+#receivedMsg {
+  overflow: hidden;
+  padding: 0 0 0 10px;
+}
+
+/* 전체 - 가로 */
+#receivedWithdMsg {
+  float: left;
+  max-width: 60%;
+  min-width: 20%;
+  word-break: break-all;
+}
+
+/* flex : 하위 3개 */
+#receivedDataFlex {
+  display: flex;
+  flex-direction: column;
+}
+
+/* flex 하위 : 자신의 프로필 */
+#receivedChatProfile {
+  display: flex;
+  flex-direction: row;
+}
+
+/* 프로필 - 닉네임 */
+#nickName {
+  /* vertical-align: text-bottom; */
+  padding-top: 20px;
+  font-size: 10px;
+}
+
+/* 프로필 - 이미지 */
+#chat-profile-img {
+  width: 40px;
+  height: 40px;
+}
+
+/* flex 하위 - 보낸 메세지 */
+#receivedWithdMsgData {
+  background: #ebebeb;
+  border-radius: 6px;
+  color: #2e2c2c;
+  font-size: 14px;
+  padding: 15px;
+  display: inline;
+}
+
+/* 작성시간 */
+#receivedTimeDate {
+  color: #7b7a7a;
+  font-size: 5px;
+  width: 100%;
+  margin: 0px;
+  margin-left: 5px;
+  vertical-align: text-top;
+  padding-top: 3px;
+  background-color: white;
+  margin-bottom: 10px;
+}
+
+#chat-box::-webkit-scrollbar {
+  width: 8px; /* 스크롤바의 너비 */
+  border-top: 13px solid transparent;
+  border-bottom: 13px solid transparent;
+}
+
+#chat-box::-webkit-scrollbar-thumb {
+  height: 20%; /* 스크롤바의 길이 */
+  background: #217af4; /* 스크롤바의 색상 */
+  overflow: scroll;
+  border-radius: 2rem;
+}
+
+#chat-box::-webkit-scrollbar-track {
+  background: rgba(33, 122, 244, 0.1); /*스크롤바 뒷 배경 색상*/
+}

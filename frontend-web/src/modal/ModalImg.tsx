@@ -139,12 +139,14 @@ const ModalBody2: React.FC<ModalProps> = ({
   useState_open,
   set_open,
 }) => {
-  console.log(useState_open + "455654");
+  // console.log(useState_open + "455654");
+
   const handleClose = () => {
     set_open(false);
     console.log("onclick_Close");
   };
   console.log(useState_open);
+
   return (
     <Modal
       open={useState_open}

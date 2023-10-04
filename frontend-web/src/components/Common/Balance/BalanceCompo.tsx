@@ -7,24 +7,11 @@ import News from "../../../modal/Quiz/News";
 import { TextBox } from "../About/AboutText";
 import { Container } from "../About/AboutContainer";
 import { EmogiBox } from "../About/AboutEmogi";
+import axios, { AxiosResponse } from "axios";
+import api from "../../../apis/Api";
+import { useNavigate } from "react-router-dom"; // useNavigate 추가
+import { Routes, Route } from "react-router-dom"; // Routes와 Route 추가
 
-/**
- *
- * style
- */
-
-interface TextProps {
-  fontsize?: string | null;
-  fontcolor?: string | null; // 'String' -> 'string'
-  fontpadding?: string | null;
-  fontweight?: string | null;
-  textalign?: string | null;
-}
-
-/**
- *
- * 이미지
- */
 interface ImgProps {
   width?: string | null;
   height?: string | null;
@@ -33,7 +20,6 @@ interface ImgProps {
 }
 
 export const Img_no = styled.img<ImgProps>`
-  // border: 1px solid black;
   width: ${(props) => (props.width ? props.width : "100%")};
   height: ${(props) => (props.height ? props.height : "100%")};
   padding: ${(props) => (props.padding ? props.padding : "0%")};
@@ -44,8 +30,8 @@ interface ButtonProps {
   backgroundcolor: string;
   border: string;
 }
+
 const Button = styled.button<ButtonProps>`
-  // border: 1px solid black;
   background-color: ${(props) => props.backgroundcolor};
   border: ${(props) => props.border};
   border-radius: 5px;
@@ -67,15 +53,46 @@ const Click = styled.div`
   display: flex;
   justify-content: center;
 `;
+
 interface BalanceCompoProps {
   showText?: boolean;
   showImg?: boolean;
+  questionText: string;
+  buyText: string;
+  notBuyText: string;
+  news: string;
+  countOfLeftAnswer?: number;
+  countOfRightAnswer?: number;
+  balanceIdx: number; // Add balanceIdx prop
 }
 
-function BalanceCompo({ showText = true, showImg = true }: BalanceCompoProps) {
-  const balancequestion = "ABC 기업의 주식을 구매하시겠습니까?";
-  const handleClick = () => {
-    console.log("버튼이 클릭되었습니다!");
+const patchAnswer = (
+  balanceIdx: number,
+  selectAnswer: string
+): Promise<AxiosResponse> => {
+  return api.patch(`/v1/balances/${balanceIdx}/answer`, {
+    selectAnswer: selectAnswer, // Pass selectAnswer in the request body
+  });
+};
+
+function BalanceCompo({
+  showText = true,
+  showImg = true,
+  questionText,
+  buyText,
+  notBuyText,
+  news,
+  balanceIdx,
+}: BalanceCompoProps) {
+  const navigate = useNavigate(); // useNavigate 훅 사용
+
+  const handleClick = (selectAnswer: string) => {
+    patchAnswer(balanceIdx, selectAnswer); // Call patchAnswer with balanceIdx and selectAnswer
+    window.alert("답변이 선택되었습니다!!"); // Show an alert message
+  };
+
+  const navigateClick = () => {
+    navigate("/chatting"); // 클릭 시 '/balance'로 이동
   };
 
   return (
@@ -83,21 +100,17 @@ function BalanceCompo({ showText = true, showImg = true }: BalanceCompoProps) {
       <Container height="10%" overflowy="hidden">
         {showText && <TextBox height="100%">오늘의 밸런스 게임</TextBox>}
       </Container>
-      <WhiteBox1 height="75%" marginB="5%" flexDirection="column">
-        <Container height="10%" justifyContent="end">
-          {showImg && (
-            <EmogiBox
-              backImg={`${LeftArrow}`}
-              width="7%"
-              height="100%"
-              onClick={handleClick}
-            />
-          )}
-        </Container>
+      <WhiteBox1
+        height="75%"
+        marginB="5%"
+        flexDirection="column"
+        onClick={navigateClick}
+      >
+        <Container height="10%" justifyContent="end"></Container>
         <Container height="53%" flexDirection="column">
           <EmogiBox backImg={`${Newspaper}`} width="45%" height="100%" />
           <Click>
-            <News />
+            <News news={news} />
           </Click>
         </Container>
         <Container height="15%">
@@ -107,15 +120,23 @@ function BalanceCompo({ showText = true, showImg = true }: BalanceCompoProps) {
             marginL="0%"
             justifyContent="center"
           >
-            {balancequestion}
+            {questionText}
           </TextBox>
         </Container>
         <Container height="20%">
-          <Button backgroundcolor="#FBD56E" border="0">
-            산다
+          <Button
+            backgroundcolor="#FBD56E"
+            border="0"
+            onClick={() => handleClick("LEFT")} // Call handleClick with "LEFT"
+          >
+            {buyText}
           </Button>
-          <Button backgroundcolor="F4F4F4" border="0">
-            안산다
+          <Button
+            backgroundcolor="F4F4F4"
+            border="0"
+            onClick={() => handleClick("RIGHT")} // Call handleClick with "RIGHT"
+          >
+            {notBuyText}
           </Button>
         </Container>
       </WhiteBox1>

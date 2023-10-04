@@ -1,5 +1,8 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+
+import { useRecoilState } from "recoil";
+import { newChallenge } from "../../states/ChallengeState";
 
 export const ContentBox = styled.div`
   width: 100%;
@@ -17,7 +20,6 @@ interface InputDivProp {
 }
 
 export const InputDiv = styled.div<InputDivProp>`
-  // border: 1px solid red;
   width: 90%;
   height: 30%;
   display: flex;
@@ -34,51 +36,166 @@ export const InputInfo = styled.input`
   outline: none;
 `;
 
+export const InputDateInfo = styled.input`
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(131, 129, 129, 0.851);
+  // border: 1px solid rgba(131, 129, 129, 0.851);
+  // border: 1px solid #fbd56e;
+  padding: 10px;
+  // background-color: white;
+  // background: rgba(250, 249, 252, 1);
+  // box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  // border: 1px solid rgba(131, 129, 129, 0.2);
+  // border-radius: 8px;
+  &::-webkit-calendar-picker-indicator {
+    // position: absolute;
+    // left: 0;
+    // top: 0;
+    // width: 100%;
+    // height: 100%;
+    // background: transparent;
+    // color: transparent;
+  }
+  &::before {
+    content: attr(placeholder);
+    width: 100%;
+    height: 100%;
+  }
+  ,
+  &:valid::before,
+  &:focus::before {
+    display: none;
+  }
+`;
+
 export const SelectBox = styled.select`
   border: none;
+  // border: 1px solid rgba(131, 129, 129, 0.851);
   border-bottom: 1px solid black;
-  width: 95%;
+  width: 100%;
   height: 50%;
   font-size: 1.3em;
   outline: none;
-  text-align: left; /* 텍스트를 왼쪽으로 정렬 */
+  text-align: left;
 `;
 
 function CreateChallenge() {
-  const [selectedOption, setSelectedOption] = React.useState(""); // 선택된 옵션을 저장할 state
+  const [newChallengeData, setNewChallengeData] = useRecoilState(newChallenge);
+  const [availableOptions, setAvailableOptions] = React.useState<string[]>([]);
 
-  const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
+  const handleChangeState = (
+    e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
+  ) => {
+    const { name, value } = e.target;
+
+    if (name === "category") {
+      // 카테고리가 변경되면 해당하는 종류를 설정하고
+      // 종류 옵션도 업데이트
+      const selectedCategory = value;
+      const options = availableOptionsByCategory[selectedCategory] || [];
+      setAvailableOptions(options);
+
+      setNewChallengeData({
+        ...newChallengeData,
+        category: value,
+        title: "", // 종류 초기화
+      });
+    } else {
+      setNewChallengeData({
+        ...newChallengeData,
+        [name]: value,
+      });
+    }
   };
+
+  const availableOptionsByCategory: Record<string, string[]> = {
+    집안일: ["애완동물케어", "빨래", "청소", "설거지"],
+    공부: ["국어 공부", "수학 공부", "영어 공부", "사회 공부"],
+    습관: ["일어나서 이불개기", "아침 인사드리기"],
+    효도: ["부모님 안아드리기", "부모님에게 사랑한다하기"],
+  };
+
+  const [minDate, setMinDate] = useState<string>("");
+
+  useEffect(() => {
+    const today = new Date();
+    const minDateString = today.toISOString().split("T")[0];
+    setMinDate(minDateString);
+  }, []);
 
   return (
     <ContentBox>
       <InputDiv>
-        {/* 종류 선택을 위한 선택 박스 */}
-        <SelectBox value={selectedOption} onChange={handleOptionChange}>
-          <option value="">종류</option>
-          <option value="옵션1">옵션1</option>
-          <option value="옵션2">옵션2</option>
-          {/* 필요한 만큼 옵션을 추가하세요 */}
+        {/* 카테고리 선택을 위한 선택 박스 */}
+        <SelectBox
+          name="category"
+          value={newChallengeData.category}
+          onChange={handleChangeState}
+        >
+          <option value="">--- 카테고리 ---</option>
+          {/* value값과 availableOptionsByCategory의 key값과 일치해야함 */}
+          <option value="집안일">집안일</option>
+          <option value="공부">공부</option>
+          <option value="습관">습관</option>
+          <option value="효도">효도</option>
         </SelectBox>
       </InputDiv>
       <InputDiv>
-        <SelectBox value={selectedOption} onChange={handleOptionChange}>
-          <option value="">내용</option>
-          <option value="옵션1">옵션1</option>
-          <option value="옵션2">옵션2</option>
-          {/* 필요한 만큼 옵션을 추가하세요 */}
+        {/* 선택된 카테고리에 따른 종류 선택을 위한 선택 박스 */}
+        <SelectBox
+          name="title"
+          value={newChallengeData.title}
+          onChange={handleChangeState}
+          disabled={newChallengeData.category === ""}
+        >
+          <option value="">--- 종류 ---</option>
+          {availableOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
         </SelectBox>
       </InputDiv>
       <InputDiv>
-        <InputInfo type="text" placeholder="챌린지명" />
+        <InputInfo
+          type="text"
+          name="memo"
+          value={newChallengeData.memo}
+          placeholder="챌린지명"
+          onChange={handleChangeState}
+        />
       </InputDiv>
       <InputDiv>
-        <InputInfo type="text" placeholder="가격" />
+        <InputInfo
+          type="number"
+          name="reward"
+          value={newChallengeData.reward}
+          placeholder="상금"
+          onChange={handleChangeState}
+          // style={{ textAlign: "end" }}
+        />
       </InputDiv>
-      <InputDiv>
-        <InputInfo type="date" placeholder="날짜" />
+      <InputDiv style={{ alignItems: "center" }}>
+        <InputDateInfo
+          type="date"
+          name="endTime"
+          value={newChallengeData.endTime}
+          placeholder="끝나는 날짜를 입력해주세요"
+          min={minDate}
+          onChange={handleChangeState}
+          required
+        />
       </InputDiv>
+
+      {/* <>
+        <div>확인용</div>
+        <span>{newChallengeData.category}</span>
+        <span>{newChallengeData.title}</span>
+        <span>{newChallengeData.memo}</span>
+        <span>{newChallengeData.reward}</span>
+        <span>{newChallengeData.endTime}</span>
+      </> */}
     </ContentBox>
   );
 }

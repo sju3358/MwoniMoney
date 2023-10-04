@@ -65,18 +65,25 @@ const BigText = styled.div`
   text-align: center; /* 텍스트 가운데 정렬 추가 */
 `;
 
-export default function balanceResult() {
-  //투표수가 많다고 노란색이 아니라 내가 선택한 쪽이 노란색
-  const myStatus = "1"; //0이면 왼쪽, 1이면 오른쪽
-  const leftCount = "70";
-  const rightCount = "30";
-  const frontPercent: string = (
-    (Number(leftCount) / (Number(leftCount) + Number(rightCount))) *
-    100
-  ).toString();
+interface IntoBalanceResultProps {
+  news: string;
+  countOfLeftAnswer: number;
+  countOfRightAnswer: number;
+}
+
+export default function balanceResult(props: IntoBalanceResultProps) {
+  // 투표수가 많다고 노란색이 아니라 내가 선택한 쪽이 노란색
+  const myStatus = "1"; // 0이면 왼쪽, 1이면 오른쪽
+  const leftCount = props.countOfLeftAnswer;
+  const rightCount = props.countOfRightAnswer;
+
+  // frontPercent를 계산하고, leftCount와 rightCount가 모두 0인 경우에는 50으로 설정
+  const frontPercent: number =
+    leftCount === 0 && rightCount === 0
+      ? 50
+      : (leftCount / (leftCount + rightCount)) * 100;
+
   const frontWidth = `${frontPercent}%`; // "%"를 붙여주기
-  // const backWidth = `calc(100% - ${frontWidth})`; // 100%에서 frontPercent를 뺀 값
-  // const backPercent = 100 - frontPercent; // 숫자값으로 설정
 
   return (
     <ModalContainer>
@@ -95,9 +102,7 @@ export default function balanceResult() {
         </ProgressBarContainer>
 
         <ContentContainer>
-          <BigText>글로벌 기업 ABC가</BigText>
-          <BigText>새로운 혁신 제품을 발표하고</BigText>
-          <BigText>시장에서 큰 관심을 받고 있습니다.</BigText>
+          <BigText>{props.news}</BigText>
         </ContentContainer>
       </Container>
     </ModalContainer>

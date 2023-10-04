@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 import jwt from "jwt-decode";
 import { useRecoilState } from "recoil";
-import { memberUuidState } from "../../states/UserInfoState"; // 경로를 실제 상황에 맞게 수정
+import { userDataState } from "../../states/UserInfoState";
+import axios, { AxiosResponse } from "axios";
+import api from "../../apis/Api";
+// import { number } from "yargs";
+import { userDataProps } from "../../states/UserInfoState";
+import { useNavigate } from "react-router";
 
 // JWT 토큰의 형태를 정의
 interface JwtToken {
@@ -12,7 +17,8 @@ interface JwtToken {
 }
 
 function KakaoLoginRedirect() {
-  const [userInfo, setUserInfo] = useRecoilState(memberUuidState);
+  const [userInfo, setUserInfo] = useRecoilState(userDataState);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // URL에서 JWT 토큰 추출 (카카오 로그인 콜백에서 전달된 토큰)
@@ -23,26 +29,48 @@ function KakaoLoginRedirect() {
       // JWT 토큰 디코딩
       const decodedToken = jwt<JwtToken>(accessToken);
 
-      console.log(decodedToken);
+      localStorage.setItem("token", accessToken);
 
-      // 새로운 사용자 정보 객체 생성
-      const updatedUserInfo = {
-        userUuid: decodedToken.sub,
-      };
+      // postRegister를 사용하여 데이터를 가져오기
 
-      const uuid = decodedToken.sub;
+      api
+        .get("/v1/members")
+        .then((response) => {
+          // 데이터를 성공적으로 받았을 때의 처리
+          console.log("postRegister 응답 데이터:", response.data);
 
-      // Recoil 상태 업데이트
-      setUserInfo(updatedUserInfo);
+          // 사용자 정보 업데이트
+          const updatedUserInfo: userDataProps = {
+            idx: decodedToken.sub,
+            uuid: response.data.uuid,
+            status: response.data.status,
+            name: response.data.name,
+            nickname: response.data.nickname,
+            birthday: response.data.birthday,
+            socialProvider: response.data.socialProvider,
+            socialId: response.data.socialId,
+            memberRole: response.data.memberRole,
+            email: response.data.email,
+            creditscore: response.data.creditScore,
+          };
 
-      //   // 토큰을 localStorage에 저장 (옵션)
-      localStorage.setItem("accessToken", accessToken);
+          setUserInfo(updatedUserInfo);
+
+          // 리디렉션 (예: 홈 페이지로)
+          if (userInfo.memberRole == "GUEST") {
+            navigate("/RegistRole");
+          } else {
+            window.location.href = `${process.env.REACT_APP_BASE_URL}`;
+          }
+        })
+        .catch((error) => {
+          // 에러가 발생했을 때의 처리
+          console.error("postRegister 오류:", error);
+        });
     }
-    // 리디렉션 (예: 홈 페이지로)
-    window.location.href = `${process.env.REACT_APP_BASE_URL}`; // 홈 페이지 URL로 변경
   }, []);
 
-  return <div>Redirecting... {/* 리디렉션 중 메시지 또는 로딩 스피너 */}</div>;
+  return <div>Redirecting...</div>;
 }
 
 export default KakaoLoginRedirect;

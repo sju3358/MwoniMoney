@@ -1,13 +1,10 @@
 package com.ntt.mwonimoney.global.security.oauth.handler;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -17,9 +14,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ntt.mwonimoney.domain.member.entity.Member;
+import com.ntt.mwonimoney.domain.member.model.dto.MemberAuthDto;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.model.vo.SocialProvider;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
+import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 import com.ntt.mwonimoney.global.security.jwt.Token;
 import com.ntt.mwonimoney.global.security.oauth.info.OAuth2MemberInfo;
@@ -40,8 +39,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 	private final OAuth2AuthorizationRequestBasedOnCookieRepository authorizationRequestRepository;
 	private final JwtTokenProvider jwtTokenProvider;
-	private final RedisTemplate<String, String> redisTemplate;
 	private final MemberRepository memberRepository;
+	private final MemberAuthService memberAuthService;
+
 	@Value("${app.oauth2.authorizedRedirectUris}")
 	private String redirectUri;
 
@@ -65,12 +65,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 				OAuth2AuthorizationRequestBasedOnCookieRepository.REDIRECT_URI_PARAM_COOKIE_NAME)
 			.map(Cookie::getValue);
 
-		// if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
-		// 	log.error("determineTargetUrl - redirectUri : {} , 인증을 진행할 수 없습니다.", redirectUri);
-		// 	throw new IllegalArgumentException(
-		// 		"Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
-		// }
-
 		String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 		OAuth2AuthenticationToken authToken = (OAuth2AuthenticationToken)authentication;
 		SocialProvider socialProvider = SocialProvider.valueOf(
@@ -91,22 +85,26 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 		}
 
 		Member bySocialId = memberRepository.findMemberBySocialId(socialId).orElseThrow();
-		Token tokenInfo = jwtTokenProvider.createToken(bySocialId.getUuid(), socialId,
+		Token tokenInfo = jwtTokenProvider.createToken(bySocialId.getUuid(),
 			memberRole.name());
 
 		log.info("successHanlder : " + bySocialId.getUuid());
-
-		redisTemplate.opsForValue()
-			.set("RT" + socialId, tokenInfo.getRefreshToken(), tokenInfo.getExpireTime(),
-				TimeUnit.MILLISECONDS);
 
 		CookieUtil.deleteCookie(request, response, OAuth2AuthorizationRequestBasedOnCookieRepository.REFRESH_TOKEN);
 		CookieUtil.addCookie(response, OAuth2AuthorizationRequestBasedOnCookieRepository.REFRESH_TOKEN,
 			tokenInfo.getRefreshToken(),
 			JwtTokenProvider.getRefreshTokenExpireTimeCookie());
 
+		memberAuthService.login(
+			MemberAuthDto.builder()
+				.memberUUID(bySocialId.getUuid())
+				.memberIdx(bySocialId.getIdx())
+				.memberRefreshToken(tokenInfo.getRefreshToken())
+				.build());
+
 		return UriComponentsBuilder.fromUriString(targetUrl)
 			.queryParam("accessToken", tokenInfo.getAccessToken())
+			.queryParam("refreshToken", tokenInfo.getRefreshToken())
 			.build()
 			.toUriString();
 	}
@@ -127,13 +125,4 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 		}
 		return false;
 	}
-
-	private boolean isAuthorizedRedirectUri(String uri) {
-		URI clientRedirectUri = URI.create(uri);
-		URI authorizedUri = URI.create(redirectUri);
-
-		return authorizedUri.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
-			&& authorizedUri.getPort() == clientRedirectUri.getPort();
-	}
-
 }

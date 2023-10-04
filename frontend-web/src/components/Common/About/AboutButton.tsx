@@ -1,11 +1,11 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import styled from "styled-components";
 
 interface BtnProps {
   width?: string;
   height?: string;
   backcolor?: string;
-  fontSize?: string;
+  fontS?: string;
 }
 
 export const Btn = styled.div<BtnProps>`
@@ -14,7 +14,7 @@ export const Btn = styled.div<BtnProps>`
   align-items: center;
   width: ${(props) => (props.width ? props.width : "100%")};
   height: ${(props) => (props.height ? props.height : "50%")};
-  font-size: ${(props) => (props.fontSize ? props.fontSize : "1.7em")};
+  font-size: ${(props) => (props.fontS ? props.fontS : "1.7em")};
   background-color: ${(props) =>
     props.backcolor ? props.backcolor : "#fbd56e"};
   border-radius: 10px;
@@ -26,16 +26,25 @@ interface ButtonProps {
   width?: string;
   height?: string;
   backcolor?: string;
-  fontSize?: string;
+  fontS?: string;
+  click?: MouseEventHandler<HTMLDivElement>;
 }
 
-function Button({ content, width, height, backcolor, fontSize }: ButtonProps) {
+function Button({
+  content,
+  width,
+  height,
+  backcolor,
+  fontS,
+  click,
+}: ButtonProps) {
   return (
     <Btn
       width={width}
       height={height}
       backcolor={backcolor}
-      fontSize={fontSize}
+      fontS={fontS}
+      onClick={click}
     >
       {content}
     </Btn>

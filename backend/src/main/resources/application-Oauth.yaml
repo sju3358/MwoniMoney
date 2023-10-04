@@ -9,6 +9,7 @@ spring:
             redirect-uri: http://j9b310.p.ssafy.io/api/login/oauth2/code/google
             scope:
               - email
+              - profile
           kakao:
             client-id: ee79d6a7c99b90866eeba9a9bc103236
             client-secret: U9zWosrIKvEZzaX6ovJLDvESgPe5adO2

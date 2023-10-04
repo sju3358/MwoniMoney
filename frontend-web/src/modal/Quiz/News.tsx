@@ -51,27 +51,26 @@ const BigText = styled.div`
   line-height: normal;
 `;
 
-function Main() {
+function NewsContent(props: any) {
+  // props.news를 이용하여 원하는 내용을 표시합니다.
   return (
     <ModalContainer>
       <Container height="60%">
         <ContentContainer>
-          <BigText>글로벌 기업 ABC가</BigText>
-          <BigText>새로운 혁신 제품을 발표하고</BigText>
-          <BigText>시장에서 큰 관심을 받고 있습니다.</BigText>
+          <BigText>{props.news}</BigText>
         </ContentContainer>
       </Container>
     </ModalContainer>
   );
 }
 
-export default function News() {
+export default function News(props: any) {
   return (
     <ModalBody
       modal_text_color="white"
       modal_start_text="Click"
       modal_title="뉴스"
-      modal_content={<Main />}
+      modal_content={<NewsContent news={props.news} />}
       modal_btn="닫기"
     />
   );

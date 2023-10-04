@@ -2,22 +2,28 @@ package com.ntt.mwonimoney.domain.game.model.dto;
 
 import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameStatus;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BalanceGameDto {
 
-	Long idx;
+	private Long idx;
 
-	String question;
+	private String news;
+	
+	private String question;
 
-	String leftAnswer;
+	private String leftAnswer;
 
-	String rightAnswer;
+	private String rightAnswer;
 
-	BalanceGameStatus balanceGameStatus;
+	private BalanceGameStatus balanceGameStatus;
 
 	private int countOfLeftAnswer;
 

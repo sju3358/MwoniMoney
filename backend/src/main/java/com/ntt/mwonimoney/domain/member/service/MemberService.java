@@ -1,17 +1,18 @@
 package com.ntt.mwonimoney.domain.member.service;
 
+import com.ntt.mwonimoney.domain.member.api.request.MemberInfoChangeRequest;
 import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
-import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
+import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 
 public interface MemberService {
 
-	public void changeNickname(String newNickName);
+	public MemberDto getMemberInfo(Long memberIdx);
 
-	public void addSmallAccount(SmallAccount smallAccount);
+	public Long getMemberIdx(String memberUuid);
 
-	public void finishSmallAccount(String uuid);
+	public void editMember(MemberInfoChangeRequest request, Long memberIdx);
 
-	public void getMemberInfo(String uuid);
+	public void changeMemberRole(String memberUUID, MemberRole memberRole);
 
-	public void addMemberInfo(MemberDto memberDto, int role, String memberUuid);
+	public void changeAlarm(String alarmName, String memberUuid);
 }
