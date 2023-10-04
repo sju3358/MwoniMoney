@@ -17,6 +17,7 @@ export interface userDataProps {
   socialId: string;
   memberRole: string;
   email: string;
+  creditscore : number;
 }
 
 export const userDataState = atom<userDataProps>({
@@ -32,6 +33,7 @@ export const userDataState = atom<userDataProps>({
     socialId: "",
     memberRole: "",
     email: "",
+    creditscore : 0,
   },
   effects_UNSTABLE: [persistAtom],
 });
