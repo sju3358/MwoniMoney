@@ -50,7 +50,7 @@ public class ChallengeApi {
 	@PostMapping("/challenges")
 	public ResponseEntity writeChallenge(
 		@RequestBody ChallengeRequestDto challengeRequestDto) {
-		Long childIdx = memberAuthService.getMemberAuthInfo(challengeRequestDto.getChildUuid()).getMemberIdx();
+		Long childIdx = memberService.getMemberIdx(challengeRequestDto.getChildUuid());
 
 		MemberChallengeResponseDto responseData = challengeService.writeChallenge(challengeRequestDto,
 			childIdx);
