@@ -72,10 +72,9 @@ public class FinAccount extends CommonEntity {
 
 	public FinAccountDto convertToDto() {
 		return FinAccountDto.builder()
-			.idx(this.idx)
-			.number(this.number)
-			.status(this.status)
+			.finAcno(this.finAcno)
 			.type(this.type)
+			.remain(this.remain)
 			.build();
 	}
 

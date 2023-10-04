@@ -1,45 +1,80 @@
 package com.ntt.mwonimoney.domain.account.service.v2;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
+import java.util.UUID;
 
-import com.ntt.mwonimoney.domain.account.model.dtoV2.FinAccountV2Dto;
-import com.ntt.mwonimoney.domain.account.repository.FinAccountRepository;
-import com.ntt.mwonimoney.domain.member.entity.Member;
-import com.ntt.mwonimoney.domain.member.repository.MemberAuthRepository;
-import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ntt.mwonimoney.domain.account.entity.FinAccount;
 import com.ntt.mwonimoney.domain.account.entity.FinAccountStatus;
 import com.ntt.mwonimoney.domain.account.entity.FinAccountType;
-import com.ntt.mwonimoney.domain.account.service.FinAccountService;
+import com.ntt.mwonimoney.domain.account.model.dto.FinAccountDto;
+import com.ntt.mwonimoney.domain.account.repository.FinAccountRepository;
+import com.ntt.mwonimoney.domain.member.entity.Member;
+import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
-@Service(value = "FinAccountServiceV2")
+@Service
 @RequiredArgsConstructor
-public class FinAccountServiceImplV2{
+@Qualifier("FinAccountServiceV2")
+@Transactional(readOnly = true)
+public class FinAccountServiceImplV2 {
 
 	private final FinAccountRepository finAccountRepository;
 	private final MemberRepository memberRepository;
-	private final MemberAuthRepository memberAuthRepository;
-	public FinAccountV2Dto getFinAccountByUUID(String memberUUID, String type) {
-		Long memberIdx = memberAuthRepository.findById(memberUUID).orElseThrow().getMemberIdx();
-		FinAccountType finAccountType = FinAccountType.valueOf(type);
 
-		FinAccount finAccount = finAccountRepository.getFinAccountByUUID(memberIdx, finAccountType);
-
-		// builder 패턴을 사용하여 FinAccountV2Dto 객체 생성
-		FinAccountV2Dto finAccountV2Dto = FinAccountV2Dto.builder()
-				.idx(finAccount.getIdx())
-				.number(finAccount.getNumber())
-				.finAcno(finAccount.getFinAcno())
-				.status(finAccount.getStatus())
-				.type(finAccount.getType())
-				.remain(finAccount.getRemain())
-				.build();
-
-		return finAccountV2Dto;
+	public FinAccountDto getFinAccount(Long memberIdx, FinAccountType finAccountType) {
+		return finAccountRepository.findFinAccountDtoByMemberIdxAndType(memberIdx, finAccountType)
+			.orElseThrow(() -> new NoSuchElementException("핀어카운트 정보가 존재하지 않습니다"));
 	}
+
+	public FinAccountDto getFinAccount(String memberUUID, FinAccountType finAccountType) {
+		Member member = memberRepository.findMemberByUuid(memberUUID)
+			.orElseThrow(() -> new NoSuchElementException("멤버정보가 존재하지 않습니다."));
+
+		return finAccountRepository.findFinAccountDtoByMemberIdxAndType(member.getIdx(), finAccountType)
+			.orElseThrow(() -> new NoSuchElementException("핀어카운트 정보가 존재하지 않습니다"));
+	}
+
+	@Transactional
+	public void openGeneralFinAccount(Long memberIdx, String accountNumber) {
+		Member member = memberRepository.findMemberByIdx(memberIdx)
+			.orElseThrow(() -> new NoSuchElementException("멤버가 존재하지 않습니다."));
+
+		/*
+			NHN API 연동 코드 추가 예정
+		 */
+
+		if (finAccountRepository.findFinAccountDtoByMemberIdxAndType(memberIdx, FinAccountType.GENERAL).isPresent())
+			throw new IllegalArgumentException("계좌는 1개만 생성 가능합니다.");
+
+		FinAccount finAccount = FinAccount.builder()
+			.number(accountNumber)
+			.finAcno(UUID.randomUUID().toString())
+			.status(FinAccountStatus.ACTIVATE)
+			.type(FinAccountType.GENERAL)
+			.remain(0L)
+			.member(member)
+			.build();
+
+		finAccountRepository.save(finAccount);
+	}
+
+	@Transactional
+	public void closeFinAccount(Long memberIdx) {
+
+		FinAccount finAccount = finAccountRepository
+			.findFinAccountByMemberIdxAndType(memberIdx, FinAccountType.GENERAL)
+			.orElseThrow(() -> new NoSuchElementException("핀어카운트 정보가 존재하지 않습니다."));
+
+		/*
+			NH API 연동 코드 추가 예정
+		 */
+
+		finAccount.changeStatus(FinAccountStatus.DEACTIVATE);
+	}
+
 }
