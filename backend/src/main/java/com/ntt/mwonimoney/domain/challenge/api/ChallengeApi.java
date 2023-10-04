@@ -49,14 +49,10 @@ public class ChallengeApi {
 	//부모님이 챌린지 생성
 	@PostMapping("/challenges")
 	public ResponseEntity writeChallenge(
-		@RequestHeader("Authorization") String accessToken,
 		@RequestBody ChallengeRequestDto challengeRequestDto) {
-		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
-
-		Long parentIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 		Long childIdx = memberAuthService.getMemberAuthInfo(challengeRequestDto.getChildUuid()).getMemberIdx();
 
-		MemberChallengeResponseDto responseData = challengeService.writeChallenge(challengeRequestDto, parentIdx,
+		MemberChallengeResponseDto responseData = challengeService.writeChallenge(challengeRequestDto,
 			childIdx);
 
 		FCMRequest fcmRequest = FCMRequest.builder()
@@ -72,13 +68,9 @@ public class ChallengeApi {
 
 	//부모 챌린지 삭제
 	@DeleteMapping("/challenges/{memberChallengeIdx}")
-	public ResponseEntity deleteChallenge(@RequestHeader("Authorization") String accessToken,
-		@PathVariable Long memberChallengeIdx) {
-		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+	public ResponseEntity deleteChallenge(@PathVariable Long memberChallengeIdx) {
 
-		Long parentIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
-
-		challengeService.deleteChallenge(parentIdx, memberChallengeIdx);
+		challengeService.deleteChallenge(memberChallengeIdx);
 
 		String childUuid = memberChallengeRepository.findById(memberChallengeIdx).orElseThrow().getMember().getUuid();
 
@@ -94,8 +86,7 @@ public class ChallengeApi {
 
 	//부모 챌린지 완료
 	@PatchMapping("/challenges/{memberChallengeIdx}")
-	public ResponseEntity CompleteChallenge(@RequestHeader("Authorization") String accessToken,
-		@PathVariable Long memberChallengeIdx) {
+	public ResponseEntity CompleteChallenge(@PathVariable Long memberChallengeIdx) {
 		challengeService.completeChallenge(memberChallengeIdx);
 
 		String childUuid = memberChallengeRepository.findById(memberChallengeIdx).orElseThrow().getMember().getUuid();
@@ -113,8 +104,7 @@ public class ChallengeApi {
 
 	//부모 챌린지 거절
 	@PatchMapping("/challenges/{memberChallengeIdx}/reject")
-	public ResponseEntity RejectChallenge(@RequestHeader("Authorization") String accessToken,
-		@PathVariable Long memberChallengeIdx) {
+	public ResponseEntity RejectChallenge(@PathVariable Long memberChallengeIdx) {
 		challengeService.rejectChallenge(memberChallengeIdx);
 
 		String childUuid = memberChallengeRepository.findById(memberChallengeIdx).orElseThrow().getMember().getUuid();
@@ -132,8 +122,7 @@ public class ChallengeApi {
 
 	//부모 챌린지 승인
 	@PatchMapping("/challenges/{memberChallengeIdx}/accept")
-	public ResponseEntity AcceptChallenge(@RequestHeader("Authorization") String accessToken,
-		@PathVariable Long memberChallengeIdx) {
+	public ResponseEntity AcceptChallenge(@PathVariable Long memberChallengeIdx) {
 		challengeService.acceptChallenge(memberChallengeIdx);
 
 		return ResponseEntity.ok().build();
