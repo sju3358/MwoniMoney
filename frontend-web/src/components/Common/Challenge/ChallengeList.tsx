@@ -96,6 +96,7 @@ export const ListBtn = styled.div`
 
 interface BtnProps {
   backcolor: string;
+  afbackcolor: string;
 }
 
 const ChallengeBtn = styled.div<BtnProps>`
@@ -109,6 +110,15 @@ const ChallengeBtn = styled.div<BtnProps>`
   justify-content: space-around;
   font-weight: bold;
   background-color: ${(props) => props.backcolor};
+  &:active {
+    background-color: ${(props) => props.afbackcolor};
+    transform: translate(0em, 0.75em);
+    &::before {
+      box-shadow: 0 0 0 2px $pink-border, 0 0 $pink-shadow;
+      transform: translate3d(0, 0, -1em);
+    }
+  }
+}
 `;
 interface Props {
   data: getChallenge;
@@ -269,6 +279,7 @@ function ChallengeList({ data }: Props) {
             data.status === 5) && (
             <ListBtn style={{ justifyContent: "flex-end" }}>
               <ChallengeBtn
+                afbackcolor="#D9D9D9"
                 backcolor="#f4f4f4"
                 onClick={handleDelete}
                 style={{ margin: "0% 7% 0% 0%" }}
@@ -280,6 +291,7 @@ function ChallengeList({ data }: Props) {
           {data.status === 1 && (
             <ListBtn style={{ justifyContent: "flex-end" }}>
               <ChallengeBtn
+                afbackcolor="#C8A23B"
                 backcolor="#fbd56e"
                 onClick={handleComplete}
                 style={{ margin: "0% 7% 0% 0%" }}
@@ -290,10 +302,18 @@ function ChallengeList({ data }: Props) {
           )}
           {data.status === 2 && (
             <ListBtn>
-              <ChallengeBtn backcolor="#fbd56e" onClick={handleAccept}>
+              <ChallengeBtn
+                afbackcolor="#C8A23B"
+                backcolor="#fbd56e"
+                onClick={handleAccept}
+              >
                 수락
               </ChallengeBtn>
-              <ChallengeBtn backcolor="#f4f4f4" onClick={handleReject}>
+              <ChallengeBtn
+                afbackcolor="#D9D9D9"
+                backcolor="#f4f4f4"
+                onClick={handleReject}
+              >
                 거절
               </ChallengeBtn>
             </ListBtn>
@@ -304,6 +324,7 @@ function ChallengeList({ data }: Props) {
         <ListBtn style={{ justifyContent: "flex-end" }}>
           {data.status === 0 && (
             <ChallengeBtn
+              afbackcolor="#fbd56e"
               backcolor="#fbd56e"
               onClick={handleComplete}
               style={{ margin: "0% 7% 0% 0%" }}
