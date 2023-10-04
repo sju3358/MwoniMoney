@@ -40,21 +40,14 @@ public class FinAccountRepositoryCustomImpl implements FinAccountRepositoryCusto
     }
 
     @Override
-    public FinAccount getFinAccountByUUID(String memberUUID, FinAccountType type) {
+    public FinAccount getFinAccountByUUID(Long memberIdx, FinAccountType type) {
 
-        List<FinAccount> result = jpaQueryFactory.selectFrom(QFinAccount.finAccount)
-                .where(QFinAccount.finAccount.type.eq(type))
-                .fetch();
+        FinAccount result = jpaQueryFactory.selectFrom(QFinAccount.finAccount)
+                .where(QFinAccount.finAccount.type.eq(type).and(QFinAccount.finAccount.status.eq(FinAccountStatus.ACTIVATE).and(QFinAccount
+                        .finAccount.member.idx.eq(memberIdx))))
+                .fetchOne();
 
-        FinAccount finAccount = null;
-
-        for(int i=0;i<result.size();i++) {
-            if(result.get(i).getStatus() == FinAccountStatus.ACTIVATE) {
-                finAccount = result.get(i);
-            }
-        }
-
-        return finAccount;
+        return result;
     }
 
 
