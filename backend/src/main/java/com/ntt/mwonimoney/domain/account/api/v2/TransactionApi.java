@@ -37,7 +37,7 @@ public class TransactionApi {
 	private final MemberAuthService memberAuthService;
 	private final MemberService memberService;
 
-	@GetMapping("/accounts/transactions")
+	@PostMapping("/accounts/transactions/parents")
 	public ResponseEntity getTransaction(
 			@RequestHeader("Authorization") String accessToken, @RequestBody GetTransactionRequestDto getTransactionRequestDto) {
 		//거래내역 불러오기
@@ -49,7 +49,7 @@ public class TransactionApi {
 		return ResponseEntity.ok().body(result);
 	}
 
-	@GetMapping("/accounts/transactions/child")
+	@PostMapping("/accounts/transactions/child")
 	public ResponseEntity getTransactionChild(
 			@RequestHeader("Authorization") String accessToken, @RequestBody GetTransactionRequestDto getTransactionRequestDto) {
 		Long memberIdx = memberService.getMemberIdx(getTransactionRequestDto.getChildUUID());
