@@ -50,7 +50,7 @@ public class FinAccount extends CommonEntity {
 	private FinAccountType type;
 
 	@Column(name = "fin_account_remain")
-	private Long remain;
+	private int remain;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_idx")
@@ -60,7 +60,7 @@ public class FinAccount extends CommonEntity {
 	private List<FinAccountTransaction> finAccountTransactionList = new ArrayList<>();
 
 	@Builder
-	public FinAccount(String number, String finAcno, FinAccountStatus status, FinAccountType type, Long remain,
+	public FinAccount(String number, String finAcno, FinAccountStatus status, FinAccountType type, int remain,
 		Member member) {
 		this.number = number;
 		this.finAcno = finAcno;
@@ -87,7 +87,7 @@ public class FinAccount extends CommonEntity {
 		this.status = status;
 	}
 
-	public void changeRemain(Long remain) {
+	public void changeRemain(int remain) {
 		this.remain = remain;
 	}
 
