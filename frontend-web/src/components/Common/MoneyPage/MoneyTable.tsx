@@ -16,9 +16,9 @@ function MoneyTable(props: MoneyTableProps) {
   return (
     <table
       style={{
-        // border: "1px solid red",
-        width: "95%",
-        height: "100%",
+        border: "1px solid gold",
+        width: "360px",
+        height: "500px",
         overflow: "auto",
         margin: "3%",
       }}
@@ -26,7 +26,7 @@ function MoneyTable(props: MoneyTableProps) {
       <tbody>
         <tr>
           <td>
-            <Container height="100%">
+            <Container height="67px">
               <Container
                 height="100%"
                 width="20%"
