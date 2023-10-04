@@ -1,7 +1,13 @@
 package com.ntt.mwonimoney.domain.account.service.v2;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import com.ntt.mwonimoney.domain.account.model.dto.GetTransactionResponseDto;
+import com.ntt.mwonimoney.domain.account.model.dtoV2.GetTransactionRequestDto;
+import com.ntt.mwonimoney.domain.account.repository.FinAccountRepository;
+import com.ntt.mwonimoney.domain.account.repository.FinAccountTransactionRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -13,24 +19,19 @@ import lombok.RequiredArgsConstructor;
 
 @Service(value = "FinAccountTransactionServiceV2")
 @RequiredArgsConstructor
-public class FinAccountTransactionServiceImplV2 implements FinAccountTransactionalService {
-	@Override
-	public Slice<FinAccountTransaction> getTransactionList(Long finAccountIdx, Pageable pageable) {
-		return null;
-	}
+public class FinAccountTransactionServiceImplV2 {
 
-	@Override
-	public Optional<FinAccountTransaction> getTransaction(Long finAccountTransactionId) {
-		return Optional.empty();
-	}
+    private final FinAccountTransactionRepository finAccountTransactionRepository;
+    public List<GetTransactionResponseDto> getTransaction(Long memberIdx, GetTransactionRequestDto getTransactionRequestDto) {
 
-	@Override
-	public FinAccountTransaction makeTransaction(FinAccountTransaction finAccountTransaction) {
-		return null;
-	}
+        List<FinAccountTransaction> result = finAccountTransactionRepository.getTransaction(memberIdx, getTransactionRequestDto);
 
-	@Override
-	public void editMemo(FinAccountTransaction finAccountTransaction, String memo) {
+        return result.stream().map(transaction -> GetTransactionResponseDto.builder()
+                .time(transaction.getTime())
+                .money(transaction.getMoney())
+                .balance(transaction.getBalance())
+                .memo(transaction.getMemo()).build()
+        ).collect(Collectors.toList());
+    }
 
-	}
 }
