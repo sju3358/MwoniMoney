@@ -64,7 +64,11 @@ function MoneyParentsPage() {
             <Category backcolor="#b9deb3">수익</Category>
             <Category backcolor="#ffa27e">지출</Category>
           </Container>
-          <Container height="70%" flexDirection="column">
+          <Container
+            style={{ border: "1px solid red" }}
+            height="100px"
+            flexDirection="column"
+          >
             <MoneyTable
               emogi={`${Income}`}
               expense_detail="지출내역"
@@ -77,12 +81,12 @@ function MoneyParentsPage() {
               expense_date="지출날짜"
               spending={100000}
             />
-            <MoneyTable
+            {/* <MoneyTable
               emogi={`${Income}`}
               expense_detail="지출내역"
               expense_date="지출날짜"
               spending={100000}
-            />
+            /> */}
           </Container>
         </WhiteBox1>
       </Container>
