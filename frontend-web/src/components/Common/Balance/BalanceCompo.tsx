@@ -92,7 +92,7 @@ function BalanceCompo({
   };
 
   const navigateClick = () => {
-    navigate("/balance"); // 클릭 시 '/balance'로 이동
+    navigate("/chatting"); // 클릭 시 '/balance'로 이동
   };
 
   return (
@@ -100,7 +100,12 @@ function BalanceCompo({
       <Container height="10%" overflowy="hidden">
         {showText && <TextBox height="100%">오늘의 밸런스 게임</TextBox>}
       </Container>
-      <WhiteBox1 height="75%" marginB="5%" flexDirection="column">
+      <WhiteBox1
+        height="75%"
+        marginB="5%"
+        flexDirection="column"
+        onClick={navigateClick}
+      >
         <Container height="10%" justifyContent="end"></Container>
         <Container height="53%" flexDirection="column">
           <EmogiBox backImg={`${Newspaper}`} width="45%" height="100%" />
