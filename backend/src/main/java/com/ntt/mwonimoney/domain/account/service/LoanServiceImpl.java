@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class LoanService {
+public class LoanServiceImpl {
 
 	private final LoanRepository loanRepository;
 

@@ -214,12 +214,12 @@ function LoanProposal() {
         />
       </InputDiv>
       <>
-        <div>확인용</div>
+        {/* <div>확인용</div>
         <span>{newLoanData.name}</span>
         <span>{newLoanData.content}</span>
         <span>{newLoanData.amount}</span>
         <span>{newLoanData.deadline}</span>
-        <span>{newLoanData.rate}</span>
+        <span>{newLoanData.rate}</span> */}
         {/* <span>{selectedFrequency}</span>
         <span>{selectedDay}</span> */}
       </>

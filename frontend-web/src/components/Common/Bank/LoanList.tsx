@@ -185,69 +185,62 @@ function LoanList({ data }: Props) {
                 </Text>
               </Category>
             )} */}
-                      </CategoryTag>
-                      <DeadLine>~ {dateFormat(data.deadline)}</DeadLine>
-                    </ListTitle>
-                  </Container>
-                  <Container height="20%">
-                    {role === "PARENT" ? <></> : <ProgressBar />}
-                  </Container>
-                  <Container height="40%">
-                    {role === "PARENT" ? (
-                      <ProgressBar />
-                    ) : (
-                      <>
-                        {data.status === "APPROVAL" && (
-                          <>
-                            <Button
-                              content="돈 갚기"
-                              width="50%"
-                              fontS="1.2em"
-                              height="70%"
-                              click={handleOpen}
-                            />
-                            <ModalPayLoan
-                              loanidx={LoanIdx}
-                              balance={data.balance}
-                              useState_open={open}
-                              set_open={setOpen}
-                              modal_title="대출 갚기"
-                              // modal_content={<LoanRepay />}
-                              modal_btn1="생성"
-                              modal_btn2="취소"
-                              btn_justify="space-around"
-                            />
-                          </>
-                        )}
-                        {data.status === "WATING" && (
-                          <ListBtn>
-                            <Button
-                              content="수락"
-                              width="35%"
-                              fontS="1.2em"
-                              height="70%"
-                              click={handleAccept}
-                            />
-                            <Button
-                              backcolor="#f4f4f4"
-                              content="거절"
-                              width="35%"
-                              fontS="1.2em"
-                              height="70%"
-                              click={handleReject}
-                            />
-                          </ListBtn>
-                        )}
-                      </>
-                    )}
-                  </Container>
-                </WhiteBox1>
-              </Container>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </Container>
+          </CategoryTag>
+          <DeadLine>~ {dateFormat(data.deadline)}</DeadLine>
+        </ListTitle>
+      </Container>
+      <Container height="20%">
+        <ProgressBar amount={data.amount} balance={data.balance} />
+      </Container>
+      <Container height="40%">
+        {role === "PARENT" ? (
+          <></>
+        ) : (
+          <>
+            {data.status === "APPROVAL" && (
+              <>
+                <Button
+                  content="돈 갚기"
+                  width="50%"
+                  fontS="1.2em"
+                  height="70%"
+                  click={handleOpen}
+                />
+                <ModalPayLoan
+                  loanidx={LoanIdx}
+                  balance={data.balance}
+                  useState_open={open}
+                  set_open={setOpen}
+                  modal_title="대출 갚기"
+                  modal_btn1="갚기"
+                  modal_btn2="취소"
+                  btn_justify="space-around"
+                />
+              </>
+            )}
+            {data.status === "WATING" && (
+              <ListBtn>
+                <Button
+                  content="수락"
+                  width="50%"
+                  fontS="1.2em"
+                  height="70%"
+                  click={handleAccept}
+                />
+                <Button
+                  backcolor="#f4f4f4"
+                  content="거절"
+                  width="50%"
+                  fontS="1.2em"
+                  height="70%"
+                  click={handleReject}
+                />
+              </ListBtn>
+            )}
+          </>
+        )}
+      </Container>
+    </WhiteBox1>
   );
 }
 

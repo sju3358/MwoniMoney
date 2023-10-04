@@ -2,11 +2,11 @@ package com.ntt.mwonimoney.domain.account.model.dto;
 
 import java.time.LocalDateTime;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class FinAccountTransactionDto {
 
 	private Long id;
