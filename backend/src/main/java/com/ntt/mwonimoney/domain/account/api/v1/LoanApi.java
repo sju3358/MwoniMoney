@@ -1,4 +1,4 @@
-package com.ntt.mwonimoney.domain.account.api;
+package com.ntt.mwonimoney.domain.account.api.v1;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +22,7 @@ import com.ntt.mwonimoney.domain.account.model.dto.CreateLoanRequest;
 import com.ntt.mwonimoney.domain.account.model.dto.LoanListRequestDto;
 import com.ntt.mwonimoney.domain.account.model.dto.LoanMemberType;
 import com.ntt.mwonimoney.domain.account.model.dto.LoanTotalDto;
-import com.ntt.mwonimoney.domain.account.service.LoanService;
+import com.ntt.mwonimoney.domain.account.service.LoanServiceImpl;
 import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
 import com.ntt.mwonimoney.domain.member.service.MemberService;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
@@ -39,7 +39,7 @@ public class LoanApi {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final MemberAuthService memberAuthService;
 	private final MemberService memberService;
-	private final LoanService loanService;
+	private final LoanServiceImpl loanService;
 
 	@GetMapping("/loans")
 	public ResponseEntity getLoanList(@RequestHeader("Authorization") String accessToken,
