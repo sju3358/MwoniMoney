@@ -57,11 +57,11 @@ public class CustomBalanceGameRepositoryImpl implements CustomBalanceGameReposit
 	}
 
 	@Override
-	public Slice<BalanceGameDto> findSliceGamesBy(Pageable pageable) {
+	public Slice<BalanceGameDto> findSliceEndGamesBy(Pageable pageable) {
 		List<BalanceGame> result = jpaQueryFactory
 			.select(balanceGame)
 			.from(balanceGame)
-			.where(balanceGame.balanceGameStatus.ne(BalanceGameStatus.WAIT))
+			.where(balanceGame.balanceGameStatus.eq(BalanceGameStatus.END))
 			.orderBy(balanceGame.createTime.desc())
 			.offset(pageable.getPageNumber())
 			.limit(pageable.getPageSize() + 1)
