@@ -69,20 +69,61 @@ function Balance() {
   const [balanceData, setBalanceData] = useState<BalanceDataItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken") || "";
+  const [curPage, setCurPage] = useState(0);
+  const [isLastPage, setIsLastPage] = useState(false);
 
-    getBalance({ bearerToken: accessToken })
+  useEffect(() => {
+    api
+      .get(`/v1/balances/end?page=${curPage}&size=5`)
       .then((response) => {
+        console.log(response);
         const data: BalanceDataItem[] = response.data.content;
-        setBalanceData(data);
+
+        const newData = balanceData;
+        const sizeOfData = data.length;
+        data.forEach((item) => {
+          if (data[sizeOfData - 1].idx != item.idx) newData.push(item);
+        });
+
+        setBalanceData(newData);
+        setIsLastPage(response.data.last);
         setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching balance data:", error);
         setIsLoading(false);
       });
-  }, []);
+  }, [curPage]);
+
+  let timer: any;
+
+  window.addEventListener("scroll", () => {
+    console.log("스크롤이벤트");
+
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    timer = setTimeout(() => {
+      console.log("스크롤이벤트");
+      if (isLastPage != true) {
+        setCurPage(curPage + 1);
+      }
+    }, 500);
+  });
+
+  window.addEventListener("wheel", () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    timer = setTimeout(() => {
+      console.log("스크롤이벤트");
+      if (isLastPage != true) {
+        setCurPage(curPage + 1);
+      }
+    }, 500);
+  });
 
   return (
     <MainContainer>

@@ -28,6 +28,8 @@ import api from "../apis/Api";
 //moneyformat
 import { moneyFormat } from "../components/Common/utils";
 
+import { totalLoan } from "../states/LoanState";
+
 function Bank() {
   //childName
   const [selectedChild, setSelectedChild] =
@@ -96,8 +98,15 @@ function Bank() {
     totalInterest: 0,
   });
 
+  //데이터 총 개수
+  const [totalLoanData, setTotalLoanData] = useRecoilState(totalLoan);
+  if (status_value === "GENERAL") {
+    setTotalLoanData(LoanData.length);
+  }
+
   useEffect(() => {
     console.log(status_value);
+
     api
       .get(`/v1/loans/total?childUuid=${childUuid}`)
       .then((res) => {
@@ -125,6 +134,7 @@ function Bank() {
          */
         setisProposeState(false);
         setIsButtonState(false);
+        console.log("대출 데이터 : ", totalLoanData);
       })
       .catch((error) => {
         // 요청이 실패한 경우 처리할 로직
@@ -182,7 +192,7 @@ function Bank() {
         flexDirection="column"
         style={{ border: "1px solid blue" }}
       >
-        {role === "PARENT" && LoanData.length < 4 ? <LoanAdd /> : <></>}
+        {role === "PARENT" && totalLoanData < 4 ? <LoanAdd /> : <></>}
         <>
           {LoanData.length > 0 ? (
             <>
@@ -191,9 +201,23 @@ function Bank() {
               ))}
             </>
           ) : (
-            <Container height="80%">
-              <Text>현재 진행중인 대출이 없어요.</Text>
-            </Container>
+            <>
+              {status_value === "GENERAL" && (
+                <Container height="80%">
+                  <Text>현재 대출 내역이 없어요.</Text>
+                </Container>
+              )}
+              {status_value === "APPROVAL" && (
+                <Container height="80%">
+                  <Text>현재 진행중인 대출이 없어요.</Text>
+                </Container>
+              )}
+              {status_value === "WATING" && (
+                <Container height="80%">
+                  <Text>현재 제안대기중인 대출이 없어요.</Text>
+                </Container>
+              )}
+            </>
           )}
         </>
       </Container>

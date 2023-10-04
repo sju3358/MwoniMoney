@@ -24,11 +24,11 @@ public class BalanceGameServiceImpl implements BalanceGameService {
 	private final BalanceGameRepository balanceGameRepository;
 
 	@Override
-	public Slice<BalanceGameDto> getBalanceGames(BalanceGameListRequest request) {
+	public Slice<BalanceGameDto> getEndBalanceGames(BalanceGameListRequest request) {
 
 		Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
 
-		Slice<BalanceGameDto> balanceGameEntities = balanceGameRepository.findSliceGamesBy(pageable);
+		Slice<BalanceGameDto> balanceGameEntities = balanceGameRepository.findSliceEndGamesBy(pageable);
 
 		if (balanceGameEntities.isEmpty() == true) {
 			throw new NoSuchElementException("밸런스 게임이 존재하지 않습니다.");
