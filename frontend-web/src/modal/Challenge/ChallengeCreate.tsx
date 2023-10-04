@@ -36,29 +36,37 @@ export const InputInfo = styled.input`
   outline: none;
 `;
 
-export const InputDateInfo = styled.input`
-  width: 100%;
+export const InputNumberInfo = styled.input`
   border: none;
-  border-bottom: 1px solid rgba(131, 129, 129, 0.851);
-  // border: 1px solid rgba(131, 129, 129, 0.851);
-  // border: 1px solid #fbd56e;
-  padding: 10px;
-  // background-color: white;
-  // background: rgba(250, 249, 252, 1);
-  // box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  // border: 1px solid rgba(131, 129, 129, 0.2);
-  // border-radius: 8px;
-  &::-webkit-calendar-picker-indicator {
-    // position: absolute;
-    // left: 0;
-    // top: 0;
-    // width: 100%;
-    // height: 100%;
-    // background: transparent;
-    // color: transparent;
-  }
+  border-bottom: 1px solid black;
+  width: 95%;
+  height: 50%;
+  font-size: 1.3em;
   &::before {
     content: attr(placeholder);
+    font-family: Pretendard;
+  }
+  ,
+  &:valid::before,
+  &:focus::before {
+    // content: attr(placeholder);
+    display: none;
+  }
+  ,
+  &::placeholder {
+    font-family: Pretendard;
+  }
+`;
+
+export const InputDateInfo = styled.input`
+  border: none;
+  border-bottom: 1px solid black;
+  width: 95%;
+  height: 50%;
+  &::before {
+    content: attr(placeholder);
+    font-family: Pretendard;
+    font-size: 1.3em;
     width: 100%;
     height: 100%;
   }
@@ -66,6 +74,11 @@ export const InputDateInfo = styled.input`
   &:valid::before,
   &:focus::before {
     display: none;
+  }
+  ,
+  &::placeholder {
+    font-family: Pretendard;
+    font-weight: 700;
   }
 `;
 
@@ -133,7 +146,7 @@ function CreateChallenge() {
           value={newChallengeData.category}
           onChange={handleChangeState}
         >
-          <option value="">--- 카테고리 ---</option>
+          <option value="">카테고리</option>
           {/* value값과 availableOptionsByCategory의 key값과 일치해야함 */}
           <option value="집안일">집안일</option>
           <option value="공부">공부</option>
@@ -149,7 +162,7 @@ function CreateChallenge() {
           onChange={handleChangeState}
           disabled={newChallengeData.category === ""}
         >
-          <option value="">--- 종류 ---</option>
+          <option value="">종류</option>
           {availableOptions.map((option) => (
             <option key={option} value={option}>
               {option}
@@ -167,13 +180,13 @@ function CreateChallenge() {
         />
       </InputDiv>
       <InputDiv>
-        <InputInfo
+        <InputNumberInfo
           type="number"
           name="reward"
           value={newChallengeData.reward}
           placeholder="상금"
           onChange={handleChangeState}
-          // style={{ textAlign: "end" }}
+          required
         />
       </InputDiv>
       <InputDiv style={{ alignItems: "center" }}>
