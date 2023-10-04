@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import GoalCreate from "../../assests/image/GoalCreate.png";
+import Item from "../../assests/image/Item.png";
 import { Text, TextBox } from "../Common/About/AboutText";
 import { Img, ImgBox } from "../../components/Common/About/AboutEmogi";
 import { Container } from "../Common/About/AboutContainer";
 import { json, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userAccountState } from "../../states/UserInfoState";
-import { GoalMoneyState } from "../../states/GoalMoneyState";
+import { GoalImgCheckState, GoalMoneyState } from "../../states/GoalMoneyState";
 import { Btn, InputList } from "../Common/GoalMoney/GoalMoneyStyle";
 import GoalModal from "../../modal/GoalMoney/GoalModal";
 import { ModalState } from "../../states/ModalState";
@@ -18,10 +19,12 @@ export default function CreatGoal() {
   const [userAccount, setUserAccount] = useRecoilState(userAccountState);
   const [goalMoney, setGoalMoney] = useRecoilState(GoalMoneyState);
   const [open, setOpen] = useRecoilState(ModalState);
+  const [goalImg, setgoalImg] = useRecoilState(GoalImgCheckState);
 
   const navigate = useNavigate();
   const rate = "0.1"; //은행이 정한 이자율
   const account = userAccount.account; //해지 시 입금 계좌
+  const ImgCheck = goalImg.ImgCheck;
   const handleClose = () => {
     navigate("/GoalMoney");
   };
@@ -106,7 +109,7 @@ export default function CreatGoal() {
       {/* 이미지 삽입 */}
       <Container height="25%" overflowy="hidden">
         <ImgBox>
-          <Img src={GoalCreate} onClick={hanldeModal} />
+          <Img src={ImgCheck ? GoalCreate : Item} onClick={hanldeModal} />
         </ImgBox>
       </Container>
       {/* InputList : 입력받는 자리*/}

@@ -6,7 +6,7 @@ import { WhiteBox1 } from "../../components/Common/About/AboutWhilteContainer";
 import { ModalBtn } from "../ModalBtn1";
 import { useRecoilState } from "recoil";
 import { ModalState } from "../../states/ModalState";
-import { GoalMoneyState } from "../../states/GoalMoneyState";
+import { GoalImgCheckState, GoalMoneyState } from "../../states/GoalMoneyState";
 
 interface GoalModalProps {
   goalModal_open: boolean;
@@ -16,6 +16,7 @@ function GoalModal(props: GoalModalProps) {
   const { goalModal_open } = props;
   const [open, setOpen] = useRecoilState(ModalState);
   const [goal, setGoal] = useRecoilState(GoalMoneyState);
+  const [goalImg, setgoalImg] = useRecoilState(GoalImgCheckState);
   const [img, setImg] = useState("");
 
   const handleChange = (e: any) => {
@@ -28,6 +29,10 @@ function GoalModal(props: GoalModalProps) {
     setGoal((goal: any) => ({
       ...goal,
       image: img,
+    }));
+    setgoalImg((res: any) => ({
+      ...res,
+      ImgCheck: true,
     }));
     setOpen(false);
   };
