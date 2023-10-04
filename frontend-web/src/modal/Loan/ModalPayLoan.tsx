@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Modal from "@mui/material/Modal";
+import { Text } from "../../components/Common/About/AboutText";
 
 //recoil
 import { useRecoilState } from "recoil";
@@ -104,10 +105,10 @@ interface ModalProps {
 
 export const ContentBox = styled.div`
   width: 100%;
-  height: 100%;
+  height: 60%;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
   box-sizing: border-box;
   margin-top: 0%;
@@ -240,7 +241,8 @@ const ModalPayLoan: React.FC<ModalProps> = ({
             {modal_content}
           </ModalContent> */}
           <ContentBox>
-            <InputDiv>
+            <Text>부모님에게 갚을 돈</Text>
+            <InputDiv style={{ flexDirection: "column" }}>
               <InputInfo
                 type="number"
                 name="payLoanData"
