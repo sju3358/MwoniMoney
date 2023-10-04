@@ -98,7 +98,11 @@ function GoalMoney() {
   const deleteGoal = async () => {
     try {
       await api
-        .patch("v1/accounts/small-account")
+        .delete("v2/accounts/small-account", {
+          // headers: {
+          //   Authorization: "Bearer " + localStorage.getItem("token"),
+          // },
+        })
         .then(() => {
           setGoalCheck((prev) => ({
             ...prev,
