@@ -16,6 +16,7 @@ import axios from "axios"; // axios 라이브러리를 임포트
 import { userDataState } from "../states/UserInfoState";
 import { useRecoilState } from "recoil";
 import api from "../apis/Api";
+import FooterChild from "../components/Layout/footerChild";
 
 interface Message {
   id: number;
@@ -150,6 +151,7 @@ const App: React.FC = () => {
         </div>
         {loading && <div>Loading...</div>} {/* 로딩 중인 경우 메시지 표시 */}
       </Container>
+      <FooterChild />
     </div>
   );
 };
