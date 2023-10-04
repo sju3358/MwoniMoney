@@ -1,15 +1,22 @@
 /*채팅 들어있는 박스 하나->이걸로 세로길이 조정 */
 #chat-box {
+  border: 1px solid blue;
+  width: 150%;
   overflow: auto;
-  height: 65vh;
-  padding-right: 10px;
+  height: 100%;
+  padding: 0%;
+  margin: 0%;
+  margin-left: -24%;
 }
 
 /* 메시지 입력란 전체 */
 #typeMsg {
   border-top: 2px solid #c4c4c4;
   position: relative;
+  display: flex;
   border-top: solid 1px rgb(184, 184, 184);
+  width: 100%;
+  justify-content: space-between;
   :focus {
     outline: none;
   }
@@ -18,11 +25,11 @@
 /* 메세지 입력란 - input */
 #chat-outgoing-msg {
   background: none;
-  border: medium none;
+  /* border: medium none; */
+  border: 1px solid brown;
   color: #4c4c4c;
   font-size: 15px;
   min-height: 48px;
-  width: 90%;
   padding: 12px;
 }
 
@@ -34,8 +41,8 @@
   color: #fff;
   cursor: pointer;
   font-size: 20px;
-  width: 40px;
-  height: 40px;
+  width: 70px;
+  height: 70px;
   position: absolute;
   right: 10px;
   top: 4px;

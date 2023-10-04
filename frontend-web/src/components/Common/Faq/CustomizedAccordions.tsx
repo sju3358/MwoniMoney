@@ -69,6 +69,7 @@ export default function CustomizedAccordions() {
         <AccordionDetails>
           <Typography>
             우선 자녀를 회원가입시킨 후 부모 메인페이지에서 QR발급에 들어가세요.
+            그 후 자녀 핸드폰으로 큐알을 찍으면 상호 연결됩니다.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -77,10 +78,10 @@ export default function CustomizedAccordions() {
         onChange={handleChange("panel2")}
       >
         <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-          <Typography>2. 질문합니다</Typography>
+          <Typography>2. 어플리케이션 알림을 설정하고싶어요.</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>답변입니다.</Typography>
+          <Typography>마이페이지 내에서 알림을 설정할 수 있습니다.</Typography>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -88,10 +89,15 @@ export default function CustomizedAccordions() {
         onChange={handleChange("panel3")}
       >
         <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-          <Typography>3. 질문합니다.</Typography>
+          <Typography>
+            3. 개명을 했습니다. 회원정보 수정은 어떻게 진행하나요?
+          </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>답변합니다.</Typography>
+          <Typography>
+            고객센터에 문의주시면 2-3일의 처리기간 후 변경된 정보를 확인할실 수
+            있습니다.
+          </Typography>
         </AccordionDetails>
       </Accordion>
     </div>
