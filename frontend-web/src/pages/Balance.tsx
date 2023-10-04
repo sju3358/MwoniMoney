@@ -26,6 +26,7 @@ const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  // border: 1px solid black;
 `;
 
 const ImgContainer = styled.div`
