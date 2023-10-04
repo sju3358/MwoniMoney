@@ -157,7 +157,6 @@ function ChallengeList({ data }: Props) {
         setIsButtonState(true);
       })
       .catch((error) => {
-        console.log(ChildUuid);
         console.log(error);
         if (error.response.data === "로그인 되어있지 않습니다.") {
           navigate("/LoginPage");
@@ -174,7 +173,6 @@ function ChallengeList({ data }: Props) {
           setIsButtonState(true);
         })
         .catch((error) => {
-          console.log(ChildUuid);
           console.log(error);
           if (error.response.data === "로그인 되어있지 않습니다.") {
             navigate("/LoginPage");
@@ -208,7 +206,6 @@ function ChallengeList({ data }: Props) {
         setIsButtonState(true);
       })
       .catch((error) => {
-        console.log(ChildUuid);
         console.log(error);
         if (error.response.data === "로그인 되어있지 않습니다.") {
           navigate("/LoginPage");
