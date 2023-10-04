@@ -51,7 +51,7 @@ export const ListComponent = styled.div`
 export const ListTitle = styled.div`
   // border: 1px solid black;
   width: 100%;
-  height: 50%;
+  height: 70%;
   display: flex;
   align-items: center;
   margin-left: 3%;
@@ -69,28 +69,28 @@ export const Title = styled.div`
 `;
 export const CategoryTag = styled.div`
   // border: 1px solid black;
-  width: 20%;
+  width: 25%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 export const DeadLine = styled.div`
-  // border: 1px solid black;
-  width: 40%;
+  // border: 1px solid red;
+  width: 35%;
   height: 100%;
   display: flex;
   justify-content: end;
   align-items: center;
-  padding-right: 10%;
+  padding-right: 5%;
 `;
 
 export const ListBtn = styled.div`
-  // border: 1px solid black;
+  border: 1px solid red;
   width: 100%;
   height: 50%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 `;
 
