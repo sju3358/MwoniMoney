@@ -152,6 +152,7 @@ function Balance() {
             borderRadius: "10px",
             fontWeight: "bold",
             borderStyle: "none",
+            margin: "auto",
           }}
         >
           더보기
