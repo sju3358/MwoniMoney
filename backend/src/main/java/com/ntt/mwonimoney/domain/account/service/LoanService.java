@@ -80,27 +80,29 @@ public class LoanService {
 		loan.changeBalacne(amount);
 	}
 
-	public LoanTotalDto getSumAmount(Long memberIdx) {
+	public LoanTotalDto getLoanTotal(Long memberIdx) {
 		List<Loan> loans = loanRepository.findAllByBorrower(memberIdx);
 
 		Long totalAmount = 0L;
 		Long totalInterest = 0L;
+		Long totalBalance = 0L;
 		Double totalRate = (double)0;
-		Double avgInterest = (double)0;
 		int cnt = 0;
 
 		for (Loan loan : loans) {
 			cnt++;
 			totalAmount += loan.getAmount();
 			totalInterest += (long)(loan.getAmount() * loan.getRate());
+			totalBalance += loan.getBalance();
 			totalRate += loan.getRate();
 		}
 
-		avgInterest = totalRate / (double)cnt;
+		Double avgInterest = totalRate / (double)cnt;
 
 		LoanTotalDto loanTotalDto = LoanTotalDto.builder()
 			.totalAmount(totalAmount)
 			.totalInterest(totalInterest)
+			.totalBalance(totalBalance)
 			.avgInterest(avgInterest)
 			.build();
 

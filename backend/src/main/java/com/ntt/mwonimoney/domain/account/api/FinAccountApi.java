@@ -3,6 +3,7 @@ package com.ntt.mwonimoney.domain.account.api;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,9 @@ import com.ntt.mwonimoney.domain.account.entity.FinAccount;
 import com.ntt.mwonimoney.domain.account.entity.FinAccountStatus;
 import com.ntt.mwonimoney.domain.account.entity.FinAccountTransaction;
 import com.ntt.mwonimoney.domain.account.entity.FinAccountType;
-import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionDto;
+import com.ntt.mwonimoney.domain.account.entity.QFinAccount;
+import com.ntt.mwonimoney.domain.account.entity.QFinAccountTransaction;
+import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionDto2;
 import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionListRequest;
 import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionListRequestType;
 import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransferRequest;
@@ -48,6 +51,7 @@ import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
 import com.ntt.mwonimoney.domain.member.service.MemberService;
 import com.ntt.mwonimoney.domain.member.util.S3Manager;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -69,6 +73,7 @@ public class FinAccountApi {
 	private final FinAccountService finAccountService;
 	private final FinAccountTransactionService finAccountTransactionService;
 	private final FinAccountTransactionRepository finAccountTransactionRepository;
+	private final JPAQueryFactory queryFactory;
 
 	@GetMapping("/accounts")
 	public ResponseEntity getFinAccount(@RequestHeader("Authorization") String accessToken,
@@ -88,16 +93,12 @@ public class FinAccountApi {
 				FinAccountStatus.ACTIVATE).orElseThrow();
 		}
 
-		List<FinAccountTransactionDto> finAccountTransactionDtos = finAccountTransactionRepository.findFinAccountTransactionByFinAccountIdx(
-			finAccount.getIdx());
-
 		FinAccountResponse finAccountResponse = new FinAccountResponse();
 
 		finAccountResponse.setRemain(finAccount.getRemain());
 		finAccountResponse.setNumber(finAccount.getNumber());
 		finAccountResponse.setCreatedDay(finAccount.getCreateTime().toLocalDate());
 		finAccountResponse.setStatus(finAccount.getStatus().toString());
-		finAccountResponse.setFinAccountTransactionDtos(finAccountTransactionDtos);
 
 		return ResponseEntity.ok().body(finAccountResponse);
 	}
@@ -293,29 +294,85 @@ public class FinAccountApi {
 		return ResponseEntity.ok().build();
 	}
 
+	//	@GetMapping("/accounts/transactions")
+	//	public ResponseEntity getTransactionList(@RequestHeader("Authorization") String accessToken,
+	//											 FinAccountTransactionListRequest request) {
+	//		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+	//		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
+	//
+	//		FinAccountTransactionListRequestType type = request.getType();
+	//		FinAccountType finAccountType = request.getFinAccountType();
+	//
+	//		Long finAccountIdx = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, finAccountType,
+	//				FinAccountStatus.ACTIVATE).orElseThrow().getIdx();
+	//
+	//		List<FinAccountTransaction> list = null;
+	//
+	//		if (type == FinAccountTransactionListRequestType.INCOME) {
+	//			//			list = finAccountTransactionService.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, 0);
+	//		} else if (type == FinAccountTransactionListRequestType.OUTCOME) {
+	//			//			list = finAccountTransactionService.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, 0, pageable);
+	//		} else {
+	//			//			list = finAccountTransactionService.findByFinAccount(finAccountIdx, pageable);
+	//		}
+	//
+	//		return ResponseEntity.ok().body(list);
+	//	}
+
 	@GetMapping("/accounts/transactions")
-	public ResponseEntity getTransactionList(@RequestHeader("Authorization") String accessToken,
-		FinAccountTransactionListRequest request) {
-		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+	public ResponseEntity<List<FinAccountTransactionDto2>> getTransactionList(
+		@RequestHeader("Authorization") String accessToken, @RequestBody FinAccountTransactionListRequest request) {
+		//		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+		String memberUUID = request.getMemberUUID();
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
 		FinAccountTransactionListRequestType type = request.getType();
 		FinAccountType finAccountType = request.getFinAccountType();
-
+		log.info("type = {}", type);
+		log.info("finAccountType = {}", finAccountType);
 		Long finAccountIdx = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, finAccountType,
 			FinAccountStatus.ACTIVATE).orElseThrow().getIdx();
+		log.info("finAccountIdx = {}", finAccountIdx);
 
-		List<FinAccountTransaction> list = null;
+		List<FinAccountTransaction> list = null; // 초기화
 
-		if (type == FinAccountTransactionListRequestType.INCOME) {
-			//			list = finAccountTransactionService.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, 0);
+		if (type == FinAccountTransactionListRequestType.GENERAL) {
+			list = queryFactory
+				.selectFrom(QFinAccountTransaction.finAccountTransaction)
+				.where(
+					QFinAccountTransaction.finAccountTransaction.finAccount.idx.eq(finAccountIdx)
+						.and(QFinAccount.finAccount.type.eq(finAccountType))
+				)
+				.fetch();
+		} else if (type == FinAccountTransactionListRequestType.INCOME) {
+			list = queryFactory
+				.selectFrom(QFinAccountTransaction.finAccountTransaction)
+				.where(
+					QFinAccountTransaction.finAccountTransaction.finAccount.idx.eq(finAccountIdx)
+						.and(QFinAccount.finAccount.type.eq(finAccountType))
+						.and(QFinAccountTransaction.finAccountTransaction.money.gt(0))
+				)
+				.fetch();
 		} else if (type == FinAccountTransactionListRequestType.OUTCOME) {
-			//			list = finAccountTransactionService.findByFinAccountIdxAndMoneyGreaterThanEqual(finAccountIdx, 0, pageable);
-		} else {
-			//			list = finAccountTransactionService.findByFinAccount(finAccountIdx, pageable);
+			list = queryFactory
+				.selectFrom(QFinAccountTransaction.finAccountTransaction)
+				.where(
+					QFinAccountTransaction.finAccountTransaction.finAccount.idx.eq(finAccountIdx)
+						.and(QFinAccount.finAccount.type.eq(finAccountType))
+						.and(QFinAccountTransaction.finAccountTransaction.money.lt(0))
+				)
+				.fetch();
 		}
 
-		return ResponseEntity.ok().body(list);
+		List<FinAccountTransactionDto2> result = list.stream().map(transaction -> FinAccountTransactionDto2.builder()
+				.money(transaction.getMoney())
+				.balance(transaction.getBalance())
+				.memo(transaction.getMemo())
+				.time(transaction.getTime())
+				.build())
+			.collect(Collectors.toList());
+
+		return ResponseEntity.ok().body(result);
 	}
 
 	@PatchMapping("/accounts/{finAccountIdx}/transactions/{transactionIdx}")

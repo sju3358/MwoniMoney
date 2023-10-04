@@ -55,11 +55,13 @@ export const userCheckState = atom<userCheckProps>({
 
 export interface userAccountProps {
   account: string;
+  status: string;
 }
 
 export const userAccountState = atom<userAccountProps>({
   key: "userAccountState",
   default: {
     account: "",
+    status: "UNKOWN",
   },
 });
