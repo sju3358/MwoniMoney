@@ -54,33 +54,14 @@ public class FinAccountTransactionRepositoryCustomImpl implements FinAccountTran
 		Long finAccountIdx = finAccount.getIdx();
 
 		log.info("여기까지안오는듯");
-		if (finAccountTransactionListRequestType == FinAccountTransactionListRequestType.GENERAL) {
-			list = jpaQueryFactory
-					.selectFrom(finAccountTransaction)
-					.where(
-							finAccountTransaction.finAccount.idx.eq(finAccountIdx)
-									.and(QFinAccount.finAccount.type.eq(finAccountType))
-					)
-					.fetch();
-		} else if (finAccountTransactionListRequestType == FinAccountTransactionListRequestType.INCOME) {
-			list = jpaQueryFactory
-					.selectFrom(QFinAccountTransaction.finAccountTransaction)
-					.where(
-							finAccountTransaction.finAccount.idx.eq(finAccountIdx)
-									.and(QFinAccount.finAccount.type.eq(finAccountType))
-									.and(QFinAccountTransaction.finAccountTransaction.money.gt(0))
-					)
-					.fetch();
-		} else if (finAccountTransactionListRequestType == FinAccountTransactionListRequestType.OUTCOME) {
-			list = jpaQueryFactory
-					.selectFrom(QFinAccountTransaction.finAccountTransaction)
-					.where(
-							finAccountTransaction.finAccount.idx.eq(finAccountIdx)
-									.and(QFinAccount.finAccount.type.eq(finAccountType))
-									.and(QFinAccountTransaction.finAccountTransaction.money.lt(0))
-					)
-					.fetch();
-		}
+		list = jpaQueryFactory
+				.selectFrom(finAccountTransaction)
+				.where(
+						finAccountTransaction.finAccount.idx.eq(finAccountIdx)
+								.and(QFinAccount.finAccount.type.eq(finAccountType))
+				)
+				.fetch();
+
 
 		return list;
 	}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionListRequestType;
 import org.springframework.stereotype.Service;
 
 import com.ntt.mwonimoney.domain.account.entity.FinAccount;
@@ -37,6 +38,8 @@ public class FinAccountTransactionServiceImplV2 {
 		Long totalPlus = 0L;
 		Long totalMinus = 0L;
 
+		FinAccountTransactionListRequestType finAccountTransactionListRequestType = getTransactionRequestDto.getType();
+
 		List<FinAccountTransactionDto2> responseList = new ArrayList<>();
 
 		for (FinAccountTransaction transaction : result) {
@@ -58,7 +61,23 @@ public class FinAccountTransactionServiceImplV2 {
 				.time(time)
 				.build();
 
-			responseList.add(responseDto);
+			if(finAccountTransactionListRequestType == FinAccountTransactionListRequestType.GENERAL) {
+				responseList.add(responseDto);
+
+			}
+			else if(finAccountTransactionListRequestType == FinAccountTransactionListRequestType.INCOME) {
+				if (money > 0) {
+					responseList.add(responseDto);
+				}
+			}
+			else if(finAccountTransactionListRequestType == FinAccountTransactionListRequestType.OUTCOME) {
+				if (money < 0) {
+					responseList.add(responseDto);
+				}
+			}
+			else {
+				responseList.add(responseDto);
+			}
 		}
 
 		GetTransactionResponseDto result1 = GetTransactionResponseDto.builder()
@@ -112,6 +131,8 @@ public class FinAccountTransactionServiceImplV2 {
 
 		finAccountTransactionRepository.save(fromTransaction);
 		finAccountTransactionRepository.save(toTransaction);
+
+
 
 		if (toMember.getMemberRole() == MemberRole.CHILD
 			&& ((Child)toMember).getSmallAccount() != null
