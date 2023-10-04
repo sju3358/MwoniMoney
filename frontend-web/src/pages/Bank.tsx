@@ -29,6 +29,7 @@ import api from "../apis/Api";
 import { moneyFormat } from "../components/Common/utils";
 
 import { totalLoan } from "../states/LoanState";
+import { MainContainer } from "../components/Common/Main/MainStyle";
 
 function Bank() {
   //childName
@@ -158,7 +159,7 @@ function Bank() {
   // flexDirection="column"
 
   return (
-    <>
+    <MainContainer>
       {/* Title */}
       <Container height="20%" flexDirection="column">
         <TextBox marginL="9%">현재 {childName}님은</TextBox>
@@ -195,43 +196,47 @@ function Bank() {
       </Container>
       {/* LoanModal */}
       {/* LoanList */}
-      <Container
-        height="100%"
-        flexDirection="column"
-        justifyContent="flex-start"
-        style={{ border: "1px solid blue" }}
-      >
-        {role === "PARENT" && totalLoanData < 4 ? <LoanAdd /> : <></>}
-        <>
-          {LoanData.length > 0 ? (
-            <>
-              {LoanData.map((loan) => (
-                <LoanList data={loan} key={loan.idx} />
-              ))}
-            </>
-          ) : (
-            <>
-              {status_value === "GENERAL" && (
-                <Container height="80%">
-                  <Text>현재 대출 내역이 없어요.</Text>
-                </Container>
-              )}
-              {status_value === "APPROVAL" && (
-                <Container height="80%">
-                  <Text>현재 진행중인 대출이 없어요.</Text>
-                </Container>
-              )}
-              {status_value === "WATING" && (
-                <Container height="80%">
-                  <Text>현재 제안대기중인 대출이 없어요.</Text>
-                </Container>
-              )}
-            </>
-          )}
-        </>
+      <Container height="80%">
+        <Container
+          height="100%"
+          flexDirection="column"
+          justifyContent="flex-start"
+          // style={{ border: "1px solid blue" }}
+          overflowy="auto"
+          // marginB="100%"
+        >
+          {role === "PARENT" && totalLoanData < 4 ? <LoanAdd /> : <></>}
+          <>
+            {LoanData.length > 0 ? (
+              <>
+                {LoanData.map((loan) => (
+                  <LoanList data={loan} key={loan.idx} />
+                ))}
+              </>
+            ) : (
+              <>
+                {status_value === "GENERAL" && (
+                  <Container height="80%">
+                    <Text>현재 대출 내역이 없어요.</Text>
+                  </Container>
+                )}
+                {status_value === "APPROVAL" && (
+                  <Container height="80%">
+                    <Text>현재 진행중인 대출이 없어요.</Text>
+                  </Container>
+                )}
+                {status_value === "WATING" && (
+                  <Container height="80%">
+                    <Text>현재 제안대기중인 대출이 없어요.</Text>
+                  </Container>
+                )}
+              </>
+            )}
+          </>
+        </Container>
       </Container>
       {/* </div> */}
-    </>
+    </MainContainer>
   );
 }
 

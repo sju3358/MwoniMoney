@@ -29,7 +29,7 @@ import ModalPayLoan from "../../../modal/Loan/ModalPayLoan";
 
 export const ListBtn = styled.div`
   // border: 1px solid green;
-  width: 95%;
+  width: 90%;
   height: 90%;
   display: flex;
   justify-content: space-around;
@@ -102,7 +102,7 @@ function LoanList({ data }: Props) {
     >
       <Container height="40%">
         <ListTitle>
-          <TextBox width="50%" marginL="0%" fontSize="1.1em" height="100%">
+          <TextBox width="50%" marginL="5%" fontSize="1.1em" height="100%">
             {data.content}
           </TextBox>
           <CategoryTag>
@@ -146,7 +146,11 @@ function LoanList({ data }: Props) {
         </ListTitle>
       </Container>
       <Container height="20%">
-        <ProgressBar amount={data.amount} balance={data.balance} />
+        <ProgressBar
+          front_height="100%"
+          amount={data.amount}
+          balance={data.balance}
+        />
       </Container>
       <Container height="40%">
         {role === "PARENT" ? (
@@ -157,10 +161,11 @@ function LoanList({ data }: Props) {
               <>
                 <Button
                   content="돈 갚기"
-                  width="50%"
+                  width="40%"
                   fontS="1.2em"
-                  height="70%"
+                  height="60%"
                   click={handleOpen}
+                  afbackcolor="#FFC107"
                 />
                 <ModalPayLoan
                   loanidx={LoanIdx}
@@ -178,18 +183,21 @@ function LoanList({ data }: Props) {
               <ListBtn>
                 <Button
                   content="수락"
-                  width="50%"
+                  width="45%"
                   fontS="1.2em"
                   height="70%"
                   click={handleAccept}
+                  afbackcolor="#FFC107"
                 />
                 <Button
-                  backcolor="#f4f4f4"
+                  backcolor="#white"
                   content="거절"
-                  width="50%"
+                  width="45%"
                   fontS="1.2em"
                   height="70%"
                   click={handleReject}
+                  bordercolor="1px solid  #BBBBBB"
+                  afbackcolor="#BBBBBB"
                 />
               </ListBtn>
             )}
