@@ -10,14 +10,15 @@ import MoneyTable from "./MoneyTable";
 import Income from "../../../assests/image/MoneyPage/MoneyBag.png";
 import { useRecoilState } from "recoil";
 import { childDataState, childDataProps } from "../../../states/ChildInfoState";
+import { moneyFormat } from "../utils";
 
 function MoneyChildPage() {
   const [selectedChild, setSelectedChild] =
     useRecoilState<childDataProps>(childDataState);
 
   const child = selectedChild.name;
-  const inCome = 100000;
-  const outCome = 129000;
+  const inCome = moneyFormat(100000);
+  const outCome = moneyFormat(129000);
   return (
     <>
       {/* 맨 상단 타이틀 */}

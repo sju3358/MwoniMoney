@@ -49,7 +49,7 @@ function Notifications() {
               color="primary"
             />
           </TextBox>
-          {/* <TextBox
+          <TextBox
             height="20%"
             fontSize="1em"
             fontWeight="normal"
@@ -82,7 +82,7 @@ function Notifications() {
               onChange={handleChange("savingChecked")}
               color="primary"
             />
-          </TextBox> */}
+          </TextBox>
           {/* <TextBox
             height="20%"
             fontSize="1em"
