@@ -97,11 +97,14 @@ function BalanceCompo({
 
   return (
     <Container height="100%" flexDirection="column">
-      <Container height="10%" overflowy="hidden">
-        {showText && <TextBox height="100%">오늘의 밸런스 게임</TextBox>}
-      </Container>
+      {showText && (
+        <Container height="10%" overflowy="hidden">
+          <TextBox height="100%">오늘의 밸런스 게임</TextBox>
+        </Container>
+      )}
+
       <WhiteBox1
-        height="75%"
+        height={showText ? "75%" : "85%"}
         marginB="5%"
         flexDirection="column"
         onClick={navigateClick}
