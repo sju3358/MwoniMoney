@@ -24,6 +24,9 @@ import {
   whichCategoryChallenge,
 } from "../../states/ChallengeState";
 
+//총 데이터
+import { totalChallenge } from "../../states/ChallengeState";
+
 function Challenge() {
   //값 어떻게 가져올지 생각하기!!
   let ChildUuid: string | null = null;
@@ -55,6 +58,12 @@ function Challenge() {
     status_value = 5;
   }
 
+  const [totalChallengeData, setTotalChallengeData] =
+    useRecoilState(totalChallenge);
+  if (status_value === 5) {
+    setTotalChallengeData(ChallengeData.length);
+  }
+
   useEffect(() => {
     api
       .get(`/v1/challenges?status=${status_value}&extramemberUuid=${ChildUuid}`)
@@ -84,7 +93,7 @@ function Challenge() {
     <MainContainer>
       <ChallengeTitle />
       <ChallengeCategory />
-      {ChallengeData.length === 4 ? <></> : <ChallengeAdd />}
+      {totalChallengeData === 4 ? <></> : <ChallengeAdd />}
       <ChallengeListContainer>
         <>
           {ChallengeData.length > 0 ? (
@@ -97,7 +106,11 @@ function Challenge() {
               ))}
             </>
           ) : (
-            <>챌린지를 생성해주세요!!</>
+            <>
+              {status_value === 5 && <>챌린지내역이 없어요.</>}
+              {status_value === 0 && <>진행중인 챌린지가 없어요.</>}
+              {status_value === 2 && <>제안대기중인 챌린지가 없어요.</>}
+            </>
           )}
         </>
       </ChallengeListContainer>
