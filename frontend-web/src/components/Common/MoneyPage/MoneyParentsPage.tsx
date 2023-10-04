@@ -12,6 +12,7 @@ import Income from "../../../assests/image/MoneyPage/OutCome.png";
 import { useRecoilState } from "recoil";
 import axios from "axios";
 import { userDataState } from "../../../states/UserInfoState";
+import { childDataState, childDataProps } from "../../../states/ChildInfoState";
 
 // Define the interface for a transaction
 interface Transaction {
@@ -21,7 +22,7 @@ interface Transaction {
   time: string | null;
 }
 
-function MoneyChildPage() {
+function MoneyParentsPage() {
   function formatDate(dateString: string) {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -31,8 +32,9 @@ function MoneyChildPage() {
   }
 
   const [userData, setUserData] = useRecoilState(userDataState);
-  console.log("왜안들어옴?");
-  const child = userData.name;
+  const [selectedChild, setSelectedChild] =
+    useRecoilState<childDataProps>(childDataState);
+  const child = selectedChild.name;
   const [transactionData, setTransactionData] = useState<{
     finAccountTransactionDto2: Transaction[];
     totalPlus: number;
@@ -45,6 +47,7 @@ function MoneyChildPage() {
     const requestBody = {
       type: "GENERAL",
       finAccountType: "GENERAL",
+      childUUID: selectedChild.uuid,
     };
 
     // Get the token from localStorage
@@ -58,7 +61,7 @@ function MoneyChildPage() {
     // Make the axios request
     axios
       .post(
-        "https://j9b310.p.ssafy.io/api/v2/accounts/transactions/parents",
+        "https://j9b310.p.ssafy.io/api/v2/accounts/transactions/child",
         requestBody,
         { headers }
       )
@@ -190,4 +193,4 @@ function MoneyChildPage() {
   );
 }
 
-export default MoneyChildPage;
+export default MoneyParentsPage;
