@@ -84,7 +84,7 @@ function Challenge() {
     <MainContainer>
       <ChallengeTitle />
       <ChallengeCategory />
-      <ChallengeAdd />
+      {ChallengeData.length === 4 ? <></> : <ChallengeAdd />}
       <ChallengeListContainer>
         <>
           {ChallengeData.length > 0 ? (
