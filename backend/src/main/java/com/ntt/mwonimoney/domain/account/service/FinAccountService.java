@@ -9,6 +9,7 @@ import com.ntt.mwonimoney.domain.account.repository.FinAccountRepository;
 import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class FinAccountService {
 
     private final FinAccountRepository finAccountRepository;
     private final MemberRepository memberRepository;
+    private final EntityManager em;
 
     public List<FinAccount> getFinAccountAll(){
         return finAccountRepository.findAll();
@@ -44,9 +46,9 @@ public class FinAccountService {
 
     public void closeSmallAccount(Long smallAccountIdx) {
 
+
         FinAccount smallAccountToUpdate = finAccountRepository.findById(smallAccountIdx).orElseThrow();
         smallAccountToUpdate.changeStatus(FinAccountStatus.DEACTIVATE);
-
     }
 
     public Long getRemain(Long finAccountIdx){

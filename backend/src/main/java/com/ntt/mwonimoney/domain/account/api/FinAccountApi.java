@@ -1,12 +1,15 @@
 package com.ntt.mwonimoney.domain.account.api;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.ntt.mwonimoney.domain.account.repository.FinAccountRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,6 +63,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@Transactional
 public class FinAccountApi {
 
 	private final S3Manager s3Manager;
@@ -74,6 +78,7 @@ public class FinAccountApi {
 	private final FinAccountTransactionService finAccountTransactionService;
 	private final FinAccountTransactionRepository finAccountTransactionRepository;
 	private final JPAQueryFactory queryFactory;
+	private final FinAccountRepository finAccountRepository;
 
 	@GetMapping("/accounts")
 	public ResponseEntity getFinAccount(@RequestHeader("Authorization") String accessToken,
@@ -239,10 +244,39 @@ public class FinAccountApi {
 		return ResponseEntity.ok().build();
 	}
 
-	@PatchMapping("/accounts/small-account/{finAccountIdx}")
-	public ResponseEntity closeSmallAccount(@PathVariable Long finAccountIdx) {
+	@PatchMapping("/accounts/small-account")
+	@Transactional
+	public ResponseEntity closeSmallAccount(@RequestHeader("Authorization") String accessToken) {
 
-		finAccountService.closeSmallAccount(finAccountIdx);
+
+		// 송금
+		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+
+		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
+
+		log.info("[짜금통 삭제 요청 시작]", LocalDateTime.now());
+
+		childService.deleteSmallAccountInfo(memberIdx);
+
+		log.info("[짜금통 삭제 요청 끝]", LocalDateTime.now());
+
+
+		FinAccount smallAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, FinAccountType.SMALL,
+				FinAccountStatus.ACTIVATE).orElseThrow();
+
+		FinAccount finAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, FinAccountType.GENERAL,
+				FinAccountStatus.ACTIVATE).orElseThrow();
+
+		Long moneygo = smallAccount.getRemain();
+		Long remain = finAccount.getRemain();
+		finAccount.changeRemain(remain += moneygo);
+
+
+		finAccountService.closeSmallAccount(smallAccount.getIdx());
+
+
+
+
 
 		return ResponseEntity.ok().build();
 	}
