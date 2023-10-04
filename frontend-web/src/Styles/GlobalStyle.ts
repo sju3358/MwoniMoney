@@ -1,7 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import { reset } from "styled-reset";
 import background from "../assests/image/backgroundv1.png";
-import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 export const GlobalStyles = createGlobalStyle`
     ${reset}
