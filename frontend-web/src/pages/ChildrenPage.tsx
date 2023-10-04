@@ -26,15 +26,6 @@ import ChatbotLink from "../components/Common/Main/ChatbotLink";
 import api_ver2 from "../apis/ApiForMultiPart";
 import { moneyFormat } from "../components/Common/utils";
 
-export const getBalance = (): Promise<AxiosResponse> => {
-  // axios 요청을 보낼 때 Authorization 헤더 설정
-  return api.get("/v1/balances?page=0&size=20", {
-    // headers: {
-    //   Authorization: `Bearer ${props.bearerToken}`,
-    // },
-  });
-};
-
 interface BalanceDataItem {
   idx: number;
   question: string;
@@ -63,15 +54,10 @@ function ChildrenPage() {
     const fetchData = async () => {
       try {
         const accessToken = localStorage.getItem("accessToken") || "";
-        getBalance()
+        api
+          .get("/v1/balances/today")
           .then((response) => {
-            const balanceItems: BalanceDataItem[] = response.data.content;
-            // "RUNNING"인 데이터만 필터링하여 새로운 배열 생성
-            const runningBalanceItems = balanceItems.filter(
-              (item) => item.balanceGameStatus === "RUNNING"
-            );
-            // 배열의 첫 번째 아이템만 선택
-            const firstRunningBalanceItem = runningBalanceItems[0];
+            const firstRunningBalanceItem = response.data;
 
             if (firstRunningBalanceItem) {
               // 필터링된 데이터가 존재하면 첫 번째 아이템을 선택
