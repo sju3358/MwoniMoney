@@ -32,3 +32,14 @@ export const GoalCheckState = atom<GoalCheckProps>({
     goalState: false,
   },
 });
+
+interface GoalImgCheckProps {
+  ImgCheck: boolean;
+}
+
+export const GoalImgCheckState = atom<GoalImgCheckProps>({
+  key: "GoalImgCheckState",
+  default: {
+    ImgCheck: false,
+  },
+});
