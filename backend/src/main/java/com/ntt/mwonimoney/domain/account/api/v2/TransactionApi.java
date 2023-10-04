@@ -2,6 +2,11 @@ package com.ntt.mwonimoney.domain.account.api.v2;
 
 import java.util.List;
 
+import com.ntt.mwonimoney.domain.account.model.dto.GetTransactionResponseDto;
+import com.ntt.mwonimoney.domain.account.model.dtoV2.GetTransactionRequestDto;
+import com.ntt.mwonimoney.domain.account.service.v2.FinAccountTransactionServiceImplV2;
+import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
+import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,13 +30,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TransactionApi {
 
+	private final JwtTokenProvider jwtTokenProvider;
+	private final FinAccountTransactionServiceImplV2 finAccountTransactionServiceImplV2;
+	private final MemberAuthService memberAuthService;
 	@GetMapping("/accounts/transactions")
-	public ResponseEntity<List<FinAccountTransactionDto2>> getTransactionListRequest(
-		@RequestHeader("Authorization") String accessToken, @RequestBody FinAccountTransactionListRequest request) {
-
+	public ResponseEntity getTransaction(
+			@RequestHeader("Authorization") String accessToken, @RequestBody GetTransactionRequestDto getTransactionRequestDto) {
 		//거래내역 불러오기
+		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
-		return null;
+ 		List<GetTransactionResponseDto> result = finAccountTransactionServiceImplV2.getTransaction(memberIdx, getTransactionRequestDto);
+
+		return ResponseEntity.ok().body(result);
 	}
 
 	@PatchMapping("/accounts/{finAccountIdx}/transactions/{transactionIdx}")
@@ -43,11 +54,21 @@ public class TransactionApi {
 		return null;
 	}
 
-	@PostMapping("/accounts/transfer")
-	public ResponseEntity makeTransactionRequest(@RequestHeader("Authorization") String accessToken,
+	@PostMapping("/accounts/transfer/parentstochild")
+	public ResponseEntity sendMoneyparentstochild(@RequestHeader("Authorization") String accessToken,
 		@RequestBody FinAccountTransferRequest finAccountTransferRequest) {
 
-		//1. 송금하기
+		//1. 부모 -> 자식 송금하기
+		//2. 그에따른 송금기록 저장하기.
+
+		return null;
+	}
+
+	@PostMapping("/accounts/transfer/accounttogoal")
+	public ResponseEntity makeTransactionRequest(@RequestHeader("Authorization") String accessToken,
+												 @RequestBody FinAccountTransferRequest finAccountTransferRequest) {
+
+		//1. 짜금통 to 은행 송금하기
 		//2. 그에따른 송금기록 저장하기.
 
 		return null;
