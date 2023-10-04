@@ -47,7 +47,7 @@ interface TextProps {
   border?: string | undefined;
 }
 export const Text = styled.div<TextProps>`
-  // border: 1px solid blue;
+  // border: 1px solid purple;
   color: ${(props) => (props.color ? props.color : "black")};
   font-family: ${(props) => (props.fontfamily ? props.fontfamily : "Inter")};
   font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
