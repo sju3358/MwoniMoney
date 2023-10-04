@@ -75,6 +75,7 @@ public class SmallAccountServiceImplV2 implements SmallAccountService {
 			.status(FinAccountStatus.ACTIVATE)
 			.type(FinAccountType.SMALL)
 			.member(member)
+			.remain(0)
 			.build();
 
 		finAccountRepository.save(finAccount);

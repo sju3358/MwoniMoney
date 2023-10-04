@@ -56,7 +56,7 @@ public class FinAccountServiceImplV2 {
 			.finAcno(UUID.randomUUID().toString())
 			.status(FinAccountStatus.ACTIVATE)
 			.type(FinAccountType.GENERAL)
-			.remain(0L)
+			.remain(0)
 			.member(member)
 			.build();
 

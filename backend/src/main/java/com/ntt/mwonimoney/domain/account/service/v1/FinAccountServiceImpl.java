@@ -49,7 +49,7 @@ public class FinAccountServiceImpl implements FinAccountService {
 		return finAccountRepository.save(newFinAccount);
 	}
 
-	public Long getBalance(Long finAccountIdx) {
+	public int getBalance(Long finAccountIdx) {
 		FinAccount finAccount = finAccountRepository.findById(finAccountIdx).orElseThrow();
 		return finAccount.getRemain();
 	}

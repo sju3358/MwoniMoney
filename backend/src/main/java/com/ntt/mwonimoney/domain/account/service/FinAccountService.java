@@ -20,6 +20,6 @@ public interface FinAccountService {
 
 	public FinAccount openFinAccount(FinAccount newFinAccount, Long memberIdx);
 
-	public Long getBalance(Long finAccountIdx);
+	public int getBalance(Long finAccountIdx);
 
 }

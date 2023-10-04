@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class FinAccountResponse {
 	private String number;
-	private Long remain;
+	private int remain;
 	private LocalDate createdDay;
 	private String status;
 	List<FinAccountTransactionDto> finAccountTransaction;

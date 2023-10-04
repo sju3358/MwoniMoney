@@ -17,7 +17,7 @@ public class FinAccountDto {
 
 	private FinAccountType type;
 
-	private Long remain;
+	private int remain;
 
 }
 
