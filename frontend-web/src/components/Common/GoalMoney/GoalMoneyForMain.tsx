@@ -33,7 +33,7 @@ function GoalForMain() {
 
   const name = ChildName;
   const item = GoalName;
-  const money = moneyFormat(GoalRemain);
+  const money = GoalRemain;
   // const Image =
   //   "https://mwonimoney.s3.ap-northeast-2.amazonaws.com/goal/" + GoalImage;
   // console.log(Image);
