@@ -40,7 +40,7 @@ public class TransactionApi {
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
- 		List<GetTransactionResponseDto> result = finAccountTransactionServiceImplV2.getTransaction(memberIdx, getTransactionRequestDto);
+		GetTransactionResponseDto result = finAccountTransactionServiceImplV2.getTransaction(memberIdx, getTransactionRequestDto);
 
 		return ResponseEntity.ok().body(result);
 	}
