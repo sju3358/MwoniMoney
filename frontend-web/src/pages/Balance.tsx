@@ -12,6 +12,7 @@ import styled from "styled-components";
 import { Text } from "../components/Common/About/AboutText";
 import { WhiteBox } from "../components/Common/About/AboutWhilteContainer";
 import { Img } from "../components/Common/About/AboutEmogi";
+import { useNavigate } from "react-router-dom"; // useNavigate 추가
 
 // 모달
 import ProgressModal from "../modal/ProgressModal";
@@ -58,6 +59,11 @@ console.warn = console.error = () => {};
 })();
 
 function Balance() {
+  const navigate = useNavigate();
+
+  function handleImgBoxClick() {
+    navigate("/chatting");
+  }
   const [runningBalanceGameData, setRunningBalanceGameData] = useState<
     BalanceDataItem[]
   >([]);
@@ -164,7 +170,7 @@ function Balance() {
       )}
 
       <ImgContainer>
-        <ImgBox>
+        <ImgBox onClick={handleImgBoxClick}>
           <Img width="100%" height="100%" padding="0%" src={`${Chat}`} />
         </ImgBox>
       </ImgContainer>
