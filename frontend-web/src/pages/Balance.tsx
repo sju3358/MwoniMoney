@@ -58,7 +58,9 @@ console.warn = console.error = () => {};
 })();
 
 function Balance() {
-  const [todayBalanceGame, setTodayBalanceGame] = useState<BalanceDataItem>();
+  const [runningBalanceGameData, setRunningBalanceGameData] = useState<
+    BalanceDataItem[]
+  >([]);
   const [endBalanceData, setEndBalanceData] = useState<BalanceDataItem[]>([]);
   const [curPage, setCurPage] = useState(0);
   const [isLastPage, setIsLastPage] = useState(false);
@@ -68,7 +70,7 @@ function Balance() {
     api
       .get(`/v1/balances/today`)
       .then((response) => {
-        setTodayBalanceGame(response.data);
+        setRunningBalanceGameData(response.data);
       })
       .catch((error) => {
         console.error("Error fetching balance data:", error);
@@ -96,23 +98,23 @@ function Balance() {
 
   return (
     <MainContainer>
-      {todayBalanceGame === undefined ? (
-        <>오늘의 밸런스게임이 없습니다</>
-      ) : (
-        <BalanceContainer height="40%">
-          <BalanceCompo
-            balanceIdx={todayBalanceGame.idx}
-            news={todayBalanceGame.news}
-            showText={true}
-            showImg={false}
-            questionText={todayBalanceGame.question}
-            buyText={todayBalanceGame.leftAnswer}
-            notBuyText={todayBalanceGame.rightAnswer}
-            countOfLeftAnswer={todayBalanceGame.countOfLeftAnswer}
-            countOfRightAnswer={todayBalanceGame.countOfRightAnswer}
-          />
-        </BalanceContainer>
-      )}
+      {runningBalanceGameData.map((data) => {
+        return (
+          <BalanceContainer height="40%">
+            <BalanceCompo
+              balanceIdx={data.idx}
+              news={data.news}
+              showText={true}
+              showImg={false}
+              questionText={data.question}
+              buyText={data.leftAnswer}
+              notBuyText={data.rightAnswer}
+              countOfLeftAnswer={data.countOfLeftAnswer}
+              countOfRightAnswer={data.countOfRightAnswer}
+            />
+          </BalanceContainer>
+        );
+      })}
 
       {endBalanceData.map((endBalanceData) => {
         return (
