@@ -10,12 +10,13 @@ import Item from "../assests/image/Item.png";
 import { Btn } from "../components/Common/About/AboutButton";
 import History from "../components/Common/History";
 import { DemoLiquid } from "../components/Common/About/AboutChart";
-import { userDataState } from "../states/UserInfoState";
+import { userAccountState, userDataState } from "../states/UserInfoState";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { GoalCheckState, GoalMoneyState } from "../states/GoalMoneyState";
 import { DetailReport } from "../components/Common/GoalMoney/GoalMoneyStyle";
 import api from "../apis/Api";
+import api_ver2 from "../apis/ApiForMultiPart";
 
 const MainContainer = styled.div`
   // border: 1px solid black;
@@ -30,6 +31,7 @@ function GoalMoney() {
   const [userData, setUserData] = useRecoilState(userDataState);
   const [goalMoney, setGoalMoney] = useRecoilState(GoalMoneyState);
   const [goalCheck, setGoalCheck] = useRecoilState(GoalCheckState);
+  const [userAccout, setUserAccount] = useRecoilState(userAccountState);
 
   // get 받아서 다시 recoil에 넣기
   useEffect(() => {
@@ -62,13 +64,35 @@ function GoalMoney() {
           .catch((error) => {
             console.log("계좌조회 " + error);
           });
+
+        // 계좌번호 get하기
+        await api_ver2
+          .get("v1/accounts", {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+            params: { type: "SMALL" },
+          })
+          .then((response2) => {
+            const receivedData2 = response2.data;
+            setUserAccount((prev) => ({
+              ...prev,
+              account: receivedData2.number,
+              status: receivedData2.status,
+              startDate: receivedData2.createdDay,
+              remain: receivedData2.remain,
+            }));
+          })
+          .catch((error) => {
+            console.log("계좌조회 " + error);
+          });
       } catch (error) {
         console.error(error);
       }
     };
+
     fetchData();
   }, []);
-
   const deleteGoal = async () => {
     try {
       await api.delete("v1/members/small-account", {});
@@ -86,14 +110,15 @@ function GoalMoney() {
   const role = userData.memberRole;
   const item = goalMoney.goalName;
   const money = goalMoney.goalMoney;
-  const date = goalMoney.goalStartDate;
+  const date = userAccout.startDate;
   const img =
     // "https://mwonimoney.s3.ap-northeast-2.amazonaws.com/goal/" +
     goalMoney.image;
   const rate = goalMoney.saveRatio;
-  const goalBalance = goalMoney.goalBalance; //지금까지 모은 금액
-  const num = money / goalMoney.goalBalance; //지금까지 모은 금액
+  const goalBalance = userAccout.remain; //지금까지 모은 금액
+  const num = money / goalBalance; //지금까지 모은 달성률
   const goalPoint = num / 100;
+  const check = goalCheck.goalState;
 
   // 함수를 위한 변수s
   const navigate = useNavigate();
@@ -222,21 +247,17 @@ function GoalMoney() {
           </Container>
         </WhiteBox>
       </Container>
-      {role === "CHILD" ? (
-        <>
-          <Container height="10%">
-            <Btn
-              backcolor="rgba(255, 255, 255, 0.50)"
-              width="90%"
-              height="70%"
-              onClick={deleteGoal}
-            >
-              해제
-            </Btn>
-          </Container>
-        </>
-      ) : (
-        <></>
+      {role === "CHILD" && check == true && (
+        <Container height="10%">
+          <Btn
+            backcolor="rgba(255, 255, 255, 0.50)"
+            width="90%"
+            height="70%"
+            onClick={deleteGoal}
+          >
+            해제
+          </Btn>
+        </Container>
       )}
     </MainContainer>
   );

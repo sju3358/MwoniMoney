@@ -17,12 +17,14 @@ import Challenge from "../components/Children/Challenge";
 import Coin from "../assests/image/main/Coin.png";
 import { useRecoilState } from "recoil";
 
-import { userDataState } from "../states/UserInfoState";
+import { userAccountState, userDataState } from "../states/UserInfoState";
 // 함수
 import { useNavigate } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import api from "../apis/Api";
 import ChatbotLink from "../components/Common/Main/ChatbotLink";
+import api_ver2 from "../apis/ApiForMultiPart";
+import { moneyFormat } from "../components/Common/utils";
 
 export const getBalance = (): Promise<AxiosResponse> => {
   // axios 요청을 보낼 때 Authorization 헤더 설정
@@ -46,6 +48,7 @@ interface BalanceDataItem {
 
 function ChildrenPage() {
   const [userData, setUserData] = useRecoilState(userDataState);
+  const [userAccount, setUserAccount] = useRecoilState(userAccountState);
   const [balanceData, setBalanceData] = useState<BalanceDataItem[]>([]);
 
   const navigate = useNavigate();
@@ -57,34 +60,62 @@ function ChildrenPage() {
   };
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken") || "";
+    const fetchData = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken") || "";
+        getBalance()
+          .then((response) => {
+            const balanceItems: BalanceDataItem[] = response.data.content;
+            // "RUNNING"인 데이터만 필터링하여 새로운 배열 생성
+            const runningBalanceItems = balanceItems.filter(
+              (item) => item.balanceGameStatus === "RUNNING"
+            );
+            // 배열의 첫 번째 아이템만 선택
+            const firstRunningBalanceItem = runningBalanceItems[0];
 
-    getBalance()
-      .then((response) => {
-        const balanceItems: BalanceDataItem[] = response.data.content;
-        // "RUNNING"인 데이터만 필터링하여 새로운 배열 생성
-        const runningBalanceItems = balanceItems.filter(
-          (item) => item.balanceGameStatus === "RUNNING"
-        );
-        // 배열의 첫 번째 아이템만 선택
-        const firstRunningBalanceItem = runningBalanceItems[0];
+            if (firstRunningBalanceItem) {
+              // 필터링된 데이터가 존재하면 첫 번째 아이템을 선택
+              setBalanceData([firstRunningBalanceItem]);
+            } else {
+              // 필터링된 데이터가 없으면 빈 배열로 설정
+              setBalanceData([]);
+            }
 
-        if (firstRunningBalanceItem) {
-          // 필터링된 데이터가 존재하면 첫 번째 아이템을 선택
-          setBalanceData([firstRunningBalanceItem]);
-        } else {
-          // 필터링된 데이터가 없으면 빈 배열로 설정
-          setBalanceData([]);
-        }
+            console.log(firstRunningBalanceItem);
+          })
+          .catch((error) => {
+            console.error("Error fetching balance data:", error);
+          });
 
-        console.log(firstRunningBalanceItem);
-      })
-      .catch((error) => {
-        console.error("Error fetching balance data:", error);
-      });
+        //  Account Axios 연결 get
+        // 계좌번호 get하기
+        api_ver2
+          .get("v1/accounts", {
+            headers: {
+              Authorization: "Bearer " + accessToken,
+            },
+            params: { type: "GENERAL" },
+          })
+          .then((response2) => {
+            const receivedData2 = response2.data;
+            setUserAccount((prev) => ({
+              ...prev,
+              account: receivedData2.number,
+              remain: receivedData2.remain,
+            }));
+          })
+          .catch((error) => {
+            console.log("계좌조회 " + error);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
   }, []);
   const userName = userData.name;
-  const asset = "100,000원";
+  const asset = moneyFormat(userAccount.remain);
   const debt = "10,000원";
   return (
     <MainContainer>
@@ -101,7 +132,7 @@ function ChildrenPage() {
           </Container>
           <Container height="20%">
             <TextBox fontSize="1.1em" marginL="10%" height="100%" width="95%">
-              잔액 {asset}
+              잔액 {asset} 원
             </TextBox>
           </Container>
           <Container height="20%">

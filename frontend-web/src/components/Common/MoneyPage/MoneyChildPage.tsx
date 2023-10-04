@@ -66,7 +66,7 @@ function MoneyParentsPage() {
           </Container>
           <Container
             style={{ border: "1px solid red" }}
-            height="100px"
+            height="500px"
             flexDirection="column"
           >
             <MoneyTable
@@ -81,12 +81,12 @@ function MoneyParentsPage() {
               expense_date="지출날짜"
               spending={100000}
             />
-            {/* <MoneyTable
+            <MoneyTable
               emogi={`${Income}`}
               expense_detail="지출내역"
               expense_date="지출날짜"
               spending={100000}
-            /> */}
+            />
           </Container>
         </WhiteBox1>
       </Container>
