@@ -13,7 +13,7 @@ const BackBar = styled.div<BarProps>`
   width: ${(props) => (props.width ? props.width : "90%")};
   height: ${(props) => (props.height ? props.height : "80%")};
   background-color: ${(props) =>
-    props.backcolor ? props.backcolor : "#f4f4f4"};
+    props.backcolor ? props.backcolor : "#ededed"}; //"#f4f4f4"
   border-radius: 30px;
 `;
 
