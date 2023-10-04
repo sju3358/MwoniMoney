@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
 import api from "../apis/Api";
 
 import {
@@ -91,6 +90,10 @@ function Balance() {
     }
   }, [loadNextFlag]);
 
+  function loadNextPage() {
+    setLoadNextFlag(loadNextFlag + 1);
+  }
+
   return (
     <MainContainer>
       {todayBalanceGame === undefined ? (
@@ -110,43 +113,53 @@ function Balance() {
           />
         </BalanceContainer>
       )}
-      <>
-        {endBalanceData.map((endBalanceData) => {
-          return (
-            <ListContainer key={endBalanceData.idx}>
-              <WhiteBox margin="0% 0% 5% 0%" padding="0%">
-                <TextContainer
-                  style={{
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text
-                    color="#C4C4C4"
-                    fontsize="0.75rem"
-                    padding="0% 0% 0% 5%"
-                  >
-                    {endBalanceData.question}
-                  </Text>
-                  <IntoBalanceResult
-                    news={endBalanceData.news}
-                    countOfLeftAnswer={endBalanceData.countOfLeftAnswer}
-                    countOfRightAnswer={endBalanceData.countOfRightAnswer}
-                  />
-                </TextContainer>
-              </WhiteBox>
-            </ListContainer>
-          );
-        })}
-      </>
 
-      <button
-        onClick={() => {
-          setLoadNextFlag(loadNextFlag + 1);
-        }}
-      >
-        {isLastPage === false ? "로딩" : "마지막 페이지입니다"}
-      </button>
+      {endBalanceData.map((endBalanceData) => {
+        return (
+          <ListContainer key={endBalanceData.idx}>
+            <WhiteBox margin="0% 0% 5% 0%" padding="0%">
+              <TextContainer
+                style={{
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text color="#C4C4C4" fontsize="0.75rem" padding="0% 0% 0% 5%">
+                  {endBalanceData.question}
+                </Text>
+                <IntoBalanceResult
+                  news={endBalanceData.news}
+                  countOfLeftAnswer={endBalanceData.countOfLeftAnswer}
+                  countOfRightAnswer={endBalanceData.countOfRightAnswer}
+                />
+              </TextContainer>
+            </WhiteBox>
+          </ListContainer>
+        );
+      })}
+
+      {isLastPage === false ? (
+        <button
+          onClick={loadNextPage}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "30%",
+            height: "5%",
+            fontSize: "1.2em",
+            backgroundColor: "#fbd56e",
+            borderRadius: "10px",
+            fontWeight: "bold",
+            borderStyle: "none",
+          }}
+        >
+          더보기
+        </button>
+      ) : (
+        ""
+      )}
+
       <ImgContainer>
         <ImgBox>
           <Img width="100%" height="100%" padding="0%" src={`${Chat}`} />
