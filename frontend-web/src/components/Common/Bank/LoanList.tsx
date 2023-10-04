@@ -135,7 +135,7 @@ function LoanList({ data }: Props) {
         </ListTitle>
       </Container>
       <Container height="20%">
-        <ProgressBar />
+        <ProgressBar amount={data.amount} balance={data.balance} />
       </Container>
       <Container height="40%">
         {role === "PARENT" ? (
@@ -157,8 +157,7 @@ function LoanList({ data }: Props) {
                   useState_open={open}
                   set_open={setOpen}
                   modal_title="대출 갚기"
-                  // modal_content={<LoanRepay />}
-                  modal_btn1="생성"
+                  modal_btn1="갚기"
                   modal_btn2="취소"
                   btn_justify="space-around"
                 />

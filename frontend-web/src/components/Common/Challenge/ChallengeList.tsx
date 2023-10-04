@@ -129,6 +129,20 @@ function ChallengeList({ data }: Props) {
   const [userData, setUserData] = useRecoilState(userDataState);
   const role = userData.memberRole;
 
+  /**
+   * uuid
+   */
+  let ChildUuid: string | null = null;
+  const childStateString: string | null = localStorage.getItem("childState");
+
+  if (childStateString !== null) {
+    const childState = JSON.parse(childStateString);
+    ChildUuid = childState.childDataState.uuid;
+    console.log(ChildUuid);
+  } else {
+    console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
+  }
+
   //자식의 memberChallengeidx
   const memberChallengeIdx = data.memberChallengeIdx;
 
@@ -151,12 +165,15 @@ function ChallengeList({ data }: Props) {
   };
   const handleReject = () => {
     api
-      .patch(`/v1/challenges/${memberChallengeIdx}/reject`)
+      .patch(
+        `/v1/challenges/${memberChallengeIdx}/reject?childUuid=${ChildUuid}`
+      )
       .then((response) => {
         console.log("부모 챌린지 거절");
         setIsButtonState(true);
       })
       .catch((error) => {
+        console.log(ChildUuid);
         console.log(error);
         if (error.response.data === "로그인 되어있지 않습니다.") {
           navigate("/LoginPage");
@@ -167,12 +184,13 @@ function ChallengeList({ data }: Props) {
     if (role === "PARENT") {
       //부모 완료 api
       api
-        .patch(`/v1/challenges/${memberChallengeIdx}`)
+        .patch(`/v1/challenges/${memberChallengeIdx}?childUuid=${ChildUuid}`)
         .then((response) => {
           console.log("부모 챌린지 완료 요청 완료 처리");
           setIsButtonState(true);
         })
         .catch((error) => {
+          console.log(ChildUuid);
           console.log(error);
           if (error.response.data === "로그인 되어있지 않습니다.") {
             navigate("/LoginPage");
@@ -200,12 +218,13 @@ function ChallengeList({ data }: Props) {
   };
   const handleDelete = () => {
     api
-      .delete(`/v1/challenges/${memberChallengeIdx}`)
+      .delete(`/v1/challenges/${memberChallengeIdx}?childUuid=${ChildUuid}`)
       .then((response) => {
         console.log("챌린지 삭제");
         setIsButtonState(true);
       })
       .catch((error) => {
+        console.log(ChildUuid);
         console.log(error);
         if (error.response.data === "로그인 되어있지 않습니다.") {
           navigate("/LoginPage");
