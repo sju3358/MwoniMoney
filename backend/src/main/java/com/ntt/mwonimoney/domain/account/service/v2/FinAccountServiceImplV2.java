@@ -28,7 +28,7 @@ public class FinAccountServiceImplV2{
 		Long memberIdx = memberAuthRepository.findById(memberUUID).orElseThrow().getMemberIdx();
 		FinAccountType finAccountType = FinAccountType.valueOf(type);
 
-		FinAccount finAccount = finAccountRepository.getFinAccountByUUID(memberUUID, finAccountType);
+		FinAccount finAccount = finAccountRepository.getFinAccountByUUID(memberIdx, finAccountType);
 
 		// builder 패턴을 사용하여 FinAccountV2Dto 객체 생성
 		FinAccountV2Dto finAccountV2Dto = FinAccountV2Dto.builder()
