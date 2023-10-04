@@ -1,15 +1,12 @@
-package com.ntt.mwonimoney.domain.account.api;
+package com.ntt.mwonimoney.domain.account.api.v1;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.ntt.mwonimoney.domain.account.repository.FinAccountRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,14 +35,16 @@ import com.ntt.mwonimoney.domain.account.entity.FinAccountTransaction;
 import com.ntt.mwonimoney.domain.account.entity.FinAccountType;
 import com.ntt.mwonimoney.domain.account.entity.QFinAccount;
 import com.ntt.mwonimoney.domain.account.entity.QFinAccountTransaction;
+import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionDto;
 import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionDto2;
 import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionListRequest;
 import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionListRequestType;
 import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransferRequest;
 import com.ntt.mwonimoney.domain.account.repository.FinAccountTransactionRepository;
-import com.ntt.mwonimoney.domain.account.service.FinAccountService;
-import com.ntt.mwonimoney.domain.account.service.FinAccountTransactionService;
 import com.ntt.mwonimoney.domain.account.service.NHApiService;
+import com.ntt.mwonimoney.domain.account.service.SmallAccountService;
+import com.ntt.mwonimoney.domain.account.service.v1.FinAccountServiceImpl;
+import com.ntt.mwonimoney.domain.account.service.v1.FinAccountTransactionServiceImpl;
 import com.ntt.mwonimoney.domain.member.api.request.SmallAccountRequest;
 import com.ntt.mwonimoney.domain.member.model.dto.MemberDto;
 import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
@@ -63,7 +62,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-@Transactional
 public class FinAccountApi {
 
 	private final S3Manager s3Manager;
@@ -74,11 +72,11 @@ public class FinAccountApi {
 	private final ChildService childService;
 
 	private final NHApiService nhApiService;
-	private final FinAccountService finAccountService;
-	private final FinAccountTransactionService finAccountTransactionService;
+	private final FinAccountServiceImpl finAccountService;
+	private final FinAccountTransactionServiceImpl finAccountTransactionService;
 	private final FinAccountTransactionRepository finAccountTransactionRepository;
 	private final JPAQueryFactory queryFactory;
-	private final FinAccountRepository finAccountRepository;
+	private final SmallAccountService smallAccountService;
 
 	@GetMapping("/accounts")
 	public ResponseEntity getFinAccount(@RequestHeader("Authorization") String accessToken,
@@ -89,29 +87,25 @@ public class FinAccountApi {
 
 		FinAccountType finAccountType = FinAccountType.valueOf(type);
 		FinAccount finAccount;
-		FinAccountResponse finAccountResponse = new FinAccountResponse();
-		log.info("finAccountType = {}", finAccountType);
 		//        // 2. 사용자의 계좌를 조회
 		if (finAccountType == FinAccountType.GENERAL) {
-			finAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, FinAccountType.GENERAL,
+			finAccount = finAccountService.getFinAccount(memberIdx, FinAccountType.GENERAL,
 				FinAccountStatus.ACTIVATE).orElseThrow();
-			log.info("finAccount1");
-
-		} else if (finAccountType == FinAccountType.SMALL){
-			finAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, FinAccountType.SMALL,
-					FinAccountStatus.ACTIVATE).orElseThrow();
-			log.info("finAccount2 ");
 		} else {
-			finAccount = null;
-			log.info("finAccount3 ");
+			finAccount = finAccountService.getFinAccount(memberIdx, FinAccountType.SMALL,
+				FinAccountStatus.ACTIVATE).orElseThrow();
 		}
 
-		log.info("finAccount 잔액 {}", finAccount.getRemain() );
+		List<FinAccountTransactionDto> finAccountTransactionDtos = finAccountTransactionRepository.findFinAccountTransactionByFinAccountIdx(
+			finAccount.getIdx());
+
+		FinAccountResponse finAccountResponse = new FinAccountResponse();
 
 		finAccountResponse.setRemain(finAccount.getRemain());
 		finAccountResponse.setNumber(finAccount.getNumber());
 		finAccountResponse.setCreatedDay(finAccount.getCreateTime().toLocalDate());
 		finAccountResponse.setStatus(finAccount.getStatus().toString());
+		finAccountResponse.setFinAccountTransaction(finAccountTransactionDtos);
 
 		return ResponseEntity.ok().body(finAccountResponse);
 	}
@@ -125,7 +119,7 @@ public class FinAccountApi {
 		MemberDto memberInfo = memberService.getMemberInfo(memberIdx);
 
 		// 1. 계좌가 있는 경우 error
-		Optional<FinAccount> finAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx,
+		Optional<FinAccount> finAccount = finAccountService.getFinAccount(memberIdx,
 			FinAccountType.GENERAL, FinAccountStatus.ACTIVATE);
 		if (finAccount.isPresent()) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -186,7 +180,7 @@ public class FinAccountApi {
 				.build();
 		}
 
-		finAccountService.save(newFinAccount, memberIdx);
+		finAccountService.openFinAccount(newFinAccount, memberIdx);
 
 		return ResponseEntity.ok().build();
 	}
@@ -209,7 +203,7 @@ public class FinAccountApi {
 		MemberDto memberInfo = memberService.getMemberInfo(memberIdx);
 
 		// 1. 계좌가 있는 경우 error
-		Optional<FinAccount> smallAccountBefo = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx,
+		Optional<FinAccount> smallAccountBefo = finAccountService.getFinAccount(memberIdx,
 			FinAccountType.SMALL, FinAccountStatus.ACTIVATE);
 		if (smallAccountBefo.isPresent()) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -236,47 +230,17 @@ public class FinAccountApi {
 			//				.finAcno("")
 			.status(FinAccountStatus.ACTIVATE)
 			.type(FinAccountType.SMALL)
-				.remain(0L)
 			.build();
 
-		finAccountService.save(finAccount, memberIdx);
+		finAccountService.openFinAccount(finAccount, memberIdx);
 
 		return ResponseEntity.ok().build();
 	}
 
-	@PatchMapping("/accounts/small-account")
-	@Transactional
-	public ResponseEntity closeSmallAccount(@RequestHeader("Authorization") String accessToken) {
+	@PatchMapping("/accounts/small-account/{finAccountIdx}")
+	public ResponseEntity closeSmallAccount(@PathVariable Long finAccountIdx) {
 
-
-		// 송금
-		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
-
-		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
-
-		log.info("[짜금통 삭제 요청 시작]", LocalDateTime.now());
-
-		childService.deleteSmallAccountInfo(memberIdx);
-
-		log.info("[짜금통 삭제 요청 끝]", LocalDateTime.now());
-
-
-		FinAccount smallAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, FinAccountType.SMALL,
-				FinAccountStatus.ACTIVATE).orElseThrow();
-
-		FinAccount finAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, FinAccountType.GENERAL,
-				FinAccountStatus.ACTIVATE).orElseThrow();
-
-		Long moneygo = smallAccount.getRemain();
-		Long remain = finAccount.getRemain();
-		finAccount.changeRemain(remain += moneygo);
-
-
-		finAccountService.closeSmallAccount(smallAccount.getIdx());
-
-
-
-
+		smallAccountService.closeSmallAccount(finAccountIdx);
 
 		return ResponseEntity.ok().build();
 	}
@@ -288,12 +252,12 @@ public class FinAccountApi {
 		Long senderIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
 		// 1. 송금자 finAccount를 찾는다., 없는 경우 error
-		FinAccount senderFinAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(senderIdx,
+		FinAccount senderFinAccount = finAccountService.getFinAccount(senderIdx,
 				FinAccountType.GENERAL, FinAccountStatus.ACTIVATE)
 			.orElseThrow();
 
 		// 2. 수취인 finAccount를 찾는다., 없는 경우 error
-		FinAccount receiverFinAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(
+		FinAccount receiverFinAccount = finAccountService.getFinAccount(
 				finAccountTransferRequest.getReceiverIdx(), FinAccountType.GENERAL, FinAccountStatus.ACTIVATE)
 			.orElseThrow();
 
@@ -332,7 +296,7 @@ public class FinAccountApi {
 			//			                .memo()
 			//			                .time()
 			.build();
-		finAccountTransactionService.save(finAccountTransaction);
+		finAccountTransactionService.makeTransaction(finAccountTransaction);
 
 		return ResponseEntity.ok().build();
 	}
@@ -365,15 +329,14 @@ public class FinAccountApi {
 	@GetMapping("/accounts/transactions")
 	public ResponseEntity<List<FinAccountTransactionDto2>> getTransactionList(
 		@RequestHeader("Authorization") String accessToken, @RequestBody FinAccountTransactionListRequest request) {
-		//		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
-		String memberUUID = request.getMemberUUID();
+		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
 		FinAccountTransactionListRequestType type = request.getType();
 		FinAccountType finAccountType = request.getFinAccountType();
 		log.info("type = {}", type);
 		log.info("finAccountType = {}", finAccountType);
-		Long finAccountIdx = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, finAccountType,
+		Long finAccountIdx = finAccountService.getFinAccount(memberIdx, finAccountType,
 			FinAccountStatus.ACTIVATE).orElseThrow().getIdx();
 		log.info("finAccountIdx = {}", finAccountIdx);
 
@@ -421,17 +384,18 @@ public class FinAccountApi {
 	@PatchMapping("/accounts/{finAccountIdx}/transactions/{transactionIdx}")
 	public ResponseEntity updateTransaction(@PathVariable Long finAccountIdx, @PathVariable Long transactionIdx,
 		@RequestBody String memoToUpdate) {
-		FinAccountTransaction finAccountTransactionToUpdate = finAccountTransactionService.findById(transactionIdx)
+		FinAccountTransaction finAccountTransactionToUpdate = finAccountTransactionService.getTransaction(
+				transactionIdx)
 			.orElseThrow();
 
-		finAccountTransactionService.changeMemo(finAccountTransactionToUpdate, memoToUpdate);
+		finAccountTransactionService.editMemo(finAccountTransactionToUpdate, memoToUpdate);
 
 		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping("/accounts/small-account/{finAccountIdx}/remain")
 	public ResponseEntity getRemain(@PathVariable Long finAccountIdx) {
-		Long remain = finAccountService.getRemain(finAccountIdx);
+		Long remain = finAccountService.getBalance(finAccountIdx);
 		return ResponseEntity.ok().body(remain);
 	}
 
