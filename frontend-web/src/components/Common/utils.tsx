@@ -1,4 +1,4 @@
-export function moneyFormat(number: number): string {
+export function moneyFormat(number: any): string {
   const numberString = number.toString();
   const parts = numberString.split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
