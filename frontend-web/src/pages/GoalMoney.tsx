@@ -1,20 +1,20 @@
+//React
 import React, { useEffect } from "react";
 import styled from "styled-components";
-
+import { useNavigate } from "react-router-dom";
+//component
 import { Container } from "../components/Common/About/AboutContainer";
 import { WhiteBox } from "../components/Common/About/AboutWhilteContainer";
 import { EmogiBox, ImgBox } from "../components/Common/About/AboutEmogi";
 import { Text, TextBox } from "../components/Common/About/AboutText";
-
-import Item from "../assests/image/Item.png";
 import { Btn } from "../components/Common/About/AboutButton";
 import History from "../components/Common/History";
 import { DemoLiquid } from "../components/Common/About/AboutChart";
 import { userAccountState, userDataState } from "../states/UserInfoState";
 import { useRecoilState } from "recoil";
-import { useNavigate } from "react-router-dom";
 import { GoalCheckState, GoalMoneyState } from "../states/GoalMoneyState";
 import { DetailReport } from "../components/Common/GoalMoney/GoalMoneyStyle";
+//api
 import api from "../apis/Api";
 import api_ver2 from "../apis/ApiForMultiPart";
 
@@ -32,6 +32,8 @@ function GoalMoney() {
   const [goalMoney, setGoalMoney] = useRecoilState(GoalMoneyState);
   const [goalCheck, setGoalCheck] = useRecoilState(GoalCheckState);
   const [userAccout, setUserAccount] = useRecoilState(userAccountState);
+  //Navigation
+  const navigate = useNavigate();
 
   // get 받아서 다시 recoil에 넣기
   useEffect(() => {
@@ -95,12 +97,19 @@ function GoalMoney() {
   }, []);
   const deleteGoal = async () => {
     try {
-      await api.delete("v1/members/small-account", {});
-      setGoalCheck((prev) => ({
-        ...prev,
-        goalState: false,
-      }));
-      alert("짜금통이 해지되었습니다.");
+      await api
+        .patch("v1/accounts/small-account")
+        .then(() => {
+          setGoalCheck((prev) => ({
+            ...prev,
+            goalState: false,
+          }));
+          alert("짜금통이 해지되었습니다.");
+          navigate("/");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     } catch (error) {
       console.error(error);
     }
@@ -121,7 +130,6 @@ function GoalMoney() {
   const check = goalCheck.goalState;
 
   // 함수를 위한 변수s
-  const navigate = useNavigate();
   const GoCreatGoal = () => {
     if (role === "CHILD") {
       navigate("/CreatGoal");
