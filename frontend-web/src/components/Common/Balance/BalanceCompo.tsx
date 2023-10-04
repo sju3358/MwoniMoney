@@ -92,7 +92,7 @@ function BalanceCompo({
   };
 
   const navigateClick = () => {
-    navigate("/chatting"); // 클릭 시 '/balance'로 이동
+    navigate("/balance"); // 클릭 시 '/balance'로 이동
   };
 
   return (

@@ -10,7 +10,7 @@ import SpacialAllowance from "../components/Common/Main/SpacialAllowance";
 import Qr from "../components/Common/Main/Qr";
 import Money from "../assests/image/Money.png";
 import { Container } from "../components/Common/About/AboutContainer";
-import { ChildCard } from "../components/Common/Main/ChildCard";
+import { ChildCard, AddChild } from "../components/Common/Main/ChildCard";
 import GoalForMain from "../components/Common/GoalMoney/GoalMoneyForMain";
 import { useRecoilState } from "recoil";
 import axios, { AxiosResponse } from "axios";
@@ -63,7 +63,9 @@ function ParentsPage() {
             childName={child.name}
             onClick={() => handleChildCardClick(child.uuid)}
           />
-        ) : null}
+        ) : (
+          <AddChild />
+        )}
       </Container>
     );
   });

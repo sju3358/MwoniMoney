@@ -120,6 +120,7 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
 					.socialProvider(result.getSocialProvider())
 					.socialId(result.getSocialId())
 					.email(result.getEmail())
+					.reqularAllowance(0)
 					.creditScore(0)
 					.quizReward(0)
 					.quizRewardRemain(0)
