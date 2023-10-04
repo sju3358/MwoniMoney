@@ -172,7 +172,7 @@ const ModalPayLoan: React.FC<ModalProps> = ({
       .then((response) => {
         console.log("자식 대출 거절");
         setIsRepayState(true);
-        handleClearNewLoan();
+        handleClose();
       })
       .catch((error) => {
         console.log(error);
@@ -249,8 +249,8 @@ const ModalPayLoan: React.FC<ModalProps> = ({
                 onChange={handleChangeState}
               ></InputInfo>
             </InputDiv>
-            <div>확인용</div>
-            <span>{pay}</span>
+            {/* <div>확인용</div>
+            <span>{pay}</span> */}
           </ContentBox>
           <ModalTopBottom justify="space-around">
             <ModalBtn onClick={handleSubmit}>{modal_btn1}</ModalBtn>
