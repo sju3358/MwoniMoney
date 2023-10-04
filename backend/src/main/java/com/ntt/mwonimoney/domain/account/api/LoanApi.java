@@ -144,12 +144,13 @@ public class LoanApi {
 			memberIdx = memberService.getMemberIdx(childUuid);
 		}
 
-		LoanTotalDto loanTotalDto = loanService.getSumAmount(memberIdx);
+		LoanTotalDto loanTotalDto = loanService.getLoanTotal(memberIdx);
 
 		LoanTotalResponse loanTotalResponse = LoanTotalResponse.builder()
 			.totalAmount(loanTotalDto.getTotalAmount())
 			.totalInterest(loanTotalDto.getTotalInterest())
 			.avgInterest(loanTotalDto.getAvgInterest())
+			.totalBalance(loanTotalDto.getTotalBalance())
 			.build();
 
 		return ResponseEntity.ok().body(loanTotalResponse);
