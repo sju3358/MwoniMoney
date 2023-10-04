@@ -26,7 +26,6 @@ import {
   whichCategoryChallenge,
 } from "../../states/ChallengeState";
 
-
 interface ChallengeProps {
   ismain: string;
 }
@@ -101,7 +100,7 @@ function Challenge(props: ChallengeProps) {
         <>
           <ChallengeTitle />
           <ChallengeCategory />
-          <ChallengeAdd />
+          {ChallengeData.length === 4 ? <></> : <ChallengeAdd />}
         </>
       )}
       <ChallengeListContainer>
