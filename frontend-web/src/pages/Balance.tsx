@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
 import api from "../apis/Api";
 
 import {
@@ -13,6 +12,7 @@ import styled from "styled-components";
 import { Text } from "../components/Common/About/AboutText";
 import { WhiteBox } from "../components/Common/About/AboutWhilteContainer";
 import { Img } from "../components/Common/About/AboutEmogi";
+import { useNavigate } from "react-router-dom"; // useNavigate 추가
 
 // 모달
 import ProgressModal from "../modal/ProgressModal";
@@ -59,7 +59,14 @@ console.warn = console.error = () => {};
 })();
 
 function Balance() {
-  const [todayBalanceGame, setTodayBalanceGame] = useState<BalanceDataItem>();
+  const navigate = useNavigate();
+
+  function handleImgBoxClick() {
+    navigate("/chatting");
+  }
+  const [runningBalanceGameData, setRunningBalanceGameData] = useState<
+    BalanceDataItem[]
+  >([]);
   const [endBalanceData, setEndBalanceData] = useState<BalanceDataItem[]>([]);
   const [curPage, setCurPage] = useState(0);
   const [isLastPage, setIsLastPage] = useState(false);
@@ -67,9 +74,9 @@ function Balance() {
 
   useEffect(() => {
     api
-      .get(`/v1/balances/today`)
+      .get(`/v1/balances?status=RUNNING`)
       .then((response) => {
-        setTodayBalanceGame(response.data);
+        setRunningBalanceGameData(response.data);
       })
       .catch((error) => {
         console.error("Error fetching balance data:", error);
@@ -91,64 +98,79 @@ function Balance() {
     }
   }, [loadNextFlag]);
 
+  function loadNextPage() {
+    setLoadNextFlag(loadNextFlag + 1);
+  }
+
   return (
     <MainContainer>
-      {todayBalanceGame === undefined ? (
-        <>오늘의 밸런스게임이 없습니다</>
-      ) : (
-        <BalanceContainer height="40%">
-          <BalanceCompo
-            balanceIdx={todayBalanceGame.idx}
-            news={todayBalanceGame.news}
-            showText={true}
-            showImg={false}
-            questionText={todayBalanceGame.question}
-            buyText={todayBalanceGame.leftAnswer}
-            notBuyText={todayBalanceGame.rightAnswer}
-            countOfLeftAnswer={todayBalanceGame.countOfLeftAnswer}
-            countOfRightAnswer={todayBalanceGame.countOfRightAnswer}
-          />
-        </BalanceContainer>
-      )}
-      <>
-        {endBalanceData.map((endBalanceData) => {
-          return (
-            <ListContainer key={endBalanceData.idx}>
-              <WhiteBox margin="0% 0% 5% 0%" padding="0%">
-                <TextContainer
-                  style={{
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text
-                    color="#C4C4C4"
-                    fontsize="0.75rem"
-                    padding="0% 0% 0% 5%"
-                  >
-                    {endBalanceData.question}
-                  </Text>
-                  <IntoBalanceResult
-                    news={endBalanceData.news}
-                    countOfLeftAnswer={endBalanceData.countOfLeftAnswer}
-                    countOfRightAnswer={endBalanceData.countOfRightAnswer}
-                  />
-                </TextContainer>
-              </WhiteBox>
-            </ListContainer>
-          );
-        })}
-      </>
+      {runningBalanceGameData.map((data) => {
+        return (
+          <BalanceContainer height="40%">
+            <BalanceCompo
+              balanceIdx={data.idx}
+              news={data.news}
+              showText={false}
+              showImg={false}
+              questionText={data.question}
+              buyText={data.leftAnswer}
+              notBuyText={data.rightAnswer}
+              countOfLeftAnswer={data.countOfLeftAnswer}
+              countOfRightAnswer={data.countOfRightAnswer}
+            />
+          </BalanceContainer>
+        );
+      })}
 
-      <button
-        onClick={() => {
-          setLoadNextFlag(loadNextFlag + 1);
-        }}
-      >
-        {isLastPage === false ? "로딩" : "마지막 페이지입니다"}
-      </button>
+      {endBalanceData.map((endBalanceData) => {
+        return (
+          <ListContainer key={endBalanceData.idx}>
+            <WhiteBox margin="0% 0% 5% 0%" padding="0%">
+              <TextContainer
+                style={{
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text color="#C4C4C4" fontsize="0.75rem" padding="0% 0% 0% 5%">
+                  {endBalanceData.question}
+                </Text>
+                <IntoBalanceResult
+                  news={endBalanceData.news}
+                  countOfLeftAnswer={endBalanceData.countOfLeftAnswer}
+                  countOfRightAnswer={endBalanceData.countOfRightAnswer}
+                />
+              </TextContainer>
+            </WhiteBox>
+          </ListContainer>
+        );
+      })}
+
+      {isLastPage === false ? (
+        <button
+          onClick={loadNextPage}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "30%",
+            height: "5%",
+            fontSize: "1.2em",
+            backgroundColor: "#fbd56e",
+            borderRadius: "10px",
+            fontWeight: "bold",
+            borderStyle: "none",
+            margin: "auto",
+          }}
+        >
+          더보기
+        </button>
+      ) : (
+        ""
+      )}
+
       <ImgContainer>
-        <ImgBox>
+        <ImgBox onClick={handleImgBoxClick}>
           <Img width="100%" height="100%" padding="0%" src={`${Chat}`} />
         </ImgBox>
       </ImgContainer>

@@ -14,6 +14,7 @@ public class ChildDto extends MemberDto {
 	private int creditScore;
 	private int quizRewardRemain;
 	private int quizReward;
+	private int regularAllowance;
 	private SmallAccount smallAccount;
 
 }
