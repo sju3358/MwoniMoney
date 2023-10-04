@@ -17,32 +17,35 @@ import { useNavigate } from "react-router-dom";
 
 //util
 import { dateFormat } from "../utils";
+import { moneyFormat } from "../utils";
 
 export const ChallengeListContainer = styled.div`
-  // border: 1px solid black;
+  border: 1px solid red;
   width: 100%;
-  height: 55%;
+  // height: 55%;
+  height: 500px;
   overflow-y: auto; /* 세로 스크롤만 생성 */
   overflow-x: hidden; /* 가로 스크롤 제거 */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 5%;
+  margin-top: 10px;
 `;
 
 export const ListComponent = styled.div`
   // 그림자
   // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
-  // border: 1px solid red;
+  border: 1px solid blue;
   background-color: #ffffff;
   width: 90%;
-  height: 30%;
+  height: 500px;
+  // height: 30%;
   border-top-left-radius: 4% 4%;
   border-top-right-radius: 4% 4%;
   border-bottom-left-radius: 4% 4%;
   border-bottom-right-radius: 4% 4%;
-  margin-bottom: 5%;
+  margin-bottom: 10px;
 `;
 
 export const ListTitle = styled.div`
@@ -255,9 +258,9 @@ function ChallengeList({ data }: Props) {
         </CategoryTag>
         <DeadLine> ~ {dateFormat(data.endTime)}</DeadLine>
       </ListTitle>
-      {/* <Text fontsize="1rem" marginL="5%">
-        보상 : {data.reward}원
-      </Text> */}
+      <Text fontsize="1rem" marginL="5%">
+        보상 : {moneyFormat(data.reward)}원
+      </Text>
       {role === "PARENT" ? (
         <>
           {(data.status === 0 ||
