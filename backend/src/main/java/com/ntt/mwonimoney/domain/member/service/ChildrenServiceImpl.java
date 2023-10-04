@@ -12,7 +12,6 @@ import com.ntt.mwonimoney.domain.member.entity.Children;
 import com.ntt.mwonimoney.domain.member.entity.ChildrenKey;
 import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.entity.Parent;
-import com.ntt.mwonimoney.domain.member.model.dto.ChildDetailDto;
 import com.ntt.mwonimoney.domain.member.model.dto.ChildDto;
 import com.ntt.mwonimoney.domain.member.repository.ChildrenRepository;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
@@ -65,11 +64,11 @@ public class ChildrenServiceImpl implements ChildrenService {
 	}
 
 	@Override
-	public ChildDetailDto getChildInfo(String parentUUID, String childUUID) {
+	public ChildDto getChildInfo(String parentUUID, String childUUID) {
 		Child child = childrenRepository.findChild(parentUUID, childUUID)
 			.orElseThrow(() -> new NoSuchElementException("자식 정보가 존재하지 않습니다"));
 
-		return child.convertToDetailDto();
+		return child.convertToDto();
 	}
 
 	@Override

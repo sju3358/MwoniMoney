@@ -1,6 +1,5 @@
 package com.ntt.mwonimoney.domain.member.entity;
 
-import com.ntt.mwonimoney.domain.member.model.dto.ChildDetailDto;
 import com.ntt.mwonimoney.domain.member.model.dto.ChildDto;
 import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
@@ -121,30 +120,6 @@ public class Child extends Member {
 			.quizRewardRemain(this.quizRewardRemain)
 			.quizReward(this.quizReward)
 			.smallAccount(this.smallAccount == null ? null : smallAccount)
-			.challengeAlarm(this.getChallengeAlarm())
-			.balanceAlarm(this.getBalanceAlarm())
-			.smallAcountAlarm(this.getSmallAcountAlarm())
-			.email(this.getEmail())
-			.build();
-	}
-
-	public ChildDetailDto convertToDetailDto() {
-
-		return ChildDetailDto.builder()
-			.uuid(this.getUuid())
-			.status(this.getStatus())
-			.name(this.getName())
-			.nickname(this.getNickname())
-			.birthday(this.getBirthday())
-			.socialProvider(this.getSocialProvider())
-			.memberRole(this.getMemberRole())
-			.creditScore(this.creditScore)
-			.quizRewardRemain(this.quizRewardRemain)
-			.quizReward(this.quizReward)
-			.goalMoney(this.smallAccount.getGoalMoney())
-			.goalName(this.smallAccount.getGoalName())
-			.imageFilename(this.smallAccount.getImageFilename())
-			.regularAllowance(this.reqularAllowance)
 			.challengeAlarm(this.getChallengeAlarm())
 			.balanceAlarm(this.getBalanceAlarm())
 			.smallAcountAlarm(this.getSmallAcountAlarm())
