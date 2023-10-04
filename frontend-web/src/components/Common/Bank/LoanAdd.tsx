@@ -12,7 +12,7 @@ function LoanAdd() {
     setOpen(true);
   };
   return (
-    <Container height="12%">
+    <Container height="20%">
       <button
         onClick={handleOpen}
         style={{ width: "90%", height: "100%", border: "none" }}

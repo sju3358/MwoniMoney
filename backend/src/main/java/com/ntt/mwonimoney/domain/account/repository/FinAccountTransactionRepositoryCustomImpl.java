@@ -25,16 +25,18 @@ public class FinAccountTransactionRepositoryCustomImpl implements FinAccountTran
 
 	@Override
 	public List<FinAccountTransactionDto> findFinAccountTransactionByFinAccountIdx(Long finAccountIdx) {
+
 		return jpaQueryFactory
-				.select(Projections.bean(FinAccountTransactionDto.class,
-						finAccountTransaction.id,
-						finAccountTransaction.money,
-						finAccountTransaction.balance,
-						finAccountTransaction.memo,
-						finAccountTransaction.time))
-				.from(finAccountTransaction)
-				.where(finAccountTransaction.finAccount.idx.eq(finAccountIdx))
-				.fetch();
+			.select(Projections.bean(FinAccountTransactionDto.class,
+				finAccountTransaction.id,
+				finAccountTransaction.money,
+				finAccountTransaction.balance,
+				finAccountTransaction.memo,
+				finAccountTransaction.time))
+			.from(finAccountTransaction)
+			.where(finAccountTransaction.finAccount.idx.eq(finAccountIdx))
+			.fetch();
+
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Transactional
 public interface FinAccountRepositoryCustom {
-    public Optional<FinAccount> findFinAccountByMemberAndTypeAndStatus(Long memberIdx, FinAccountType finAccountType, FinAccountStatus finAccountStatus);
+	public Optional<FinAccount> findFinAccountByMemberAndTypeAndStatus(Long memberIdx, FinAccountType finAccountType, FinAccountStatus finAccountStatus);
 
-    public FinAccount getFinAccountByUUID(Long memberIdx, FinAccountType type);
+	public FinAccount getFinAccountByUUID(Long memberIdx, FinAccountType type);
 }

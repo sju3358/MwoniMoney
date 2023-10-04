@@ -1,5 +1,5 @@
 import React from "react";
-import QrEmogi from "../../../assests/image/QR.png";
+import chatbot from "../../../assests/image/main/chatbot.png";
 import { useNavigate } from "react-router-dom";
 import { WhiteBox1 } from "../About/AboutWhilteContainer";
 import { Container } from "../About/AboutContainer";
@@ -25,7 +25,7 @@ function ChatbotLink() {
         <Text>해결해보세요!</Text>
       </Container>
       <Container height="100%" width="35%">
-        <EmogiBox height="60%" width="65%" backImg={`${QrEmogi}`} />
+        <EmogiBox height="60%" width="65%" backImg={`${chatbot}`} />
       </Container>
     </WhiteBox1>
   );

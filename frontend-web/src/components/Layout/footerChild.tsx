@@ -44,7 +44,7 @@ export default function FooterChild() {
       <BottomNavigation
         sx={{
           width: "100%",
-          //   border: "1px solid red",
+          // border: "1px solid red",
           height: "95%",
           margin: "0%",
           padding: "0%",
@@ -57,21 +57,13 @@ export default function FooterChild() {
           value="Main"
           label="메인"
           icon={
-            <HomeIcon
-              sx={{
-                width: "50%",
-                // border: "1px solid red",
-                height: "50%",
-                color: "#969696",
-              }}
-            />
+            <HomeIcon sx={{ width: "50%", height: "50%", color: "#969696" }} />
           }
           sx={{
-            width: "50%",
-            // border: "1px solid blue",
             height: "95%",
             margin: "0%",
             padding: "0%",
+            color: "#FF0000", // Change this to the desired text color
           }}
         />
         <BottomNavigationAction

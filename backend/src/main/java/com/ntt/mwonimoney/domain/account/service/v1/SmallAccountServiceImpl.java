@@ -29,8 +29,7 @@ public class SmallAccountServiceImpl implements SmallAccountService {
 	}
 
 	@Override
-	public FinAccount openSmallAccount(Long memberIdx, SmallAccount smallAccount) {
-		return null;
+	public void openSmallAccount(Long memberIdx, SmallAccount smallAccount) {
 	}
 
 }

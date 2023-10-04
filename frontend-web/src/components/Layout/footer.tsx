@@ -12,6 +12,7 @@ export const FooterBody = styled.div`
   justify-content: space-around;
   align-items: center;
   box-sizing: border-box;
+  z-index: 10000000;
 `;
 
 interface FooterBoxProps {
