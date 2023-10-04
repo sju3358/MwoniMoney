@@ -105,7 +105,7 @@ public class FinAccountApi {
 		finAccountResponse.setNumber(finAccount.getNumber());
 		finAccountResponse.setCreatedDay(finAccount.getCreateTime().toLocalDate());
 		finAccountResponse.setStatus(finAccount.getStatus().toString());
-		finAccountResponse.setFinAccountTransactionDtos(finAccountTransactionDtos);
+		finAccountResponse.setFinAccountTransaction(finAccountTransactionDtos);
 
 		return ResponseEntity.ok().body(finAccountResponse);
 	}
