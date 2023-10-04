@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ntt.mwonimoney.domain.challenge.api.request.ChallengeRequestDto;
 import com.ntt.mwonimoney.domain.challenge.api.response.MemberChallengeResponseDto;
 import com.ntt.mwonimoney.domain.challenge.repository.MemberChallengeRepository;
-import com.ntt.mwonimoney.domain.challenge.service.ChallengeService;
+import com.ntt.mwonimoney.domain.challenge.service.ChallengeServiceImpl;
 import com.ntt.mwonimoney.domain.member.entity.Parent;
 import com.ntt.mwonimoney.domain.member.repository.ChildrenRepository;
 import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
@@ -39,7 +39,7 @@ public class ChallengeApi {
 	private final ChildrenRepository childrenRepository;
 	private final MemberChallengeRepository memberChallengeRepository;
 	private final MemberAuthService memberAuthService;
-	private final ChallengeService challengeService;
+	private final ChallengeServiceImpl challengeServiceImpl;
 	private final MemberService memberService;
 	private final FCMService fcmService;
 
@@ -52,7 +52,7 @@ public class ChallengeApi {
 		@RequestBody ChallengeRequestDto challengeRequestDto) {
 		Long childIdx = memberService.getMemberIdx(challengeRequestDto.getChildUuid());
 
-		MemberChallengeResponseDto responseData = challengeService.writeChallenge(challengeRequestDto,
+		MemberChallengeResponseDto responseData = challengeServiceImpl.writeChallenge(challengeRequestDto,
 			childIdx);
 
 		FCMRequest fcmRequest = FCMRequest.builder()
@@ -68,11 +68,10 @@ public class ChallengeApi {
 
 	//부모 챌린지 삭제
 	@DeleteMapping("/challenges/{memberChallengeIdx}")
-	public ResponseEntity deleteChallenge(@PathVariable Long memberChallengeIdx) {
+	public ResponseEntity deleteChallenge(@PathVariable Long memberChallengeIdx,
+		@RequestParam("childUuid") String childUuid) {
 
-		challengeService.deleteChallenge(memberChallengeIdx);
-
-		String childUuid = memberChallengeRepository.findById(memberChallengeIdx).orElseThrow().getMember().getUuid();
+		challengeServiceImpl.deleteChallenge(memberChallengeIdx);
 
 		FCMRequest fcmRequest = FCMRequest.builder()
 			.memberUuid(childUuid)
@@ -86,10 +85,9 @@ public class ChallengeApi {
 
 	//부모 챌린지 완료
 	@PatchMapping("/challenges/{memberChallengeIdx}")
-	public ResponseEntity CompleteChallenge(@PathVariable Long memberChallengeIdx) {
-		challengeService.completeChallenge(memberChallengeIdx);
-
-		String childUuid = memberChallengeRepository.findById(memberChallengeIdx).orElseThrow().getMember().getUuid();
+	public ResponseEntity CompleteChallenge(@PathVariable Long memberChallengeIdx,
+		@RequestParam("childUuid") String childUuid) {
+		challengeServiceImpl.completeChallenge(memberChallengeIdx);
 
 		FCMRequest fcmRequest = FCMRequest.builder()
 			.memberUuid(childUuid)
@@ -104,10 +102,9 @@ public class ChallengeApi {
 
 	//부모 챌린지 거절
 	@PatchMapping("/challenges/{memberChallengeIdx}/reject")
-	public ResponseEntity RejectChallenge(@PathVariable Long memberChallengeIdx) {
-		challengeService.rejectChallenge(memberChallengeIdx);
-
-		String childUuid = memberChallengeRepository.findById(memberChallengeIdx).orElseThrow().getMember().getUuid();
+	public ResponseEntity RejectChallenge(@PathVariable Long memberChallengeIdx,
+		@RequestParam("childUuid") String childUuid) {
+		challengeServiceImpl.rejectChallenge(memberChallengeIdx);
 
 		FCMRequest fcmRequest = FCMRequest.builder()
 			.memberUuid(childUuid)
@@ -122,8 +119,17 @@ public class ChallengeApi {
 
 	//부모 챌린지 승인
 	@PatchMapping("/challenges/{memberChallengeIdx}/accept")
-	public ResponseEntity AcceptChallenge(@PathVariable Long memberChallengeIdx) {
-		challengeService.acceptChallenge(memberChallengeIdx);
+	public ResponseEntity AcceptChallenge(@PathVariable Long memberChallengeIdx,
+		@RequestParam("childUuid") String childUuid) {
+		challengeServiceImpl.acceptChallenge(memberChallengeIdx);
+
+		FCMRequest fcmRequest = FCMRequest.builder()
+			.memberUuid(childUuid)
+			.title("챌린지 승인")
+			.content("부모님께서 챌린지를 승인하셨어요")
+			.build();
+
+		fcmService.sendNotificationByToken(fcmRequest);
 
 		return ResponseEntity.ok().build();
 	}
@@ -139,7 +145,7 @@ public class ChallengeApi {
 
 		Long childIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
-		MemberChallengeResponseDto responseData = challengeService.proposeChallenge(challengeRequestDto,
+		MemberChallengeResponseDto responseData = challengeServiceImpl.proposeChallenge(challengeRequestDto,
 			childIdx);
 		log.info("responseData : {}", responseData);
 
@@ -161,7 +167,7 @@ public class ChallengeApi {
 	@PatchMapping("/challenges/propose/{memberChallengeIdx}")
 	public ResponseEntity ProposeAcceptChallenge(@RequestHeader("Authorization") String accessToken,
 		@PathVariable Long memberChallengeIdx) {
-		challengeService.proposeAcceptChallenge(memberChallengeIdx);
+		challengeServiceImpl.proposeAcceptChallenge(memberChallengeIdx);
 
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 
@@ -197,7 +203,7 @@ public class ChallengeApi {
 		}
 
 		log.info("서비스 시작");
-		List<MemberChallengeResponseDto> responseData = challengeService.selectMemberChallenge(
+		List<MemberChallengeResponseDto> responseData = challengeServiceImpl.selectMemberChallenge(
 			status, memberIdx);
 		log.info("서비스 끝");
 		return ResponseEntity.ok().body(responseData);
