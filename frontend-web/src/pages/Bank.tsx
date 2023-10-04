@@ -182,8 +182,7 @@ function Bank() {
         flexDirection="column"
         style={{ border: "1px solid blue" }}
       >
-        {role === "PARENT" ? <LoanAdd /> : <></>}
-
+        {role === "PARENT" && LoanData.length < 4 ? <LoanAdd /> : <></>}
         <>
           {LoanData.length > 0 ? (
             <>
