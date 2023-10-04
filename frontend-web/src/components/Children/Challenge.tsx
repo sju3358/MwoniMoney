@@ -26,6 +26,7 @@ import {
   whichCategoryChallenge,
 } from "../../states/ChallengeState";
 
+
 interface ChallengeProps {
   ismain: string;
 }
