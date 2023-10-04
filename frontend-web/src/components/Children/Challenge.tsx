@@ -123,7 +123,7 @@ function Challenge(props: ChallengeProps) {
                   />
                 ))}
                 {ChallengeData.length > 3 && (
-                  <Text>그 외의 챌린지도 더 있어요!</Text>
+                  <Text marginL="0%">그 외의 챌린지도 더 있어요!</Text>
                 )}
               </>
             ) : (
@@ -144,9 +144,9 @@ function Challenge(props: ChallengeProps) {
               </>
             ) : (
               <>
-                {status_value === 5 && <>챌린지내역이 없어요.</>}
+                {status_value === 5 && <>챌린지 내역이 없어요.</>}
                 {status_value === 0 && <>진행중인 챌린지가 없어요.</>}
-                {status_value === 2 && <>제안대기중인 챌린지가 없어요.</>}
+                {status_value === 2 && <>제안 대기중인 챌린지가 없어요.</>}
               </>
             )}
           </>
