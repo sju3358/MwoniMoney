@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ntt.mwonimoney.domain.account.entity.FinAccountType;
+import com.ntt.mwonimoney.domain.account.model.dto.FinAccountDto;
+import com.ntt.mwonimoney.domain.account.service.v2.FinAccountServiceImplV2;
+import com.ntt.mwonimoney.domain.member.model.dto.ChildDetailDto;
 import com.ntt.mwonimoney.domain.member.model.dto.ChildDto;
 import com.ntt.mwonimoney.domain.member.service.ChildrenService;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
@@ -26,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ChildrenApi {
 
 	private final ChildrenService childrenService;
+	private final FinAccountServiceImplV2 finAccountServiceImplV2;
 	private final JwtTokenProvider jwtTokenProvider;
 
 	@GetMapping("/children")
@@ -44,7 +49,7 @@ public class ChildrenApi {
 	}
 
 	@GetMapping("/children/{child_uuid}")
-	public ResponseEntity<ChildDto> getChildInfoRequest(
+	public ResponseEntity<ChildDetailDto> getChildInfoRequest(
 		@RequestHeader("Authorization") String accessToken,
 		@PathVariable("child_uuid") String childUUID) {
 
@@ -52,11 +57,14 @@ public class ChildrenApi {
 
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 
-		ChildDto childDto = childrenService.getChildInfo(memberUUID, childUUID);
+		ChildDetailDto childDetailDto = childrenService.getChildInfo(memberUUID, childUUID);
+		FinAccountDto finAccountDto = finAccountServiceImplV2.getFinAccount(childDetailDto.getUuid(),
+			FinAccountType.SMALL);
 
+		childDetailDto.setRemain(finAccountDto.getRemain());
 		log.info("[자녀 정보 조회 요청 끝]", LocalDateTime.now());
 
-		return ResponseEntity.ok().body(childDto);
+		return ResponseEntity.ok().body(childDetailDto);
 	}
 
 	@PostMapping("/children/{parentUUID}")
