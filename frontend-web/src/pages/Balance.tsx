@@ -41,19 +41,6 @@ const ImgBox = styled.button`
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
 `;
 
-export const getBalance = (props: GetRegisterProps): Promise<AxiosResponse> => {
-  // axios 요청을 보낼 때 Authorization 헤더 설정
-  return api.get("/v1/balances?page=0&size=20", {
-    // headers: {
-    //   Authorization: `Bearer ${props.bearerToken}`,
-    // },
-  });
-};
-
-interface GetRegisterProps {
-  bearerToken: string;
-}
-
 interface BalanceDataItem {
   idx: number;
   question: string;
@@ -65,126 +52,101 @@ interface BalanceDataItem {
   news: string;
 }
 
-function Balance() {
-  const [balanceData, setBalanceData] = useState<BalanceDataItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+console.warn = console.error = () => {};
+// or IIFE
+(() => {
+  console.warn = console.error = () => {};
+})();
 
+function Balance() {
+  const [todayBalanceGame, setTodayBalanceGame] = useState<BalanceDataItem>();
+  const [endBalanceData, setEndBalanceData] = useState<BalanceDataItem[]>([]);
   const [curPage, setCurPage] = useState(0);
   const [isLastPage, setIsLastPage] = useState(false);
+  const [loadNextFlag, setLoadNextFlag] = useState(0);
 
   useEffect(() => {
     api
-      .get(`/v1/balances/end?page=${curPage}&size=5`)
+      .get(`/v1/balances/today`)
       .then((response) => {
-        console.log(response);
-        const data: BalanceDataItem[] = response.data.content;
-
-        const newData = balanceData;
-        const sizeOfData = data.length;
-        data.forEach((item) => {
-          if (data[sizeOfData - 1].idx != item.idx) newData.push(item);
-        });
-
-        setBalanceData(newData);
-        setIsLastPage(response.data.last);
-        setIsLoading(false);
+        setTodayBalanceGame(response.data);
       })
       .catch((error) => {
         console.error("Error fetching balance data:", error);
-        setIsLoading(false);
       });
-  }, [curPage]);
+  }, []);
 
-  let timer: any;
-
-  window.addEventListener("scroll", () => {
-    console.log("스크롤이벤트");
-
-    if (timer) {
-      clearTimeout(timer);
+  useEffect(() => {
+    if (isLastPage !== true) {
+      api
+        .get(`/v1/balances/end?page=${curPage}&size=5`)
+        .then((response) => {
+          setEndBalanceData(endBalanceData.concat(response.data.content));
+          setCurPage(curPage + 1);
+          setIsLastPage(response.data.last);
+        })
+        .catch((error) => {
+          console.error("Error fetching balance data:", error);
+        });
     }
-
-    timer = setTimeout(() => {
-      console.log("스크롤이벤트");
-      if (isLastPage != true) {
-        setCurPage(curPage + 1);
-      }
-    }, 500);
-  });
-
-  window.addEventListener("wheel", () => {
-    if (timer) {
-      clearTimeout(timer);
-    }
-
-    timer = setTimeout(() => {
-      console.log("스크롤이벤트");
-      if (isLastPage != true) {
-        setCurPage(curPage + 1);
-      }
-    }, 500);
-  });
+  }, [loadNextFlag]);
 
   return (
     <MainContainer>
-      {isLoading ? (
-        <div>Loading...</div>
+      {todayBalanceGame === undefined ? (
+        <>오늘의 밸런스게임이 없습니다</>
       ) : (
-        <>
-          {balanceData &&
-            balanceData.length > 0 &&
-            // Render items with balanceGameStatus "RUNNING"
-            balanceData
-              .filter((item) => item.balanceGameStatus === "RUNNING")
-              .map((item, index) => (
-                <BalanceContainer key={index} height="40%">
-                  <BalanceCompo
-                    balanceIdx={item.idx}
-                    news={item.news}
-                    showText={true}
-                    showImg={false}
-                    questionText={item.question}
-                    buyText={item.leftAnswer}
-                    notBuyText={item.rightAnswer}
-                    countOfLeftAnswer={item.countOfLeftAnswer}
-                    countOfRightAnswer={item.countOfRightAnswer}
-                  />
-                </BalanceContainer>
-              ))}
-
-          {balanceData &&
-            balanceData.length > 0 &&
-            // Render items with balanceGameStatus "END"
-            balanceData
-              .filter((item) => item.balanceGameStatus === "END")
-              .map((item, index) => (
-                <ListContainer key={index}>
-                  <WhiteBox margin="0% 0% 5% 0%" padding="0%">
-                    <TextContainer
-                      style={{
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Text
-                        color="#C4C4C4"
-                        fontsize="0.75rem"
-                        padding="0% 0% 0% 5%"
-                      >
-                        {item.question}
-                      </Text>
-                      <IntoBalanceResult
-                        news={item.news}
-                        countOfLeftAnswer={item.countOfLeftAnswer}
-                        countOfRightAnswer={item.countOfRightAnswer}
-                      />
-                    </TextContainer>
-                  </WhiteBox>
-                </ListContainer>
-              ))}
-        </>
+        <BalanceContainer height="40%">
+          <BalanceCompo
+            balanceIdx={todayBalanceGame.idx}
+            news={todayBalanceGame.news}
+            showText={true}
+            showImg={false}
+            questionText={todayBalanceGame.question}
+            buyText={todayBalanceGame.leftAnswer}
+            notBuyText={todayBalanceGame.rightAnswer}
+            countOfLeftAnswer={todayBalanceGame.countOfLeftAnswer}
+            countOfRightAnswer={todayBalanceGame.countOfRightAnswer}
+          />
+        </BalanceContainer>
       )}
+      <>
+        {endBalanceData.map((endBalanceData) => {
+          return (
+            <ListContainer key={endBalanceData.idx}>
+              <WhiteBox margin="0% 0% 5% 0%" padding="0%">
+                <TextContainer
+                  style={{
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text
+                    color="#C4C4C4"
+                    fontsize="0.75rem"
+                    padding="0% 0% 0% 5%"
+                  >
+                    {endBalanceData.question}
+                  </Text>
+                  <IntoBalanceResult
+                    news={endBalanceData.news}
+                    countOfLeftAnswer={endBalanceData.countOfLeftAnswer}
+                    countOfRightAnswer={endBalanceData.countOfRightAnswer}
+                  />
+                </TextContainer>
+              </WhiteBox>
+            </ListContainer>
+          );
+        })}
+      </>
 
+      <button
+        onClick={() => {
+          setLoadNextFlag(loadNextFlag + 1);
+        }}
+      >
+        {isLastPage === false ? "로딩" : "마지막 페이지입니다"}
+      </button>
       <ImgContainer>
         <ImgBox>
           <Img width="100%" height="100%" padding="0%" src={`${Chat}`} />
