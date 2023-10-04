@@ -28,6 +28,9 @@ public class Child extends Member {
 	@Column(name = "member_quiz_reward")
 	private int quizReward;
 
+	@Column(name = "member_regular_allowance")
+	private int reqularAllowance;
+
 	@Embedded
 	private SmallAccount smallAccount;
 
@@ -90,7 +93,8 @@ public class Child extends Member {
 		SmallAccount smallAccount,
 		String challengeAlarm,
 		String balanceAlarm,
-		String smallAcountAlarm) {
+		String smallAcountAlarm,
+		int reqularAllowance) {
 
 		super(status, uuid, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD, challengeAlarm,
 			balanceAlarm, smallAcountAlarm);
@@ -99,6 +103,7 @@ public class Child extends Member {
 		this.creditScore = creditScore;
 		this.quizReward = quizReward;
 		this.smallAccount = smallAccount;
+		this.reqularAllowance = reqularAllowance;
 	}
 
 	@Override
@@ -139,6 +144,7 @@ public class Child extends Member {
 			.goalMoney(this.smallAccount.getGoalMoney())
 			.goalName(this.smallAccount.getGoalName())
 			.imageFilename(this.smallAccount.getImageFilename())
+			.regularAllowance(this.reqularAllowance)
 			.challengeAlarm(this.getChallengeAlarm())
 			.balanceAlarm(this.getBalanceAlarm())
 			.smallAcountAlarm(this.getSmallAcountAlarm())
