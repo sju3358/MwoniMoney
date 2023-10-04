@@ -68,7 +68,7 @@ export default function CustomizedAccordions() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            우선 자녀를 회원가입시킨 후 자녀로 등록합니다.블라블라블라
+            우선 자녀를 회원가입시킨 후 부모 메인페이지에서 QR발급에 들어가세요.
           </Typography>
         </AccordionDetails>
       </Accordion>
