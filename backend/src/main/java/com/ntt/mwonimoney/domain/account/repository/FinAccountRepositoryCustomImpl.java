@@ -3,7 +3,9 @@ package com.ntt.mwonimoney.domain.account.repository;
 import com.ntt.mwonimoney.domain.account.entity.FinAccount;
 import com.ntt.mwonimoney.domain.account.entity.FinAccountStatus;
 import com.ntt.mwonimoney.domain.account.entity.FinAccountType;
+import com.ntt.mwonimoney.domain.account.entity.QFinAccount;
 import com.ntt.mwonimoney.domain.member.model.vo.SmallAccount;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class FinAccountRepositoryCustomImpl implements FinAccountRepositoryCustom{
     private final EntityManager em;
 
+    private final JPAQueryFactory jpaQueryFactory;
     @Override
     public Optional<FinAccount> findFinAccountByMemberAndTypeAndStatus(Long memberIdx, FinAccountType finAccountType, FinAccountStatus finAccountStatus){
         TypedQuery<FinAccount> query = em.createQuery(
@@ -36,6 +39,23 @@ public class FinAccountRepositoryCustomImpl implements FinAccountRepositoryCusto
         }
     }
 
+    @Override
+    public FinAccount getFinAccountByUUID(String memberUUID, FinAccountType type) {
+
+        List<FinAccount> result = jpaQueryFactory.selectFrom(QFinAccount.finAccount)
+                .where(QFinAccount.finAccount.type.eq(type))
+                .fetch();
+
+        FinAccount finAccount = null;
+
+        for(int i=0;i<result.size();i++) {
+            if(result.get(i).getStatus() == FinAccountStatus.ACTIVATE) {
+                finAccount = result.get(i);
+            }
+        }
+
+        return finAccount;
+    }
 
 
 }
