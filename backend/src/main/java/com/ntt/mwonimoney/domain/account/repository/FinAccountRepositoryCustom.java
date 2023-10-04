@@ -14,7 +14,7 @@ public interface FinAccountRepositoryCustom {
 	public Optional<FinAccount> findFinAccountByMemberAndTypeAndStatus(Long memberIdx, FinAccountType finAccountType,
 		FinAccountStatus finAccountStatus);
 
-	public FinAccount getFinAccountByUUID(String memberUUID, FinAccountType type);
+	Optional<FinAccountDto> findFinAccountDtoByMemberIdxAndType(Long memberIdx, FinAccountType type);
 
-	Optional<FinAccountDto> findFinAccountDtoByMemberIdx(Long memberIdx, FinAccountType type);
+	Optional<FinAccount> findFinAccountByMemberIdxAndType(Long memberIdx, FinAccountType type);
 }
