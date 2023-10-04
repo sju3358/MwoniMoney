@@ -4,9 +4,16 @@ import background from "../assests/image/backgroundv1.png";
 
 export const GlobalStyles = createGlobalStyle`
     ${reset}
-    @import url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+
+    @font-face {
+        font-family: 'Pretendard-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+        font-weight: 400;
+        font-style: normal;
+    }
+
     body{
-        font-family: "Pretendard";
+        font-family: 'Pretendard-Regular', sans-serif;
         position: absolute;
         margin:0;
         padding:0;
