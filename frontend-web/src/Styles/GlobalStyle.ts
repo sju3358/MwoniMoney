@@ -1,11 +1,13 @@
 import { createGlobalStyle } from "styled-components";
 import { reset } from "styled-reset";
 import background from "../assests/image/backgroundv1.png";
+import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 export const GlobalStyles = createGlobalStyle`
     ${reset}
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
     body{
-        // font-family: "Font_test"; 
+        font-family: "Pretendard";
         position: absolute;
         margin:0;
         padding:0;
