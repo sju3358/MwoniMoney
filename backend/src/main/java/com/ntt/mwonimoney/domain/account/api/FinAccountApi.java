@@ -84,16 +84,24 @@ public class FinAccountApi {
 
 		FinAccountType finAccountType = FinAccountType.valueOf(type);
 		FinAccount finAccount;
+		FinAccountResponse finAccountResponse = new FinAccountResponse();
+		log.info("finAccountType = {}", finAccountType);
 		//        // 2. 사용자의 계좌를 조회
 		if (finAccountType == FinAccountType.GENERAL) {
 			finAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, FinAccountType.GENERAL,
 				FinAccountStatus.ACTIVATE).orElseThrow();
-		} else {
+			log.info("finAccount1");
+
+		} else if (finAccountType == FinAccountType.SMALL){
 			finAccount = finAccountService.getFinAccountByMemberAndTypeAndStatus(memberIdx, FinAccountType.SMALL,
-				FinAccountStatus.ACTIVATE).orElseThrow();
+					FinAccountStatus.ACTIVATE).orElseThrow();
+			log.info("finAccount2 ");
+		} else {
+			finAccount = null;
+			log.info("finAccount3 ");
 		}
 
-		FinAccountResponse finAccountResponse = new FinAccountResponse();
+		log.info("finAccount 잔액 {}", finAccount.getRemain() );
 
 		finAccountResponse.setRemain(finAccount.getRemain());
 		finAccountResponse.setNumber(finAccount.getNumber());
@@ -223,6 +231,7 @@ public class FinAccountApi {
 			//				.finAcno("")
 			.status(FinAccountStatus.ACTIVATE)
 			.type(FinAccountType.SMALL)
+				.remain(0L)
 			.build();
 
 		finAccountService.save(finAccount, memberIdx);
