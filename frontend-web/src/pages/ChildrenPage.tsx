@@ -152,9 +152,9 @@ function ChildrenPage() {
           <p>No balance data available</p>
         )}
       </Container>
-      <Container height="50%" overflowy="hidden">
+      {/* <Container height="50%" overflowy="hidden">
         <Quiz />
-      </Container>
+      </Container> */}
       <Container height="30%">
         <ChatbotLink />
       </Container>
