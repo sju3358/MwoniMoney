@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const MainContainer = styled.div`
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -87,11 +87,12 @@ interface BalanceProps {
 }
 
 export const BalanceContainer = styled.div<BalanceProps>`
-  // border: 1px solid black;
+  // border: 1px solid blue;
   width: 100%;
   height: ${(props) => props.height};
   box-sizing: border-box;
   display: flex;
+  // margin-top: 3%;
 `;
 
 {
