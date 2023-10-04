@@ -12,4 +12,5 @@ import lombok.Setter;
 public class GetTransactionRequestDto {
     FinAccountTransactionListRequestType type;
     FinAccountType finAccountType;
+    String childUUID;
 }

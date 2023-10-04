@@ -5,7 +5,9 @@ import java.util.List;
 import com.ntt.mwonimoney.domain.account.model.dto.GetTransactionResponseDto;
 import com.ntt.mwonimoney.domain.account.model.dtoV2.GetTransactionRequestDto;
 import com.ntt.mwonimoney.domain.account.service.v2.FinAccountTransactionServiceImplV2;
+import com.ntt.mwonimoney.domain.member.entity.Member;
 import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
+import com.ntt.mwonimoney.domain.member.service.MemberService;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,14 +35,26 @@ public class TransactionApi {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final FinAccountTransactionServiceImplV2 finAccountTransactionServiceImplV2;
 	private final MemberAuthService memberAuthService;
-	@GetMapping("/accounts/transactions")
+	private final MemberService memberService;
+
+	@PostMapping("/accounts/transactions/parents")
 	public ResponseEntity getTransaction(
 			@RequestHeader("Authorization") String accessToken, @RequestBody GetTransactionRequestDto getTransactionRequestDto) {
 		//거래내역 불러오기
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
-		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
+		Long memberIdx = memberService.getMemberIdx(memberUUID);
 
- 		List<GetTransactionResponseDto> result = finAccountTransactionServiceImplV2.getTransaction(memberIdx, getTransactionRequestDto);
+		GetTransactionResponseDto result = finAccountTransactionServiceImplV2.getTransaction(memberIdx, getTransactionRequestDto);
+
+		return ResponseEntity.ok().body(result);
+	}
+
+	@PostMapping("/accounts/transactions/child")
+	public ResponseEntity getTransactionChild(
+			@RequestHeader("Authorization") String accessToken, @RequestBody GetTransactionRequestDto getTransactionRequestDto) {
+		Long memberIdx = memberService.getMemberIdx(getTransactionRequestDto.getChildUUID());
+
+		GetTransactionResponseDto result = finAccountTransactionServiceImplV2.getTransaction(memberIdx, getTransactionRequestDto);
 
 		return ResponseEntity.ok().body(result);
 	}

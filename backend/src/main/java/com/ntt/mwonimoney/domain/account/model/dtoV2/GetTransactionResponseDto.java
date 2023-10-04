@@ -5,18 +5,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @Builder
 public class GetTransactionResponseDto {
 
-    private int money;
+    private List<FinAccountTransactionDto2> FinAccountTransactionDto2;
 
-    private int balance;
+    private Long totalPlus;
 
-    private String memo;
-
-    private LocalDateTime time;
+    private Long totalMinus;
 
 }
