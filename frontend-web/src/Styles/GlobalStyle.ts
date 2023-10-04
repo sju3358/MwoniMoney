@@ -6,7 +6,7 @@ export const GlobalStyles = createGlobalStyle`
     ${reset}
     @import url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
     body{
-        font-family: "Pretendard-Regular";
+        font-family: Pretendard-Regular;
         position: absolute;
         margin:0;
         padding:0;
