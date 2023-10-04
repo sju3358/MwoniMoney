@@ -88,110 +88,116 @@ function LoanList({ data }: Props) {
   };
 
   return (
-    <Container
-      height="100%"
-      overflowy="hidden"
-      style={{ backgroundColor: "yellow", border: "1px solid red" }}
+    // <Container
+    //   width="90%"
+    //   height="100%"
+    //   overflowy="hidden"
+    //   style={{ backgroundColor: "yellow", border: "1px solid red" }}
+    // >
+    <WhiteBox1
+      style={{ borderRadius: "15px", marginBottom: "20px" }}
+      height="25%"
+      width="90%"
+      flexDirection="column"
     >
-      <WhiteBox1 height="100%" width="100%" flexDirection="column">
-        <Container height="40%">
-          <ListTitle>
-            <TextBox width="50%" marginL="0%" fontSize="1.1em" height="100%">
-              {data.content}
-            </TextBox>
-            <CategoryTag>
-              {data.status === "APPROVAL" && (
-                <Category backcolor="#fcdf92" width="90%" height="90%">
-                  <Text fontsize="0.9rem" marginL="0%" fontweight="600">
-                    대출중
-                  </Text>
-                </Category>
-              )}
-              {data.status === "REJECTION" && (
-                <Category backcolor="#FFA27E" width="90%" height="90%">
-                  <Text fontsize="0.9rem" marginL="0%" fontweight="600">
-                    거절
-                  </Text>
-                </Category>
-              )}
-              {data.status === "WATING" && (
-                <Category backcolor="#d1d1d1" width="90%" height="90%">
-                  <Text fontsize="0.9rem" marginL="0%" fontweight="600">
-                    제안대기
-                  </Text>
-                </Category>
-              )}
-              {data.status === "PAID" && (
-                <Category backcolor="#B9DEB3" width="90%" height="90%">
-                  <Text fontsize="0.9rem" marginL="0%" fontweight="600">
-                    다 갚음
-                  </Text>
-                </Category>
-              )}
-              {/* {data.status === 0 && (
+      <Container height="40%">
+        <ListTitle>
+          <TextBox width="50%" marginL="0%" fontSize="1.1em" height="100%">
+            {data.content}
+          </TextBox>
+          <CategoryTag>
+            {data.status === "APPROVAL" && (
+              <Category backcolor="#fcdf92" width="90%" height="90%">
+                <Text fontsize="0.9rem" marginL="0%" fontweight="600">
+                  대출중
+                </Text>
+              </Category>
+            )}
+            {data.status === "REJECTION" && (
+              <Category backcolor="#FFA27E" width="90%" height="90%">
+                <Text fontsize="0.9rem" marginL="0%" fontweight="600">
+                  거절
+                </Text>
+              </Category>
+            )}
+            {data.status === "WATING" && (
+              <Category backcolor="#d1d1d1" width="90%" height="90%">
+                <Text fontsize="0.9rem" marginL="0%" fontweight="600">
+                  제안대기
+                </Text>
+              </Category>
+            )}
+            {data.status === "PAID" && (
+              <Category backcolor="#B9DEB3" width="90%" height="90%">
+                <Text fontsize="0.9rem" marginL="0%" fontweight="600">
+                  다 갚음
+                </Text>
+              </Category>
+            )}
+            {/* {data.status === 0 && (
               <Category backcolor="#fcdf92" width="90%" height="90%">
                 <Text fontsize="0.9rem" marginL="0%" fontweight="700">
                   만료됨
                 </Text>
               </Category>
             )} */}
-            </CategoryTag>
-            <DeadLine>~ {dateFormat(data.deadline)}</DeadLine>
-          </ListTitle>
-        </Container>
-        <Container height="20%">
-          <ProgressBar amount={data.amount} balance={data.balance} />
-        </Container>
-        <Container height="40%">
-          {role === "PARENT" ? (
-            <></>
-          ) : (
-            <>
-              {data.status === "APPROVAL" && (
-                <>
-                  <Button
-                    content="돈 갚기"
-                    width="50%"
-                    fontS="1.2em"
-                    height="70%"
-                    click={handleOpen}
-                  />
-                  <ModalPayLoan
-                    loanidx={LoanIdx}
-                    balance={data.balance}
-                    useState_open={open}
-                    set_open={setOpen}
-                    modal_title="대출 갚기"
-                    modal_btn1="갚기"
-                    modal_btn2="취소"
-                    btn_justify="space-around"
-                  />
-                </>
-              )}
-              {data.status === "WATING" && (
-                <ListBtn>
-                  <Button
-                    content="수락"
-                    width="50%"
-                    fontS="1.2em"
-                    height="70%"
-                    click={handleAccept}
-                  />
-                  <Button
-                    backcolor="#f4f4f4"
-                    content="거절"
-                    width="50%"
-                    fontS="1.2em"
-                    height="70%"
-                    click={handleReject}
-                  />
-                </ListBtn>
-              )}
-            </>
-          )}
-        </Container>
-      </WhiteBox1>
-    </Container>
+          </CategoryTag>
+          <DeadLine>~ {dateFormat(data.deadline)}</DeadLine>
+        </ListTitle>
+      </Container>
+      <Container height="20%">
+        <ProgressBar amount={data.amount} balance={data.balance} />
+      </Container>
+      <Container height="40%">
+        {role === "PARENT" ? (
+          <></>
+        ) : (
+          <>
+            {data.status === "APPROVAL" && (
+              <>
+                <Button
+                  content="돈 갚기"
+                  width="50%"
+                  fontS="1.2em"
+                  height="70%"
+                  click={handleOpen}
+                />
+                <ModalPayLoan
+                  loanidx={LoanIdx}
+                  balance={data.balance}
+                  useState_open={open}
+                  set_open={setOpen}
+                  modal_title="대출 갚기"
+                  modal_btn1="갚기"
+                  modal_btn2="취소"
+                  btn_justify="space-around"
+                />
+              </>
+            )}
+            {data.status === "WATING" && (
+              <ListBtn>
+                <Button
+                  content="수락"
+                  width="50%"
+                  fontS="1.2em"
+                  height="70%"
+                  click={handleAccept}
+                />
+                <Button
+                  backcolor="#f4f4f4"
+                  content="거절"
+                  width="50%"
+                  fontS="1.2em"
+                  height="70%"
+                  click={handleReject}
+                />
+              </ListBtn>
+            )}
+          </>
+        )}
+      </Container>
+    </WhiteBox1>
+    // </Container>
   );
 }
 
