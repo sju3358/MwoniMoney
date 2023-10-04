@@ -3,6 +3,11 @@ package com.ntt.mwonimoney.domain.account.service.v2;
 import java.util.List;
 import java.util.Optional;
 
+import com.ntt.mwonimoney.domain.account.model.dtoV2.FinAccountV2Dto;
+import com.ntt.mwonimoney.domain.account.repository.FinAccountRepository;
+import com.ntt.mwonimoney.domain.member.entity.Member;
+import com.ntt.mwonimoney.domain.member.repository.MemberAuthRepository;
+import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
 import com.ntt.mwonimoney.domain.account.entity.FinAccount;
@@ -14,35 +19,27 @@ import lombok.RequiredArgsConstructor;
 
 @Service(value = "FinAccountServiceV2")
 @RequiredArgsConstructor
-public class FinAccountServiceImplV2 implements FinAccountService {
-	@Override
-	public List<FinAccount> getFinAccountList() {
-		return null;
-	}
+public class FinAccountServiceImplV2{
 
-	@Override
-	public Optional<FinAccount> getFinAccount(Long finAccountIdx) {
-		return Optional.empty();
-	}
+	private final FinAccountRepository finAccountRepository;
+	private final MemberRepository memberRepository;
+	private final MemberAuthRepository memberAuthRepository;
+	public FinAccountV2Dto getFinAccountByUUID(String memberUUID, String type) {
+		Long memberIdx = memberAuthRepository.findById(memberUUID).orElseThrow().getMemberIdx();
+		FinAccountType finAccountType = FinAccountType.valueOf(type);
 
-	@Override
-	public Optional<FinAccount> getFinAccount(Long memberIdx, FinAccountType finAccountType,
-		FinAccountStatus finAccountStatus) {
-		return Optional.empty();
-	}
+		FinAccount finAccount = finAccountRepository.getFinAccountByUUID(memberUUID, finAccountType);
 
-	@Override
-	public FinAccount openFinAccount(FinAccount finAccount) {
-		return null;
-	}
+		// builder 패턴을 사용하여 FinAccountV2Dto 객체 생성
+		FinAccountV2Dto finAccountV2Dto = FinAccountV2Dto.builder()
+				.idx(finAccount.getIdx())
+				.number(finAccount.getNumber())
+				.finAcno(finAccount.getFinAcno())
+				.status(finAccount.getStatus())
+				.type(finAccount.getType())
+				.remain(finAccount.getRemain())
+				.build();
 
-	@Override
-	public FinAccount openFinAccount(FinAccount newFinAccount, Long memberIdx) {
-		return null;
-	}
-
-	@Override
-	public Long getBalance(Long finAccountIdx) {
-		return null;
+		return finAccountV2Dto;
 	}
 }
