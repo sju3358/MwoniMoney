@@ -26,7 +26,16 @@ import {
 
 function Challenge() {
   //값 어떻게 가져올지 생각하기!!
-  const extramemberUuid_value = "d3a58e6c-14d7-4b3a-b58f-982aafc9836b";
+  let ChildUuid: string | null = null;
+  const childStateString: string | null = localStorage.getItem("childState");
+
+  if (childStateString !== null) {
+    const childState = JSON.parse(childStateString);
+    ChildUuid = childState.childDataState.uuid;
+    console.log(ChildUuid);
+  } else {
+    console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
+  }
 
   const [ChallengeData, setChallengeData] = useRecoilState(ChallengeStore);
   const [isProposeState, setisProposeState] =
@@ -48,9 +57,7 @@ function Challenge() {
 
   useEffect(() => {
     api
-      .get(
-        `/v1/challenges?status=${status_value}&extramemberUuid=${extramemberUuid_value}`
-      )
+      .get(`/v1/challenges?status=${status_value}&extramemberUuid=${ChildUuid}`)
       .then((response) => {
         // 성공적으로 요청이 완료된 경우 처리할 로직
         console.log("GET 요청 성공:", response.data);
