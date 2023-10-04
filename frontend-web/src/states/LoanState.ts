@@ -85,3 +85,9 @@ export const isRepayLoan = atom<boolean>({
   key: "is_repay_loan",
   default: false,
 });
+
+//총데이터 
+export const totalLoan = atom<number>({
+  key: "totalLoan",
+  default: 0,
+});
