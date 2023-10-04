@@ -16,5 +16,6 @@ public class ChildDetailDto extends MemberDto {
 	private String goalName;
 	private String imageFilename;
 	private int remain;
+	private int regularAllowance;
 
 }
