@@ -4,10 +4,11 @@ import { WhiteBox1 } from "../About/AboutWhilteContainer";
 import { TextBox } from "../About/AboutText";
 import { moneyFormat } from "../utils";
 
-function Card() {
-  const principal = 100000;
-  const interest = 129000;
-
+interface Props {
+  principal: number;
+  interest: number;
+}
+function Card({ principal, interest }: Props) {
   return (
     <Container height="15%" justifyContent="space-around">
       <WhiteBox1 width="45%" backcolor="#b79df5" flexDirection="column">

@@ -34,7 +34,7 @@ public class ChallengeService {
 	//계좌이체
 
 	// 부모
-	public MemberChallengeResponseDto writeChallenge(ChallengeRequestDto challengeRequestDto, Long parentIdx,
+	public MemberChallengeResponseDto writeChallenge(ChallengeRequestDto challengeRequestDto,
 		Long childIdx) {
 		//카테고리번호 조회
 		Challenge challenge = challengeRepository.findChallenge(challengeRequestDto.getTitle(),
@@ -67,7 +67,7 @@ public class ChallengeService {
 
 	//삭제
 	@Transactional(readOnly = false)
-	public void deleteChallenge(Long parentIdx, Long memberChallengeIdx) {
+	public void deleteChallenge(Long memberChallengeIdx) {
 		log.info("서비스 시작");
 		memberChallengeRepository.deleteById(memberChallengeIdx);
 		log.info("서비스 끝");
