@@ -71,9 +71,10 @@ function Balance() {
 
   const [curPage, setCurPage] = useState(0);
   const [isLastPage, setIsLastPage] = useState(false);
+
   useEffect(() => {
     api
-      .get(`/v1/balances?page=${curPage}&size=5`)
+      .get(`/v1/balances/end?page=${curPage}&size=5`)
       .then((response) => {
         console.log(response);
         const data: BalanceDataItem[] = response.data.content;
@@ -94,9 +95,34 @@ function Balance() {
       });
   }, [curPage]);
 
+  let timer: any;
+
   window.addEventListener("scroll", () => {
     console.log("스크롤이벤트");
-    if (isLastPage != true) setCurPage(curPage + 1);
+
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    timer = setTimeout(() => {
+      console.log("스크롤이벤트");
+      if (isLastPage != true) {
+        setCurPage(curPage + 1);
+      }
+    }, 500);
+  });
+
+  window.addEventListener("wheel", () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    timer = setTimeout(() => {
+      console.log("스크롤이벤트");
+      if (isLastPage != true) {
+        setCurPage(curPage + 1);
+      }
+    }, 500);
   });
 
   return (

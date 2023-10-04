@@ -1,9 +1,6 @@
 package com.ntt.mwonimoney.domain.game.api;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,16 +20,16 @@ public class BalanceGameApi {
 
 	private final BalanceGameService balanceGameService;
 
-	@GetMapping("/balances")
+	@GetMapping("/balances/end")
 	public ResponseEntity getBalanceGameList(BalanceGameListRequest request) {
 
-		Slice<BalanceGameDto> responseData = balanceGameService.getBalanceGames(request);
+		Slice<BalanceGameDto> responseData = balanceGameService.getEndBalanceGames(request);
 
 		return ResponseEntity.ok().body(responseData);
 	}
 
 	@GetMapping("/balances/{balanceIdx}")
-	public ResponseEntity getBalanceGameInfo(@PathVariable("balanceIdx") Long balanceGameIdx){
+	public ResponseEntity getBalanceGameInfo(@PathVariable("balanceIdx") Long balanceGameIdx) {
 
 		BalanceGameDto responseData = balanceGameService.getBalanceGameInfo(balanceGameIdx);
 
@@ -40,7 +37,7 @@ public class BalanceGameApi {
 	}
 
 	@GetMapping("/balances/today")
-	public ResponseEntity getBalanceGameToday(){
+	public ResponseEntity getBalanceGameToday() {
 
 		BalanceGameDto responseData = balanceGameService.getTodayBalanceGame();
 
