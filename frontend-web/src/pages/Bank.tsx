@@ -89,9 +89,6 @@ function Bank() {
   const page = 0;
   const size = 10;
 
-  //
-  const debt = 10000;
-
   const [totalData, setTotalData] = useState({
     avgInterest: 0,
     totalAmount: 0,
