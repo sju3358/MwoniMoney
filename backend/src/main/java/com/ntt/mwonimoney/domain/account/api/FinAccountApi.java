@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import com.ntt.mwonimoney.domain.account.entity.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,10 +29,6 @@ import com.ntt.mwonimoney.domain.account.api.request.NHApiRequestHeader;
 import com.ntt.mwonimoney.domain.account.api.response.FinAccountResponse;
 import com.ntt.mwonimoney.domain.account.api.response.NHApiCheckOpenFinAccountDirectResponse;
 import com.ntt.mwonimoney.domain.account.api.response.NHApiOpenFinAccountDirectResponse;
-import com.ntt.mwonimoney.domain.account.entity.FinAccount;
-import com.ntt.mwonimoney.domain.account.entity.FinAccountStatus;
-import com.ntt.mwonimoney.domain.account.entity.FinAccountTransaction;
-import com.ntt.mwonimoney.domain.account.entity.FinAccountType;
 import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionDto;
 import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionListRequest;
 import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionListRequestType;
@@ -202,10 +199,10 @@ public class FinAccountApi {
 
 		// 2. 계좌가 없는 경우 save
 		// 2-1. 예치금 관리용 가상계좌 발급
-		//		NHApiRequestHeader openVirtualAccountHeader = NHApiRequestHeader.builder()
-		//			.ApiNm("OpenVirtualAccount")
-		//			.IsTuno(nhApiService.istunoGenerator())
-		//			.build();
+		NHApiRequestHeader openVirtualAccountHeader = NHApiRequestHeader.builder()
+			.ApiNm("OpenVirtualAccount")
+			.IsTuno(nhApiService.istunoGenerator())
+			.build();
 		//
 		//		NHOpenVirtualAccountRequest openVirtualAccountRequest = NHOpenVirtualAccountRequest.builder()
 		//			.requestHeader(openVirtualAccountHeader)
@@ -318,11 +315,11 @@ public class FinAccountApi {
 
 	@PatchMapping("/accounts/{finAccountIdx}/transactions/{transactionIdx}")
 	public ResponseEntity updateTransaction(@PathVariable Long finAccountIdx, @PathVariable Long transactionIdx,
-		@RequestBody String memoToUpdate) {
+											@RequestBody UpdateTransactionRequest updateTransactionRequest) {
+
 		FinAccountTransaction finAccountTransactionToUpdate = finAccountTransactionService.findById(transactionIdx)
 			.orElseThrow();
-
-		finAccountTransactionService.changeMemo(finAccountTransactionToUpdate, memoToUpdate);
+		finAccountTransactionService.changeMemo(finAccountTransactionToUpdate, updateTransactionRequest.getMemoToUpdate());
 
 		return ResponseEntity.ok().build();
 	}
