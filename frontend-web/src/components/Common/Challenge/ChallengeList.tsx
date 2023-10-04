@@ -18,17 +18,18 @@ import { useNavigate } from "react-router-dom";
 //util
 import { dateFormat } from "../utils";
 import { moneyFormat } from "../utils";
+import { style } from "@mui/system";
 
 export const ChallengeListContainer = styled.div`
-  border: 1px solid red;
+  // border: 1px solid red;
   width: 100%;
-  // height: 55%;
-  height: 500px;
+  height: 90%;
+  // height: 500px;
   overflow-y: auto; /* 세로 스크롤만 생성 */
   overflow-x: hidden; /* 가로 스크롤 제거 */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
   margin-top: 10px;
 `;
@@ -36,25 +37,27 @@ export const ChallengeListContainer = styled.div`
 export const ListComponent = styled.div`
   // 그림자
   // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
-  border: 1px solid blue;
+  // border: 1px solid blue;
   background-color: #ffffff;
   width: 90%;
-  height: 500px;
-  // height: 30%;
-  border-top-left-radius: 4% 4%;
-  border-top-right-radius: 4% 4%;
-  border-bottom-left-radius: 4% 4%;
-  border-bottom-right-radius: 4% 4%;
-  margin-bottom: 10px;
+  height: 25%;
+  // border-top-left-radius: 4% 4%;
+  // border-top-right-radius: 4% 4%;
+  // border-bottom-left-radius: 4% 4%;
+  // border-bottom-right-radius: 4% 4%;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ListTitle = styled.div`
   // border: 1px solid black;
   width: 100%;
-  height: 70%;
+  height: 50%;
   display: flex;
   align-items: center;
-  margin-left: 3%;
 `;
 
 export const Title = styled.div`
@@ -78,7 +81,7 @@ export const CategoryTag = styled.div`
 export const DeadLine = styled.div`
   // border: 1px solid red;
   width: 35%;
-  height: 100%;
+  // height: 100%;
   display: flex;
   justify-content: end;
   align-items: center;
@@ -86,9 +89,9 @@ export const DeadLine = styled.div`
 `;
 
 export const ListBtn = styled.div`
-  border: 1px solid red;
+  // border: 1px solid red;
   width: 100%;
-  height: 50%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -103,8 +106,8 @@ const ChallengeBtn = styled.div<BtnProps>`
   // 그림자
   // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   width: 35%;
-  height: 70%;
-  border-radius: 5%;
+  height: 100%;
+  border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -112,7 +115,7 @@ const ChallengeBtn = styled.div<BtnProps>`
   background-color: ${(props) => props.backcolor};
   &:active {
     background-color: ${(props) => props.afbackcolor};
-    transform: translate(0em, 0.75em);
+    transform: translate(0em, 0.2em);
     &::before {
       box-shadow: 0 0 0 2px $pink-border, 0 0 $pink-shadow;
       transform: translate3d(0, 0, -1em);
@@ -123,6 +126,13 @@ const ChallengeBtn = styled.div<BtnProps>`
 interface Props {
   data: getChallenge;
 }
+const ListContainer = styled.div`
+  // border: 1px solid orange;
+  display: flex;
+  width: 90%;
+  height: 95%;
+  flex-direction: column;
+`;
 
 function ChallengeList({ data }: Props) {
   const navigate = useNavigate();
@@ -215,125 +225,136 @@ function ChallengeList({ data }: Props) {
 
   return (
     <ListComponent>
-      <ListTitle>
-        <Title>{data.memo}</Title>
-        <CategoryTag>
-          {data.status === 0 && (
-            <Category backcolor="#fcdf92" width="80%">
-              <Text fontsize="0.7rem" marginL="0%" fontweight="700">
-                진행중
-              </Text>
-            </Category>
-          )}
-          {data.status === 1 && (
-            <Category backcolor="#d1d1d1" width="80%">
-              <Text fontsize="0.7rem" marginL="0%" fontweight="700">
-                완료대기
-              </Text>
-            </Category>
-          )}
-          {data.status === 2 && (
-            <Category backcolor="#d1d1d1" width="80%">
-              <Text fontsize="0.7rem" marginL="0%" fontweight="700">
-                제안대기
-              </Text>
-            </Category>
-          )}
-          {data.status === 3 && (
-            <Category backcolor="#B9DEB3" width="80%">
-              <Text fontsize="0.7rem" marginL="0%" fontweight="700">
-                완료
-              </Text>
-            </Category>
-          )}
-          {data.status === 4 && (
-            <Category backcolor="#FFA27E" width="80%">
-              <Text fontsize="0.7rem" marginL="0%" fontweight="700">
-                거절
-              </Text>
-            </Category>
-          )}
-          {data.status === 5 && (
-            <Category backcolor="#656565" width="80%">
-              <Text
-                color="white"
-                fontsize="0.7rem"
-                marginL="0%"
-                fontweight="700"
-              >
-                만료
-              </Text>
-            </Category>
-          )}
-        </CategoryTag>
-        <DeadLine> ~ {dateFormat(data.endTime)}</DeadLine>
-      </ListTitle>
-      <Text fontsize="1rem" marginL="5%">
-        보상 : {moneyFormat(data.reward)}원
-      </Text>
-      {role === "PARENT" ? (
-        <>
-          {(data.status === 0 ||
-            data.status === 3 ||
-            data.status === 4 ||
-            data.status === 5) && (
+      <ListContainer>
+        <ListTitle style={{ justifyContent: "space-between" }}>
+          <Text fontsize="1.5rem" marginL="0%" fontweight="bold">
+            {data.memo}
+          </Text>
+          {/* <Title>{data.memo}</Title> */}
+          <CategoryTag style={{ height: "60%" }}>
+            {data.status === 0 && (
+              <Category backcolor="#fcdf92" width="80%">
+                <Text fontsize="0.9rem" marginL="0%" fontweight="700">
+                  진행중
+                </Text>
+              </Category>
+            )}
+            {data.status === 1 && (
+              <Category backcolor="#d1d1d1" width="80%">
+                <Text fontsize="0.9rem" marginL="0%" fontweight="700">
+                  완료대기
+                </Text>
+              </Category>
+            )}
+            {data.status === 2 && (
+              <Category backcolor="#d1d1d1" width="80%">
+                <Text fontsize="0.9rem" marginL="0%" fontweight="700">
+                  제안대기
+                </Text>
+              </Category>
+            )}
+            {data.status === 3 && (
+              <Category backcolor="#B9DEB3" width="80%">
+                <Text fontsize="0.9rem" marginL="0%" fontweight="700">
+                  완료
+                </Text>
+              </Category>
+            )}
+            {data.status === 4 && (
+              <Category backcolor="#FFA27E" width="80%">
+                <Text fontsize="0.9rem" marginL="0%" fontweight="700">
+                  거절
+                </Text>
+              </Category>
+            )}
+            {data.status === 5 && (
+              <Category backcolor="#656565" width="80%">
+                <Text
+                  color="white"
+                  fontsize="0.9rem"
+                  marginL="0%"
+                  fontweight="700"
+                >
+                  만료
+                </Text>
+              </Category>
+            )}
+          </CategoryTag>
+          <Text fontweight="700" fontsize="1rem">
+            ~ {dateFormat(data.endTime)}
+          </Text>
+        </ListTitle>
+        <Text
+          style={{ height: "20%" }}
+          fontweight="700"
+          fontsize="1rem"
+          marginL="0%"
+        >
+          보상 : {moneyFormat(data.reward)}원
+        </Text>
+        <div style={{ height: "20%" }}>
+          {role === "PARENT" ? (
+            <>
+              {(data.status === 0 ||
+                data.status === 3 ||
+                data.status === 4 ||
+                data.status === 5) && (
+                <ListBtn style={{ justifyContent: "flex-end" }}>
+                  <ChallengeBtn
+                    afbackcolor="#D9D9D9"
+                    backcolor="#f4f4f4"
+                    onClick={handleDelete}
+                  >
+                    삭제
+                  </ChallengeBtn>
+                </ListBtn>
+              )}
+              {data.status === 1 && (
+                <ListBtn style={{ justifyContent: "flex-end" }}>
+                  <ChallengeBtn
+                    afbackcolor="#C8A23B"
+                    backcolor="#fbd56e"
+                    onClick={handleComplete}
+                  >
+                    완료
+                  </ChallengeBtn>
+                </ListBtn>
+              )}
+              {data.status === 2 && (
+                <ListBtn>
+                  <ChallengeBtn
+                    afbackcolor="#C8A23B"
+                    backcolor="#fbd56e"
+                    onClick={handleAccept}
+                  >
+                    수락
+                  </ChallengeBtn>
+                  <ChallengeBtn
+                    afbackcolor="#D9D9D9"
+                    backcolor="#f4f4f4"
+                    onClick={handleReject}
+                  >
+                    거절
+                  </ChallengeBtn>
+                </ListBtn>
+              )}
+            </>
+          ) : (
+            //CHILD
             <ListBtn style={{ justifyContent: "flex-end" }}>
-              <ChallengeBtn
-                afbackcolor="#D9D9D9"
-                backcolor="#f4f4f4"
-                onClick={handleDelete}
-                style={{ margin: "0% 7% 0% 0%" }}
-              >
-                삭제
-              </ChallengeBtn>
+              {data.status === 0 && (
+                <ChallengeBtn
+                  afbackcolor="#fbd56e"
+                  backcolor="#fbd56e"
+                  onClick={handleComplete}
+                >
+                  완료
+                </ChallengeBtn>
+              )}
             </ListBtn>
           )}
-          {data.status === 1 && (
-            <ListBtn style={{ justifyContent: "flex-end" }}>
-              <ChallengeBtn
-                afbackcolor="#C8A23B"
-                backcolor="#fbd56e"
-                onClick={handleComplete}
-                style={{ margin: "0% 7% 0% 0%" }}
-              >
-                완료
-              </ChallengeBtn>
-            </ListBtn>
-          )}
-          {data.status === 2 && (
-            <ListBtn>
-              <ChallengeBtn
-                afbackcolor="#C8A23B"
-                backcolor="#fbd56e"
-                onClick={handleAccept}
-              >
-                수락
-              </ChallengeBtn>
-              <ChallengeBtn
-                afbackcolor="#D9D9D9"
-                backcolor="#f4f4f4"
-                onClick={handleReject}
-              >
-                거절
-              </ChallengeBtn>
-            </ListBtn>
-          )}
-        </>
-      ) : (
-        //CHILD
-        <ListBtn style={{ justifyContent: "flex-end" }}>
-          {data.status === 0 && (
-            <ChallengeBtn
-              afbackcolor="#fbd56e"
-              backcolor="#fbd56e"
-              onClick={handleComplete}
-              style={{ margin: "0% 7% 0% 0%" }}
-            >
-              완료
-            </ChallengeBtn>
-          )}
-        </ListBtn>
-      )}
+        </div>
+      </ListContainer>
     </ListComponent>
   );
 }

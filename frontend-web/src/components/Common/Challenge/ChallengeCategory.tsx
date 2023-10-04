@@ -52,10 +52,11 @@ export const CategoryBtn = styled.button<CategoryBtnProps>`
   border: ${(props) => (props.isActive ? "none" : "1px solid #BBBBBB")};
   width: ${(props) => props.width};
   height: 60%;
-  border-top-left-radius: 20% 40%;
-  border-top-right-radius: 20% 40%;
-  border-bottom-left-radius: 20% 40%;
-  border-bottom-right-radius: 20% 40%;
+  border-radius: 50px;
+  // border-top-left-radius: 20% 40%;
+  // border-top-right-radius: 20% 40%;
+  // border-bottom-left-radius: 20% 40%;
+  // border-bottom-right-radius: 20% 40%;
   background-color: ${(props) => (props.isActive ? props.backcolor : "white")};
   margin-right: 5%;
   display: flex;
