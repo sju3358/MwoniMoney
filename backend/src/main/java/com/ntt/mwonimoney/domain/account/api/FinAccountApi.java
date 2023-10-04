@@ -319,7 +319,8 @@ public class FinAccountApi {
 
 	@GetMapping("/accounts/transactions")
 	public ResponseEntity<List<FinAccountTransactionDto2>> getTransactionList(@RequestHeader("Authorization") String accessToken, @RequestBody FinAccountTransactionListRequest request) {
-		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+//		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+		String memberUUID = request.getMemberUUID();
 		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
 
 		FinAccountTransactionListRequestType type = request.getType();
