@@ -17,6 +17,7 @@ export interface userDataProps {
   socialId: string;
   memberRole: string;
   email: string;
+  creditscore : number;
 }
 
 export const userDataState = atom<userDataProps>({
@@ -32,6 +33,7 @@ export const userDataState = atom<userDataProps>({
     socialId: "",
     memberRole: "",
     email: "",
+    creditscore : 0,
   },
   effects_UNSTABLE: [persistAtom],
 });
@@ -54,6 +56,8 @@ export const userCheckState = atom<userCheckProps>({
 export interface userAccountProps {
   account: string;
   status: string;
+  remain: number;
+  startDate: string;
 }
 
 export const userAccountState = atom<userAccountProps>({
@@ -61,5 +65,7 @@ export const userAccountState = atom<userAccountProps>({
   default: {
     account: "",
     status: "UNKOWN",
+    remain: 0,
+    startDate: "0000-00-00",
   },
 });

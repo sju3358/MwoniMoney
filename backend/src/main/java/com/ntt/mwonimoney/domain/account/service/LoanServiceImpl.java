@@ -80,7 +80,7 @@ public class LoanServiceImpl {
 		loan.changeBalacne(amount);
 	}
 
-	public LoanTotalDto getSumAmount(Long memberIdx) {
+	public LoanTotalDto getLoanTotal(Long memberIdx) {
 		List<Loan> loans = loanRepository.findAllByBorrower(memberIdx);
 
 		Long totalAmount = 0L;

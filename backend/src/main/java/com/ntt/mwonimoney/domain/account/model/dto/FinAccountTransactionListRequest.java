@@ -9,6 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FinAccountTransactionListRequest {
+    String memberUUID;
     FinAccountTransactionListRequestType type;
     FinAccountType finAccountType;
 }

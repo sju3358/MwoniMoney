@@ -47,22 +47,23 @@ function LoanImpo({ title, content, isloan }: LoanImpoProps) {
 interface BankGraphProps {
   creditScore: any;
   color: string;
+  avgInterest: number;
 }
 
-function BankGraph({ creditScore, color }: BankGraphProps) {
+function BankGraph({ avgInterest, creditScore, color }: BankGraphProps) {
   const scroe = 50;
   return (
     <WhiteBox1 flexDirection="column">
       <TextBox height="20%">신용등급</TextBox>
       {/*그래프*/}
       <Container height="55%" overflowy="hidden">
-        <GaugeChart value={50} />
+        <GaugeChart value={creditScore} />
         {/* Pass creditScore as a prop */}
       </Container>
       {/**금리, 신용점수 */}
       <Container height="25%">
-        <LoanImpo title="대출금리" content={1} isloan={true} />
-        <LoanImpo title="신용점수" content={1000} isloan={false} />
+        <LoanImpo title="대출금리" content={avgInterest} isloan={true} />
+        <LoanImpo title="신용점수" content={creditScore} isloan={false} />
       </Container>
     </WhiteBox1>
   );
