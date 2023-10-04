@@ -16,22 +16,23 @@ import lombok.NoArgsConstructor;
 public class Guest extends Member {
 
 	@Builder
-	public Guest(int status, String name, String nickname, String birthday, SocialProvider socialProvider,
-		String socialId, String email) {
-		super(status, name, nickname, birthday, socialProvider, socialId, email, MemberRole.GUEST);
+	public Guest(int status, String uuid, String name, String nickname, String birthday, SocialProvider socialProvider,
+		String socialId, String email, String challengeAlarm, String balanceAlarm,
+		String smallAcountAlarm) {
+		super(status, uuid, name, nickname, birthday, socialProvider, socialId, email, MemberRole.GUEST, challengeAlarm,
+			balanceAlarm, smallAcountAlarm);
 	}
 
 	public GuestDto convertToDto() {
 		return GuestDto.builder()
-			.idx(this.getIdx())
 			.uuid(this.getUuid())
 			.status(this.getStatus())
 			.name(this.getName())
 			.nickname(this.getNickname())
 			.birthday(this.getBirthday())
 			.socialProvider(this.getSocialProvider())
-			.socialId(this.getSocialId())
 			.memberRole(this.getMemberRole())
+			.email(this.getEmail())
 			.build();
 	}
 }

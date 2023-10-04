@@ -1,5 +1,7 @@
 package com.ntt.mwonimoney.global.security.oauth.service;
 
+import java.util.Optional;
+
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -44,24 +46,28 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		OAuth2MemberInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(socialProvider, user.getAttributes());
 		log.info("before findMember : " + userInfo.getId());
 
-		Member savedMember = memberRepository.findMemberBySocialId(userInfo.getId())
-			.orElseGet(() -> createMember(userInfo, socialProvider));
+		Optional<Member> foundMember = (Optional<Member>)memberRepository.findMemberBySocialId(userInfo.getId());
+
+		Member savedMember = foundMember.orElseGet(() -> createMember(userInfo, socialProvider));
+
 		log.info("after findMember : " + savedMember.getSocialId());
 
 		return MemberPrincipal.create(savedMember, user.getAttributes(), savedMember.getMemberRole());
 	}
 
-	private Member createMember(OAuth2MemberInfo userInfo, SocialProvider socialProvider) {
-		Member member = Guest.builder()
+	private Guest createMember(OAuth2MemberInfo userInfo, SocialProvider socialProvider) {
+		Guest member = Guest.builder()
 			.socialId(userInfo.getId())
 			.name(userInfo.getName())
 			.nickname(userInfo.getName())
 			.birthday("0000-00-00")
 			.email(userInfo.getEmail())
 			.socialProvider(socialProvider)
-			.status((byte)1)
+			.status(0)
 			.build();
 
-		return memberRepository.saveAndFlush(member);
+		memberRepository.saveAndFlush(member);
+
+		return member;
 	}
 }

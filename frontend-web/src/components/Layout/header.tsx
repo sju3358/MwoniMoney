@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import headerLogo from "../../assests/image/HeaderLogo.png";
 import headerArrow from "../../assests/image/HeaderArrow.png";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const HeaderBody = styled.div`
   // border: 1px solid black;
@@ -13,6 +14,7 @@ const HeaderBody = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  z-index: 10000000;
 `;
 
 const HeaderLogo = styled.div`
@@ -25,7 +27,7 @@ const HeaderLogo = styled.div`
 `;
 
 const Logo = styled.div`
-  // border: 1px solid black;
+  border: 1px solid black;
   width: 70%;
   height: 80%;
   background-image: url(${headerLogo});
@@ -69,16 +71,17 @@ const HeaderArrowBox = styled.div`
 `;
 
 function Header() {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/");
+  };
   return (
     <HeaderBody>
       <HeaderLogo>
-        <Logo />
+        <Logo onClick={handleClick} />
       </HeaderLogo>
       <HeaderProfile>
         <HeaderNameBox name="자녀변수" />
-        <HeaderArrow>
-          <HeaderArrowBox />
-        </HeaderArrow>
       </HeaderProfile>
     </HeaderBody>
   );

@@ -36,11 +36,20 @@ public class FinAccountTransaction extends CommonEntity {
     private FinAccount finAccount;
 
     @Builder
-    public FinAccountTransaction(int money, int balance, String memo, LocalDateTime time){
+    public FinAccountTransaction(Long id, int money, int balance, String memo, LocalDateTime time){
+        this.id = id;
         this.money = money;
         this.balance = balance;
         this.memo = memo;
         this.time = time;
     }
 
+    public void addFinAccount(FinAccount finAccount){
+        this.finAccount = finAccount;
+        finAccount.addFinAccountTransaction(this);
+    }
+
+    public void changeMemo(String memo){
+        this.memo = memo;
+    }
 }

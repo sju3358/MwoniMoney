@@ -1,17 +1,22 @@
-import React from "react";
+//React
+import React, { useEffect } from "react";
 import styled from "styled-components";
-
+import { useNavigate } from "react-router-dom";
+//component
+import { Container } from "../components/Common/About/AboutContainer";
 import { WhiteBox } from "../components/Common/About/AboutWhilteContainer";
-import { Img, ImgBox } from "../components/Common/About/AboutEmogi";
-import { Text } from "../components/Common/About/AboutText";
-
-import RigthArrow from "../assests/image/main/RightArrow.png";
-import Item from "../assests/image/Item.png";
+import { EmogiBox, ImgBox } from "../components/Common/About/AboutEmogi";
+import { Text, TextBox } from "../components/Common/About/AboutText";
 import { Btn } from "../components/Common/About/AboutButton";
 import History from "../components/Common/History";
 import { DemoLiquid } from "../components/Common/About/AboutChart";
-
-import { useNavigate } from "react-router-dom";
+import { userAccountState, userDataState } from "../states/UserInfoState";
+import { useRecoilState } from "recoil";
+import { GoalCheckState, GoalMoneyState } from "../states/GoalMoneyState";
+import { DetailReport } from "../components/Common/GoalMoney/GoalMoneyStyle";
+//api
+import api from "../apis/Api";
+import api_ver2 from "../apis/ApiForMultiPart";
 
 const MainContainer = styled.div`
   // border: 1px solid black;
@@ -22,64 +27,121 @@ const MainContainer = styled.div`
   overflow-x: hidden; /* 가로 스크롤 제거 */
 `;
 
-interface ContainerProps {
-  width?: string | null;
-  height?: string | null;
-  display?: string | null;
-  justifycontent?: string | null;
-  alignitems?: string | null;
-  margin?: string | null;
-  padding?: string | null;
-  flexdirection?: string | null;
-}
-
-export const Container = styled.div<ContainerProps>`
-  // border: 1px solid black;
-  width: ${(props) => (props.width ? props.width : "100%")};
-  height: ${(props) => (props.height ? props.height : "80%")};
-  box-sizing: border-box;
-  display: ${(props) => (props.display ? props.display : "flex")};
-  justify-content: ${(props) =>
-    props.justifycontent ? props.justifycontent : ""};
-  align-items: ${(props) => (props.alignitems ? props.alignitems : "")};
-  margin: ${(props) => (props.margin ? props.margin : "0%")};
-  padding: ${(props) => (props.padding ? props.padding : "0%")};
-  flex-direction: ${(props) =>
-    props.flexdirection ? props.flexdirection : ""};
-`;
-
 function GoalMoney() {
-  const name = "기택";
-  const item = "게임기";
-  const money = "100,1000";
-  const date = "2023.09.13";
-  const rate = "0.1";
-  const num = 30;
-  const goalPoint = num / 100;
-
-  //number = 1 : 부모 , number = 0 : 자식
-  const role: number = 1;
-
+  const [userData, setUserData] = useRecoilState(userDataState);
+  const [goalMoney, setGoalMoney] = useRecoilState(GoalMoneyState);
+  const [goalCheck, setGoalCheck] = useRecoilState(GoalCheckState);
+  const [userAccout, setUserAccount] = useRecoilState(userAccountState);
+  //Navigation
   const navigate = useNavigate();
 
+  // get 받아서 다시 recoil에 넣기
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await api
+          .get("v1/members")
+          .then((response) => {
+            const receivedData = response.data;
+
+            setGoalMoney((prev) => ({
+              ...prev,
+              goalName: receivedData.smallAccount.goalName,
+              goalBalance: receivedData.smallAccount.goalBalance,
+              goalMoney: receivedData.smallAccount.goalMoney,
+              saveRatio: receivedData.smallAccount.saveRatio,
+              image: receivedData.smallAccount.imageFilename,
+            }));
+
+            setGoalCheck((prev) => ({
+              ...prev,
+              goalState: true,
+            }));
+
+            setUserData((prev) => ({
+              ...prev,
+              memberRole: receivedData.memberRole,
+            }));
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        // 계좌번호 get하기
+        await api_ver2
+          .get("v1/accounts", {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+            params: { type: "SMALL" },
+          })
+          .then((response2) => {
+            const receivedData2 = response2.data;
+            setUserAccount((prev) => ({
+              ...prev,
+              account: receivedData2.number,
+              status: receivedData2.status,
+              startDate: receivedData2.createdDay,
+              remain: receivedData2.remain,
+            }));
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  const deleteGoal = async () => {
+    try {
+      await api
+        .patch("v1/accounts/small-account")
+        .then(() => {
+          setGoalCheck((prev) => ({
+            ...prev,
+            goalState: false,
+          }));
+          alert("짜금통이 해지되었습니다.");
+          navigate("/");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const name = userData.name;
+  const role = userData.memberRole;
+  const item = goalMoney.goalName;
+  const money = goalMoney.goalMoney;
+  const date = userAccout.startDate;
+  const img =
+    // "https://mwonimoney.s3.ap-northeast-2.amazonaws.com/goal/" +
+    goalMoney.image;
+  const rate = goalMoney.saveRatio;
+  const goalBalance = userAccout.remain; //지금까지 모은 금액
+  const num = money / goalBalance; //지금까지 모은 달성률
+  const goalPoint = num / 100;
+  const check = goalCheck.goalState;
+
+  // 함수를 위한 변수s
+  const GoCreatGoal = () => {
+    if (role === "CHILD") {
+      navigate("/CreatGoal");
+    }
+  };
+  // 출력문
+  // console.log(goalMoney);
+  // console.log(goalCheck);
   return (
     <MainContainer>
-      <ImgBox justifycontent="flex-start">
-        <Img
-          onClick={() => navigate(-1)}
-          src={`${RigthArrow}`}
-          width="8%"
-          height="8%"
-          padding="0% 0% 0% 3%"
-        />
-      </ImgBox>
-      <Container
-        width="100%"
-        height="28%"
-        flexdirection="column"
-        justifycontent="center"
-        alignitems="center"
-      >
+      <Container height="5%" />
+      <Container height="28%">
         <WhiteBox
           width="50%"
           height="100%"
@@ -88,13 +150,53 @@ function GoalMoney() {
           justifycontent="center"
           alignitems="center"
         >
-          <ImgBox>
-            <Img src={`${Item}`} width="80%" height="80%" />
-          </ImgBox>
+          {goalCheck.goalState === false ? (
+            <Container
+              height="100%"
+              onClick={GoCreatGoal}
+              flexDirection="column"
+            >
+              {role === "PARENT" ? (
+                <Text textalign="center" fontweight="bolder" marginL="0%">
+                  아직 짜금통이 없어요
+                </Text>
+              ) : (
+                <Text textalign="center" fontweight="bolder" marginL="0%">
+                  짜금통 만들러 가기
+                </Text>
+              )}
+            </Container>
+          ) : (
+            <EmogiBox
+              backImg={`${img}`}
+              width="100%"
+              height="100%"
+              borderA="100px"
+            />
+          )}
         </WhiteBox>
       </Container>
-      <Container height="auto" flexdirection="column" padding="5% 0% 0% 5%">
-        {role === 1 ? (
+      <Container height="25%" flexDirection="column">
+        {goalCheck.goalState === false ? (
+          <>
+            <Text
+              fontsize="1.3rem"
+              fontweight="700"
+              marginL="0%"
+              textalign="center"
+            >
+              가지고 싶은 물건이 있다면
+            </Text>
+            <Text
+              fontsize="1.3rem"
+              fontweight="700"
+              marginL="0%"
+              textalign="center"
+            >
+              짜금통계좌를 개설해보세요.
+            </Text>
+          </>
+        ) : role === "PARENT" ? (
           <>
             <Text fontsize="1.5rem" fontweight="700" padding="0% 0% 5% 0%">
               {name}님이
@@ -117,64 +219,53 @@ function GoalMoney() {
           </>
         )}
       </Container>
-      <Container height="80%" justifycontent="center" alignitems="center">
+      <Container height="90%">
         <WhiteBox>
-          <Container
-            height="95%"
-            flexdirection="column"
-            justifycontent="space-between"
-          >
-            <Text fontsize="1.125rem" fontweight="700" padding="5% 0% 0% 5%">
-              세부내용
-            </Text>
-            <Container width="100%" height="100%">
+          <Container height="100%" flexDirection="column">
+            <Container height="10%">
+              <TextBox marginL="0%" justifyContent="center" height="100%">
+                세부내용
+              </TextBox>
+            </Container>
+            <Container width="100%" height="80%">
               {/* <Chart value={score} color="#e60eb0" /> */}
               <DemoLiquid percent={goalPoint} />
             </Container>
-            <Text fontsize="1.125rem" fontweight="700" padding="5% 0% 0% 5%">
-              현재까지 모은 금액
-            </Text>
-            <Text fontsize="1.125rem" padding="5% 0% 0% 5%">
-              {money}원
-            </Text>
-            <Text fontsize="1.125rem" fontweight="700" padding="5% 0% 0% 5%">
-              시작일
-            </Text>
-            <Text fontsize="1.125rem" padding="5% 0% 0% 5%">
-              {date}
-            </Text>
-            <Text fontsize="1.125rem" fontweight="700" padding="5% 0% 0% 5%">
-              이자율
-            </Text>
-            <Text fontsize="1.125rem" padding="5% 0% 0% 5%">
-              {rate}%
-            </Text>
+            {/* 현재 현황 보고서 */}
+            <Container height="40%" flexDirection="column">
+              <DetailReport
+                title="현재까지 모은 금액"
+                content={`${goalBalance} 원`}
+              />
+              <DetailReport title="시작일" content={`${date}`} />
+              <DetailReport title="이자율" content={`${rate} %`} />
+            </Container>
           </Container>
         </WhiteBox>
       </Container>
-      <Container height="60%" justifycontent="center" alignitems="center">
+      <Container height="40%">
         <WhiteBox>
-          <Text fontsize="1.125rem" fontweight="700" padding="5%">
-            저금내역
-          </Text>
-          <History />
-          <History />
+          <Container height="5%" />
+          <Container height="15%">
+            <TextBox height="100%">저금내역</TextBox>
+          </Container>
+          <Container height="80%" flexDirection="column" overflowy="auto">
+            <History />
+            <History />
+          </Container>
         </WhiteBox>
       </Container>
-      {role === 1 ? (
-        <>
-          <Container
-            height="10%"
-            justifycontent="center"
-            alignitems="flex-start"
+      {role === "CHILD" && check == true && (
+        <Container height="10%">
+          <Btn
+            backcolor="rgba(255, 255, 255, 0.50)"
+            width="90%"
+            height="70%"
+            onClick={deleteGoal}
           >
-            <Btn backcolor="rgba(255, 255, 255, 0.50)" width="90%" height="70%">
-              해제
-            </Btn>
-          </Container>
-        </>
-      ) : (
-        <></>
+            해제
+          </Btn>
+        </Container>
       )}
     </MainContainer>
   );

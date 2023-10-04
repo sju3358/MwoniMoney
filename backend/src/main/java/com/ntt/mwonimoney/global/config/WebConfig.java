@@ -12,4 +12,5 @@ public class WebConfig implements WebMvcConfigurer {
 			.addInterceptor(new WebInterceptor())
 			.addPathPatterns("/**");
 	}
+
 }

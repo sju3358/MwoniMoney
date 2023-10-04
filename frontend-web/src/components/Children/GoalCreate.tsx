@@ -1,142 +1,181 @@
-import React from "react";
-import styled from "styled-components";
-import { EmogiBox } from "../../components/Common/About/AboutEmogi";
+import React, { useState } from "react";
 import GoalCreate from "../../assests/image/GoalCreate.png";
-import { Text } from "../Common/About/AboutText";
+import { Text, TextBox } from "../Common/About/AboutText";
 import { Img, ImgBox } from "../../components/Common/About/AboutEmogi";
+import { Container } from "../Common/About/AboutContainer";
+import { json, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { userAccountState } from "../../states/UserInfoState";
+import { GoalMoneyState } from "../../states/GoalMoneyState";
+import { Btn, InputList } from "../Common/GoalMoney/GoalMoneyStyle";
+import GoalModal from "../../modal/GoalMoney/GoalModal";
+import { ModalState } from "../../states/ModalState";
+// import api from "../../apis/Api";
+import api_ver2 from "../../apis/ApiForMultiPart";
 
-const MainContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  overflow: auto;
-  overflow-x: hidden;
-  display: flex;
-  justify-content: center;
-`;
+export default function CreatGoal() {
+  const [inputValue, setInputValue] = useState("");
+  const [userAccount, setUserAccount] = useRecoilState(userAccountState);
+  const [goalMoney, setGoalMoney] = useRecoilState(GoalMoneyState);
+  const [open, setOpen] = useRecoilState(ModalState);
 
-const ModalContainer = styled.div`
-  width: 90%;
-  height: 100%;
-  padding: 0% 10% 0% 10%;
-  display: flex;
-  flex-direction: column;
-`;
-interface ContainerProps {
-  width?: string | null;
-  height?: string | null;
-  display?: string | null;
-  justifycontent?: string | null;
-  alignitems?: string | null;
-  margin?: string | null;
-  padding?: string | null;
-  flexdirection?: string | null;
-}
-
-export const Container = styled.div<ContainerProps>`
-  // border: 1px solid black;
-  width: ${(props) => (props.width ? props.width : "100%")};
-  height: ${(props) => (props.height ? props.height : "80%")};
-  box-sizing: border-box;
-  display: ${(props) => (props.display ? props.display : "flex")};
-  justify-content: ${(props) =>
-    props.justifycontent ? props.justifycontent : ""};
-  align-items: ${(props) => (props.alignitems ? props.alignitems : "")};
-  margin: ${(props) => (props.margin ? props.margin : "0%")};
-  padding: ${(props) => (props.padding ? props.padding : "0%")};
-  flex-direction: ${(props) =>
-    props.flexdirection ? props.flexdirection : ""};
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const InputInfo = styled.input`
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid #969696;
-  width: 95%;
-  height: 50px;
-  font-size: 1em;
-  outline: none;
-  margin: 5% 0% 5% 0%; /* 각 Input 사이의 간격을 조절할 수 있는 margin 설정 */
-  padding-left: 5%;
-`;
-
-interface BtnProps {
-  width?: string;
-  height?: string;
-  backcolor?: string;
-  fontSize?: string;
-}
-
-const Btn = styled.button<BtnProps>`
-  width: ${(props) => (props.width ? props.width : "100%")};
-  height: ${(props) => (props.height ? props.height : "50%")};
-  font-size: ${(props) => (props.fontSize ? props.fontSize : "1.7em")};
-  background-color: ${(props) =>
-    props.backcolor ? props.backcolor : "#fbd56e"};
-  border-radius: 10px;
-  font-weight: bold;
-  margin: 5%;
-  border: 0;
-  padding: 5px;
-`;
-
-export default function Main() {
+  const navigate = useNavigate();
   const rate = "0.1"; //은행이 정한 이자율
-  const account = "000-0000-00000"; //해지 시 입금 계좌
+  const account = userAccount.account; //해지 시 입금 계좌
+  const handleClose = () => {
+    navigate("/GoalMoney");
+  };
+
+  // 모달 열리는 클릭 이벤트
+  const hanldeModal = () => {
+    setOpen(true);
+  };
+
+  console.log(goalMoney);
+
+  // axios 날리는
+  const handleAxios = () => {
+    const jsonData = {
+      goalName: goalMoney.goalName,
+      goalMoney: goalMoney.goalMoney,
+      saveRatio: goalMoney.saveRatio,
+    };
+    // console.log(jsonData);
+    // console.log(goalMoney.goalName);
+
+    const formData = new FormData();
+    formData.append(
+      "info",
+      new Blob([JSON.stringify(jsonData)], { type: "application/json" })
+    );
+    // console.log(formData.get("info"));
+    // 이미지를 Recoil 상태에서 가져오기
+    const image = goalMoney.image;
+    // 이미지를 Blob으로 변환
+    const blob = new Blob([image], { type: "image/jpeg" });
+
+    // FormData에 추가
+    formData.append("image", blob, "img.jpg");
+
+    console.log(formData);
+    // console.log(formData.get("image"));
+
+    api_ver2
+      .post(
+        "v1/accounts/small-account",
+        formData
+        // headers: {
+        // "Contest-Type": "multipart/form-data",
+        // Authorization: "Bearer " + localStorage.getItem("token"),
+        // },
+      )
+      .then((response) => {
+        alert("짜금통을 생성했습니다.");
+        navigate("/GoalMoney");
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("짜금통 생성에 실패했습니다.");
+      });
+  };
+  // 출력문
+  // console.log(goalMoney);
+  // console.log(open);
+
   return (
-    <MainContainer>
-      <ModalContainer>
-        <Container
-          width="100%"
-          height="100%"
-          flexdirection="column"
-          alignitems="center"
-        >
-          <Text fontweight="700" fontsize="2rem" padding="5%">
+    <Container height="100vh" flexDirection="column">
+      <GoalModal goalModal_open={open} />
+      {/* 짜금통 타이틀 */}
+      <Container height="20%" flexDirection="column" overflowy="auto">
+        <Container height="77%" overflowy="hidden">
+          <TextBox
+            TextBox_align="end"
+            height="100%"
+            marginL="0%"
+            justifyContent="center"
+          >
             짜금통
-          </Text>
-          <Text fontsize="0.9rem">
+          </TextBox>
+        </Container>
+        <Container height="23%">
+          <Text fontsize="1rem">
             갖고 싶은 물건을 위해 열심히 저축해보아요!
           </Text>
         </Container>
-        <Container justifycontent="center">
-          <ImgBox>
-            <Img src={GoalCreate} />
-          </ImgBox>
+      </Container>
+      {/* 이미지 삽입 */}
+      <Container height="25%" overflowy="hidden">
+        <ImgBox>
+          <Img src={GoalCreate} onClick={hanldeModal} />
+        </ImgBox>
+      </Container>
+      {/* InputList : 입력받는 자리*/}
+      <Container height="50%" flexDirection="column">
+        <InputList
+          title="물건명"
+          placeholder="가지고 싶은 물건을 적어보세요."
+          type="text"
+          id="goalName"
+        />
+        <InputList
+          title="물건금액"
+          placeholder="물건금액"
+          type="number"
+          id="goalMoney"
+        />
+        <InputList
+          title="정기용돈 출금 비율"
+          placeholder="정기용돈에서 몇 % 저금할 건가요?"
+          type="number"
+          id="saveRatio"
+        />
+      </Container>
+      {/* 은행이자율과 입금계좌에 대한 정보칸 */}
+      <Container height="30%" flexDirection="column">
+        <Container height="50%">
+          <Container height="100%" width="60%">
+            <TextBox width="100%">은행 이자율</TextBox>
+          </Container>
+          <Container
+            width="50%"
+            height="100%"
+            justifyContent="center"
+            align="center"
+          >
+            <Text fontsize="1.4rem" color="#969696" marginL="0%">
+              {rate}%
+            </Text>
+          </Container>
         </Container>
-        <InputContainer>
-          {/* Input 태그를 8개 추가 */}
-          <Text>물건명</Text>
-          <InputInfo type="text" placeholder="물건명"></InputInfo>
-          <Text>물건금액</Text>
-          <InputInfo type="text" placeholder="물건금액"></InputInfo>
-          <Text>정기용돈 출금 비율</Text>
-          <InputInfo
-            type="text"
-            placeholder="정기용돈에서 몇 % 저금할지"
-          ></InputInfo>
-        </InputContainer>
-        <Container flexdirection="column" margin="2% 0% 0% 0%">
-          <Text>은행 이자율</Text>
-          <Text fontsize="1.2rem" color="#969696" margin="5% 0% 5% 0%">
-            {rate}%
-          </Text>
-          <Text>해지 시 입금 계좌</Text>
-          <Text fontsize="1.2rem" color="#969696" margin="5% 0% 5% 0%">
-            {account}
-          </Text>
+        <Container height="50%">
+          <Container height="100%" width="60%">
+            <TextBox width="100%">입금 계좌</TextBox>
+          </Container>
+          <Container
+            width="50%"
+            height="100%"
+            justifyContent="center"
+            align="center"
+          >
+            <Text fontsize="1.4rem" color="#969696" marginL="0%">
+              {account === "" ? (
+                <Text fontsize="1rem" marginL="0%" color="red">
+                  해지 시 입금받을 계좌를 등록해 주세요.
+                </Text>
+              ) : (
+                account
+              )}
+            </Text>
+          </Container>
         </Container>
-        <Container>
-          <Btn>생성</Btn>
-          <Btn backcolor="#ffffff">취소</Btn>
-        </Container>
-      </ModalContainer>
-    </MainContainer>
+      </Container>
+      {/* 버튼 : axios 작동함 */}
+      <Container height="10%" overflowy="hidden">
+        <Btn onClick={handleAxios}>생성</Btn>
+        <Btn backcolor="#ffffff" onClick={handleClose}>
+          취소
+        </Btn>
+      </Container>
+    </Container>
   );
 }

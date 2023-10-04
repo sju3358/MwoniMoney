@@ -6,8 +6,8 @@ public interface MemberAuthService {
 
 	MemberAuthDto getMemberAuthInfo(String memberUUID);
 
-	void Login(MemberAuthDto memberAuthDto);
+	void login(MemberAuthDto memberAuthDto);
 
-	void Logout(String memberUUID);
+	void logout(String memberUUID);
 
 }

@@ -12,9 +12,8 @@ import lombok.experimental.SuperBuilder;
 public class ChildDto extends MemberDto {
 
 	private int creditScore;
-
+	private int quizRewardRemain;
 	private int quizReward;
-
 	private SmallAccount smallAccount;
 
 }

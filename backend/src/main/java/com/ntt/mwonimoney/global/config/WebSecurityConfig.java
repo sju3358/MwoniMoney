@@ -2,7 +2,6 @@ package com.ntt.mwonimoney.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,7 +13,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.ntt.mwonimoney.domain.member.repository.MemberAuthRepository;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
+import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
 import com.ntt.mwonimoney.global.security.jwt.JwtAuthenticationFilter;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 import com.ntt.mwonimoney.global.security.jwt.TokenAccessDeniedHandler;
@@ -28,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 @Slf4j
 public class WebSecurityConfig {
@@ -36,10 +37,13 @@ public class WebSecurityConfig {
 	private final TokenAccessDeniedHandler tokenAccessDeniedHandler;
 	private final CustomOAuth2UserService customOAuth2UserService;
 	private final JwtTokenProvider jwtTokenProvider;
-	private final RedisTemplate<String, String> redisTemplate;
 	private final MemberRepository memberRepository;
+	private final MemberAuthRepository memberAuthRepository;
+	private final MemberAuthService memberAuthService;
 	private static final String[] GET_LIST = {"/api/oauth2/authorization", "/api/login/oauth2/code/**",
-		"/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**", "/api-docs/swagger-config"};
+		"/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**", "/api-docs/swagger-config", "/api/v1/balances/*/chatting"};
+
+	private static final String[] POST_LIST = {"/api/v1/balances/*/chatting"};
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -51,6 +55,8 @@ public class WebSecurityConfig {
 				.accessDeniedHandler(tokenAccessDeniedHandler))
 			.sessionManagement(c -> c.sessionCreationPolicy((SessionCreationPolicy.STATELESS)))
 			.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, GET_LIST)
+				.permitAll()
+				.requestMatchers(HttpMethod.POST, POST_LIST)
 				.permitAll()
 				.requestMatchers("/**")
 				.hasAnyRole("PARENT", "CHILD", "GUEST")
@@ -70,7 +76,7 @@ public class WebSecurityConfig {
 			.failureHandler(oAuth2AuthenticationFailureHandler())
 			.permitAll()
 			.and()
-			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate, memberRepository),
+			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, memberRepository, memberAuthRepository),
 				UsernamePasswordAuthenticationFilter.class);
 
 		return httpSecurity.build();
@@ -97,7 +103,7 @@ public class WebSecurityConfig {
 	@Bean
 	public OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
 		return new OAuth2AuthenticationSuccessHandler(oAuth2AuthorizationRequestBasedOnCookieRepository(),
-			jwtTokenProvider, redisTemplate, memberRepository);
+			jwtTokenProvider, memberRepository, memberAuthService);
 	}
 
 	@Bean
