@@ -27,6 +27,9 @@ export const Img = styled.img<ImgProps>`
   width: ${(props) => (props.width ? props.width : "100%")};
   height: ${(props) => (props.height ? props.height : "100%")};
   padding: ${(props) => (props.padding ? props.padding : "1%")};
+  // border: 1px solid red;
+  border-radius: 50%;
+  margin-top: 5%;
 `;
 
 interface ImgBoxProps {
