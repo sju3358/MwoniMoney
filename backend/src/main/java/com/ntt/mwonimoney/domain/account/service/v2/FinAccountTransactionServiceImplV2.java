@@ -1,10 +1,12 @@
 package com.ntt.mwonimoney.domain.account.service.v2;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionDto2;
 import org.springframework.stereotype.Service;
 
 import com.ntt.mwonimoney.domain.account.entity.FinAccount;
@@ -27,19 +29,47 @@ public class FinAccountTransactionServiceImplV2 {
 	private final FinAccountRepository finAccountRepository;
 	private final MemberRepository memberRepository;
 
-	public List<GetTransactionResponseDto> getTransaction(Long memberIdx,
-		GetTransactionRequestDto getTransactionRequestDto) {
+	public GetTransactionResponseDto getTransaction(Long memberIdx, GetTransactionRequestDto getTransactionRequestDto) {
+		List<FinAccountTransaction> result = finAccountTransactionRepository.getTransaction(memberIdx, getTransactionRequestDto);
 
-		List<FinAccountTransaction> result = finAccountTransactionRepository.getTransaction(memberIdx,
-			getTransactionRequestDto);
+		Long totalPlus = 0L;
+		Long totalMinus = 0L;
 
-		return result.stream().map(transaction -> GetTransactionResponseDto.builder()
-			.time(transaction.getTime())
-			.money(transaction.getMoney())
-			.balance(transaction.getBalance())
-			.memo(transaction.getMemo()).build()
-		).collect(Collectors.toList());
+		List<FinAccountTransactionDto2> responseList = new ArrayList<>();
+
+		for (FinAccountTransaction transaction : result) {
+			int money = transaction.getMoney();
+			int balance = transaction.getBalance();
+			String memo = transaction.getMemo();
+			LocalDateTime time = transaction.getTime();
+
+			if (money > 0) {
+				totalPlus += money;
+			} else if (money < 0) {
+				totalMinus += money;
+			}
+
+			FinAccountTransactionDto2 responseDto = FinAccountTransactionDto2.builder()
+					.money(money)
+					.balance(balance)
+					.memo(memo)
+					.time(time)
+					.build();
+
+			responseList.add(responseDto);
+		}
+
+		GetTransactionResponseDto result1 = GetTransactionResponseDto.builder()
+				.FinAccountTransactionDto2(responseList)
+				.totalMinus(totalMinus)
+				.totalPlus(totalPlus)
+				.build();
+
+
+		return result1;
 	}
+
+
 
 	public void makeTransaction(String fromUUID, String toUUID, int amount, String memo) {
 		makeTransaction(fromUUID, toUUID, amount, memo, FinAccountType.GENERAL, FinAccountType.GENERAL);
