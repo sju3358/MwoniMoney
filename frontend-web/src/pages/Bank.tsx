@@ -179,11 +179,14 @@ function Bank() {
         <CategoryTag content1="모두" content2="대출중" content3="제안대기" />
       </Container>
       {/* LoanModal */}
-      <Container height="100%" flexDirection="column">
+      {/* LoanList */}
+      <Container
+        height="60%"
+        flexDirection="column"
+        style={{ border: "1px solid blue" }}
+      >
         {role === "PARENT" ? <LoanAdd /> : <></>}
-        {/* <LoanList />
-        <LoanList />
-        <LoanList /> */}
+
         <>
           {LoanData.length > 0 ? (
             <>
@@ -192,7 +195,9 @@ function Bank() {
               ))}
             </>
           ) : (
-            <Text>현재 진행중인 대출이 없어요.</Text>
+            <Container height="80%">
+              <Text>현재 진행중인 대출이 없어요.</Text>
+            </Container>
           )}
         </>
       </Container>
