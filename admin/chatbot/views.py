@@ -41,7 +41,7 @@ def question(request):
     return Response(responseData, status = status.HTTP_200_OK)
 
 def get_response_from_query(vector_db, query, target):
-    docs = vector_db.similarity_search(query, 3)
+    docs = vector_db.similarity_search(query, 7)
     docs_page_content = " ".join([d.page_content for d in docs])
 
     chat = ChatOpenAI(model_name = "gpt-3.5-turbo-16k", temperature = 1)
