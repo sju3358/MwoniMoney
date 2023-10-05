@@ -3,6 +3,9 @@ package com.ntt.mwonimoney.domain.quiz.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ntt.mwonimoney.domain.account.service.v2.FinAccountTransactionServiceImplV2;
+import com.ntt.mwonimoney.domain.member.service.ChildService;
+import com.ntt.mwonimoney.domain.member.service.MemberService;
 import com.ntt.mwonimoney.domain.quiz.entity.QuizHistory;
 import com.ntt.mwonimoney.domain.quiz.model.dto.PostAnswerRequestDto;
 import com.ntt.mwonimoney.domain.quiz.model.dto.PostAnswerResponseDto;
@@ -23,6 +26,10 @@ public class QuizServiceImpl implements QuizService {
 
 	private final QuizRepository quizRepository;
 	private final QuizHistoryRepository quizHistoryRepository;
+	private final FinAccountTransactionServiceImplV2 finAccountTransactionServiceImplV2;
+	private final MemberService memberService;
+	private final ChildService childService;
+
 	public List<QuizDto> getRandom5QuizSet() {
 
 		List<Quiz> quizListEntity = quizRepository.findRandom5Quiz();
@@ -36,11 +43,18 @@ public class QuizServiceImpl implements QuizService {
 	}
 
 	@Override
-	public PostAnswerResponseDto postAnswer(Long memberIdx, PostAnswerRequestDto postAnswerRequestDto) {
+	public PostAnswerResponseDto postAnswer(String memberUUID, PostAnswerRequestDto postAnswerRequestDto) {
+
+		Long memberIdx = memberService.getMemberIdx(memberUUID);
 
 		QuizHistory quizHistory = quizHistoryRepository.postAnswer(memberIdx, postAnswerRequestDto);
 
 		quizHistoryRepository.save(quizHistory);
+
+
+
+//		finAccountTransactionServiceImplV2.makeTransaction(memberUUID, toUUID, amount, memo);
+
 
 		PostAnswerResponseDto result = PostAnswerResponseDto.builder()
 				.isAnswer(quizHistory.getIsAnswer())

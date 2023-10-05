@@ -55,7 +55,7 @@ public class TransactionApi {
 		Long memberIdx = memberService.getMemberIdx(getTransactionRequestDto.getChildUUID());
 
 		GetTransactionResponseDto result = finAccountTransactionServiceImplV2.getTransaction(memberIdx, getTransactionRequestDto);
-
+		
 		return ResponseEntity.ok().body(result);
 	}
 
