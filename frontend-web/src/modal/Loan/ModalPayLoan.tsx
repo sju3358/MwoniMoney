@@ -86,7 +86,7 @@ export const ModalBtn = styled.div<Btn>`
   background-color: ${(props) =>
     props.back_color ? props.back_color : "#fbd570"};
   border: ${(props) => (props.border ? props.border : "none")};
-  border-radius: 50px;
+  border-radius: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
