@@ -27,18 +27,27 @@ export const Img_no = styled.img<ImgProps>`
 `;
 
 interface ButtonProps {
-  backgroundcolor: string;
-  border: string;
+  backgroundcolor?: string;
+  border?: string;
+  afbackcolor?: string;
 }
 
 const Button = styled.button<ButtonProps>`
-  background-color: ${(props) => props.backgroundcolor};
-  border: ${(props) => props.border};
-  border-radius: 5px;
+  background-color: ${(props) =>
+    props.backgroundcolor ? props.backgroundcolor : "#fbd56e"};
+  border: ${(props) => (props.border ? props.border : "none")};
+  border-radius: 20px;
   margin: 2% 5% 0% 5%;
   padding: 2% 7% 2% 7%;
   font-weight: bold;
   font-size: 1em;
+  // box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  &:active {
+    background-color: ${(props) =>
+      props.afbackcolor ? props.afbackcolor : props.backgroundcolor};
+    transform: translate(0em, 0.2em);
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const Click = styled.div`
@@ -52,6 +61,10 @@ const Click = styled.div`
   left: 20%;
   display: flex;
   justify-content: center;
+  &:active {
+    background-color: #F3654A;
+    transform: translate(0em, 0.2em);
+  }
 `;
 
 interface BalanceCompoProps {
@@ -131,13 +144,15 @@ function BalanceCompo({
             backgroundcolor="#FBD56E"
             border="0"
             onClick={() => handleClick("LEFT")} // Call handleClick with "LEFT"
+            afbackcolor="#FFC107"
           >
             {buyText}
           </Button>
           <Button
-            backgroundcolor="F4F4F4"
-            border="0"
+            backgroundcolor="white"
             onClick={() => handleClick("RIGHT")} // Call handleClick with "RIGHT"
+            afbackcolor="#BBBBBB"
+            border="1px solid #BBBBBB"
           >
             {notBuyText}
           </Button>
