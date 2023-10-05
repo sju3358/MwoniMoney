@@ -163,7 +163,9 @@ function ChildrenPage() {
 
       <Container height="40%" flexDirection="column">
         <Container height="15%">
-          <TextBox height="50%">챌린지</TextBox>
+          <TextBox fontF="TheJamsil7Bold" height="50%">
+            챌린지
+          </TextBox>
         </Container>
         <Challenge ismain="Y" />
       </Container>

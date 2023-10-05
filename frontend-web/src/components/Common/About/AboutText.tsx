@@ -16,7 +16,7 @@ interface TextBoxProps {
 }
 
 export const TextBox = styled.div<TextBoxProps>`
-  border: 1px solid green;
+  // border: 1px solid green;
   box-sizing: border-box;
   display: flex;
   flex-direction: ${(props) =>
