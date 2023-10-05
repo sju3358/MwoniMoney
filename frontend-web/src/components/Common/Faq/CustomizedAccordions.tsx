@@ -84,6 +84,7 @@ export default function CustomizedAccordions() {
           <Typography>마이페이지 내에서 알림을 설정할 수 있습니다.</Typography>
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         expanded={expanded === "panel3"}
         onChange={handleChange("panel3")}
@@ -93,10 +94,30 @@ export default function CustomizedAccordions() {
             3. 개명을 했습니다. 회원정보 수정은 어떻게 진행하나요?
           </Typography>
         </AccordionSummary>
+
         <AccordionDetails>
           <Typography>
             고객센터에 문의주시면 2-3일의 처리기간 후 변경된 정보를 확인할실 수
             있습니다.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion
+        expanded={expanded === "panel4"}
+        onChange={handleChange("panel4")}
+      >
+        <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
+          <Typography>
+            4. 왜 정기용돈 보내는 날을 30일, 31일로 설정할 순 없나요?
+          </Typography>
+        </AccordionSummary>
+
+        <AccordionDetails>
+          <Typography>
+            매달 30일 31일은 서비스 점검일로 혹시나 있을 송금오류를 방지하고자
+            정기용돈을 막아두었습니다. 더 좋은 서비스를 제공하기 위해 노력하는
+            뭐니Money가 되겠습니다.
           </Typography>
         </AccordionDetails>
       </Accordion>

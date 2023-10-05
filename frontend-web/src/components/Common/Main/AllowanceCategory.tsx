@@ -14,20 +14,27 @@ const CategoryContainer = styled.div`
 `;
 
 const Category = styled.div`
-  background-color: #f4f4f4;
-  width: 30%;
+  background-color: white;
+  border: 1px solid #bbbbbb;
+  border-radius: 12px;
+  width: 28%;
   height: 80%;
   display: flex;
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
   font-size: 1em; /* 글자 크기 조절 */
   font-weight: bold;
+  &:active {
+    background-color: #bbbbbb;
+    transform: translate(0em, 0.2em);
+  }
 `;
 
 function AllowanceCategory() {
+  const handleChangeMoney = () => {};
   return (
     <CategoryContainer>
-      <Category>1만원</Category>
+      <Category onClick={handleChangeMoney}>1만원</Category>
       <Category>5만원</Category>
       <Category>10만원</Category>
     </CategoryContainer>
