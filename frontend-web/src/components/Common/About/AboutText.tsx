@@ -75,3 +75,28 @@ export const InputBox = styled.input<TextProps>`
   border: none;
   overflow: hidden;
 `;
+
+interface SpanProps {
+  color?: string;
+  fontfamily?: string;
+  fontsize?: string;
+  fontstyle?: string;
+  fontweight?: string;
+  margin?: string;
+  padding?: string;
+  textalign?: string;
+  border?: string | undefined;
+}
+export const SpanText = styled.span<SpanProps>`
+  // border: 1px solid purple;
+  color: ${(props) => (props.color ? props.color : "black")};
+  font-family: ${(props) =>
+    props.fontfamily ? props.fontfamily : "Pretendard"};
+  font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
+  font-style: ${(props) => (props.fontstyle ? props.fontstyle : "normal")};
+  font-weight: ${(props) => (props.fontweight ? props.fontweight : "600")};
+  margin: ${(props) => (props.margin ? props.margin : "0%")};
+  padding: ${(props) => (props.padding ? props.padding : "0%")};
+  text-align: ${(props) => (props.textalign ? props.textalign : "")};
+  overflow: hidden;
+`;
