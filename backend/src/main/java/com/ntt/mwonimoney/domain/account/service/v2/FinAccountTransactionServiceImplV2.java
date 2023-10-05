@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionListRequestType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ntt.mwonimoney.domain.account.entity.FinAccount;
 import com.ntt.mwonimoney.domain.account.entity.FinAccountTransaction;
 import com.ntt.mwonimoney.domain.account.entity.FinAccountType;
 import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionDto2;
+import com.ntt.mwonimoney.domain.account.model.dto.FinAccountTransactionListRequestType;
 import com.ntt.mwonimoney.domain.account.model.dto.GetTransactionResponseDto;
 import com.ntt.mwonimoney.domain.account.model.dtoV2.GetTransactionRequestDto;
 import com.ntt.mwonimoney.domain.account.repository.FinAccountRepository;
@@ -22,9 +23,12 @@ import com.ntt.mwonimoney.domain.member.model.vo.MemberRole;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service(value = "FinAccountTransactionServiceV2")
 @RequiredArgsConstructor
+@Slf4j
+@Transactional
 public class FinAccountTransactionServiceImplV2 {
 
 	private final FinAccountTransactionRepository finAccountTransactionRepository;
@@ -61,21 +65,18 @@ public class FinAccountTransactionServiceImplV2 {
 				.time(time)
 				.build();
 
-			if(finAccountTransactionListRequestType == FinAccountTransactionListRequestType.GENERAL) {
+			if (finAccountTransactionListRequestType == FinAccountTransactionListRequestType.GENERAL) {
 				responseList.add(responseDto);
 
-			}
-			else if(finAccountTransactionListRequestType == FinAccountTransactionListRequestType.INCOME) {
+			} else if (finAccountTransactionListRequestType == FinAccountTransactionListRequestType.INCOME) {
 				if (money > 0) {
 					responseList.add(responseDto);
 				}
-			}
-			else if(finAccountTransactionListRequestType == FinAccountTransactionListRequestType.OUTCOME) {
+			} else if (finAccountTransactionListRequestType == FinAccountTransactionListRequestType.OUTCOME) {
 				if (money < 0) {
 					responseList.add(responseDto);
 				}
-			}
-			else {
+			} else {
 				responseList.add(responseDto);
 			}
 		}
@@ -98,9 +99,10 @@ public class FinAccountTransactionServiceImplV2 {
 
 		Member fromMember = memberRepository.findMemberByUuid(fromUUID)
 			.orElseThrow(() -> new NoSuchElementException("송금자 멤버정보가 없습니다."));
+		log.info("송금자");
 		Member toMember = memberRepository.findMemberByUuid(toUUID)
 			.orElseThrow(() -> new NoSuchElementException("수신자 멤버정보가 없습니다."));
-
+		log.info("수신자");
 		FinAccount fromFinAccount = finAccountRepository
 			.findFinAccountByMemberIdxAndType(fromMember.getIdx(), fromType)
 			.orElseThrow(() -> new NoSuchElementException("송금자 멤버정보가 없습니다."));
@@ -131,8 +133,6 @@ public class FinAccountTransactionServiceImplV2 {
 
 		finAccountTransactionRepository.save(fromTransaction);
 		finAccountTransactionRepository.save(toTransaction);
-
-
 
 		if (toMember.getMemberRole() == MemberRole.CHILD
 			&& ((Child)toMember).getSmallAccount() != null
