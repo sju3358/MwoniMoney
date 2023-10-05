@@ -58,6 +58,7 @@ export const ListTitle = styled.div`
   height: 50%;
   display: flex;
   align-items: center;
+  white-space: nowrap;
 `;
 
 export const Title = styled.div`
@@ -100,6 +101,7 @@ export const ListBtn = styled.div`
 interface BtnProps {
   backcolor: string;
   afbackcolor: string;
+  border?: string;
 }
 
 const ChallengeBtn = styled.div<BtnProps>`
@@ -107,19 +109,16 @@ const ChallengeBtn = styled.div<BtnProps>`
   // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   width: 35%;
   height: 100%;
-  border-radius: 15px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: space-around;
   font-weight: bold;
+  border: ${(props) => (props.border ? props.border : "none")};
   background-color: ${(props) => props.backcolor};
   &:active {
     background-color: ${(props) => props.afbackcolor};
     transform: translate(0em, 0.2em);
-    &::before {
-      box-shadow: 0 0 0 2px $pink-border, 0 0 $pink-shadow;
-      transform: translate3d(0, 0, -1em);
-    }
   }
 }
 `;
@@ -301,8 +300,9 @@ function ChallengeList({ data }: Props) {
                 data.status === 5) && (
                 <ListBtn style={{ justifyContent: "flex-end" }}>
                   <ChallengeBtn
-                    afbackcolor="#D9D9D9"
-                    backcolor="#f4f4f4"
+                    afbackcolor="#BBBBBB"
+                    backcolor="white"
+                    border="1px solid #BBBBBB"
                     onClick={handleDelete}
                   >
                     삭제
@@ -312,7 +312,7 @@ function ChallengeList({ data }: Props) {
               {data.status === 1 && (
                 <ListBtn style={{ justifyContent: "flex-end" }}>
                   <ChallengeBtn
-                    afbackcolor="#C8A23B"
+                    afbackcolor="#FFC107"
                     backcolor="#fbd56e"
                     onClick={handleComplete}
                   >
@@ -323,15 +323,16 @@ function ChallengeList({ data }: Props) {
               {data.status === 2 && (
                 <ListBtn>
                   <ChallengeBtn
-                    afbackcolor="#C8A23B"
+                    afbackcolor="#FFC107"
                     backcolor="#fbd56e"
                     onClick={handleAccept}
                   >
                     수락
                   </ChallengeBtn>
                   <ChallengeBtn
-                    afbackcolor="#D9D9D9"
-                    backcolor="#f4f4f4"
+                    afbackcolor="#BBBBBB"
+                    backcolor="white"
+                    border="1px solid #BBBBBB"
                     onClick={handleReject}
                   >
                     거절
@@ -344,7 +345,7 @@ function ChallengeList({ data }: Props) {
             <ListBtn style={{ justifyContent: "flex-end" }}>
               {data.status === 0 && (
                 <ChallengeBtn
-                  afbackcolor="#fbd56e"
+                  afbackcolor="#FFC107"
                   backcolor="#fbd56e"
                   onClick={handleComplete}
                 >

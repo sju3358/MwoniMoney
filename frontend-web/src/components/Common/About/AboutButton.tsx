@@ -26,10 +26,6 @@ export const Btn = styled.div<BtnProps>`
     background-color: ${(props) =>
       props.afbackcolor ? props.afbackcolor : props.backcolor};
     transform: translate(0em, 0.2em);
-    &::before {
-      box-shadow: 0 0 0 2px $pink-border, 0 0 $pink-shadow;
-      transform: translate3d(0, 0, -1em);
-    }
   }
 `;
 
