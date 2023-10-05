@@ -2,6 +2,7 @@ package com.ntt.mwonimoney.domain.challenge.api;
 
 import java.util.List;
 
+import com.ntt.mwonimoney.domain.challenge.entity.MemberChallenge;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -79,17 +80,17 @@ public class ChallengeApi {
 
 	//부모 챌린지 완료
 	@PatchMapping("/challenges/{memberChallengeIdx}")
-	// public ResponseEntity CompleteChallenge(@PathVariable Long memberChallengeIdx) {
-	// 	challengeServiceImpl.completeChallenge(memberChallengeIdx);
-	//
-	// 	return ResponseEntity.ok().build();
-	// }
 	public ResponseEntity CompleteChallenge(@RequestHeader("Authorization") String accessToken,
-		@PathVariable Long memberChallengeIdx, @RequestBody CompleteChallengeRequestDto completeChallengeRequestDto) {
+											@PathVariable Long memberChallengeIdx, @RequestBody CompleteChallengeRequestDto completeChallengeRequestDto) {
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 		String toUUID = completeChallengeRequestDto.getToUUID();
 		challengeServiceImpl.completeChallenge(memberChallengeIdx);
-		int amount = memberChallengeRepository.findById(memberChallengeIdx).orElseThrow().getReward();
+		MemberChallenge memberChallenge = memberChallengeRepository.findById(memberChallengeIdx).orElseThrow();
+
+		int amount = memberChallenge.getReward();
+		toUUID = memberChallenge.getMember().getUuid();
+
+
 		String memo = "챌린지 보상";
 		log.info("toUUID : {}", toUUID);
 		log.info("시작");
