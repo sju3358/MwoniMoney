@@ -144,6 +144,18 @@ function ChallengeList({ data }: Props) {
   //챌린지 리스트의 버튼이 클릭되어있는지
   const [isButtonState, setIsButtonState] = useRecoilState(isButtonChallenge);
 
+  let ChildUuid: string | null = null;
+  const childStateString: string | null = localStorage.getItem("childState");
+
+  if (childStateString !== null) {
+    const childState = JSON.parse(childStateString);
+    ChildUuid = childState.childDataState.uuid;
+    console.log(ChildUuid);
+  } else {
+    console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
+  }
+
+  const patchData = { toUUID: ChildUuid };
   const handleAccept = () => {
     api
       .patch(`/v1/challenges/${memberChallengeIdx}/accept`)
@@ -176,7 +188,7 @@ function ChallengeList({ data }: Props) {
     if (role === "PARENT") {
       //부모 완료 api
       api
-        .patch(`/v1/challenges/${memberChallengeIdx}`)
+        .patch(`/v1/challenges/${memberChallengeIdx}`, patchData)
         .then((response) => {
           console.log("부모 챌린지 완료 요청 완료 처리");
           setIsButtonState(true);
