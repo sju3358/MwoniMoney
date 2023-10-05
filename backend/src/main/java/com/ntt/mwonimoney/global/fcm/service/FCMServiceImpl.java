@@ -10,7 +10,6 @@ import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import com.ntt.mwonimoney.domain.member.entity.Member;
-import com.ntt.mwonimoney.domain.member.entity.MemberAuth;
 import com.ntt.mwonimoney.domain.member.repository.MemberAuthRepository;
 import com.ntt.mwonimoney.domain.member.repository.MemberRepository;
 import com.ntt.mwonimoney.global.fcm.api.request.FCMTokenRequest;
@@ -32,9 +31,7 @@ public class FCMServiceImpl implements FCMService {
 	@Override
 	@Transactional
 	public void updateFCMToken(FCMTokenRequest fcmTokenRequest) {
-		MemberAuth memberAuth = memberAuthRepository.findById(fcmTokenRequest.getUserUUID())
-			.orElseThrow();
-		Member member = memberRepository.findMemberByIdx(memberAuth.getMemberIdx()).orElseThrow();
+		Member member = memberRepository.findMemberByUuid(fcmTokenRequest.getUserUUID()).orElseThrow();
 		member.updateFCMToken(fcmTokenRequest.getFirebaseToken());
 		memberRepository.save(member);
 	}
