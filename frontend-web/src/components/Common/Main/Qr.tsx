@@ -25,7 +25,7 @@ function Qr() {
         <Text>QR코드를 발급해주세요!</Text>
       </Container>
       <Container height="100%" width="35%">
-        <EmogiBox height="60%" width="65%" backImg={`${QrEmogi}`} />
+        <EmogiBox height="60%" width="80%" backImg={`${QrEmogi}`} />
       </Container>
     </WhiteBox1>
   );
