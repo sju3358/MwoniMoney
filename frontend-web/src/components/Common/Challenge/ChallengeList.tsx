@@ -34,13 +34,17 @@ export const ChallengeListContainer = styled.div`
   margin-top: 10px;
 `;
 
-export const ListComponent = styled.div`
+interface ListProps {
+  ismain?: string | null;
+}
+
+export const ListComponent = styled.div<ListProps>`
   // 그림자
   // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   // border: 1px solid blue;
   background-color: #ffffff;
   width: 90%;
-  height: 25%;
+  height: ${(props) => (props.ismain === "Y" ? "25%" : "25%")};
   // border-top-left-radius: 4% 4%;
   // border-top-right-radius: 4% 4%;
   // border-bottom-left-radius: 4% 4%;
@@ -124,6 +128,7 @@ const ChallengeBtn = styled.div<BtnProps>`
 `;
 interface Props {
   data: getChallenge;
+  ismain?: string | null;
 }
 const ListContainer = styled.div`
   // border: 1px solid orange;
@@ -133,7 +138,7 @@ const ListContainer = styled.div`
   flex-direction: column;
 `;
 
-function ChallengeList({ data }: Props) {
+function ChallengeList({ data, ismain }: Props) {
   const navigate = useNavigate();
   const [userData, setUserData] = useRecoilState(userDataState);
   const role = userData.memberRole;
@@ -235,7 +240,7 @@ function ChallengeList({ data }: Props) {
   };
 
   return (
-    <ListComponent>
+    <ListComponent ismain={ismain}>
       <ListContainer>
         <ListTitle style={{ justifyContent: "space-between" }}>
           <Text fontsize="1.5rem" marginL="0%" fontweight="bold">
@@ -291,7 +296,7 @@ function ChallengeList({ data }: Props) {
               </Category>
             )}
           </CategoryTag>
-          <Text fontweight="700" fontsize="1rem">
+          <Text fontweight="700" fontsize="1rem" marginL="0%">
             ~ {dateFormat(data.endTime)}
           </Text>
         </ListTitle>
