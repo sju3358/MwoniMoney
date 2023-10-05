@@ -2,6 +2,7 @@ package com.ntt.mwonimoney.domain.quiz.api;
 
 import java.util.List;
 
+import com.ntt.mwonimoney.domain.account.service.v2.FinAccountTransactionServiceImplV2;
 import com.ntt.mwonimoney.domain.member.service.MemberService;
 import com.ntt.mwonimoney.domain.quiz.model.dto.PostAnswerRequestDto;
 import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
@@ -24,6 +25,7 @@ public class QuizApi {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final MemberAuthService memberAuthService;
 	private final MemberService memberService;
+
 
 	//뱅크서비스
 
@@ -52,9 +54,9 @@ public class QuizApi {
 
 		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
 //		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
-		Long memberIdx = memberService.getMemberIdx(memberUUID);
+//		Long memberIdx = memberService.getMemberIdx(memberUUID);
 
-		PostAnswerResponseDto result = quizService.postAnswer(memberIdx, postAnswerRequestDto);
+		PostAnswerResponseDto result = quizService.postAnswer(memberUUID, postAnswerRequestDto);
 
 		return ResponseEntity.ok().body(result);
 	}

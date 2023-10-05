@@ -9,5 +9,5 @@ import com.ntt.mwonimoney.domain.quiz.model.dto.QuizDto;
 public interface QuizService {
 	List<QuizDto> getRandom5QuizSet();
 
-	PostAnswerResponseDto postAnswer(Long memberIdx, PostAnswerRequestDto postAnswerRequestDto);
+	PostAnswerResponseDto postAnswer(String memberUUID, PostAnswerRequestDto postAnswerRequestDto);
 }

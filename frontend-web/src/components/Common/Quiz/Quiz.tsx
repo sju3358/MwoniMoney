@@ -142,6 +142,7 @@ export default function Quiz() {
       try {
         const response = await getQuizes();
         setQuizes(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching quizes:", error);
       }
