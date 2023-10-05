@@ -46,7 +46,13 @@ function AddChild() {
     <>
       <button
         onClick={handleOpen}
-        style={{ width: "90%", height: "90%", border: "none", marginTop: "3%" }}
+        style={{
+          width: "90%",
+          height: "90%",
+          border: "none",
+          marginTop: "3%",
+          backgroundColor: "transparent",
+        }}
       >
         <EmogiBox backImg={AddChildImg} width="100%" height="100%" />
       </button>
