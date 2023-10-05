@@ -2,10 +2,13 @@ package com.ntt.mwonimoney.domain.quiz.api;
 
 import java.util.List;
 
+import com.ntt.mwonimoney.domain.member.service.MemberService;
+import com.ntt.mwonimoney.domain.quiz.model.dto.PostAnswerRequestDto;
+import com.ntt.mwonimoney.domain.member.service.MemberAuthService;
+import com.ntt.mwonimoney.domain.quiz.model.dto.PostAnswerResponseDto;
+import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ntt.mwonimoney.domain.quiz.model.dto.QuizDto;
 import com.ntt.mwonimoney.domain.quiz.service.QuizService;
@@ -18,6 +21,9 @@ import lombok.RequiredArgsConstructor;
 public class QuizApi {
 
 	private final QuizService quizService;
+	private final JwtTokenProvider jwtTokenProvider;
+	private final MemberAuthService memberAuthService;
+	private final MemberService memberService;
 
 	//뱅크서비스
 
@@ -40,4 +46,16 @@ public class QuizApi {
 	// 	for (GradeAnswerRequest request : requests)
 	// 		userSelectedAnswers.add(request.getSelectAnswer());
 	// }
+
+	@PostMapping("/quizes")
+	public ResponseEntity postAnswer(@RequestHeader("Authorization") String accessToken, @RequestBody PostAnswerRequestDto postAnswerRequestDto) {
+
+		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+//		Long memberIdx = memberAuthService.getMemberAuthInfo(memberUUID).getMemberIdx();
+		Long memberIdx = memberService.getMemberIdx(memberUUID);
+
+		PostAnswerResponseDto result = quizService.postAnswer(memberIdx, postAnswerRequestDto);
+
+		return ResponseEntity.ok().body(result);
+	}
 }
