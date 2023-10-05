@@ -55,7 +55,7 @@ export default function FooterChild() {
         <BottomNavigationAction
           onClick={GoHome}
           value="Main"
-          label="메인"
+          // label="메인"
           icon={
             <HomeIcon sx={{ width: "50%", height: "50%", color: "#969696" }} />
           }
@@ -69,7 +69,7 @@ export default function FooterChild() {
         <BottomNavigationAction
           onClick={GoMoneyPage}
           value="MoneyPage"
-          label="용돈기입장"
+          // label="용돈기입장"
           icon={
             <ReceiptLongIcon
               sx={{
@@ -90,7 +90,7 @@ export default function FooterChild() {
         <BottomNavigationAction
           onClick={GoChallenge}
           value="Challenge"
-          label="챌린지"
+          // label="챌린지"
           icon={
             <WorkspacePremiumIcon
               sx={{
@@ -111,7 +111,7 @@ export default function FooterChild() {
         <BottomNavigationAction
           onClick={GoBank}
           value="Bank"
-          label="은행"
+          // label="은행"
           icon={
             <AccountBalanceIcon
               sx={{
@@ -133,7 +133,7 @@ export default function FooterChild() {
         <BottomNavigationAction
           onClick={GoMyPage}
           value="Setting"
-          label="설정"
+          // label="설정"
           icon={
             <SettingsIcon
               sx={{

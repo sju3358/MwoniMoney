@@ -15,7 +15,12 @@ function LoanAdd() {
     <Container height="20%">
       <button
         onClick={handleOpen}
-        style={{ width: "90%", height: "100%", border: "none" }}
+        style={{
+          width: "90%",
+          height: "100%",
+          border: "none",
+          backgroundColor: "transparent",
+        }}
       >
         <EmogiBox backImg={AddChildImg} width="100%" height="100%" />
       </button>
