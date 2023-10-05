@@ -44,7 +44,6 @@ export const InputNumberInfo = styled.input`
   font-size: 1.3em;
   &::before {
     content: attr(placeholder);
-    font-family: Pretendard;
   }
   ,
   &:valid::before,
@@ -53,9 +52,6 @@ export const InputNumberInfo = styled.input`
     display: none;
   }
   ,
-  &::placeholder {
-    font-family: Pretendard;
-  }
 `;
 
 export const InputDateInfo = styled.input`
@@ -65,7 +61,6 @@ export const InputDateInfo = styled.input`
   height: 50%;
   &::before {
     content: attr(placeholder);
-    font-family: Pretendard;
     font-size: 1.3em;
     width: 100%;
     height: 100%;
@@ -77,7 +72,6 @@ export const InputDateInfo = styled.input`
   }
   ,
   &::placeholder {
-    font-family: Pretendard;
     font-weight: 700;
   }
 `;

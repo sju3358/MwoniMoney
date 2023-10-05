@@ -162,12 +162,16 @@ function Bank() {
     <MainContainer>
       {/* Title */}
       <Container height="20%" flexDirection="column">
-        <TextBox marginL="9%">현재 {childName}님은</TextBox>
+        <TextBox fontF="TheJamsil7Bold" marginL="9%">
+          현재 {childName}님은
+        </TextBox>
         {/* <TextBox>{moneyFormat(totalData.totalBalance)}만큼의</TextBox> */}
-        <TextBox marginL="9%">
+        <TextBox fontF="TheJamsil7Bold" marginL="9%">
           {moneyFormat(totalData.totalBalance)}만큼의
         </TextBox>
-        <TextBox marginL="9%">빚이 있어요!</TextBox>
+        <TextBox fontF="TheJamsil7Bold" marginL="9%">
+          빚이 있어요!
+        </TextBox>
       </Container>
 
       {/* GoGoalMoney */}

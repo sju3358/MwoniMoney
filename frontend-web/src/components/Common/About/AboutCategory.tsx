@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Text } from "./AboutText";
 
 //recoil
 import { useRecoilState } from "recoil";
@@ -114,7 +115,9 @@ function CategoryTag(props: CategoryTagProps) {
         isActive={activeButton === "GENERAL"}
         onClick={() => handleSearch("GENERAL")}
       >
-        {content1}
+        <Text marginL="0%" fontsize="0.85rem">
+          {content1}
+        </Text>
       </CategoryBtn>
       <CategoryBtn
         width="20%"
@@ -122,7 +125,9 @@ function CategoryTag(props: CategoryTagProps) {
         onClick={() => handleSearch("APPROVAL")}
         backcolor="#fcdf92"
       >
-        {content2}
+        <Text marginL="0%" fontsize="0.85rem">
+          {content2}
+        </Text>
       </CategoryBtn>
       <CategoryBtn
         width="20%"
@@ -130,7 +135,9 @@ function CategoryTag(props: CategoryTagProps) {
         onClick={() => handleSearch("WATING")}
         backcolor="#d1d1d1"
       >
-        {content3}
+        <Text marginL="0%" fontsize="0.85rem">
+          {content3}
+        </Text>
       </CategoryBtn>
     </CategoryContainer>
   );

@@ -34,7 +34,6 @@ export const TextMentBox = styled.div`
 `;
 interface TextProps {
   color?: string | null;
-  fontfamily?: string | null;
   fontsize?: string | null;
   fontstyle?: string | null;
   fontweight?: string | null;
@@ -44,7 +43,6 @@ interface TextProps {
 export const Text = styled.div<TextProps>`
   // border: 1px solid blue;
   color: ${(props) => (props.color ? props.color : "black")};
-  font-family: ${(props) => (props.fontfamily ? props.fontfamily : "Inter")};
   font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
   font-style: ${(props) => (props.fontstyle ? props.fontstyle : "normal")};
   font-weight: ${(props) => (props.fontweight ? props.fontweight : "400")};
