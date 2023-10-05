@@ -106,9 +106,6 @@ const ExampleBtn = styled.button`
   border: 0;
   width: 100%;
   background-color: transparent;
-  &:hover {
-    background-color: #fbd56e;
-  }
 `;
 
 interface ImgProps {
@@ -200,10 +197,10 @@ export default function Quiz() {
       </Container>
       <Container height="20%">
         <Container width="75%" height="100%" flexDirection="column">
-          <TextBox fontSize="0.8em" marginL="25%">
+          <TextBox fontSize="1.1em" marginL="25%">
             퀴즈를 맞추면
           </TextBox>
-          <TextBox fontSize="0.8em" marginL="25%">
+          <TextBox fontSize="1.1em" marginL="25%">
             용돈을 더 받을 수 있어요!
           </TextBox>
         </Container>

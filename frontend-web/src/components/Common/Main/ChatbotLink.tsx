@@ -20,7 +20,9 @@ function ChatbotLink() {
         align="start"
         justifyContent="start"
       >
-        <TextBox marginL="10%">챗봇에게 질문</TextBox>
+        <TextBox fontF="TheJamsil7Bold" marginL="10%">
+          챗봇에게 질문
+        </TextBox>
         <Text>모르는 것을 챗봇과 </Text>
         <Container height="3%" />
         <Text>함께 해결해보세요!</Text>

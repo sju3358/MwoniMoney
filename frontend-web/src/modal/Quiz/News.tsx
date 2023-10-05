@@ -9,7 +9,7 @@ const ModalContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
+  // border: 1px solid black;
   box-sizing: border-box;
 `;
 
@@ -24,7 +24,7 @@ const Container = styled.div<ContainerProps>`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  border: 1px solid black;
+  // border: 1px solid black;
   box-sizing: border-box;
 `;
 

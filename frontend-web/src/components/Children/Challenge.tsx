@@ -33,7 +33,7 @@ interface ChallengeProps {
   ismain: string;
 }
 
-function  Challenge(props: ChallengeProps) {
+function Challenge(props: ChallengeProps) {
   const navigate = useNavigate();
 
   const [ChallengeData, setChallengeData] = useRecoilState(ChallengeStore);
@@ -94,6 +94,8 @@ function  Challenge(props: ChallengeProps) {
       });
   }, [isProposeState, isButtonState, whichCategoryState]);
 
+  const ismain = props.ismain;
+
   return (
     <MainContainer>
       {props.ismain === "Y" ? (
@@ -118,6 +120,7 @@ function  Challenge(props: ChallengeProps) {
               <>
                 {ChallengeData.slice(0, 3).map((challenge) => (
                   <ChallengeList
+                    ismain={ismain}
                     data={challenge}
                     key={challenge.memberChallengeIdx}
                   />
@@ -137,6 +140,7 @@ function  Challenge(props: ChallengeProps) {
               <>
                 {ChallengeData.map((challenge) => (
                   <ChallengeList
+                    ismain=""
                     data={challenge}
                     key={challenge.memberChallengeIdx}
                   />
