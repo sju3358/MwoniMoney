@@ -12,6 +12,7 @@ interface TextBoxProps {
   marginT?: string | undefined;
   paddingB?: string | undefined;
   TextBox_align?: string | undefined;
+  fontF?: string;
 }
 
 export const TextBox = styled.div<TextBoxProps>`
@@ -32,11 +33,12 @@ export const TextBox = styled.div<TextBoxProps>`
   color: ${(props) => props.fontcolor};
   margin-top: ${(props) => props.marginT};
   padding: ${(props) => props.paddingB};
+  font-family: ${(props) => (props.fontF ? props.fontF : "TheJamsil5Bold")};
 `;
 
 interface TextProps {
   color?: string;
-  fontfamily?: string;
+
   fontsize?: string;
   fontstyle?: string;
   fontweight?: string;
@@ -45,26 +47,26 @@ interface TextProps {
   textalign?: string;
   marginL?: string | undefined;
   border?: string | undefined;
+  fontF?: string;
 }
 export const Text = styled.div<TextProps>`
   // border: 1px solid purple;
   color: ${(props) => (props.color ? props.color : "black")};
-  font-family: ${(props) =>
-    props.fontfamily ? props.fontfamily : "Pretendard"};
   font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
   font-style: ${(props) => (props.fontstyle ? props.fontstyle : "normal")};
-  font-weight: ${(props) => (props.fontweight ? props.fontweight : "400")};
+  font-weight: ${(props) => (props.fontweight ? props.fontweight : "700")};
   margin: ${(props) => (props.margin ? props.margin : "0%")};
   padding: ${(props) => (props.padding ? props.padding : "0%")};
   text-align: ${(props) => (props.textalign ? props.textalign : "")};
   margin-left: ${(props) => (props.marginL ? props.marginL : "7%")};
   overflow: hidden;
+  font-family: ${(props) => (props.fontF ? props.fontF : "TheJamsil5Bold")};
+  white-space: nowrap;
 `;
 
 export const InputBox = styled.input<TextProps>`
   // border: 1px solid orange;
   color: ${(props) => (props.color ? props.color : "black")};
-  font-family: ${(props) => (props.fontfamily ? props.fontfamily : "Inter")};
   font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
   font-style: ${(props) => (props.fontstyle ? props.fontstyle : "normal")};
   font-weight: ${(props) => (props.fontweight ? props.fontweight : "400")};
@@ -78,7 +80,6 @@ export const InputBox = styled.input<TextProps>`
 
 interface SpanProps {
   color?: string;
-  fontfamily?: string;
   fontsize?: string;
   fontstyle?: string;
   fontweight?: string;
@@ -86,12 +87,13 @@ interface SpanProps {
   padding?: string;
   textalign?: string;
   border?: string | undefined;
+  shadow?: string | undefined;
 }
 export const SpanText = styled.span<SpanProps>`
   // border: 1px solid purple;
+  text-shadow: ${(props) =>
+    props.shadow ? props.shadow : "2px 2px 2px #bbbbbb"};
   color: ${(props) => (props.color ? props.color : "black")};
-  font-family: ${(props) =>
-    props.fontfamily ? props.fontfamily : "Pretendard"};
   font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
   font-style: ${(props) => (props.fontstyle ? props.fontstyle : "normal")};
   font-weight: ${(props) => (props.fontweight ? props.fontweight : "600")};

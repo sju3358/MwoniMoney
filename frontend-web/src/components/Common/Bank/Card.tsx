@@ -15,7 +15,7 @@ function Card({ principal, interest }: Props) {
         <TextBox marginL="10%" fontSize="1.2em">
           원금
         </TextBox>
-        <TextBox marginL="10%" fontSize="1em" fontWeight="normal">
+        <TextBox marginL="10%" fontSize="1em">
           {moneyFormat(principal)}
         </TextBox>
       </WhiteBox1>
@@ -23,7 +23,7 @@ function Card({ principal, interest }: Props) {
         <TextBox marginL="10%" fontSize="1.2em">
           이자
         </TextBox>
-        <TextBox marginL="10%" fontSize="1em" fontWeight="normal">
+        <TextBox marginL="10%" fontSize="1em">
           {moneyFormat(interest)}
         </TextBox>
       </WhiteBox1>

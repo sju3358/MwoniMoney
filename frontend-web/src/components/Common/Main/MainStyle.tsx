@@ -16,12 +16,12 @@ export const MainContainer = styled.div`
 export const Text = styled.div`
   // border: 1px solid blue;
   color: #292929;
-  font-family: Inter;
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   margin-left: 5%;
+  margin-bottom: 3%;
 `;
 
 interface TextEmojiBoxProps {

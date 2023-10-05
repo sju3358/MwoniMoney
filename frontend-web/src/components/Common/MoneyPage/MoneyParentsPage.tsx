@@ -107,13 +107,28 @@ function MoneyParentsPage() {
       {/* 맨 상단 타이틀 */}
       <Container height="25%">
         <Container width="75%" height="100%" flexDirection="column">
-          <TextBox fontSize="1.4em" height="25%" marginL="10%">
+          <TextBox
+            fontF="TheJamsil7Bold"
+            fontSize="1.4em"
+            height="25%"
+            marginL="10%"
+          >
             {child}님이
           </TextBox>
-          <TextBox fontSize="1.4em" height="25%" marginL="10%">
+          <TextBox
+            fontF="TheJamsil7Bold"
+            fontSize="1.4em"
+            height="25%"
+            marginL="10%"
+          >
             현재까지 사용한 금액을
           </TextBox>
-          <TextBox fontSize="1.4em" height="25%" marginL="10%">
+          <TextBox
+            fontF="TheJamsil7Bold"
+            fontSize="1.4em"
+            height="25%"
+            marginL="10%"
+          >
             확인해보세요!
           </TextBox>
         </Container>
@@ -145,7 +160,9 @@ function MoneyParentsPage() {
         >
           {/* 제목 */}
           <Container height="20%">
-            <TextBox height="100%">지출내역</TextBox>
+            <TextBox fontF="TheJamsil7Bold" height="100%">
+              지출내역
+            </TextBox>
           </Container>
           {/* 카테고리 */}
           <Container height="20%" justifyContent="start">

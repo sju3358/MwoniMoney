@@ -33,13 +33,17 @@ function AboutCard(props: AboutCardProps) {
   return (
     <>
       <WhiteBox1 width={width} backcolor={backcolor1} flexDirection="column">
-        <TextBox fontSize={fontsize1}>{title1}</TextBox>
+        <TextBox fontF="TheJamsil7Bold" fontSize={fontsize1}>
+          {title1}
+        </TextBox>
         <TextBox fontSize={fontsize2} fontWeight={fontweight}>
           {content1}
         </TextBox>
       </WhiteBox1>
       <WhiteBox1 width={width} backcolor={backcolor2} flexDirection="column">
-        <TextBox fontSize={fontsize1}>{title2}</TextBox>
+        <TextBox fontF="TheJamsil7Bold" fontSize={fontsize1}>
+          {title2}
+        </TextBox>
         <TextBox fontSize={fontsize2} fontWeight={fontweight}>
           {content2}
         </TextBox>
