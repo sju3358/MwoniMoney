@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +35,7 @@ public class FinAccountTransactionServiceImplV2 {
 	private final FinAccountTransactionRepository finAccountTransactionRepository;
 	private final FinAccountRepository finAccountRepository;
 	private final MemberRepository memberRepository;
-
+	private final EntityManager em;
 	public GetTransactionResponseDto getTransaction(Long memberIdx, GetTransactionRequestDto getTransactionRequestDto) {
 		List<FinAccountTransaction> result = finAccountTransactionRepository.getTransaction(memberIdx,
 			getTransactionRequestDto);
@@ -96,7 +97,7 @@ public class FinAccountTransactionServiceImplV2 {
 
 	public void makeTransaction(String fromUUID, String toUUID, int amount, String memo, FinAccountType fromType,
 		FinAccountType toType) {
-
+		em.clear();
 		Member fromMember = memberRepository.findMemberByUuid(fromUUID)
 			.orElseThrow(() -> new NoSuchElementException("송금자 멤버정보가 없습니다."));
 		log.info("송금자");
@@ -124,7 +125,7 @@ public class FinAccountTransactionServiceImplV2 {
 
 		FinAccountTransaction toTransaction = FinAccountTransaction.builder()
 			.money(amount)
-			.balance(fromFinAccount.getRemain() + amount)
+			.balance(toFinAccount.getRemain() + amount)
 			.memo(memo)
 			.time(LocalDateTime.now())
 			.build();
