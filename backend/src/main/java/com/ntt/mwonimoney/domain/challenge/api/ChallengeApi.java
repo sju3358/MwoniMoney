@@ -90,7 +90,6 @@ public class ChallengeApi {
 		int amount = memberChallenge.getReward();
 		toUUID = memberChallenge.getMember().getUuid();
 
-
 		String memo = "챌린지 보상";
 		log.info("toUUID : {}", toUUID);
 		log.info("시작");

@@ -10,7 +10,7 @@ public interface CustomChildrenRepository {
 
 	Optional<Child> findChild(String parentUUID, String ChildUUID);
 
-	List<Parent> findParents(String parentUUID);
+	List<Parent> findParents(String childUUID);
 
 	List<Child> findChildren(String parentUUID);
 }
