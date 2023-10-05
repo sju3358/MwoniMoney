@@ -102,7 +102,7 @@ function ChildrenPage() {
   }, []);
   const userName = userData.name;
   const asset = moneyFormat(userAccount.remain);
-  const debt = "10,000원";
+  const debt = "0원";
   return (
     <MainContainer>
       {/* 메인 타이틀 컨테이너 */}
@@ -127,8 +127,8 @@ function ChildrenPage() {
             </TextBox>
           </Container>
         </Container>
-        <TextEmojiBox>
-          <Emoji url={`${Coin}`} width="80%" height="40%" />
+        <TextEmojiBox EmojiBox_justify="start">
+          <Emoji url={`${Coin}`} width="80%" height="50%" />
         </TextEmojiBox>
       </Container>
 
@@ -152,9 +152,9 @@ function ChildrenPage() {
           <p>No balance data available</p>
         )}
       </Container>
-      {/* <Container height="50%" overflowy="hidden">
+      <Container height="50%" overflowy="hidden">
         <Quiz />
-      </Container> */}
+      </Container>
       <Container height="30%">
         <ChatbotLink />
       </Container>
