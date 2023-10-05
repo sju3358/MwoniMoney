@@ -52,4 +52,5 @@ public class FinAccountTransaction extends CommonEntity {
     public void changeMemo(String memo){
         this.memo = memo;
     }
+
 }
