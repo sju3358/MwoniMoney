@@ -4,7 +4,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
+import com.ntt.mwonimoney.domain.member.repository.ChildRepository;
+import com.ntt.mwonimoney.domain.member.repository.ChildrenRepository;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +38,7 @@ public class FinAccountTransactionServiceImplV2 {
 	private final FinAccountTransactionRepository finAccountTransactionRepository;
 	private final FinAccountRepository finAccountRepository;
 	private final MemberRepository memberRepository;
+	private final ChildRepository childRepository;
 	private final EntityManager em;
 	public GetTransactionResponseDto getTransaction(Long memberIdx, GetTransactionRequestDto getTransactionRequestDto) {
 		List<FinAccountTransaction> result = finAccountTransactionRepository.getTransaction(memberIdx,
@@ -115,41 +119,76 @@ public class FinAccountTransactionServiceImplV2 {
 			throw new IllegalArgumentException("잔액이 부족합니다");
 
 		FinAccountTransaction fromTransaction = FinAccountTransaction.builder()
-			.money((-1) * amount)
-			.balance(fromFinAccount.getRemain() - amount)
-			.memo(memo)
-			.time(LocalDateTime.now())
-			.build();
+				.money((-1) * amount)
+				.balance(fromFinAccount.getRemain() - amount)
+				.memo(memo)
+				.time(LocalDateTime.now())
+				.build();
 		fromTransaction.addFinAccount(fromFinAccount);
 		fromFinAccount.changeRemain(fromFinAccount.getRemain() - amount);
 
 		FinAccountTransaction toTransaction = FinAccountTransaction.builder()
-			.money(amount)
-			.balance(toFinAccount.getRemain() + amount)
-			.memo(memo)
-			.time(LocalDateTime.now())
-			.build();
+				.money(amount)
+				.balance(toFinAccount.getRemain() + amount)
+				.memo(memo)
+				.time(LocalDateTime.now())
+				.build();
 		toTransaction.addFinAccount(toFinAccount);
-		toTransaction.changeMemo(toFinAccount.getFinAcno() + amount);
+		toFinAccount.changeRemain(toFinAccount.getRemain() + amount);
 
 		finAccountTransactionRepository.save(fromTransaction);
 		finAccountTransactionRepository.save(toTransaction);
 
-		if (toMember.getMemberRole() == MemberRole.CHILD
-			&& ((Child)toMember).getSmallAccount() != null
-			&& toType.equals(FinAccountType.GENERAL)) {
-
-			int saveRatio = ((Child)toMember).getSmallAccount().getSaveRatio();
-			int moneyToSaveInSmall = amount * saveRatio / 100;
-			makeTransaction(
-				toUUID,
-				toUUID,
-				moneyToSaveInSmall,
-				"[짜금통 자동 저금] : " + toTransaction.getMemo(),
-				FinAccountType.GENERAL,
-				FinAccountType.SMALL);
-		}
 
 	}
+
+
+	public void makeQuizTransaction(String fromUUID, String toUUID, String memo) {
+		em.clear();
+
+		Member fromMember = memberRepository.findMemberByUuid(fromUUID)
+				.orElseThrow(() -> new NoSuchElementException("송금자 멤버정보가 없습니다."));
+		log.info("송금자");
+//		Member toMember = memberRepository.findMemberByUuid(toUUID)
+//				.orElseThrow(() -> new NoSuchElementException("수신자 멤버정보가 없습니다."));
+		Child toMember = childRepository.findByUuid(toUUID).orElseThrow();
+		log.info("수신자");
+
+		int amount = toMember.getQuizReward();
+
+		FinAccount fromFinAccount = finAccountRepository
+				.findFinAccountByMemberIdxAndType(fromMember.getIdx(), FinAccountType.GENERAL)
+				.orElseThrow(() -> new NoSuchElementException("송금자 멤버정보가 없습니다."));
+		FinAccount toFinAccount = finAccountRepository
+				.findFinAccountByMemberIdxAndType(toMember.getIdx(), FinAccountType.GENERAL)
+				.orElseThrow(() -> new NoSuchElementException("수신자 멤버정보가 없습니다."));
+
+		if (fromFinAccount.getRemain() - amount < 0) {
+			throw new IllegalArgumentException("잔액이 부족합니다");
+		}
+
+		FinAccountTransaction fromTransaction = FinAccountTransaction.builder()
+				.money((-1) * amount)
+				.balance(fromFinAccount.getRemain() - amount)
+				.memo(memo)
+				.time(LocalDateTime.now())
+				.build();
+		fromTransaction.addFinAccount(fromFinAccount);
+		fromFinAccount.changeRemain(fromFinAccount.getRemain() - amount);
+
+		FinAccountTransaction toTransaction = FinAccountTransaction.builder()
+				.money(amount)
+				.balance(toFinAccount.getRemain() + amount)
+				.memo(memo)
+				.time(LocalDateTime.now())
+				.build();
+		toTransaction.addFinAccount(toFinAccount);
+		toFinAccount.changeRemain(toFinAccount.getRemain() + amount);
+
+		finAccountTransactionRepository.save(fromTransaction);
+		finAccountTransactionRepository.save(toTransaction);
+
+	}
+
 
 }
