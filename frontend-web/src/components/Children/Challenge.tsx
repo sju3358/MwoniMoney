@@ -33,7 +33,7 @@ interface ChallengeProps {
   ismain: string;
 }
 
-function Challenge(props: ChallengeProps) {
+function  Challenge(props: ChallengeProps) {
   const navigate = useNavigate();
 
   const [ChallengeData, setChallengeData] = useRecoilState(ChallengeStore);
