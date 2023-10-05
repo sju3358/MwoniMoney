@@ -21,8 +21,8 @@ public interface LoanRepository extends JpaRepository<Loan, Long>, LoanRepositor
 	Slice<Loan> findByStatus(LoanStatus status, Pageable pageable);
 
 	Slice<Loan> findByLender(Long lender, Pageable pageable);
-
-	@Query("SELECT l FROM Loan l WHERE l.status <> 'PAID' AND l.borrower = :borrower")
+	
+	@Query("SELECT l FROM Loan l WHERE l.status <> 'PAID' AND l.status <> 'REJECTION' AND l.borrower = :borrower")
 	Slice<Loan> findByBorrower(Long borrower, Pageable pageable);
 
 	List<Loan> findAllByBorrower(Long borrower);
