@@ -119,6 +119,7 @@ public class Child extends Member {
 			.creditScore(this.creditScore)
 			.quizRewardRemain(this.quizRewardRemain)
 			.quizReward(this.quizReward)
+			.regularAllowance(this.reqularAllowance)
 			.smallAccount(this.smallAccount == null ? null : smallAccount)
 			.challengeAlarm(this.getChallengeAlarm())
 			.balanceAlarm(this.getBalanceAlarm())
