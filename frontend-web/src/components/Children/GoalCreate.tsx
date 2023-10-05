@@ -26,6 +26,10 @@ export default function CreatGoal() {
   const account = userAccount.account; //해지 시 입금 계좌
   const ImgCheck = goalImg.ImgCheck;
   const handleClose = () => {
+    setgoalImg((res: any) => ({
+      ...res,
+      ImgCheck: false,
+    }));
     navigate("/GoalMoney");
   };
 
@@ -109,7 +113,7 @@ export default function CreatGoal() {
       {/* 이미지 삽입 */}
       <Container height="25%" overflowy="hidden">
         <ImgBox>
-          <Img src={ImgCheck ? GoalCreate : Item} onClick={hanldeModal} />
+          <Img src={ImgCheck ? Item : GoalCreate} onClick={hanldeModal} />
         </ImgBox>
       </Container>
       {/* InputList : 입력받는 자리*/}

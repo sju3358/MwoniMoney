@@ -9,7 +9,7 @@ const HeaderBody = styled.div`
   position: fixed;
   top: 0;
   width: 100vw;
-  height: 10vh;
+  height: 8vh;
   background-color: white;
   display: flex;
   justify-content: space-around;
@@ -27,7 +27,7 @@ const HeaderLogo = styled.div`
 `;
 
 const Logo = styled.div`
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 70%;
   height: 80%;
   background-image: url(${headerLogo});

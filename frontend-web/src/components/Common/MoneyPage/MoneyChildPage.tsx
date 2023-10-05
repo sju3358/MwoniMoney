@@ -177,9 +177,11 @@ function MoneyChildPage() {
                   emogi={transaction.money > 0 ? `${Income}` : `${Outcome}`}
                   expense_detail={transaction.memo}
                   expense_date={
-                    transaction.time ? formatDate(transaction.time) : "N/A"
+                    transaction.time
+                      ? formatDate(transaction.time)
+                      : "날짜 없음"
                   }
-                  spending={Math.abs(transaction.money)}
+                  spending={transaction.money}
                 />
               )
             )}

@@ -46,7 +46,12 @@ function ChallengeAdd() {
     <Container height="10%">
       <button
         onClick={handleOpen}
-        style={{ width: "90%", height: "90%", border: "none" }}
+        style={{
+          width: "90%",
+          height: "90%",
+          border: "none",
+          backgroundColor: "transparent",
+        }}
       >
         <EmogiBox backImg={AddChildImg} width="100%" height="100%" />
       </button>
