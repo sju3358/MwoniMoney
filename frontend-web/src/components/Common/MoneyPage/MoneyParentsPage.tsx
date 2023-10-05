@@ -118,7 +118,7 @@ function MoneyParentsPage() {
           </TextBox>
         </Container>
         <Container width="25%" height="100%">
-          <EmogiBox backImg={`${Chart}`} width="50%" height="50%" />
+          <EmogiBox backImg={`${Chart}`} width="70%" height="60%" />
         </Container>
       </Container>
       {/* 수입지출 카드 */}
