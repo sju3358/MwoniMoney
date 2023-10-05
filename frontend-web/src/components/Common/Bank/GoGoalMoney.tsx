@@ -34,9 +34,11 @@ function GoGoalMoney() {
       try {
         const response = await api.get("v1/members", {});
         const receivedData = response.data;
+        console.log(receivedData);
         setUserData((prev) => ({
           ...prev,
           name: receivedData.name,
+          memberRole: receivedData.memberRole,
         }));
       } catch (error) {
         console.error(error);
@@ -52,12 +54,14 @@ function GoGoalMoney() {
   if (childStateString !== null) {
     const childState = JSON.parse(childStateString);
     ChildName = childState.childDataState.name;
-    console.log(ChildName);
+    // console.log(ChildName);
   } else {
     console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
   }
 
+  const role = userData.memberRole;
   const childName = ChildName;
+  const userName = userData.name;
   const navigate = useNavigate();
   const GoGoalMoney = () => {
     navigate("/GoalMoney");
@@ -73,9 +77,26 @@ function GoGoalMoney() {
         <TextBox marginL="20%" fontSize="2em">
           짜금통
         </TextBox>
-        <TextBox marginL="20%" height="25%" fontSize="1em" fontWeight="normal">
-          이번주 {childName}님이
-        </TextBox>
+        {role === "CHILD" ? (
+          <TextBox
+            marginL="20%"
+            height="25%"
+            fontSize="1em"
+            fontWeight="normal"
+          >
+            이번주 {userName}님이
+          </TextBox>
+        ) : (
+          <TextBox
+            marginL="20%"
+            height="25%"
+            fontSize="1em"
+            fontWeight="normal"
+          >
+            이번주 {childName}님이
+          </TextBox>
+        )}
+
         <TextBox marginL="20%" height="25%" fontSize="1em" fontWeight="normal">
           모은 금액을 확인해보세요
         </TextBox>
