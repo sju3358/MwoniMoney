@@ -2,16 +2,14 @@ package com.ntt.mwonimoney.domain.quiz.entity;
 
 import com.ntt.mwonimoney.domain.quiz.model.dto.QuizDto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -41,6 +39,10 @@ public class Quiz {
 
 	@Column(name = "quiz_answer")
 	private int answer;
+
+//	@OneToMany
+//	@JoinColumn(name = "quiz_idx")
+//	private List<QuizHistory> quizHistoryList = new ArrayList<>();
 
 	public Quiz(Long id, String question, String option1, String option2, String option3, String option4,
 		int answer) {

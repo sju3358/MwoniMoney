@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import headerLogo from "../../assests/image/HeaderLogo.png";
+import LogoA from "./Logo.png";
 import headerArrow from "../../assests/image/HeaderArrow.png";
 import { Navigate, useNavigate } from "react-router-dom";
 
@@ -22,16 +22,17 @@ const HeaderLogo = styled.div`
   width: 90%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 `;
 
 const Logo = styled.div`
   // border: 1px solid black;
-  width: 70%;
-  height: 80%;
-  background-image: url(${headerLogo});
+  width: 60%;
+  height: 65%;
+  background-image: url(${LogoA});
   background-size: 100% 100%;
+  margin-left: 5%;
 `;
 
 interface profileBoxProps {
