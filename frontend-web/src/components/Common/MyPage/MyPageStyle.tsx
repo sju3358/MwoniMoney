@@ -42,7 +42,6 @@ export const TextMentBox = styled.div`
 export const Text = styled.div`
   // border: 1px solid blue;
   color: #292929;
-  font-family: Inter;
   font-size: 2em;
   font-style: normal;
   font-weight: 700;
