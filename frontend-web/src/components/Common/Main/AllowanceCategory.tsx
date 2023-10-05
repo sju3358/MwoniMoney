@@ -1,6 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
+import { useRecoilState } from "recoil";
+import {
+  allowanceMoney,
+  isAllowanceMoney,
+} from "../../../states/AllowanceState";
+import { specialMoney, isSpecialMoney } from "../../../states/AllowanceState";
+
 /*category 상자 */
 
 const CategoryContainer = styled.div`
@@ -29,14 +36,52 @@ const Category = styled.div`
     transform: translate(0em, 0.2em);
   }
 `;
+interface categoryProps {
+  al: string;
+}
 
-function AllowanceCategory() {
-  const handleChangeMoney = () => {};
+function AllowanceCategory({ al }: categoryProps) {
+  const [allowanceMoneyData, setAllowanceMoneyData] =
+    useRecoilState(allowanceMoney);
+  const [IsAllowanceMoney, setIsAllowanceMoney] =
+    useRecoilState(isAllowanceMoney);
+
+  const [SpecialMoneyData, setSpecialMoneyData] = useRecoilState(specialMoney);
+  const [IsSpecialMoney, setIsSpecialMoney] = useRecoilState(isSpecialMoney);
+
+  const handleChangeMoneyR = (data: number) => {
+    console.log("alR이 뭐야?", al);
+    setIsAllowanceMoney(true);
+    setAllowanceMoneyData(data);
+    console.log(allowanceMoneyData);
+  };
+
+  const handleChangeMoneyS = (data: number) => {
+    console.log("alS이 뭐야?", al);
+    setIsSpecialMoney(true);
+    setSpecialMoneyData(data);
+    console.log(SpecialMoneyData);
+  };
+
   return (
     <CategoryContainer>
-      <Category onClick={handleChangeMoney}>1만원</Category>
-      <Category>5만원</Category>
-      <Category>10만원</Category>
+      {al === "regular" ? (
+        <>
+          <Category onClick={() => handleChangeMoneyR(100000)}>1만원</Category>
+          <Category onClick={() => handleChangeMoneyR(500000)}>5만원</Category>
+          <Category onClick={() => handleChangeMoneyR(1000000)}>
+            10만원
+          </Category>
+        </>
+      ) : (
+        <>
+          <Category onClick={() => handleChangeMoneyS(100000)}>1만원</Category>
+          <Category onClick={() => handleChangeMoneyS(500000)}>5만원</Category>
+          <Category onClick={() => handleChangeMoneyS(1000000)}>
+            10만원
+          </Category>
+        </>
+      )}
     </CategoryContainer>
   );
 }
