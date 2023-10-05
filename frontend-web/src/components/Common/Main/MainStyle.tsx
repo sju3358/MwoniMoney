@@ -21,6 +21,7 @@ export const Text = styled.div`
   font-weight: 700;
   line-height: normal;
   margin-left: 5%;
+  margin-bottom: 3%;
 `;
 
 interface TextEmojiBoxProps {

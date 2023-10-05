@@ -112,7 +112,9 @@ function BalanceCompo({
     <Container height="100%" flexDirection="column">
       {showText && (
         <Container height="10%" overflowy="hidden">
-          <TextBox height="100%">오늘의 밸런스 게임</TextBox>
+          <TextBox fontF="TheJamsil7Bold" height="100%">
+            오늘의 밸런스 게임
+          </TextBox>
         </Container>
       )}
 

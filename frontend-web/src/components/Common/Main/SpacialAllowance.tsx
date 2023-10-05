@@ -120,7 +120,7 @@ function SpacialAllowance() {
         text1={"특별용돈"}
         text2={"퀴즈로 얻을 수 있는 용돈으로 얼마까지 줄까요?"}
       /> */}
-      <Text fontsize="1.8em" fontweight="bold" marginL="5%">
+      <Text fontsize="1.8em" fontF="TheJamsil7Bold" marginL="5%">
         특별용돈
       </Text>
       <Text style={{ margin: "5% 0% 0% 5%" }}>
