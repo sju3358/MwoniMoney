@@ -158,7 +158,7 @@ function Balance() {
             height: "5%",
             fontSize: "1.2em",
             backgroundColor: "#fbd56e",
-            borderRadius: "10px",
+            borderRadius: "20px",
             fontWeight: "bold",
             borderStyle: "none",
             margin: "auto",

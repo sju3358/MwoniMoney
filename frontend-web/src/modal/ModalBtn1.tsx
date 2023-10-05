@@ -70,10 +70,14 @@ export const ModalBtn = styled.div<ModalBtnProps>`
   height: ${(props) => (props.modalBtn_height ? props.modalBtn_height : "80%")};
   background-color: ${(props) =>
     props.modalBtn_color ? props.modalBtn_color : "#fbd570"};
-  border-radius: 10px;
+  border-radius: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
+  &:active {
+    background-color: #ffc107;
+    transform: translate(0em, 0.2em);
+  }
 `;
 
 interface ModalProps {
