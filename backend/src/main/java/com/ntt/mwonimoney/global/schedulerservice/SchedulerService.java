@@ -52,13 +52,17 @@ public class SchedulerService {
 		}
 	}
 
-	@Transactional
-	@Scheduled(cron = "0 0 6 1 * *")
+	@Scheduled(cron = "0 0 6 * * *")
 	public void addAllowance() {
 		List<Member> childList = memberRepository.findAllByMemberRole(MemberRole.CHILD);
 
+		int now = LocalDate.now().getDayOfMonth();
 		for (Member child : childList) {
-			int reqularAllowance = ((Child)child).getReqularAllowance();
+			if (((Child)child).getRegularAllowanceDay() != now)
+				continue;
+
+			int reqularAllowance = ((Child)child).getRegularAllowance();
+
 			Optional<FinAccount> finAccount = finAccountRepository.findFinAccountByMemberIdxAndType(child.getIdx(),
 				FinAccountType.GENERAL);
 

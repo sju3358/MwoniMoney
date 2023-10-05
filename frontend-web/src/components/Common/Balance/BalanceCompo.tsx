@@ -62,7 +62,7 @@ const Click = styled.div`
   display: flex;
   justify-content: center;
   &:active {
-    background-color: #F3654A;
+    background-color: #f3654a;
     transform: translate(0em, 0.2em);
   }
 `;
@@ -122,9 +122,9 @@ function BalanceCompo({
         flexDirection="column"
         onClick={navigateClick}
       >
-        <Container height="10%" justifyContent="end"></Container>
+        <Container height="10%" justifyContent="end" />
         <Container height="53%" flexDirection="column">
-          <EmogiBox backImg={`${Newspaper}`} width="45%" height="100%" />
+          <EmogiBox backImg={`${Newspaper}`} width="50%" height="100%" />
           <Click>
             <News news={news} />
           </Click>

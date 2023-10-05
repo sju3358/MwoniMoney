@@ -1,5 +1,5 @@
 //React
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 //component
@@ -27,15 +27,30 @@ const MainContainer = styled.div`
   overflow-x: hidden; /* 가로 스크롤 제거 */
 `;
 
+interface TransactionType {
+  id: number;
+  money: number;
+  balance: number;
+  memo: string;
+  time: string;
+}
+// React 및 기타 import 문은 유지하도록 하겠습니다.
+
 function GoalChild() {
+  interface AccountType {
+    number: string | null;
+    remain: number;
+    createdDay: string;
+    status: string;
+    finAccountTransaction: TransactionType[];
+  }
+
   const [userData, setUserData] = useRecoilState(userDataState);
   const [goalMoney, setGoalMoney] = useRecoilState(GoalMoneyState);
   const [goalCheck, setGoalCheck] = useRecoilState(GoalCheckState);
-  const [userAccout, setUserAccount] = useRecoilState(userAccountState);
-  //Navigation
+  const [accountData, setAccountData] = useState<AccountType | null>(null);
   const navigate = useNavigate();
 
-  // get 받아서 다시 recoil에 넣기
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -67,7 +82,6 @@ function GoalChild() {
             console.log(error);
           });
 
-        // 계좌번호 get하기
         await api_ver2
           .get("v1/accounts", {
             headers: {
@@ -77,13 +91,14 @@ function GoalChild() {
           })
           .then((response2) => {
             const receivedData2 = response2.data;
-            setUserAccount((prev) => ({
-              ...prev,
-              account: receivedData2.number,
-              status: receivedData2.status,
-              startDate: receivedData2.createdDay,
+
+            setAccountData({
+              number: receivedData2.number,
               remain: receivedData2.remain,
-            }));
+              createdDay: receivedData2.createdDay,
+              status: receivedData2.status,
+              finAccountTransaction: receivedData2.finAccountTransaction,
+            });
           })
           .catch((error) => {
             console.log(error);
@@ -123,26 +138,21 @@ function GoalChild() {
   const name = userData.name;
   const role = userData.memberRole;
   const item = goalMoney.goalName;
-  const money = goalMoney.goalMoney; // 모아야하는 금액
-  const date = userAccout.startDate;
-  const img =
-    // "https://mwonimoney.s3.ap-northeast-2.amazonaws.com/goal/" +
-    goalMoney.image;
+  const money = goalMoney.goalMoney;
+  const date = accountData?.createdDay || "";
+  const img = goalMoney.image;
   const rate = goalMoney.saveRatio;
-  const goalBalance = userAccout.remain; //잔액
-  const num = money - goalBalance; //지금까지 모은 달성률
+  const goalBalance = accountData?.remain || 0;
+  const num = money - goalBalance;
   const goalPoint = goalBalance / money;
   const check = goalCheck.goalState;
 
-  // 함수를 위한 변수s
   const GoCreatGoal = () => {
     if (role === "CHILD") {
       navigate("/CreatGoal");
     }
   };
-  // 출력문
-  // console.log(goalMoney);
-  console.log(goalCheck);
+
   return (
     <MainContainer>
       <Container height="5%" />
@@ -215,10 +225,8 @@ function GoalChild() {
               </TextBox>
             </Container>
             <Container width="100%" height="80%">
-              {/* <Chart value={score} color="#e60eb0" /> */}
               <DemoLiquid percent={goalPoint} />
             </Container>
-            {/* 현재 현황 보고서 */}
             <Container height="40%" flexDirection="column">
               <DetailReport
                 title="현재까지 모은 금액"
@@ -237,8 +245,15 @@ function GoalChild() {
             <TextBox height="100%">저금내역</TextBox>
           </Container>
           <Container height="80%" flexDirection="column" overflowy="auto">
-            <History />
-            <History />
+            {accountData?.finAccountTransaction.map(
+              (transaction: TransactionType, index: number) => (
+                <History
+                  key={index}
+                  money={transaction.money}
+                  time={new Date(transaction.time).toLocaleDateString()}
+                />
+              )
+            )}
           </Container>
         </WhiteBox>
       </Container>

@@ -75,16 +75,20 @@ const Body = styled.div<BodyProps>`
 `;
 
 const Btn = styled.button`
+  // border: 1px solid gold;
   border: 0;
   background-color: transparent;
   display: flex;
 `;
 
 const ExampleContainer = styled.div`
+  border: 1px solid blue;
   width: 100%;
 `;
 
 const ExampleBox = styled.div`
+  border: 1px solid red;
+  width: 90%;
   display: flex;
   flex-direction: column;
 `;
@@ -95,7 +99,7 @@ const ExampleNumber = styled.span`
 `;
 
 const ExampleText = styled.div`
-  border: 1px solid red;
+  // border: 1px solid red;
   width: 100%;
   font-size: 0.85rem;
 `;
@@ -142,6 +146,7 @@ export default function Quiz() {
       try {
         const response = await getQuizes();
         setQuizes(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching quizes:", error);
       }
@@ -185,22 +190,14 @@ export default function Quiz() {
           flexDirection="column"
           isdisplay={`${isButton}`}
         >
-          <Container height="20%">
+          {/* 문제 번호 담는 Container */}
+          <Container height="20%" justifyContent="start">
             <TextBox height="100%" width="15%">
               Q1.
             </TextBox>
-            <Container height="100%" width="85%" overflowy="hidden">
-              <Container height="100%" width="55%" />
-              <Container
-                height="100%"
-                width="40%"
-                justifyContent="space-between"
-              >
-                <div>4번문제(총5개)</div>
-              </Container>
-              <Container height="100%" width="5%" />
-            </Container>
           </Container>
+
+          {/* 문제 내용을 담는 Container */}
           <Container height="80%" flexDirection="column">
             <Container height="80%" overflowy="hidden">
               <TextBox
