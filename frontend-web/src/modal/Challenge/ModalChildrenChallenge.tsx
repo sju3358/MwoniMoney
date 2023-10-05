@@ -70,6 +70,8 @@ export const ModalContent = styled.div<ModalContentProps>`
 `;
 interface Btn {
   back_color?: string;
+  af_back_color?: string;
+  border?: string;
 }
 /**모달 닫기 버튼 */
 export const ModalBtn = styled.div<Btn>`
@@ -78,10 +80,17 @@ export const ModalBtn = styled.div<Btn>`
   height: 80%;
   background-color: ${(props) =>
     props.back_color ? props.back_color : "#fbd570"};
-  border-radius: 10px;
+  border-radius: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  border: ${(props) => (props.border ? props.border : "none")};
+  &:active {
+    background-color: ${(props) =>
+      props.af_back_color ? props.af_back_color : props.af_back_color};
+    transform: translate(0em, 0.2em);
+  }
 `;
 
 interface ModalProps {
@@ -205,8 +214,15 @@ const ModalChildrenChallenge: React.FC<ModalProps> = ({
             {modal_content}
           </ModalContent>
           <ModalTopBottom justify="space-around">
-            <ModalBtn onClick={handleSubmit}>{modal_btn1}</ModalBtn>
-            <ModalBtn back_color="#f5f3ed" onClick={handleClose}>
+            <ModalBtn af_back_color="#FFC107" onClick={handleSubmit}>
+              {modal_btn1}
+            </ModalBtn>
+            <ModalBtn
+              back_color="white"
+              af_back_color="#BBBBBB"
+              border="1px solid #BBBBBB"
+              onClick={handleClose}
+            >
               {modal_btn2}
             </ModalBtn>
           </ModalTopBottom>
