@@ -16,7 +16,6 @@ const Skip = styled.div`
   height: 3.75vh;
   background-image: url(${process.env.PUBLIC_URL}/images/StartPage1/Skip.png);
   background-size: 100% 100%;
-  font-family: "Nanum Gothic", sans-serif;
   position: absolute;
   left: 74.72vw;
   top: 6.56vh;
