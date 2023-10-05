@@ -26,7 +26,7 @@ function Notifications() {
   };
 
   return (
-    <Container height="25%">
+    <Container height="30%">
       <WhiteBox1 justify="center" align="center">
         <Container width="95%" height="95%" flexDirection="column">
           <TextBox height="40%" fontSize="1.5em">
