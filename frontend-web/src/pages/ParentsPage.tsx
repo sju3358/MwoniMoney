@@ -100,11 +100,11 @@ function ParentsPage() {
             <>
               <Text>현재 {selectedChild.name}님은</Text>
               <Text>
-                매달{" "}
-                {selectedChild?.allowance !== undefined
-                  ? selectedChild.allowance
+                매달
+                {selectedChild?.regularAllowance !== undefined
+                  ? selectedChild.regularAllowance
                   : ""}
-                원을{" "}
+                원을
               </Text>
               <Text>받고 있어요!</Text>
             </>
