@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import LogoA from "../Layout/Logo.png";
+import LogoA from "./Logo.png";
 import headerArrow from "../../assests/image/HeaderArrow.png";
 import { Navigate, useNavigate } from "react-router-dom";
 
