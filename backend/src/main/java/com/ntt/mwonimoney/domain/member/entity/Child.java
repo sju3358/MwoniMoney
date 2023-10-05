@@ -28,7 +28,10 @@ public class Child extends Member {
 	private int quizReward;
 
 	@Column(name = "member_regular_allowance")
-	private int reqularAllowance;
+	private int regularAllowance;
+
+	@Column(name = "member_regular_allowance_day")
+	private int regularAllowanceDay;
 
 	@Embedded
 	private SmallAccount smallAccount;
@@ -76,6 +79,17 @@ public class Child extends Member {
 		this.quizReward = reward;
 	}
 
+	public void changeRegularAllowance(int regularAllowance, int regularAllowanceDay) {
+		if (regularAllowance < 0)
+			throw new IllegalArgumentException("정기 용돈 금액은 0이상 입니다");
+		this.regularAllowance = regularAllowance;
+
+		if (regularAllowanceDay < 0 || regularAllowanceDay > 28)
+			throw new IllegalArgumentException("정기 용돈 날짜는 0 ~ 28 사이 입니다");
+		this.regularAllowanceDay = regularAllowanceDay;
+
+	}
+
 	@Builder
 	public Child(
 		int status,
@@ -93,7 +107,8 @@ public class Child extends Member {
 		String challengeAlarm,
 		String balanceAlarm,
 		String smallAcountAlarm,
-		int reqularAllowance) {
+		int regularAllowance,
+		int regularAllowanceDay) {
 
 		super(status, uuid, name, nickname, birthday, socialProvider, socialId, email, MemberRole.CHILD, challengeAlarm,
 			balanceAlarm, smallAcountAlarm);
@@ -102,7 +117,8 @@ public class Child extends Member {
 		this.creditScore = creditScore;
 		this.quizReward = quizReward;
 		this.smallAccount = smallAccount;
-		this.reqularAllowance = reqularAllowance;
+		this.regularAllowance = regularAllowance;
+		this.regularAllowanceDay = regularAllowanceDay;
 	}
 
 	@Override
@@ -119,7 +135,7 @@ public class Child extends Member {
 			.creditScore(this.creditScore)
 			.quizRewardRemain(this.quizRewardRemain)
 			.quizReward(this.quizReward)
-			.regularAllowance(this.reqularAllowance)
+			.regularAllowance(this.regularAllowance)
 			.smallAccount(this.smallAccount == null ? null : smallAccount)
 			.challengeAlarm(this.getChallengeAlarm())
 			.balanceAlarm(this.getBalanceAlarm())
