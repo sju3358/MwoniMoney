@@ -36,7 +36,7 @@ export const TextBox = styled.div<TextBoxProps>`
 
 interface TextProps {
   color?: string;
-  fontfamily?: string;
+
   fontsize?: string;
   fontstyle?: string;
   fontweight?: string;
@@ -49,8 +49,6 @@ interface TextProps {
 export const Text = styled.div<TextProps>`
   // border: 1px solid purple;
   color: ${(props) => (props.color ? props.color : "black")};
-  font-family: ${(props) =>
-    props.fontfamily ? props.fontfamily : "Pretendard"};
   font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
   font-style: ${(props) => (props.fontstyle ? props.fontstyle : "normal")};
   font-weight: ${(props) => (props.fontweight ? props.fontweight : "400")};
@@ -64,7 +62,6 @@ export const Text = styled.div<TextProps>`
 export const InputBox = styled.input<TextProps>`
   // border: 1px solid orange;
   color: ${(props) => (props.color ? props.color : "black")};
-  font-family: ${(props) => (props.fontfamily ? props.fontfamily : "Inter")};
   font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
   font-style: ${(props) => (props.fontstyle ? props.fontstyle : "normal")};
   font-weight: ${(props) => (props.fontweight ? props.fontweight : "400")};
@@ -78,7 +75,6 @@ export const InputBox = styled.input<TextProps>`
 
 interface SpanProps {
   color?: string;
-  fontfamily?: string;
   fontsize?: string;
   fontstyle?: string;
   fontweight?: string;
@@ -90,8 +86,6 @@ interface SpanProps {
 export const SpanText = styled.span<SpanProps>`
   // border: 1px solid purple;
   color: ${(props) => (props.color ? props.color : "black")};
-  font-family: ${(props) =>
-    props.fontfamily ? props.fontfamily : "Pretendard"};
   font-size: ${(props) => (props.fontsize ? props.fontsize : "1.25rem")};
   font-style: ${(props) => (props.fontstyle ? props.fontstyle : "normal")};
   font-weight: ${(props) => (props.fontweight ? props.fontweight : "600")};
