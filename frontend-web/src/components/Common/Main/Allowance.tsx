@@ -29,14 +29,18 @@ const BtnContainer = styled.div`
 
 const Btn = styled.div`
   background-color: #fbd56e;
-  border-radius: 4%;
+  border-radius: 12px;
   width: 95%;
-  height: 80%;
+  height: 70%;
   font-size: 1.5em;
   font-weight: bold;
   display: flex;
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
+  &:active {
+    background-color: #ffc107;
+    transform: translate(0em, 0.2em);
+  }
 `;
 
 function Allowance() {

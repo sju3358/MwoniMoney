@@ -27,6 +27,10 @@ export const Child = styled.div<ChildProps>`
   display: ${(props) => props.flex};
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
+  &:active {
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+    transform: translate(0em, 0.2em);
+  }
 `;
 
 interface ChildCardProps {
