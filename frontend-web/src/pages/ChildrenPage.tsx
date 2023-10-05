@@ -158,8 +158,9 @@ function ChildrenPage() {
       <Container height="30%">
         <ChatbotLink />
       </Container>
-      <Container height="90%" flexDirection="column">
-        <Container height="10%">
+
+      <Container height="40%" flexDirection="column">
+        <Container height="15%">
           <TextBox height="50%">챌린지</TextBox>
         </Container>
         <Challenge ismain="Y" />
