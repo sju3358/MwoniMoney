@@ -102,7 +102,7 @@ function ChildrenPage() {
   }, []);
   const userName = userData.name;
   const asset = moneyFormat(userAccount.remain);
-  const debt = "10,000원";
+  const debt = "0원";
   return (
     <MainContainer>
       {/* 메인 타이틀 컨테이너 */}
