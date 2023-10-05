@@ -17,7 +17,7 @@ function LoanAdd() {
         onClick={handleOpen}
         style={{
           width: "90%",
-          height: "100%",
+          height: "90%",
           border: "none",
           backgroundColor: "transparent",
         }}
