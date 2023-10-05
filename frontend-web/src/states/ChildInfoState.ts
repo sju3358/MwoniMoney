@@ -16,11 +16,14 @@ export interface childDataProps {
   socialProvider: string;
   memberRole: string;
   email: string;
-  allowance: number;
+  regularAllowance: number;
   creditScore: number; // 추가: creditScore 속성
   quizRewardRemain: number; // 추가: quizRewardRemain 속성
   quizReward: number; // 추가: quizReward 속성
   smallAccount: null | any; // 추가: smallAccount 속성
+  balanceAlarm: number;
+  challengeAlarm: number;
+  smallAccountAlarm: number;
 }
 
 export const childDataState = atom<childDataProps>({
@@ -35,11 +38,14 @@ export const childDataState = atom<childDataProps>({
     socialProvider: "",
     memberRole: "",
     email: "",
-    allowance: 0,
+    regularAllowance: 0,
     creditScore: 0, // 추가: creditScore 속성
     quizRewardRemain: 0, // 추가: quizRewardRemain 속성
     quizReward: 0, // 추가: quizReward 속성
     smallAccount: null, // 추가: smallAccount 속성
+    balanceAlarm: 0,
+    challengeAlarm: 0,
+    smallAccountAlarm: 0,
   },
   effects_UNSTABLE: [persistAtom],
 });
