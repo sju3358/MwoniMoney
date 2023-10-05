@@ -4,17 +4,14 @@ import background from "../assests/image/backgroundv1.png";
 
 export const GlobalStyles = createGlobalStyle`
     ${reset}
-
     @font-face {
-        font-family: 'Pretendard-Regular';
-        // src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-        src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css')
-        font-weight: 400;
+        font-family: 'TheJamsil5Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+        font-weight: 700;
         font-style: normal;
     }
-
     body{
-        font-family: 'Pretendard-Regular', sans-serif;
+        font-family: 'TheJamsil5Bold', sans-serif;
         position: absolute;
         margin:0;
         padding:0;
