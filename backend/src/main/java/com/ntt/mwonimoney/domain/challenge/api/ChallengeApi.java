@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ntt.mwonimoney.domain.account.service.v2.FinAccountTransactionServiceImplV2;
 import com.ntt.mwonimoney.domain.challenge.api.request.ChallengeRequestDto;
+import com.ntt.mwonimoney.domain.challenge.api.request.CompleteChallengeRequestDto;
 import com.ntt.mwonimoney.domain.challenge.api.response.MemberChallengeResponseDto;
 import com.ntt.mwonimoney.domain.challenge.repository.MemberChallengeRepository;
 import com.ntt.mwonimoney.domain.challenge.service.ChallengeServiceImpl;
@@ -42,6 +44,7 @@ public class ChallengeApi {
 	private final ChallengeServiceImpl challengeServiceImpl;
 	private final MemberService memberService;
 	private final FCMService fcmService;
+	private final FinAccountTransactionServiceImplV2 finAccountTransactionServiceImplV2;
 
 	/**
 	 * 부모
@@ -76,9 +79,22 @@ public class ChallengeApi {
 
 	//부모 챌린지 완료
 	@PatchMapping("/challenges/{memberChallengeIdx}")
-	public ResponseEntity CompleteChallenge(@PathVariable Long memberChallengeIdx) {
+	// public ResponseEntity CompleteChallenge(@PathVariable Long memberChallengeIdx) {
+	// 	challengeServiceImpl.completeChallenge(memberChallengeIdx);
+	//
+	// 	return ResponseEntity.ok().build();
+	// }
+	public ResponseEntity CompleteChallenge(@RequestHeader("Authorization") String accessToken,
+		@PathVariable Long memberChallengeIdx, @RequestBody CompleteChallengeRequestDto completeChallengeRequestDto) {
+		String memberUUID = jwtTokenProvider.getMemberUUID(accessToken);
+		String toUUID = completeChallengeRequestDto.getToUUID();
 		challengeServiceImpl.completeChallenge(memberChallengeIdx);
-
+		int amount = memberChallengeRepository.findById(memberChallengeIdx).orElseThrow().getReward();
+		String memo = "챌린지 보상";
+		log.info("toUUID : {}", toUUID);
+		log.info("시작");
+		finAccountTransactionServiceImplV2.makeTransaction(memberUUID, toUUID, amount, memo);
+		log.info("끝");
 		return ResponseEntity.ok().build();
 	}
 
