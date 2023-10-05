@@ -63,7 +63,7 @@ function GoalForMain() {
               {item}을 위해
             </Text>
             <Text fontsize="1.5rem" fontweight="700" padding="0% 0% 5% 0%">
-              {money}원을 모았어요!
+              짜금통을 모으고 있어요!
             </Text>
           </>
         ) : (
@@ -72,7 +72,7 @@ function GoalForMain() {
               {item}을 위해
             </Text>
             <Text fontsize="1.5rem" fontweight="700" padding="0% 0% 5% 0%">
-              {money}원을 모았어요!
+              짜금통을 모으고 있어요!
             </Text>
           </>
         )}

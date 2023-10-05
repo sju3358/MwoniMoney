@@ -86,9 +86,10 @@ function ParentsPage() {
 
   return (
     <MainContainer>
+      {/* 자녀추가 section */}
       <Container height="15%">{childCards}</Container>
-
-      <Container height="25%">
+      {/* 메인 타이틀 section */}
+      <Container height="20%">
         <Container
           height="100%"
           width="80%"
@@ -97,7 +98,7 @@ function ParentsPage() {
         >
           {selectedChild?.name ? (
             <>
-              <Text>현재 {selectedChild.name}는</Text>
+              <Text>현재 {selectedChild.name}님은</Text>
               <Text>
                 매달{" "}
                 {selectedChild?.allowance !== undefined
@@ -112,7 +113,7 @@ function ParentsPage() {
           )}
         </Container>
         <TextEmojiBox>
-          <Emoji url={`${Money}`} width="80%" height="50%" />
+          <Emoji url={`${Money}`} width="100%" height="100%" />
         </TextEmojiBox>
       </Container>
       <Container height="60%">
