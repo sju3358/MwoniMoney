@@ -144,11 +144,11 @@ function MoneyParentsPage() {
           style={{ overflowY: "auto" }}
         >
           {/* 제목 */}
-          <Container height="13%">
+          <Container height="20%">
             <TextBox height="100%">지출내역</TextBox>
           </Container>
           {/* 카테고리 */}
-          <Container height="13%" justifyContent="start">
+          <Container height="20%" justifyContent="start">
             <Category
               backcolor={category === "GENERAL" ? "#f4f4f4" : "#ffffff"}
               onClick={() => handleCategoryClick("GENERAL")}
@@ -169,7 +169,7 @@ function MoneyParentsPage() {
             </Category>
           </Container>
           <Container
-            style={{ border: "1px solid red" }}
+            // style={{ border: "1px solid red" }}
             height="500px"
             flexDirection="column"
           >
