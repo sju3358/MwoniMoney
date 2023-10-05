@@ -2,48 +2,46 @@ import React from "react";
 import styled from "styled-components";
 
 const Background = styled.div`
-  /* ·Î°í ÀÌ¹ÌÁö ½ºÅ¸ÀÏ ¼³Á¤ */
-  width: 100vw; /* È­¸é ³Êºñ¿¡ ¸Â°Ô ÄÁÅ×ÀÌ³Ê Å©±â ¼³Á¤ */
-  height: 100vh; /* È­¸é ³ôÀÌ¿¡ ¸Â°Ô ÄÁÅ×ÀÌ³Ê Å©±â ¼³Á¤ */
-  background-image: url(${process.env.PUBLIC_URL}/images/StartPage1/background5.png);
+  /* ï¿½Î°ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+  width: 100vw; /* È­ï¿½ï¿½ ï¿½Êºï¿½ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+  height: 100vh; /* È­ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+  background-image: url(${process.env
+    .PUBLIC_URL}/images/StartPage1/background5.png);
   background-size: 100% 100%;
-  background-repeat: no-repeat; /* ÀÌ¹ÌÁö ¹Ýº¹ Á¦°Å */
+  background-repeat: no-repeat; /* ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Ýºï¿½ ï¿½ï¿½ï¿½ï¿½ */
 `;
 
 const LogoBox = styled.div`
-width: 100vw; /* È­¸é ³Êºñ¿¡ ¸Â°Ô ÄÁÅ×ÀÌ³Ê Å©±â ¼³Á¤ */
-height: 80vh; /* È­¸é ³ôÀÌ¿¡ ¸Â°Ô ÄÁÅ×ÀÌ³Ê Å©±â ¼³Á¤ */
-// border: 1px solid black;
-`
+  width: 100vw; /* È­ï¿½ï¿½ ï¿½Êºï¿½ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+  height: 80vh; /* È­ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+  // border: 1px solid black;
+`;
 const ButtonBox = styled.div`
-width: 100vw; /* È­¸é ³Êºñ¿¡ ¸Â°Ô ÄÁÅ×ÀÌ³Ê Å©±â ¼³Á¤ */
-height: 20vh; /* È­¸é ³ôÀÌ¿¡ ¸Â°Ô ÄÁÅ×ÀÌ³Ê Å©±â ¼³Á¤ */
-// border: 1px solid black;
-display: flex;
-justify-content: center;
-align-items: center;
-`
+  width: 100vw; /* È­ï¿½ï¿½ ï¿½Êºï¿½ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+  height: 20vh; /* È­ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+  // border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const StartButton = styled.div`
-// border:1px solid  black;
-  /* Ä«Ä«¿À ·Î±×ÀÎ ÀÌ¹ÌÁö ½ºÅ¸ÀÏ ¼³Á¤ */
-  width: 80%; /* °¡·Î ³Êºñ¸¦ È­¸é ³ÊºñÀÇ 41.11%·Î ¼³Á¤ */
-  height: 30%; /* ³ôÀÌ¸¦ È­¸é ³ôÀÌÀÇ 6.41%·Î ¼³Á¤ */
+  // border:1px solid  black;
+  /* Ä«Ä«ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+  width: 80%; /* ï¿½ï¿½ï¿½ï¿½ ï¿½Êºï¿½ È­ï¿½ï¿½ ï¿½Êºï¿½ï¿½ï¿½ 41.11%ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+  height: 30%; /* ï¿½ï¿½ï¿½Ì¸ï¿½ È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 6.41%ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
   // background-color :green;
   background-image: url(${process.env.PUBLIC_URL}/images/StartPage1/start.png);
   background-size: 100% 100%;
-  // font-family: 'Nanum Gothic', sans-serif; /* ÇÑ±Û ÆùÆ® ¼³Á¤ */
-
-
 `;
 
 function MyComponent() {
   return (
     <Background>
-       <LogoBox></LogoBox>
-       <ButtonBox>
-        <StartButton/>
-       </ButtonBox>
+      <LogoBox></LogoBox>
+      <ButtonBox>
+        <StartButton />
+      </ButtonBox>
     </Background>
   );
 }
