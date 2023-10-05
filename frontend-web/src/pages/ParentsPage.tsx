@@ -111,8 +111,8 @@ function ParentsPage() {
             <Text>아이를 선택해 주세요!</Text>
           )}
         </Container>
-        <TextEmojiBox>
-          <Emoji url={`${Money}`} width="80%" height="50%" />
+        <TextEmojiBox EmojiBox_justify="start">
+          <Emoji url={`${Money}`} width="85%" height="55%" />
         </TextEmojiBox>
       </Container>
       <Container height="60%">

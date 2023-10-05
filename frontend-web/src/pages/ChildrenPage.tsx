@@ -127,8 +127,8 @@ function ChildrenPage() {
             </TextBox>
           </Container>
         </Container>
-        <TextEmojiBox>
-          <Emoji url={`${Coin}`} width="80%" height="40%" />
+        <TextEmojiBox EmojiBox_justify="start">
+          <Emoji url={`${Coin}`} width="80%" height="50%" />
         </TextEmojiBox>
       </Container>
 
