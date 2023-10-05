@@ -48,6 +48,8 @@ function GoalForMain() {
   const GoGoalMoney = () => {
     navigate("/GoalMoney");
   };
+  console.log(item === undefined);
+
   return (
     <WhiteBox height="90%" onClick={GoGoalMoney}>
       <ImgBox>
@@ -56,22 +58,63 @@ function GoalForMain() {
       <Container height="60" flexDirection="column" marginT="10%">
         {role === "PARENT" ? (
           <>
-            <Text fontsize="1.5rem" fontweight="700" padding="0% 0% 5% 0%">
+            <Text
+              fontF="TheJamsil7Bold"
+              fontsize="1.5rem"
+              padding="0% 0% 5% 0%"
+            >
               {name}님이
             </Text>
-            <Text fontsize="1.5rem" fontweight="700" padding="0% 0% 5% 0%">
-              {item}을 위해
-            </Text>
-            <Text fontsize="1.5rem" fontweight="700" padding="0% 0% 5% 0%">
-              짜금통을 모으고 있어요!
-            </Text>
+            {item === undefined ? (
+              <>
+                <Text
+                  fontF="TheJamsil7Bold"
+                  fontsize="1.5rem"
+                  padding="0% 0% 5% 0%"
+                >
+                  모으고 있는
+                </Text>
+                <Text
+                  fontF="TheJamsil7Bold"
+                  fontsize="1.5rem"
+                  padding="0% 0% 5% 0%"
+                >
+                  짜금통이 없어요!
+                </Text>
+              </>
+            ) : (
+              <>
+                <Text
+                  fontF="TheJamsil7Bold"
+                  fontsize="1.5rem"
+                  padding="0% 0% 5% 0%"
+                >
+                  {item}을 위해
+                </Text>
+                <Text
+                  fontF="TheJamsil7Bold"
+                  fontsize="1.5rem"
+                  padding="0% 0% 5% 0%"
+                >
+                  짜금통을 모으고 있어요!
+                </Text>
+              </>
+            )}
           </>
         ) : (
           <>
-            <Text fontsize="1.5rem" fontweight="700" padding="0% 0% 5% 0%">
+            <Text
+              fontF="TheJamsil7Bold"
+              fontsize="1.5rem"
+              padding="0% 0% 5% 0%"
+            >
               {item}을 위해
             </Text>
-            <Text fontsize="1.5rem" fontweight="700" padding="0% 0% 5% 0%">
+            <Text
+              fontF="TheJamsil7Bold"
+              fontsize="1.5rem"
+              padding="0% 0% 5% 0%"
+            >
               짜금통을 모으고 있어요!
             </Text>
           </>

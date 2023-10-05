@@ -41,7 +41,7 @@ export const ModalTopBottom = styled.div<forBtn>`
   display: flex;
   justify-content: ${(props) => (props.justify ? props.justify : "center")};
   align-items: center;
-  font-size: 1.3em;
+  font-size: 1.5em;
   font-weight: bold;
 `;
 
@@ -68,6 +68,7 @@ interface Btn {
 /**모달 닫기 버튼 */
 export const ModalBtn = styled.div<Btn>`
   // border: 1px solid black;
+  font-family: TheJamsil5Bold;
   width: 40%;
   height: 80%;
   background-color: ${(props) =>

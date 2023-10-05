@@ -58,7 +58,7 @@ function InputInfo({ title, info, placeholder, id }: InputImfoProps) {
   return (
     <>
       <Container height="30%">
-        <TextBox fontSize="1.5em" height="100%">
+        <TextBox marginL="3%" fontSize="1.5em" height="100%">
           {title}
         </TextBox>
       </Container>

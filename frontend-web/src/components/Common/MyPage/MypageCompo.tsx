@@ -95,7 +95,7 @@ function MypageCompo() {
       {/* 페이지 제목 & 이미지 */}
       <Container width="100%" height="20%">
         <TextMentBox>
-          <Text>{name}님</Text>
+          <Text style={{ marginBottom: "3%" }}>{name}님</Text>
           <Text>안녕하세요!</Text>
         </TextMentBox>
         <TextEmojiBox>
@@ -111,7 +111,7 @@ function MypageCompo() {
           }}
         >
           <Container height="30%">
-            <TextBox fontSize="1.5em" height="100%">
+            <TextBox marginL="3%" fontSize="1.5em" height="100%">
               계좌번호
             </TextBox>
           </Container>

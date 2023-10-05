@@ -4,9 +4,21 @@ import ParentsPage from "./ParentsPage";
 import { Navigate } from "react-router-dom";
 import { userDataState } from "../states/UserInfoState";
 import { useRecoilState } from "recoil";
+import { useEffect } from "react";
 
 function Main(): JSX.Element {
   const [userData, setUserData] = useRecoilState(userDataState);
+
+  useEffect(() => {
+    if (window.ReactNativeWebView && userData.uuid) {
+      window.ReactNativeWebView.postMessage(
+        JSON.stringify({
+          type: 'userUUID',
+          code: userData.uuid,
+        })
+      );
+    }
+  }, [userData.uuid]);
 
   const role = userData.memberRole;
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Text } from "../About/AboutText";
 
 //recoil
 import { useRecoilState } from "recoil";
@@ -105,7 +106,9 @@ function ChallengeCategory() {
         isActive={activeButton === "all"}
         onClick={() => handleSearch("all")}
       >
-        모두
+        <Text marginL="0%" fontsize="0.85rem">
+          모두
+        </Text>
       </CategoryBtn>
       <CategoryBtn
         backcolor="#fcdf92"
@@ -113,7 +116,9 @@ function ChallengeCategory() {
         isActive={activeButton === "ing"}
         onClick={() => handleSearch("ing")}
       >
-        진행중
+        <Text marginL="0%" fontsize="0.85rem">
+          진행중
+        </Text>
       </CategoryBtn>
       <CategoryBtn
         backcolor="#d1d1d1"
@@ -121,7 +126,9 @@ function ChallengeCategory() {
         isActive={activeButton === "propose"}
         onClick={() => handleSearch("propose")}
       >
-        제안대기
+        <Text marginL="0%" fontsize="0.85rem">
+          제안대기
+        </Text>
       </CategoryBtn>
     </CategoryContainer>
   );
