@@ -5,12 +5,15 @@ import java.time.LocalDateTime;
 import javax.security.sasl.AuthenticationException;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ntt.mwonimoney.domain.member.api.request.ChangeRegularAllowanceRequest;
 import com.ntt.mwonimoney.domain.member.api.request.EditRewardRemainRequest;
 import com.ntt.mwonimoney.domain.member.api.request.EditRewardRequest;
 import com.ntt.mwonimoney.domain.member.service.ChildService;
@@ -66,6 +69,19 @@ public class ChildApi {
 		log.info("[자녀 리워드 한도 변경 요청 끝]", LocalDateTime.now());
 
 		return ResponseEntity.ok().body(request.getRewardRemain());
+	}
+
+	@PatchMapping("/members/regularAllowance")
+	public ResponseEntity changeChildRegularAllowance(@RequestParam("childUUID") String childUUID, @RequestBody
+	ChangeRegularAllowanceRequest changeRegularAllowanceRequest) {
+		log.info("[자녀 정기 용돈 변경 요청 시작]", LocalDateTime.now());
+
+		childService.changeRegularAllowance(childUUID, changeRegularAllowanceRequest.getRegularAllowance(),
+			changeRegularAllowanceRequest.getRegularAllowanceDay());
+
+		log.info("[자녀 정기 용돈 변경 요청 끝]", LocalDateTime.now());
+
+		return ResponseEntity.ok().build();
 	}
 
 }
