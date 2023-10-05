@@ -19,7 +19,7 @@ import {
   childDataState,
   childDataProps,
 } from "../../src/states/ChildInfoState"; // Import the childDataState atom
-import { SpanText } from "../components/Common/About/AboutText";
+import { moneyFormat } from "../components/Common/utils";
 
 const postRegisterChild = (): Promise<AxiosResponse> => {
   // axios 요청을 보낼 때 Authorization 헤더 설정
@@ -99,13 +99,11 @@ function ParentsPage() {
         >
           {selectedChild?.name ? (
             <>
+              <Text>현재 {selectedChild.name}님은</Text>
               <Text>
-                현재 <SpanText>{selectedChild.name}</SpanText>님은
-              </Text>
-              <Text>
-                매달
+                매달{" "}
                 {selectedChild?.regularAllowance !== undefined
-                  ? selectedChild.regularAllowance
+                  ? moneyFormat(selectedChild.regularAllowance)
                   : ""}
                 원을
               </Text>

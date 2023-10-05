@@ -74,30 +74,20 @@ function GoGoalMoney() {
         flexDirection="column"
         style={{ padding: "5% 0% 5% 0%" }}
       >
-        <TextBox marginL="20%" fontSize="2em">
+        <TextBox fontF="TheJamsil7Bold" marginL="20%" fontSize="2em">
           짜금통
         </TextBox>
         {role === "CHILD" ? (
-          <TextBox
-            marginL="20%"
-            height="25%"
-            fontSize="1em"
-            fontWeight="normal"
-          >
+          <TextBox marginL="20%" height="25%" fontSize="1em">
             이번주 {userName}님이
           </TextBox>
         ) : (
-          <TextBox
-            marginL="20%"
-            height="25%"
-            fontSize="1em"
-            fontWeight="normal"
-          >
+          <TextBox marginL="20%" height="25%" fontSize="1em">
             이번주 {childName}님이
           </TextBox>
         )}
 
-        <TextBox marginL="20%" height="25%" fontSize="1em" fontWeight="normal">
+        <TextBox marginL="20%" height="25%" fontSize="1em">
           모은 금액을 확인해보세요
         </TextBox>
       </HalfBox>

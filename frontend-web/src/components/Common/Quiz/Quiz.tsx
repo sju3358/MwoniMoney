@@ -168,7 +168,9 @@ export default function Quiz() {
   return (
     <Container height="100%" flexDirection="column" marginT="5%">
       <Container height="10%" overflowy="hidden">
-        <TextBox height="100%">오늘의 퀴즈</TextBox>
+        <TextBox fontF="TheJamsil7Bold" height="100%">
+          오늘의 퀴즈
+        </TextBox>
       </Container>
       <Container height="20%">
         <Container width="75%" height="100%" flexDirection="column">

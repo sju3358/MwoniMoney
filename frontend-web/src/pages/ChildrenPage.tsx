@@ -114,7 +114,9 @@ function ChildrenPage() {
           align="start"
         >
           <Container height="30%">
-            <TextBox height="100%">{userName}님은 지금</TextBox>
+            <TextBox fontF="TheJamsil7Bold" height="100%">
+              {userName}님은 지금
+            </TextBox>
           </Container>
           <Container height="20%">
             <TextBox fontSize="1.1em" marginL="10%" height="100%" width="95%">
