@@ -15,6 +15,8 @@ const InputTag = styled.input`
   height: 50%;
   border: none;
   border-bottom: 1px solid #797979;
+  text-align: end;
+  padding: 0% 5% 0% 0%;
 `;
 
 interface AllowanceInputProps {

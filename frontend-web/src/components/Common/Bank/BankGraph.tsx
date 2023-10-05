@@ -18,6 +18,7 @@ function LoanImpo({ title, content, isloan }: LoanImpoProps) {
         fontSize="1.2em"
         justifyContent="center"
         marginL="0%"
+        fontF="TheJamsil7Bold"
       >
         {title}
       </TextBox>
@@ -54,7 +55,9 @@ function BankGraph({ avgInterest, creditScore, color }: BankGraphProps) {
   const scroe = 50;
   return (
     <WhiteBox1 flexDirection="column">
-      <TextBox height="20%">신용등급</TextBox>
+      <TextBox fontF="TheJamsil7Bold" height="20%">
+        신용등급
+      </TextBox>
       {/*그래프*/}
       <Container height="55%" overflowy="hidden">
         <GaugeChart value={creditScore} />

@@ -44,6 +44,7 @@ const Btn = styled.button`
   font-size: 1.5em;
   font-weight: bold;
   display: flex;
+  font-family: TheJamsil7Bold;
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
   &:active {
@@ -124,14 +125,12 @@ function Allowance() {
         text1={"정기용돈"}
         text2={"정기 용돈으로 언제 얼마를 줄까요?"}
       /> */}
-      <Text fontsize="1.8em" fontweight="bold" marginL="5%">
+      <Text fontF="TheJamsil7Bold" fontsize="1.8em" marginL="5%">
         정기용돈
       </Text>
       <InputContainer>
         {/* 60% */}
-        <Text style={{ margin: "5% 0% 0% 5%" }}>
-          <SpanText>언제</SpanText> 송금하실건가요?
-        </Text>
+        <Text style={{ margin: "5% 0% 0% 5%" }}>언제 송금하실건가요?</Text>
         <AllowanceInput
           height="40%"
           type="number"
@@ -140,9 +139,7 @@ function Allowance() {
           placeholder="날짜 선택하기"
           onChange={handleDateChange}
         />
-        <Text style={{ margin: "0% 0% 0% 5%" }}>
-          <SpanText>얼마</SpanText>를 송금하실건가요?
-        </Text>
+        <Text style={{ margin: "0% 0% 0% 5%" }}>얼마를 송금하실건가요?</Text>
         <AllowanceInput
           value={money}
           name="money"
