@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios"; // Import axios for making HTTP requests
 import { WhiteBox1 } from "../About/AboutWhilteContainer";
 import { Container } from "../About/AboutContainer";
 import { TextBox } from "../About/AboutText";
@@ -11,9 +12,8 @@ import X from "../../../assests/image/quiz/X.png";
 import None from "../../../assests/image/quiz/None.png";
 import Correct from "../../../assests/image/quiz/Correct.png";
 import Error from "../../../assests/image/quiz/Error.png";
-import { EmogiBox } from "../History";
-import axios, { AxiosResponse } from "axios";
 import api from "../../../apis/Api";
+import { EmogiBox } from "../History";
 
 export const TextContainer = styled.div`
   width: 100%;
@@ -75,7 +75,6 @@ const Body = styled.div<BodyProps>`
 `;
 
 const Btn = styled.button`
-  // border: 1px solid gold;
   border: 0;
   background-color: transparent;
   display: flex;
@@ -99,7 +98,6 @@ const ExampleNumber = styled.span`
 `;
 
 const ExampleText = styled.div`
-  // border: 1px solid red;
   width: 100%;
   font-size: 0.85rem;
 `;
@@ -132,14 +130,14 @@ const ImgBox = styled.div`
   align-items: center;
 `;
 
-const getQuizes = (): Promise<AxiosResponse> => {
+const getQuizes = (): Promise<any> => {
   return api.get(`/v1/quizes`, {});
 };
 
 export default function Quiz() {
   const [isButton, setIsButton] = useState("none");
-  const [quiztype, setQuizType] = useState(0);
-  const [quizes, setQuizes] = useState<any[]>([]); // 타입을 any[]로 지정
+  const [quizes, setQuizes] = useState<any[]>([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   useEffect(() => {
     const fetchQuizes = async () => {
@@ -156,14 +154,42 @@ export default function Quiz() {
   }, []);
 
   const handleButtonClick = () => {
-    if (isButton === "none") {
-      setIsButton("flex");
-    } else {
-      setIsButton("none");
+    if (currentQuestionIndex < quizes.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
   };
 
-  const width = "15%";
+  const handleOptionClick = async (optionIndex: number) => {
+    if (currentQuestionIndex < quizes.length) {
+      const quizIdx = quizes[currentQuestionIndex].id;
+      const answer = optionIndex + 1; // Add 1 to match your answer numbering
+
+      try {
+        // Get the token from localStorage
+        const token = localStorage.getItem("token");
+
+        // Define the headers with Authorization
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+
+        // Send a POST request to the specified URL with quizIdx and answer, including headers
+        await axios.post(
+          "https://j9b310.p.ssafy.io/api/v1/quizes",
+          {
+            quizIdx,
+            answer,
+          },
+          { headers }
+        );
+
+        // Move to the next question
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      } catch (error) {
+        console.error("Error sending POST request:", error);
+      }
+    }
+  };
 
   return (
     <Container height="100%" flexDirection="column" marginT="5%">
@@ -181,70 +207,54 @@ export default function Quiz() {
             용돈을 더 받을 수 있어요!
           </TextBox>
         </Container>
-
         <Container width="25%" height="100%">
           <EmogiBox backImg={`${Pencil}`} width="90%" height="100%" />
         </Container>
       </Container>
       <Container height="70%">
         <WhiteBox_V1
-          height="70%"
+          height="90%"
           flexDirection="column"
           isdisplay={`${isButton}`}
         >
-          {/* 문제 번호 담는 Container */}
-          <Container height="20%" justifyContent="start">
-            <TextBox height="100%" width="15%">
-              Q1.
-            </TextBox>
-          </Container>
-
-          {/* 문제 내용을 담는 Container */}
-          <Container height="80%" flexDirection="column">
-            <Container height="80%" overflowy="hidden">
+          {currentQuestionIndex < quizes.length && (
+            <div>
               <TextBox
-                height="100%"
+                height="40%"
+                width="90%"
                 fontSize="1em"
                 marginL="0%"
                 fontWeight="normal"
-                style={{ margin: "3%" }}
+                style={{ margin: "5%", textAlign: "left" }} // Add textAlign: "left"
               >
-                {quizes.length > 0 ? quizes[0].question : ""}
+                {quizes[currentQuestionIndex].question}
               </TextBox>
-            </Container>
-            <Body isdisplay={`${isButton}`}>
-              <ExampleContainer>
-                {quiztype === 0 ? (
-                  <ExampleBox>
-                    {quizes.map((quizItem, index) => (
-                      <ExampleBtn key={index}>
-                        <ExampleText>
-                          <ExampleNumber>{index + 1}</ExampleNumber>
-                          {quizItem.option1}
-                        </ExampleText>
-                      </ExampleBtn>
-                    ))}
-                  </ExampleBox>
-                ) : (
-                  <>
-                    <ImgBox>
-                      <Img src={`${O}`} width="10%" height="10%" />
-                      <Img src={`${X}`} width="10%" height="10%" />
-                    </ImgBox>
-                  </>
-                )}
-              </ExampleContainer>
-            </Body>
-            <Container height="19%">
-              <Btn onClick={handleButtonClick}>
-                {isButton === "none" ? (
-                  <Img height="100%" width="100%" src={`${DownArrow}`} />
-                ) : (
-                  <Img height="100%" width="100%" src={`${UpArrow}`} />
-                )}
-              </Btn>
-            </Container>
-          </Container>
+              <ExampleBtn onClick={() => handleOptionClick(0)}>
+                <ExampleText>
+                  <ExampleNumber>1</ExampleNumber>
+                  {quizes[currentQuestionIndex].option1}
+                </ExampleText>
+              </ExampleBtn>
+              <ExampleBtn onClick={() => handleOptionClick(1)}>
+                <ExampleText>
+                  <ExampleNumber>2</ExampleNumber>
+                  {quizes[currentQuestionIndex].option2}
+                </ExampleText>
+              </ExampleBtn>
+              <ExampleBtn onClick={() => handleOptionClick(2)}>
+                <ExampleText>
+                  <ExampleNumber>3</ExampleNumber>
+                  {quizes[currentQuestionIndex].option3}
+                </ExampleText>
+              </ExampleBtn>
+              <ExampleBtn onClick={() => handleOptionClick(3)}>
+                <ExampleText>
+                  <ExampleNumber>4</ExampleNumber>
+                  {quizes[currentQuestionIndex].option4}
+                </ExampleText>
+              </ExampleBtn>
+            </div>
+          )}
         </WhiteBox_V1>
       </Container>
     </Container>
