@@ -19,7 +19,7 @@ function MoneyTable(props: MoneyTableProps) {
   return (
     <table
       style={{
-        border: "1px solid gold",
+        // border: "1px solid gold",
         width: "360px",
         height: "500px",
         overflow: "auto",
