@@ -8,3 +8,4 @@ spring:
           min-idle: 2
       host: j9b310.p.ssafy.io
       port: 6379
+      password : mownimoney
