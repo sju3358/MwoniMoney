@@ -135,6 +135,7 @@ function Bank() {
          */
         setisProposeState(false);
         setIsButtonState(false);
+        setisRepayState(false);
         console.log("대출 데이터 : ", totalLoanData);
       })
       .catch((error) => {
