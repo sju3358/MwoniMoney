@@ -19,5 +19,7 @@ public interface MemberChallengeRepository extends JpaRepository<MemberChallenge
 	List<MemberChallenge> findMemberChallengeMemberIdx(@Param("memberIdx") Long memberIdx);
 
 	//스케줄러에서 이용
-	List<MemberChallenge> findByEndTimeBeforeAndStatus(LocalDateTime localDateTime, Integer status);
+	@Query("SELECT c FROM MemberChallenge c WHERE c.status IN :statuses AND c.endTime <= :localDateTime")
+	List<MemberChallenge> findByEndTimeBeforeAndStatus(@Param("localDateTime") LocalDateTime localDateTime,
+		@Param("statuses") List<Integer> statuses);
 }

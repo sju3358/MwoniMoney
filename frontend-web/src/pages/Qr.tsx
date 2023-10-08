@@ -31,7 +31,7 @@ function Qr() {
   return (
     <div style={containerStyle}>
       <div style={textBoxStyle}>
-        <TextBox>아이와연결!</TextBox>
+        <TextBox marginL="0%">아이와 연결!</TextBox>
       </div>
       <QRCode value={qrLink} />
     </div>

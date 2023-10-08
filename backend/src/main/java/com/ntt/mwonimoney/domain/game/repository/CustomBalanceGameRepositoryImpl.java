@@ -57,13 +57,13 @@ public class CustomBalanceGameRepositoryImpl implements CustomBalanceGameReposit
 	}
 
 	@Override
-	public Slice<BalanceGameDto> findSliceGamesBy(Pageable pageable) {
+	public Slice<BalanceGameDto> findSliceEndGamesBy(Pageable pageable) {
 		List<BalanceGame> result = jpaQueryFactory
 			.select(balanceGame)
 			.from(balanceGame)
-			.where(balanceGame.balanceGameStatus.ne(BalanceGameStatus.WAIT))
+			.where(balanceGame.balanceGameStatus.eq(BalanceGameStatus.END))
 			.orderBy(balanceGame.createTime.desc())
-			.offset(pageable.getPageNumber())
+			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize() + 1)
 			.fetch();
 
@@ -71,15 +71,6 @@ public class CustomBalanceGameRepositoryImpl implements CustomBalanceGameReposit
 			throw new NoSuchElementException("밸런스게임이 존재하지 않습니다");
 
 		List<BalanceGameDto> balanceGames = new ArrayList<>();
-
-		for (BalanceGame balanceGameEntity : result) {
-			if (balanceGameEntity.getBalanceGameStatus().equals(BalanceGameStatus.RUNNING)) {
-				BalanceGameDto dto = balanceGameEntity.convertToDto();
-				dto.setCountOfRightAnswer(getCountOfAnswer(dto.getIdx(), BalanceGameAnswer.RIGHT));
-				dto.setCountOfLeftAnswer(getCountOfAnswer(dto.getIdx(), BalanceGameAnswer.LEFT));
-				balanceGames.add(dto);
-			}
-		}
 
 		for (BalanceGame balanceGameEntity : result) {
 			if (balanceGameEntity.getBalanceGameStatus().equals(BalanceGameStatus.END)) {

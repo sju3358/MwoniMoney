@@ -1,5 +1,7 @@
 package com.ntt.mwonimoney.domain.game.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.data.domain.PageRequest;
@@ -9,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ntt.mwonimoney.domain.game.api.request.BalanceGameListRequest;
+import com.ntt.mwonimoney.domain.game.entity.BalanceGame;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameDto;
+import com.ntt.mwonimoney.domain.game.model.vo.BalanceGameStatus;
 import com.ntt.mwonimoney.domain.game.repository.BalanceGameRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -24,17 +28,32 @@ public class BalanceGameServiceImpl implements BalanceGameService {
 	private final BalanceGameRepository balanceGameRepository;
 
 	@Override
-	public Slice<BalanceGameDto> getBalanceGames(BalanceGameListRequest request) {
+	public Slice<BalanceGameDto> getEndBalanceGames(BalanceGameListRequest request) {
 
 		Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
 
-		Slice<BalanceGameDto> balanceGameEntities = balanceGameRepository.findSliceGamesBy(pageable);
+		Slice<BalanceGameDto> balanceGameEntities = balanceGameRepository.findSliceEndGamesBy(pageable);
 
 		if (balanceGameEntities.isEmpty() == true) {
 			throw new NoSuchElementException("밸런스 게임이 존재하지 않습니다.");
 		}
 
 		return balanceGameEntities;
+	}
+
+	@Override
+	public List<BalanceGameDto> getBalanceGames(BalanceGameStatus status) {
+		List<BalanceGame> balanceGameEntityLiST = balanceGameRepository.findBalanceGamesByBalanceGameStatus(status);
+
+		if (balanceGameEntityLiST.isEmpty())
+			throw new NoSuchElementException("밸런스 게임이 존재하지 않습니다.");
+
+		List<BalanceGameDto> balanceGameDtos = new ArrayList<>();
+
+		for (BalanceGame balanceGame : balanceGameEntityLiST)
+			balanceGameDtos.add(balanceGame.convertToDto());
+
+		return balanceGameDtos;
 	}
 
 	public BalanceGameDto getTodayBalanceGame() {

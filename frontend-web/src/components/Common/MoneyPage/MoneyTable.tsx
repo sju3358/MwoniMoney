@@ -13,12 +13,15 @@ interface MoneyTableProps {
 function MoneyTable(props: MoneyTableProps) {
   const { emogi, expense_detail, expense_date, spending } = props;
 
+  // Determine the background color based on spending
+  const backgroundColor = spending > 0 ? "#b9deb3" : "#ffa27e";
+
   return (
     <table
       style={{
-        // border: "1px solid red",
-        width: "95%",
-        height: "100%",
+        // border: "1px solid gold",
+        width: "360px",
+        height: "500px",
         overflow: "auto",
         margin: "3%",
       }}
@@ -26,12 +29,12 @@ function MoneyTable(props: MoneyTableProps) {
       <tbody>
         <tr>
           <td>
-            <Container height="100%">
+            <Container height="67px">
               <Container
                 height="100%"
                 width="20%"
                 radius="50%"
-                backcolor="#b9deb3"
+                backcolor={backgroundColor} // Apply the background color here
               >
                 <EmogiBox backImg={emogi} />
               </Container>
@@ -44,7 +47,11 @@ function MoneyTable(props: MoneyTableProps) {
                 </TextBox>
               </Container>
               <Container height="100%" width="30%">
-                <TextBox fontSize="1.2em" fontcolor="#b9deb3" fontWeight="bold">
+                <TextBox
+                  fontSize="1.2em"
+                  fontcolor={backgroundColor}
+                  fontWeight="bold"
+                >
                   {spending} 원
                 </TextBox>
               </Container>

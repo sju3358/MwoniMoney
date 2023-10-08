@@ -1,27 +1,35 @@
 import React, { useState } from "react";
 import GoalCreate from "../../assests/image/GoalCreate.png";
+import Item from "../../assests/image/Item.png";
 import { Text, TextBox } from "../Common/About/AboutText";
 import { Img, ImgBox } from "../../components/Common/About/AboutEmogi";
 import { Container } from "../Common/About/AboutContainer";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userAccountState } from "../../states/UserInfoState";
-import { GoalMoneyState } from "../../states/GoalMoneyState";
+import { GoalImgCheckState, GoalMoneyState } from "../../states/GoalMoneyState";
 import { Btn, InputList } from "../Common/GoalMoney/GoalMoneyStyle";
 import GoalModal from "../../modal/GoalMoney/GoalModal";
 import { ModalState } from "../../states/ModalState";
-import { api, api_ver2 } from "../../apis/Api";
+// import api from "../../apis/Api";
+import api_ver2 from "../../apis/ApiForMultiPart";
 
 export default function CreatGoal() {
   const [inputValue, setInputValue] = useState("");
   const [userAccount, setUserAccount] = useRecoilState(userAccountState);
   const [goalMoney, setGoalMoney] = useRecoilState(GoalMoneyState);
   const [open, setOpen] = useRecoilState(ModalState);
+  const [goalImg, setgoalImg] = useRecoilState(GoalImgCheckState);
 
   const navigate = useNavigate();
   const rate = "0.1"; //은행이 정한 이자율
   const account = userAccount.account; //해지 시 입금 계좌
+  const ImgCheck = goalImg.ImgCheck;
   const handleClose = () => {
+    setgoalImg((res: any) => ({
+      ...res,
+      ImgCheck: false,
+    }));
     navigate("/GoalMoney");
   };
 
@@ -30,6 +38,8 @@ export default function CreatGoal() {
     setOpen(true);
   };
 
+  console.log(goalMoney);
+
   // axios 날리는
   const handleAxios = () => {
     const jsonData = {
@@ -37,28 +47,35 @@ export default function CreatGoal() {
       goalMoney: goalMoney.goalMoney,
       saveRatio: goalMoney.saveRatio,
     };
+    // console.log(jsonData);
+    // console.log(goalMoney.goalName);
 
     const formData = new FormData();
     formData.append(
       "info",
       new Blob([JSON.stringify(jsonData)], { type: "application/json" })
     );
+    // console.log(formData.get("info"));
+    // 이미지를 Recoil 상태에서 가져오기
+    const image = goalMoney.image;
+    // 이미지를 Blob으로 변환
+    const blob = new Blob([image], { type: "image/jpeg" });
 
-    formData.append(
-      "image",
-      new Blob([JSON.stringify(jsonData)], { type: "application/json" }),
-      goalMoney.image
-    );
+    // FormData에 추가
+    formData.append("image", blob, "img.jpg");
 
     console.log(formData);
+    // console.log(formData.get("image"));
 
     api_ver2
-      .post("v1/members/small-account", formData, {
-        headers: {
-          "Contest-Type": "multipart/form-data",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
+      .post(
+        "v1/accounts/small-account",
+        formData
+        // headers: {
+        // "Contest-Type": "multipart/form-data",
+        // Authorization: "Bearer " + localStorage.getItem("token"),
+        // },
+      )
       .then((response) => {
         alert("짜금통을 생성했습니다.");
         navigate("/GoalMoney");
@@ -96,7 +113,7 @@ export default function CreatGoal() {
       {/* 이미지 삽입 */}
       <Container height="25%" overflowy="hidden">
         <ImgBox>
-          <Img src={GoalCreate} onClick={hanldeModal} />
+          <Img src={ImgCheck ? Item : GoalCreate} onClick={hanldeModal} />
         </ImgBox>
       </Container>
       {/* InputList : 입력받는 자리*/}

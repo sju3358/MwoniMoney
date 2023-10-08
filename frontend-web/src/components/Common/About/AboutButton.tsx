@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import styled from "styled-components";
 
 interface BtnProps {
@@ -6,6 +6,8 @@ interface BtnProps {
   height?: string;
   backcolor?: string;
   fontS?: string;
+  bordercolor?: string;
+  afbackcolor?: string;
 }
 
 export const Btn = styled.div<BtnProps>`
@@ -19,6 +21,12 @@ export const Btn = styled.div<BtnProps>`
     props.backcolor ? props.backcolor : "#fbd56e"};
   border-radius: 10px;
   font-weight: bold;
+  border: ${(props) => (props.bordercolor ? props.bordercolor : "none")};
+  &:active {
+    background-color: ${(props) =>
+      props.afbackcolor ? props.afbackcolor : props.backcolor};
+    transform: translate(0em, 0.2em);
+  }
 `;
 
 interface ButtonProps {
@@ -27,11 +35,31 @@ interface ButtonProps {
   height?: string;
   backcolor?: string;
   fontS?: string;
+  click?: MouseEventHandler<HTMLDivElement>;
+  bordercolor?: string;
+  afbackcolor?: string;
 }
 
-function Button({ content, width, height, backcolor, fontS }: ButtonProps) {
+function Button({
+  content,
+  width,
+  height,
+  backcolor,
+  fontS,
+  bordercolor,
+  afbackcolor,
+  click,
+}: ButtonProps) {
   return (
-    <Btn width={width} height={height} backcolor={backcolor} fontS={fontS}>
+    <Btn
+      width={width}
+      height={height}
+      backcolor={backcolor}
+      fontS={fontS}
+      onClick={click}
+      bordercolor={bordercolor}
+      afbackcolor={afbackcolor}
+    >
       {content}
     </Btn>
   );

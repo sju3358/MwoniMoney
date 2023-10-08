@@ -36,10 +36,51 @@ export const InputInfo = styled.input`
   outline: none;
 `;
 
-export const SelectBox = styled.select`
+export const InputNumberInfo = styled.input`
   border: none;
   border-bottom: 1px solid black;
   width: 95%;
+  height: 50%;
+  font-size: 1.3em;
+  &::before {
+    content: attr(placeholder);
+  }
+  ,
+  &:valid::before,
+  &:focus::before {
+    // content: attr(placeholder);
+    display: none;
+  }
+  ,
+`;
+
+export const InputDateInfo = styled.input`
+  border: none;
+  border-bottom: 1px solid black;
+  width: 95%;
+  height: 50%;
+  &::before {
+    content: attr(placeholder);
+    font-size: 1.3em;
+    width: 100%;
+    height: 100%;
+  }
+  ,
+  &:valid::before,
+  &:focus::before {
+    display: none;
+  }
+  ,
+  &::placeholder {
+    font-weight: 700;
+  }
+`;
+
+export const SelectBox = styled.select`
+  border: none;
+  // border: 1px solid rgba(131, 129, 129, 0.851);
+  border-bottom: 1px solid black;
+  width: 100%;
   height: 50%;
   font-size: 1.3em;
   outline: none;
@@ -86,7 +127,6 @@ function CreateChallenge() {
 
   useEffect(() => {
     const today = new Date();
-    today.setDate(today.getDate() + 1);
     const minDateString = today.toISOString().split("T")[0];
     setMinDate(minDateString);
   }, []);
@@ -100,7 +140,7 @@ function CreateChallenge() {
           value={newChallengeData.category}
           onChange={handleChangeState}
         >
-          <option value="">---카테고리---</option>
+          <option value="">카테고리</option>
           {/* value값과 availableOptionsByCategory의 key값과 일치해야함 */}
           <option value="집안일">집안일</option>
           <option value="공부">공부</option>
@@ -116,7 +156,7 @@ function CreateChallenge() {
           onChange={handleChangeState}
           disabled={newChallengeData.category === ""}
         >
-          <option value="">---종류---</option>
+          <option value="">종류</option>
           {availableOptions.map((option) => (
             <option key={option} value={option}>
               {option}
@@ -134,34 +174,35 @@ function CreateChallenge() {
         />
       </InputDiv>
       <InputDiv>
-        <InputInfo
+        <InputNumberInfo
           type="number"
           name="reward"
           value={newChallengeData.reward}
           placeholder="상금"
           onChange={handleChangeState}
-          // style={{ textAlign: "end" }}
+          required
         />
       </InputDiv>
-      <InputDiv>
-        <InputInfo
+      <InputDiv style={{ alignItems: "center" }}>
+        <InputDateInfo
           type="date"
           name="endTime"
           value={newChallengeData.endTime}
-          placeholder="끝나는 날짜"
+          placeholder="끝나는 날짜를 입력해주세요"
           min={minDate}
           onChange={handleChangeState}
+          required
         />
       </InputDiv>
 
-      <>
+      {/* <>
         <div>확인용</div>
         <span>{newChallengeData.category}</span>
         <span>{newChallengeData.title}</span>
         <span>{newChallengeData.memo}</span>
         <span>{newChallengeData.reward}</span>
         <span>{newChallengeData.endTime}</span>
-      </>
+      </> */}
     </ContentBox>
   );
 }

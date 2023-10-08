@@ -23,22 +23,23 @@ export const GoalMoneyState = atom<GoalMoneyProps>({
 });
 
 interface GoalCheckProps {
-  goalName: boolean;
-  goalMoney: boolean;
-  saveRatio: boolean;
-  goalBalance: boolean;
-  image: boolean;
-  goalStartDate: boolean;
+  goalState: boolean;
 }
 
 export const GoalCheckState = atom<GoalCheckProps>({
   key: "GoalCheckState",
   default: {
-    goalName: false, // 등록 물품 이름
-    goalMoney: false, // 등록 물품 가격
-    saveRatio: false, // 정기용돈의 몇% 저축할지
-    goalBalance: false,
-    goalStartDate: false,
-    image: false,
+    goalState: false,
+  },
+});
+
+interface GoalImgCheckProps {
+  ImgCheck: boolean;
+}
+
+export const GoalImgCheckState = atom<GoalImgCheckProps>({
+  key: "GoalImgCheckState",
+  default: {
+    ImgCheck: false,
   },
 });

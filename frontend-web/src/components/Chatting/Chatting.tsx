@@ -6,8 +6,9 @@ import { userDataState } from "../../states/UserInfoState";
 
 import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
 
-import { api } from "../../apis/Api";
+import api from "../../apis/Api";
 import moment from "moment";
+import { Container } from "../Common/About/AboutContainer";
 
 export default function Chatting({ balanceGameIdx = 1 }) {
   const memberInfo = useRecoilValue(userDataState);
@@ -178,20 +179,34 @@ export default function Chatting({ balanceGameIdx = 1 }) {
 
   return (
     <div>
-      <div id="user_chat_data">
-        <div id="chat-box"></div>
-
-        <div id="typeMsg">
-          <input
-            onKeyDown={(e) => sendMsg(e)}
-            id="chat-outgoing-msg"
-            type="text"
-            placeholder="메세지를 입력하세요"
-          />
-          <button id="chat-send" onClick={enterMsg} type="button">
-            전송
-          </button>
-        </div>
+      <div
+        id="user_chat_data"
+        style={{
+          marginBottom: "30%",
+          padding: "0%",
+          width: "124%",
+          marginLeft: "-25%",
+          boxSizing: "border-box",
+          // bottom: "300px",
+        }}
+      >
+        <Container height="50%" width="120%" style={{ zIndex: "5000" }}>
+          <div id="chat-box" />
+        </Container>
+        <Container height="20%">
+          <div id="typeMsg">
+            <input
+              onKeyDown={(e) => sendMsg(e)}
+              id="chat-outgoing-msg"
+              type="text"
+              placeholder="메세지를 입력하세요"
+              style={{ width: "95%" }}
+            />
+            <button id="chat-send" onClick={enterMsg} type="button">
+              전송
+            </button>
+          </div>
+        </Container>
       </div>
     </div>
   );

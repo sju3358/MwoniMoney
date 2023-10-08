@@ -24,4 +24,12 @@ public abstract class MemberDto {
 
 	private MemberRole memberRole;
 
+	private String challengeAlarm;
+
+	private String balanceAlarm;
+
+	private String smallAcountAlarm;
+
+	private String email;
+
 }

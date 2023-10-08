@@ -16,21 +16,25 @@ export const MainContainer = styled.div`
 export const Text = styled.div`
   // border: 1px solid blue;
   color: #292929;
-  font-family: Inter;
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   margin-left: 5%;
+  margin-bottom: 3%;
 `;
 
-export const TextEmojiBox = styled.div`
+interface TextEmojiBoxProps {
+  EmojiBox_justify?: string | undefined;
+}
+
+export const TextEmojiBox = styled.div<TextEmojiBoxProps>`
   // border: 1px solid red;
   width: 30%;
   height: 100%;
   box-sizing: border-box;
   display: flex;
-  justify-content: center;
+  justify-content: ${(props) => props.EmojiBox_justify || "center"};
   align-items: center;
 `;
 
@@ -39,6 +43,7 @@ interface EmogiProps {
   // size: string;
   width: string;
   height: string;
+  emogi_margin?: string;
 }
 
 export const Emoji = styled.div<EmogiProps>`

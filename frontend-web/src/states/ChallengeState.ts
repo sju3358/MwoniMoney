@@ -68,5 +68,11 @@ export const isCategoryChallenge = atom<boolean>({
 //챌린지 카테고리 버튼이 클릭되어있는지
 export const whichCategoryChallenge = atom<number>({
   key: "which_category_challenge",
+  default: -1,
+});
+
+//총데이터
+export const totalChallenge = atom<number>({
+  key: "totalChallenge",
   default: 0,
 });

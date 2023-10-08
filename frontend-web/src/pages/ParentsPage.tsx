@@ -12,10 +12,14 @@ import Money from "../assests/image/Money.png";
 import { Container } from "../components/Common/About/AboutContainer";
 import { ChildCard, AddChild } from "../components/Common/Main/ChildCard";
 import GoalForMain from "../components/Common/GoalMoney/GoalMoneyForMain";
-import { userDataState } from "../states/UserInfoState";
 import { useRecoilState } from "recoil";
 import axios, { AxiosResponse } from "axios";
-import { api } from "../apis/Api";
+import api from "../apis/Api";
+import {
+  childDataState,
+  childDataProps,
+} from "../../src/states/ChildInfoState"; // Import the childDataState atom
+import { moneyFormat } from "../components/Common/utils";
 
 const postRegisterChild = (): Promise<AxiosResponse> => {
   // axios 요청을 보낼 때 Authorization 헤더 설정
@@ -29,14 +33,21 @@ const getChild = (childUuid: string): Promise<AxiosResponse> => {
 
 function ParentsPage() {
   const [childData, setChildData] = useState<any[]>([]);
-  const [selectedChild, setSelectedChild] = useState<any>(null); // 선택한 자식 데이터를 저장하는 상태 추가
-  const [userData, setUserData] = useRecoilState(userDataState);
+
+  // Use the childDataState atom to manage selectedChild
+  const [selectedChild, setSelectedChild] =
+    useRecoilState<childDataProps>(childDataState);
 
   useEffect(() => {
     console.log("postRegisterChild");
     postRegisterChild()
       .then((response) => {
         setChildData(response.data);
+
+        // Set the selectedChild to the first child if available
+        if (response.data.length > 0) {
+          handleChildCardClick(response.data[0].uuid);
+        }
       })
       .catch((childError) => {
         console.error(" 오류:", childError);
@@ -53,7 +64,9 @@ function ParentsPage() {
             childName={child.name}
             onClick={() => handleChildCardClick(child.uuid)}
           />
-        ) : null}
+        ) : (
+          <AddChild />
+        )}
       </Container>
     );
   });
@@ -63,10 +76,9 @@ function ParentsPage() {
   const handleChildCardClick = (childUuid: string) => {
     console.log(`ChildCard가 클릭되었습니다. childUuid: ${childUuid}`);
 
-    // getChild 함수를 호출하고 childUuid를 전달하여 데이터를 가져올 수 있음
     getChild(childUuid)
       .then((response) => {
-        setSelectedChild(response.data); // 데이터를 선택한 자식 상태에 저장
+        setSelectedChild(response.data); // Use setSelectedChild to update the selectedChild state
       })
       .catch((error) => {
         console.error("getChild 오류:", error);
@@ -75,21 +87,34 @@ function ParentsPage() {
 
   return (
     <MainContainer>
+      {/* 자녀추가 section */}
       <Container height="15%">{childCards}</Container>
-
-      <Container height="25%">
+      {/* 메인 타이틀 section */}
+      <Container height="20%">
         <Container
           height="100%"
           width="80%"
           flexDirection="column"
           align="start"
         >
-          <Text>현재 {selectedChild?.name || ""}는</Text>
-          <Text>매달 {selectedChild?.allowance || ""}원을 </Text>
-          <Text>받고 있어요!</Text>
+          {selectedChild?.name ? (
+            <>
+              <Text>현재 {selectedChild.name}님은</Text>
+              <Text>
+                매달{" "}
+                {selectedChild?.regularAllowance !== undefined
+                  ? moneyFormat(selectedChild.regularAllowance)
+                  : ""}
+                원을
+              </Text>
+              <Text>받고 있어요!</Text>
+            </>
+          ) : (
+            <Text>아이를 선택해 주세요!</Text>
+          )}
         </Container>
         <TextEmojiBox>
-          <Emoji url={`${Money}`} width="80%" height="50%" />
+          <Emoji url={`${Money}`} width="100%" height="100%" />
         </TextEmojiBox>
       </Container>
       <Container height="60%">

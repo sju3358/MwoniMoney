@@ -7,9 +7,10 @@ import ChallengeList, {
 import ChallengeTitle from "../Common/Challenge/ChallengeTitle";
 import { MainContainer } from "../Common/Main/Main";
 import { Text } from "../Common/About/AboutText";
+import { useNavigate } from "react-router-dom";
 
 //axios
-import { api } from "../../apis/Api";
+import api from "../../apis/Api";
 
 /**
  * recoil
@@ -25,11 +26,16 @@ import {
   whichCategoryChallenge,
 } from "../../states/ChallengeState";
 
+//총 데이터
+import { totalChallenge } from "../../states/ChallengeState";
+
 interface ChallengeProps {
   ismain: string;
 }
 
 function Challenge(props: ChallengeProps) {
+  const navigate = useNavigate();
+
   const [ChallengeData, setChallengeData] = useRecoilState(ChallengeStore);
   const [isProposeState, setisProposeState] =
     useRecoilState(isProposeChallenge);
@@ -49,6 +55,11 @@ function Challenge(props: ChallengeProps) {
   } else {
     status_value = 5;
   }
+  const [totalChallengeData, setTotalChallengeData] =
+    useRecoilState(totalChallenge);
+  if (status_value === 5) {
+    setTotalChallengeData(ChallengeData.length);
+  }
 
   useEffect(() => {
     api
@@ -67,6 +78,9 @@ function Challenge(props: ChallengeProps) {
       })
       .catch((error) => {
         // 요청이 실패한 경우 처리할 로직
+        if (error.response.data === "로그인 되어있지 않습니다.") {
+          navigate("/LoginPage");
+        }
         if (error.response) {
           // 서버에서 응답이 왔지만, 응답 상태 코드가 실패인 경우
           console.error("GET 요청 실패 - 응답 데이터:", error.response.data);
@@ -79,6 +93,8 @@ function Challenge(props: ChallengeProps) {
         }
       });
   }, [isProposeState, isButtonState, whichCategoryState]);
+
+  const ismain = props.ismain;
 
   return (
     <MainContainer>
@@ -94,7 +110,7 @@ function Challenge(props: ChallengeProps) {
         <>
           <ChallengeTitle />
           <ChallengeCategory />
-          <ChallengeAdd />
+          {totalChallengeData === 4 ? <></> : <ChallengeAdd />}
         </>
       )}
       <ChallengeListContainer>
@@ -104,16 +120,17 @@ function Challenge(props: ChallengeProps) {
               <>
                 {ChallengeData.slice(0, 3).map((challenge) => (
                   <ChallengeList
+                    ismain={ismain}
                     data={challenge}
                     key={challenge.memberChallengeIdx}
                   />
                 ))}
                 {ChallengeData.length > 3 && (
-                  <Text>그 외의 챌린지도 더 있어요!</Text>
+                  <Text marginL="0%">그 외의 챌린지도 더 있어요!</Text>
                 )}
               </>
             ) : (
-              <Text>현재 진행중인 챌린지가 없어요. 챌린지를 제안해주세요!</Text>
+              <Text>챌린지를 제안해주세요!</Text>
             )}
           </>
         ) : (
@@ -123,13 +140,18 @@ function Challenge(props: ChallengeProps) {
               <>
                 {ChallengeData.map((challenge) => (
                   <ChallengeList
+                    ismain=""
                     data={challenge}
                     key={challenge.memberChallengeIdx}
                   />
                 ))}
               </>
             ) : (
-              <>챌린지를 제안해주세요!!</>
+              <>
+                {status_value === 5 && <>챌린지 내역이 없어요.</>}
+                {status_value === 0 && <>진행중인 챌린지가 없어요.</>}
+                {status_value === 2 && <>제안 대기중인 챌린지가 없어요.</>}
+              </>
             )}
           </>
         )}
