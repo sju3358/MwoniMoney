@@ -4,15 +4,15 @@ spring:
       client:
         registration:
           google:
-            client-id: 875956331523-t41sdqqi1uj1esl3u222kogktvtjfmjb.apps.googleusercontent.com
-            client-secret: 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
+            client-id:
+            client-secret:
             redirect-uri: http://j9b310.p.ssafy.io/api/login/oauth2/code/google
             scope:
               - email
               - profile
           kakao:
-            client-id: ee79d6a7c99b90866eeba9a9bc103236
-            client-secret: U9zWosrIKvEZzaX6ovJLDvESgPe5adO2
+            client-id:
+            client-secret:
             scope:
               - profile_nickname
               - account_email
