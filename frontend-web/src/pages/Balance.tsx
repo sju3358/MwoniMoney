@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
-import { api } from "../apis/Api";
+import api from "../apis/Api";
 
 import {
   MainContainer,
@@ -13,6 +12,7 @@ import styled from "styled-components";
 import { Text } from "../components/Common/About/AboutText";
 import { WhiteBox } from "../components/Common/About/AboutWhilteContainer";
 import { Img } from "../components/Common/About/AboutEmogi";
+import { useNavigate } from "react-router-dom"; // useNavigate 추가
 
 // 모달
 import ProgressModal from "../modal/ProgressModal";
@@ -26,6 +26,7 @@ const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  // border: 1px solid black;
 `;
 
 const ImgContainer = styled.div`
@@ -41,19 +42,6 @@ const ImgBox = styled.button`
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
 `;
 
-export const getBalance = (props: GetRegisterProps): Promise<AxiosResponse> => {
-  // axios 요청을 보낼 때 Authorization 헤더 설정
-  return api.get("/v1/balances?page=0&size=20", {
-    // headers: {
-    //   Authorization: `Bearer ${props.bearerToken}`,
-    // },
-  });
-};
-
-interface GetRegisterProps {
-  bearerToken: string;
-}
-
 interface BalanceDataItem {
   idx: number;
   question: string;
@@ -65,86 +53,125 @@ interface BalanceDataItem {
   news: string;
 }
 
+console.warn = console.error = () => {};
+// or IIFE
+(() => {
+  console.warn = console.error = () => {};
+})();
+
 function Balance() {
-  const [balanceData, setBalanceData] = useState<BalanceDataItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+
+  function handleImgBoxClick() {
+    navigate("/chatting");
+  }
+  const [runningBalanceGameData, setRunningBalanceGameData] = useState<
+    BalanceDataItem[]
+  >([]);
+  const [endBalanceData, setEndBalanceData] = useState<BalanceDataItem[]>([]);
+  const [curPage, setCurPage] = useState(0);
+  const [isLastPage, setIsLastPage] = useState(false);
+  const [loadNextFlag, setLoadNextFlag] = useState(0);
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken") || "";
-
-    getBalance({ bearerToken: accessToken })
+    api
+      .get(`/v1/balances?status=RUNNING`)
       .then((response) => {
-        const data: BalanceDataItem[] = response.data.content;
-        setBalanceData(data);
-        setIsLoading(false);
+        setRunningBalanceGameData(response.data);
       })
       .catch((error) => {
         console.error("Error fetching balance data:", error);
-        setIsLoading(false);
       });
   }, []);
 
+  useEffect(() => {
+    if (isLastPage !== true) {
+      api
+        .get(`/v1/balances/end?page=${curPage}&size=5`)
+        .then((response) => {
+          setEndBalanceData(endBalanceData.concat(response.data.content));
+          setCurPage(curPage + 1);
+          setIsLastPage(response.data.last);
+        })
+        .catch((error) => {
+          console.error("Error fetching balance data:", error);
+        });
+    }
+  }, [loadNextFlag]);
+
+  function loadNextPage() {
+    setLoadNextFlag(loadNextFlag + 1);
+  }
+
   return (
     <MainContainer>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <>
-          {balanceData &&
-            balanceData.length > 0 &&
-            // Render items with balanceGameStatus "RUNNING"
-            balanceData
-              .filter((item) => item.balanceGameStatus === "RUNNING")
-              .map((item, index) => (
-                <BalanceContainer key={index} height="40%">
-                  <BalanceCompo
-                    news={item.news}
-                    showText={true}
-                    showImg={true}
-                    questionText={item.question}
-                    buyText={item.leftAnswer}
-                    notBuyText={item.rightAnswer}
-                    countOfLeftAnswer={item.countOfLeftAnswer}
-                    countOfRightAnswer={item.countOfRightAnswer}
-                  />
-                </BalanceContainer>
-              ))}
+      {runningBalanceGameData.map((data) => {
+        return (
+          <BalanceContainer height="40%">
+            <BalanceCompo
+              balanceIdx={data.idx}
+              news={data.news}
+              showText={false}
+              showImg={false}
+              questionText={data.question}
+              buyText={data.leftAnswer}
+              notBuyText={data.rightAnswer}
+              countOfLeftAnswer={data.countOfLeftAnswer}
+              countOfRightAnswer={data.countOfRightAnswer}
+            />
+          </BalanceContainer>
+        );
+      })}
 
-          {balanceData &&
-            balanceData.length > 0 &&
-            // Render items with balanceGameStatus "END"
-            balanceData
-              .filter((item) => item.balanceGameStatus === "END")
-              .map((item, index) => (
-                <ListContainer key={index}>
-                  <WhiteBox margin="0% 0% 5% 0%" padding="0%">
-                    <TextContainer
-                      style={{
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Text
-                        color="#C4C4C4"
-                        fontsize="0.75rem"
-                        padding="0% 0% 0% 5%"
-                      >
-                        {item.question}
-                      </Text>
-                      <IntoBalanceResult
-                        news={item.news}
-                        countOfLeftAnswer={item.countOfLeftAnswer}
-                        countOfRightAnswer={item.countOfRightAnswer}
-                      />
-                    </TextContainer>
-                  </WhiteBox>
-                </ListContainer>
-              ))}
-        </>
+      {endBalanceData.map((endBalanceData) => {
+        return (
+          <ListContainer key={endBalanceData.idx}>
+            <WhiteBox margin="0% 0% 5% 0%" padding="0%">
+              <TextContainer
+                style={{
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text color="#C4C4C4" fontsize="0.75rem" padding="0% 0% 0% 5%">
+                  {endBalanceData.question}
+                </Text>
+                <IntoBalanceResult
+                  news={endBalanceData.news}
+                  countOfLeftAnswer={endBalanceData.countOfLeftAnswer}
+                  countOfRightAnswer={endBalanceData.countOfRightAnswer}
+                />
+              </TextContainer>
+            </WhiteBox>
+          </ListContainer>
+        );
+      })}
+
+      {isLastPage === false ? (
+        <button
+          onClick={loadNextPage}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "30%",
+            height: "5%",
+            fontSize: "1.2em",
+            backgroundColor: "#fbd56e",
+            borderRadius: "20px",
+            fontWeight: "bold",
+            borderStyle: "none",
+            margin: "auto",
+          }}
+        >
+          더보기
+        </button>
+      ) : (
+        ""
       )}
 
       <ImgContainer>
-        <ImgBox>
+        <ImgBox onClick={handleImgBoxClick}>
           <Img width="100%" height="100%" padding="0%" src={`${Chat}`} />
         </ImgBox>
       </ImgContainer>

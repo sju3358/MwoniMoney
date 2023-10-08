@@ -34,6 +34,7 @@ import QrLoginRedirect from "./pages/Login/QrLoginRedirect";
 import QrLoginPage from "./pages/Login/QrLoginPage";
 //짜금통
 import CreatGoal from "./components/Children/GoalCreate";
+import Chatbot from "./pages/Chatbot";
 
 function App() {
   // 로컬 스토리지에서 userUuidState 값을 가져옵니다.
@@ -60,6 +61,10 @@ function App() {
             element={
               userUuidState ? <StartPage2 /> : <Navigate to="/LoginPage" />
             }
+          />
+          <Route
+            path="/Chatbot"
+            element={userUuidState ? <Chatbot /> : <Navigate to="/LoginPage" />}
           />
           <Route
             path="/StartPage3"

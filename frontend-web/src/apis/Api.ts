@@ -1,12 +1,38 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { API_BASE_URL } from "./Url";
-export const api = axios.create({
+
+let instance = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    "Content-type": "application/json",
-    Authorization: "Bearer " + localStorage.getItem("token"),
+  withCredentials: true,
+});
+
+instance.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization = "Bearer " + localStorage.getItem("token");
+    return config;
   },
-});
-export const api_ver2 = axios.create({
-  baseURL: API_BASE_URL,
-});
+  (error) => {
+    console.log(error);
+    return Promise.reject(error);
+  }
+);
+
+instance.interceptors.response.use(
+  (response) => {
+    console.log("인터셉터 헤더 : ", response.headers["x-access-token"]);
+    const newAccessToken = response.headers["x-access-token"];
+    if (
+      newAccessToken != null &&
+      newAccessToken != undefined &&
+      newAccessToken != ""
+    ) {
+      localStorage.setItem("token", newAccessToken);
+    }
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+export default instance;

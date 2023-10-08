@@ -36,17 +36,22 @@ function ChallengeAdd() {
   const role = userData.memberRole;
 
   const [open, setOpen] = React.useState(false);
-  console.log(open + "33");
+  // console.log(open + "33");
   const handleOpen = (e: any) => {
     e.preventDefault();
     setOpen(true);
-    console.log(open + "111");
+    // console.log(open + "111");
   };
   return (
     <Container height="10%">
       <button
         onClick={handleOpen}
-        style={{ width: "90%", height: "90%", border: "none" }}
+        style={{
+          width: "90%",
+          height: "90%",
+          border: "none",
+          backgroundColor: "transparent",
+        }}
       >
         <EmogiBox backImg={AddChildImg} width="100%" height="100%" />
       </button>

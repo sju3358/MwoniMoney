@@ -4,7 +4,7 @@ import Modal from "@mui/material/Modal";
 import { userCheckState, userDataState } from "../../states/UserInfoState";
 import { Container } from "../../components/Common/About/AboutContainer";
 import { TextBox } from "../../components/Common/About/AboutText";
-import { api } from "../../apis/Api";
+import api from "../../apis/Api";
 import { WhiteBox1 } from "../../components/Common/About/AboutWhilteContainer";
 import { ModalBtn } from "../ModalBtn1";
 
@@ -35,8 +35,11 @@ function MypageModal() {
         email: userData.email,
         birthday: userData.birthday,
         memberRole: userData.memberRole,
+        // status : s
       });
+      // console.log(email);
       setOpen(false);
+
       alert("axios 성공");
     } catch (error) {
       alert("axios 실패");

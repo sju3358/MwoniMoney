@@ -33,9 +33,9 @@ public class JwtTokenProvider {
 
 	private static final String AUTHORITIES_KEY = "Auth";
 	private static final String BEARER_TYPE = "Bearer";
-	private static final long ACCESS_TOKEN_EXPIRE_TIME = 48 * 30 * 60 * 1000L; // 30분
-	private static final long REFRESH_TOKEN_EXPIRE_TIME = 30 * 24 * 60 * 60 * 1000L; // 한달
-	private static final int REFRESH_TOKEN_EXPIRE_TIME_COOKIE = 12 * 30 * 24 * 60 * 60; // 12개월
+	private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 24 * 60 * 60 * 1000L;
+	private static final long REFRESH_TOKEN_EXPIRE_TIME = 30 * 24 * 60 * 60 * 1000L;
+	private static final int REFRESH_TOKEN_EXPIRE_TIME_COOKIE = 365 * 24 * 60 * 60;
 	private final Key key;
 
 	public JwtTokenProvider(@Value("${jwt.key}") String secret) {
@@ -47,7 +47,7 @@ public class JwtTokenProvider {
 		return REFRESH_TOKEN_EXPIRE_TIME_COOKIE;
 	}
 
-	public Token createToken(String id, String socialId, String role) {
+	public Token createToken(String id, String role) {
 		long now = new Date().getTime();
 
 		String accessToken = Jwts
@@ -56,12 +56,12 @@ public class JwtTokenProvider {
 			.setIssuedAt(new Date())
 			.claim(AUTHORITIES_KEY, role)
 			.signWith(key, SignatureAlgorithm.HS256)
-			.setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
+			.setExpiration(new Date(now + ACCESS_TOKEN_EXPIRE_TIME))
 			.compact();
 
 		String refreshToken = Jwts
 			.builder()
-			.setSubject(socialId)
+			.setSubject(id)
 			.setIssuedAt(new Date())
 			.claim(AUTHORITIES_KEY, role)
 			.signWith(key, SignatureAlgorithm.HS256)
@@ -151,7 +151,9 @@ public class JwtTokenProvider {
 
 	public String getMemberUUID(String accessToken) {
 		StringTokenizer st = new StringTokenizer(accessToken);
-		st.nextToken();
+
+		if (st.countTokens() >= 2)
+			st.nextToken();
 
 		String jwtToken = st.nextToken();
 

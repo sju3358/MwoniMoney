@@ -38,11 +38,21 @@ function ChallengeTitle() {
   const [userData, setUserData] = useRecoilState(userDataState);
   const role = userData.memberRole;
 
-  const child = "재이"; // axios 연결하면 자녀 이름
+  let name: string | null = null;
+  const childStateString: string | null = localStorage.getItem("childState");
+
+  if (childStateString !== null) {
+    const childState = JSON.parse(childStateString);
+    name = childState.childDataState.name;
+    console.log(name);
+  } else {
+    console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
+  }
+
   return (
     <TitleContainer>
       {role === "PARENT" ? (
-        <TitleBox width="70%">{child}의 챌린지</TitleBox>
+        <TitleBox width="70%">{name}의 챌린지</TitleBox>
       ) : (
         <TitleBox width="70%">나의 챌린지</TitleBox>
       )}

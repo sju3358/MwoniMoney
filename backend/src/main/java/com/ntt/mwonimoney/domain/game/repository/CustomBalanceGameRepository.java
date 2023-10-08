@@ -8,7 +8,7 @@ import org.springframework.data.domain.Slice;
 import com.ntt.mwonimoney.domain.game.model.dto.BalanceGameDto;
 
 public interface CustomBalanceGameRepository {
-	Slice<BalanceGameDto> findSliceGamesBy(Pageable pageable);
+	Slice<BalanceGameDto> findSliceEndGamesBy(Pageable pageable);
 
 	Optional<BalanceGameDto> findBalanceGameDtoByIdx(Long idx);
 

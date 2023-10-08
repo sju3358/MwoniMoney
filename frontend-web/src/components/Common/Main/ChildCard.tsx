@@ -27,6 +27,10 @@ export const Child = styled.div<ChildProps>`
   display: ${(props) => props.flex};
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
+  &:active {
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+    transform: translate(0em, 0.2em);
+  }
 `;
 
 interface ChildCardProps {
@@ -46,7 +50,13 @@ function AddChild() {
     <>
       <button
         onClick={handleOpen}
-        style={{ width: "90%", height: "90%", border: "none", marginTop: "3%" }}
+        style={{
+          width: "90%",
+          height: "90%",
+          border: "none",
+          marginTop: "3%",
+          backgroundColor: "transparent",
+        }}
       >
         <EmogiBox backImg={AddChildImg} width="100%" height="100%" />
       </button>

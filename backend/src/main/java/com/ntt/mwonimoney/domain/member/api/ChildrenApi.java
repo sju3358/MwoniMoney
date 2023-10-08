@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ntt.mwonimoney.domain.account.entity.FinAccountType;
+import com.ntt.mwonimoney.domain.account.model.dto.FinAccountDto;
+import com.ntt.mwonimoney.domain.account.service.v2.FinAccountServiceImplV2;
+import com.ntt.mwonimoney.domain.member.model.dto.ChildDetailDto;
 import com.ntt.mwonimoney.domain.member.model.dto.ChildDto;
 import com.ntt.mwonimoney.domain.member.service.ChildrenService;
 import com.ntt.mwonimoney.global.security.jwt.JwtTokenProvider;
@@ -26,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ChildrenApi {
 
 	private final ChildrenService childrenService;
+	private final FinAccountServiceImplV2 finAccountServiceImplV2;
 	private final JwtTokenProvider jwtTokenProvider;
 
 	@GetMapping("/children")
@@ -44,7 +49,7 @@ public class ChildrenApi {
 	}
 
 	@GetMapping("/children/{child_uuid}")
-	public ResponseEntity<ChildDto> getChildInfoRequest(
+	public ResponseEntity<?> getChildInfoRequest(
 		@RequestHeader("Authorization") String accessToken,
 		@PathVariable("child_uuid") String childUUID) {
 
@@ -54,9 +59,39 @@ public class ChildrenApi {
 
 		ChildDto childDto = childrenService.getChildInfo(memberUUID, childUUID);
 
+		if (childDto.getSmallAccount() == null) {
+			return ResponseEntity.ok().body(childDto);
+		}
+
+		ChildDetailDto childDetailDto = ChildDetailDto.builder()
+			.uuid(childDto.getUuid())
+			.status(childDto.getStatus())
+			.name(childDto.getName())
+			.nickname(childDto.getNickname())
+			.birthday(childDto.getBirthday())
+			.socialProvider(childDto.getSocialProvider())
+			.memberRole(childDto.getMemberRole())
+			.creditScore(childDto.getCreditScore())
+			.quizRewardRemain(childDto.getQuizRewardRemain())
+			.quizReward(childDto.getQuizReward())
+			.goalMoney(childDto.getSmallAccount().getGoalMoney())
+			.goalName(childDto.getSmallAccount().getGoalName())
+			.imageFilename(childDto.getSmallAccount().getImageFilename())
+			.regularAllowance(childDto.getRegularAllowance())
+			.challengeAlarm(childDto.getChallengeAlarm())
+			.balanceAlarm(childDto.getBalanceAlarm())
+			.smallAcountAlarm(childDto.getSmallAcountAlarm())
+			.email(childDto.getEmail())
+			.build();
+
+		FinAccountDto finAccountDto = finAccountServiceImplV2.getFinAccount(childDetailDto.getUuid(),
+			FinAccountType.SMALL);
+
+		childDetailDto.setRemain(finAccountDto.getRemain());
+
 		log.info("[자녀 정보 조회 요청 끝]", LocalDateTime.now());
 
-		return ResponseEntity.ok().body(childDto);
+		return ResponseEntity.ok().body(childDetailDto);
 	}
 
 	@PostMapping("/children/{parentUUID}")

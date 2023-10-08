@@ -9,7 +9,7 @@ import { userCheckState, userDataState } from "../../../states/UserInfoState";
 import { Container } from "../About/AboutContainer";
 import { useRecoilState } from "recoil";
 import { ModalBtn } from "../../../modal/ModalBtn1";
-import { api } from "../../../apis/Api";
+import api from "../../../apis/Api";
 
 import { useNavigate } from "react-router";
 
@@ -90,7 +90,7 @@ export default function RoleSelect() {
     try {
       api
         .post("/v1/members/role", {
-          memberRole: userData.memberRole,
+          memberRole: selectedValue,
         })
         .catch((e) => {
           console.log(e);

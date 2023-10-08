@@ -6,7 +6,7 @@ const { persistAtom } = recoilPersist({
   storage: localStorage,
 });
 
-export interface userDataProps {
+export interface childDataProps {
   idx: any;
   uuid: string;
   status: number;
@@ -14,12 +14,19 @@ export interface userDataProps {
   nickname: string;
   birthday: string;
   socialProvider: string;
-  socialId: string;
   memberRole: string;
   email: string;
+  regularAllowance: number;
+  creditScore: number; // 추가: creditScore 속성
+  quizRewardRemain: number; // 추가: quizRewardRemain 속성
+  quizReward: number; // 추가: quizReward 속성
+  smallAccount: null | any; // 추가: smallAccount 속성
+  balanceAlarm: number;
+  challengeAlarm: number;
+  smallAccountAlarm: number;
 }
 
-export const userDataState = atom<userDataProps>({
+export const childDataState = atom<childDataProps>({
   key: "childDataState",
   default: {
     idx: 0,
@@ -29,24 +36,16 @@ export const userDataState = atom<userDataProps>({
     nickname: "",
     birthday: "",
     socialProvider: "",
-    socialId: "",
     memberRole: "",
     email: "",
+    regularAllowance: 0,
+    creditScore: 0, // 추가: creditScore 속성
+    quizRewardRemain: 0, // 추가: quizRewardRemain 속성
+    quizReward: 0, // 추가: quizReward 속성
+    smallAccount: null, // 추가: smallAccount 속성
+    balanceAlarm: 0,
+    challengeAlarm: 0,
+    smallAccountAlarm: 0,
   },
   effects_UNSTABLE: [persistAtom],
-});
-
-export interface userCheckProps {
-  nameCheck: boolean;
-  birthdayCheck: boolean;
-  emailCheck: boolean;
-}
-
-export const userCheckState = atom<userCheckProps>({
-  key: "useCheckState",
-  default: {
-    nameCheck: false,
-    birthdayCheck: false,
-    emailCheck: false,
-  },
 });

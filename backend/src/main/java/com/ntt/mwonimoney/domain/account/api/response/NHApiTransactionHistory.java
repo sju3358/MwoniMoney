@@ -1,5 +1,11 @@
 package com.ntt.mwonimoney.domain.account.api.response;
 
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class NHApiTransactionHistory {
     private String Trdd;
     private String Txtm;

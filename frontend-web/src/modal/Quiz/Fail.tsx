@@ -62,7 +62,6 @@ const BigText = styled.div`
   color: var(--text-color-active, #292929);
 
   /* content/title/mid */
-  font-family: Inter;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;

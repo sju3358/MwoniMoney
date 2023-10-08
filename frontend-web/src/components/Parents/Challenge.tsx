@@ -8,7 +8,7 @@ import ChallengeTitle from "../Common/Challenge/ChallengeTitle";
 import { MainContainer } from "../Common/Main/Main";
 
 //axios
-import { api } from "../../apis/Api";
+import api from "../../apis/Api";
 
 /**
  * recoil
@@ -24,9 +24,21 @@ import {
   whichCategoryChallenge,
 } from "../../states/ChallengeState";
 
+//총 데이터
+import { totalChallenge } from "../../states/ChallengeState";
+
 function Challenge() {
   //값 어떻게 가져올지 생각하기!!
-  const extramemberUuid_value = "d3a58e6c-14d7-4b3a-b58f-982aafc9836b";
+  let ChildUuid: string | null = null;
+  const childStateString: string | null = localStorage.getItem("childState");
+
+  if (childStateString !== null) {
+    const childState = JSON.parse(childStateString);
+    ChildUuid = childState.childDataState.uuid;
+    console.log(ChildUuid);
+  } else {
+    console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
+  }
 
   const [ChallengeData, setChallengeData] = useRecoilState(ChallengeStore);
   const [isProposeState, setisProposeState] =
@@ -46,11 +58,15 @@ function Challenge() {
     status_value = 5;
   }
 
+  const [totalChallengeData, setTotalChallengeData] =
+    useRecoilState(totalChallenge);
+  if (status_value === 5) {
+    setTotalChallengeData(ChallengeData.length);
+  }
+
   useEffect(() => {
     api
-      .get(
-        `/v1/challenges?status=${status_value}&extramemberUuid=${extramemberUuid_value}`
-      )
+      .get(`/v1/challenges?status=${status_value}&extramemberUuid=${ChildUuid}`)
       .then((response) => {
         // 성공적으로 요청이 완료된 경우 처리할 로직
         console.log("GET 요청 성공:", response.data);
@@ -77,7 +93,7 @@ function Challenge() {
     <MainContainer>
       <ChallengeTitle />
       <ChallengeCategory />
-      <ChallengeAdd />
+      {totalChallengeData === 4 ? <></> : <ChallengeAdd />}
       <ChallengeListContainer>
         <>
           {ChallengeData.length > 0 ? (
@@ -90,7 +106,11 @@ function Challenge() {
               ))}
             </>
           ) : (
-            <>챌린지를 생성해주세요!!</>
+            <>
+              {status_value === 5 && <>챌린지내역이 없어요.</>}
+              {status_value === 0 && <>진행중인 챌린지가 없어요.</>}
+              {status_value === 2 && <>제안대기중인 챌린지가 없어요.</>}
+            </>
           )}
         </>
       </ChallengeListContainer>

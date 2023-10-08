@@ -26,10 +26,10 @@ function Notifications() {
   };
 
   return (
-    <Container height="50%">
+    <Container height="30%">
       <WhiteBox1 justify="center" align="center">
         <Container width="95%" height="95%" flexDirection="column">
-          <TextBox height="30%" fontSize="1.5em">
+          <TextBox height="40%" fontSize="1.5em">
             알림설정
           </TextBox>
           <TextBox
@@ -83,7 +83,7 @@ function Notifications() {
               color="primary"
             />
           </TextBox>
-          <TextBox
+          {/* <TextBox
             height="20%"
             fontSize="1em"
             fontWeight="normal"
@@ -99,7 +99,7 @@ function Notifications() {
               onChange={handleChange("allowanceChecked")}
               color="primary"
             />
-          </TextBox>
+          </TextBox> */}
         </Container>
       </WhiteBox1>
     </Container>

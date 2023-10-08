@@ -1,7 +1,6 @@
 package com.ntt.mwonimoney.global.security.oauth.handler;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -66,12 +65,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 				OAuth2AuthorizationRequestBasedOnCookieRepository.REDIRECT_URI_PARAM_COOKIE_NAME)
 			.map(Cookie::getValue);
 
-		// if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
-		// 	log.error("determineTargetUrl - redirectUri : {} , 인증을 진행할 수 없습니다.", redirectUri);
-		// 	throw new IllegalArgumentException(
-		// 		"Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
-		// }
-
 		String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 		OAuth2AuthenticationToken authToken = (OAuth2AuthenticationToken)authentication;
 		SocialProvider socialProvider = SocialProvider.valueOf(
@@ -92,7 +85,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 		}
 
 		Member bySocialId = memberRepository.findMemberBySocialId(socialId).orElseThrow();
-		Token tokenInfo = jwtTokenProvider.createToken(bySocialId.getUuid(), socialId,
+		Token tokenInfo = jwtTokenProvider.createToken(bySocialId.getUuid(),
 			memberRole.name());
 
 		log.info("successHanlder : " + bySocialId.getUuid());
@@ -132,13 +125,4 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 		}
 		return false;
 	}
-
-	private boolean isAuthorizedRedirectUri(String uri) {
-		URI clientRedirectUri = URI.create(uri);
-		URI authorizedUri = URI.create(redirectUri);
-
-		return authorizedUri.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
-			&& authorizedUri.getPort() == clientRedirectUri.getPort();
-	}
-
 }

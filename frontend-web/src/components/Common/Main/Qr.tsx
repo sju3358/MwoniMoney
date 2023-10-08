@@ -20,12 +20,16 @@ function Qr() {
         align="start"
         justifyContent="start"
       >
-        <TextBox marginL="10%">QR 발급</TextBox>
-        <Text>자녀에게</Text>
-        <Text>QR코드를 발급해주세요!</Text>
+        <TextBox fontF="TheJamsil7Bold" marginL="10%">
+          QR 발급
+        </TextBox>
+        <Text marginL="10%" padding="0% 0% 5% 0%">
+          자녀에게
+        </Text>
+        <Text marginL="10%">QR코드를 발급해주세요!</Text>
       </Container>
       <Container height="100%" width="35%">
-        <EmogiBox height="60%" width="65%" backImg={`${QrEmogi}`} />
+        <EmogiBox height="60%" width="80%" backImg={`${QrEmogi}`} />
       </Container>
     </WhiteBox1>
   );

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "../About/AboutContainer";
 import { InputBox, TextBox } from "../About/AboutText";
 import { useRecoilState } from "recoil";
 import { userCheckState, userDataState } from "../../../states/UserInfoState";
+import api from "../../../apis/Api";
 
 // 입력칸
 interface InputImfoProps {
@@ -16,7 +17,28 @@ function InputInfo({ title, info, placeholder, id }: InputImfoProps) {
   const [userData, setUserData] = useRecoilState(userDataState);
   const [userCheck, setUserCheck] = useRecoilState(userCheckState);
   const [inputValue, setInputValue] = useState("");
-  console.log(userCheck);
+
+  //member를 get해서 status? 값으로 정보 받았는지 확인하기
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get("v1/members", {});
+        const receivedData = response.data;
+        // console.log(receivedData.email);
+        setUserData((prev) => ({
+          ...prev,
+          status: receivedData.member_status,
+          name: receivedData.name,
+          email: receivedData.email,
+          birthday: receivedData.birthday,
+        }));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+  const status = userData.status;
 
   const handleInputChange = (e: any) => {
     setInputValue(e.target.value);
@@ -36,7 +58,7 @@ function InputInfo({ title, info, placeholder, id }: InputImfoProps) {
   return (
     <>
       <Container height="30%">
-        <TextBox fontSize="1.5em" height="100%">
+        <TextBox marginL="3%" fontSize="1.5em" height="100%">
           {title}
         </TextBox>
       </Container>
@@ -46,9 +68,7 @@ function InputInfo({ title, info, placeholder, id }: InputImfoProps) {
         justifyContent="center"
         align="center"
       >
-        {userCheck.birthdayCheck === false ||
-        userCheck.emailCheck === false ||
-        userCheck.nameCheck === false ? (
+        {status == 0 ? (
           <TextBox
             height="40%"
             width="93%"
