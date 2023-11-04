@@ -10,7 +10,7 @@ import { Text } from "../About/AboutText";
 import styled from "styled-components";
 
 //recoil
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { userDataState } from "../../../states/UserInfoState";
 import { getLoan } from "../../../states/LoanState";
 import { isButtonLoan } from "../../../states/LoanState";
@@ -47,7 +47,7 @@ function LoanList({ data }: Props) {
   const LoanIdx = data.idx;
 
   //챌린지 리스트의 버튼이 클릭되어있는지
-  const [isButtonState, setIsButtonState] = useRecoilState(isButtonLoan);
+  const setIsButtonState = useSetRecoilState(isButtonLoan);
 
   //자식이 부모의 대출 수락
   const handleAccept = () => {
@@ -79,7 +79,7 @@ function LoanList({ data }: Props) {
       });
   };
 
-// Repay모달
+  // Repay모달
   const [open, setOpen] = React.useState(false);
   const handleOpen = (e: any) => {
     e.preventDefault();

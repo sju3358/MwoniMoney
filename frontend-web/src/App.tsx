@@ -20,7 +20,6 @@ import News from "./modal/Quiz/News";
 import LoanProposal from "./modal/LoanProposal";
 import Faq from "./pages/Faq";
 import GoalCreate from "./components/Children/GoalCreate";
-import ProgressModal from "./modal/ProgressModal";
 import LoginRedirect from "./pages/Login/LoginRedirect";
 import Fail from "./modal/Quiz/Fail";
 import Qr from "./pages/Qr";

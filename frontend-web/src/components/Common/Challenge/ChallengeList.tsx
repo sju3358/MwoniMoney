@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Category } from "./ChallengeCategory";
 import { Text } from "../About/AboutText";
 //recoil
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { getChallenge } from "../../../states/ChallengeState";
 import { userDataState } from "../../../states/UserInfoState";
 import { isButtonChallenge } from "../../../states/ChallengeState";
@@ -111,7 +111,7 @@ function ChallengeList({ data, ismain }: Props) {
   const memberChallengeIdx = data.memberChallengeIdx;
 
   //챌린지 리스트의 버튼이 클릭되어있는지
-  const [isButtonState, setIsButtonState] = useRecoilState(isButtonChallenge);
+  const setIsButtonState = useSetRecoilState(isButtonChallenge);
 
   let ChildUuid: string | null = null;
   const childStateString: string | null = localStorage.getItem("childState");
