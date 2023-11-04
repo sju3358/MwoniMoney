@@ -50,7 +50,6 @@ function MyComponent() {
     console.log("KaKaoLogin 로그인");
     // kakaoURL
     const socialName = "kakao";
-    const redirectURI = "your_redirect_uri";
     const kakaoURL = `${process.env.REACT_APP_SERVER_URL}/api/oauth2/authorization/${socialName}?redirect_uri=${process.env.REACT_APP_BASE_URL}/oauth/redirect`;
     console.log("Kakao URL 주소: " + kakaoURL);
 
@@ -58,14 +57,10 @@ function MyComponent() {
   };
 
   const handleGoogleLoginClick = () => {
-    // ���⿡�� ���� �α��� ó���� �����ϰų� �ʿ��� ������ ������ �� ����
     console.log("GoogleLogin Ŭ����");
-    const socialName = "google"; // �Ҽ� �̵�� �̸�
-    const redirectURI = "your_redirect_uri"; // ���𷺼� URI�� ���⿡ �߰�
+    const socialName = "google"; 
     const kakaoURL = `${process.env.REACT_APP_SERVER_URL}/api/oauth2/authorization/${socialName}?redirect_uri=${process.env.REACT_APP_BASE_URL}/oauth/redirect`;
     console.log("Kakao URL �ּ�: " + kakaoURL);
-
-    // ������ ���𷺼�
     window.location.href = kakaoURL;
   };
 
