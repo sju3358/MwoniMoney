@@ -26,18 +26,11 @@ import {
 
 //총 데이터
 import { totalChallenge } from "../../states/ChallengeState";
+import { getChildState } from "../Common/utils";
 
 function Challenge() {
   let ChildUuid: string | null = null;
-  const childStateString: string | null = localStorage.getItem("childState");
-
-  if (childStateString !== null) {
-    const childState = JSON.parse(childStateString);
-    ChildUuid = childState.childDataState.uuid;
-    console.log(ChildUuid);
-  } else {
-    console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
-  }
+  getChildState();
 
   const [ChallengeData, setChallengeData] = useRecoilState(ChallengeStore);
   const [isProposeState, setisProposeState] =
