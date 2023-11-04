@@ -10,6 +10,7 @@ import { isProposeChallenge } from "../../states/ChallengeState";
 
 //axios
 import api from "../../apis/Api";
+import { getChildState } from "../../components/Common/utils";
 
 interface ModalBackPops {
   height?: string;
@@ -124,15 +125,7 @@ const ModalParentChallenge: React.FC<ModalProps> = ({
    * 자식 uuid
    */
   let ChildUuid: string | null = null;
-  const childStateString: string | null = localStorage.getItem("childState");
-
-  if (childStateString !== null) {
-    const childState = JSON.parse(childStateString);
-    ChildUuid = childState.childDataState.uuid;
-    console.log(ChildUuid);
-  } else {
-    console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
-  }
+  getChildState();
 
   const handleSubmit = () => {
     if (newChallengeData.category.length < 1) {

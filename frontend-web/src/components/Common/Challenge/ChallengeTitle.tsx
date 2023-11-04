@@ -42,7 +42,6 @@ function ChallengeTitle() {
   if (childStateString !== null) {
     const childState = JSON.parse(childStateString);
     name = childState.childDataState.name;
-    console.log(name);
   } else {
     console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
   }
