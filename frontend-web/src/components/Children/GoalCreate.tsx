@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import GoalCreate from "../../assests/image/GoalCreate.png";
 import Item from "../../assests/image/Item.png";
 import { Text, TextBox } from "../Common/About/AboutText";

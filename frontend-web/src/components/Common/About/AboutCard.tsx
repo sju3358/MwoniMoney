@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { TextBox } from "./AboutText";
 import { WhiteBox1 } from "./AboutWhilteContainer";
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "../About/AboutContainer";
 import { InputBox, TextBox } from "../About/AboutText";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { userCheckState, userDataState } from "../../../states/UserInfoState";
 import api from "../../../apis/Api";
 
@@ -15,7 +15,7 @@ interface InputImfoProps {
 
 function InputInfo({ title, info, placeholder, id }: InputImfoProps) {
   const [userData, setUserData] = useRecoilState(userDataState);
-  const [userCheck, setUserCheck] = useRecoilState(userCheckState);
+  const setUserCheck = useSetRecoilState(userCheckState);
   const [inputValue, setInputValue] = useState("");
 
   //member를 get해서 status? 값으로 정보 받았는지 확인하기
