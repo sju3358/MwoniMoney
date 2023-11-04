@@ -6,7 +6,7 @@ import { userDataState } from "../../states/UserInfoState";
 import { useRecoilState } from "recoil";
 
 function MoneyPageCommon(): JSX.Element {
-  const [userData, setUserData] = useRecoilState(userDataState);
+  const [userData] = useRecoilState(userDataState);
 
   const role = userData.memberRole;
 
