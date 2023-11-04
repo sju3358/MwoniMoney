@@ -2,34 +2,27 @@ import React from "react";
 import styled from "styled-components";
 import { Category } from "./ChallengeCategory";
 import { Text } from "../About/AboutText";
-
 //recoil
 import { useRecoilState } from "recoil";
 import { getChallenge } from "../../../states/ChallengeState";
 import { userDataState } from "../../../states/UserInfoState";
 import { isButtonChallenge } from "../../../states/ChallengeState";
-
 //axios
 import api from "../../../apis/Api";
-
 //router
 import { useNavigate } from "react-router-dom";
-
 //util
 import { dateFormat } from "../utils";
 import { moneyFormat } from "../utils";
-import { style } from "@mui/system";
 
 export const ChallengeListContainer = styled.div`
   // border: 1px solid red;
   width: 100%;
   height: 90%;
-  // height: 500px;
   overflow-y: auto; /* 세로 스크롤만 생성 */
   overflow-x: hidden; /* 가로 스크롤 제거 */
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   align-items: center;
   margin-top: 10px;
 `;
@@ -39,16 +32,10 @@ interface ListProps {
 }
 
 export const ListComponent = styled.div<ListProps>`
-  // 그림자
-  // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   // border: 1px solid blue;
   background-color: #ffffff;
   width: 90%;
   height: ${(props) => (props.ismain === "Y" ? "25%" : "25%")};
-  // border-top-left-radius: 4% 4%;
-  // border-top-right-radius: 4% 4%;
-  // border-bottom-left-radius: 4% 4%;
-  // border-bottom-right-radius: 4% 4%;
   border-radius: 15px;
   margin-bottom: 20px;
   display: flex;
@@ -86,7 +73,6 @@ export const CategoryTag = styled.div`
 export const DeadLine = styled.div`
   // border: 1px solid red;
   width: 35%;
-  // height: 100%;
   display: flex;
   justify-content: end;
   align-items: center;
@@ -109,8 +95,6 @@ interface BtnProps {
 }
 
 const ChallengeBtn = styled.div<BtnProps>`
-  // 그림자
-  // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   width: 35%;
   height: 100%;
   border-radius: 20px;
@@ -140,7 +124,7 @@ const ListContainer = styled.div`
 
 function ChallengeList({ data, ismain }: Props) {
   const navigate = useNavigate();
-  const [userData, setUserData] = useRecoilState(userDataState);
+  const [userData] = useRecoilState(userDataState);
   const role = userData.memberRole;
 
   //자식의 memberChallengeidx
