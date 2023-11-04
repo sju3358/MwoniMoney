@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Img } from "../About/AboutEmogi";
-import { ModalBody2, ModalBody3 } from "../../../modal/ModalImg";
+import { ModalBody2 } from "../../../modal/ModalImg";
 import BalanceResult from "../../../modal/ProgressModal";
 import LeftArrow from "../../../assests/image/main/LeftArrow.png";
 
