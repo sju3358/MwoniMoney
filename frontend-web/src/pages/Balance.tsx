@@ -20,6 +20,8 @@ import IntoBalanceResult from "../components/Common/Main/IntoBalanceResult";
 // 이미지
 import Chat from "../assests/image/main/Chat.png";
 
+import Button from "../components/Common/About/AboutButton";
+
 const ListContainer = styled.div`
   // border: 1px solid black;
   display: flex;
@@ -146,24 +148,16 @@ function Balance() {
       })}
 
       {isLastPage === false ? (
-        <button
+        <Button
+          margin="auto"
+          width="30%"
+          height="5%"
+          fontS="1.2em"
+          borderR="20px"
           onClick={loadNextPage}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "30%",
-            height: "5%",
-            fontSize: "1.2em",
-            backgroundColor: "#fbd56e",
-            borderRadius: "20px",
-            fontWeight: "bold",
-            borderStyle: "none",
-            margin: "auto",
-          }}
         >
           더보기
-        </button>
+        </Button>
       ) : (
         ""
       )}

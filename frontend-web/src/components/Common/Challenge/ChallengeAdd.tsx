@@ -5,7 +5,7 @@ import { EmogiBox } from "../History";
 import { Container } from "../About/AboutContainer";
 import ModalChildrenChallenge from "../../../modal/Challenge/ModalChildrenChallenge";
 import ModalParentChallenge from "../../../modal/Challenge/ModalParentChallenge";
-
+import Button from "../About/AboutButton";
 import { userDataState } from "../../../states/UserInfoState";
 import { useRecoilState } from "recoil";
 
@@ -20,17 +20,17 @@ function ChallengeAdd() {
   };
   return (
     <Container height="10%">
-      <button
+      <Button
+        width="90%"
+        height="90%"
+        backcolor="transparent"
+        border="1px solid black"
         onClick={handleOpen}
-        style={{
-          width: "90%",
-          height: "90%",
-          border: "none",
-          backgroundColor: "transparent",
-        }}
+        borderR="none"
+        fontS="0"
       >
         <EmogiBox backImg={AddChildImg} width="100%" height="100%" />
-      </button>
+      </Button>
       {role === "PARENT" ? (
         <ModalParentChallenge
           useState_open={open}

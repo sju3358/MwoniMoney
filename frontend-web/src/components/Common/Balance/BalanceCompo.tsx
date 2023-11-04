@@ -8,6 +8,7 @@ import { Container } from "../About/AboutContainer";
 import { EmogiBox } from "../About/AboutEmogi";
 import { AxiosResponse } from "axios";
 import api from "../../../apis/Api";
+import Button from "../About/AboutButton";
 import { useNavigate } from "react-router-dom";
 
 interface ImgProps {
@@ -22,29 +23,6 @@ export const Img_no = styled.img<ImgProps>`
   height: ${(props) => (props.height ? props.height : "100%")};
   padding: ${(props) => (props.padding ? props.padding : "0%")};
   margin: ${(props) => (props.margin ? props.margin : "0%")};
-`;
-
-interface ButtonProps {
-  backgroundcolor?: string;
-  border?: string;
-  afbackcolor?: string;
-}
-
-const Button = styled.button<ButtonProps>`
-  background-color: ${(props) =>
-    props.backgroundcolor ? props.backgroundcolor : "#fbd56e"};
-  border: ${(props) => (props.border ? props.border : "none")};
-  border-radius: 20px;
-  margin: 2% 5% 0% 5%;
-  padding: 2% 7% 2% 7%;
-  font-weight: bold;
-  font-size: 1em;
-  &:active {
-    background-color: ${(props) =>
-      props.afbackcolor ? props.afbackcolor : props.backgroundcolor};
-    transform: translate(0em, 0.2em);
-    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
-  }
 `;
 
 const Click = styled.div`
@@ -139,18 +117,25 @@ function BalanceCompo({
         </Container>
         <Container height="20%">
           <Button
-            backgroundcolor="#FBD56E"
-            border="0"
-            onClick={() => handleClick("LEFT")}
+            margin="2% 5% 0% 5%"
+            padding="2% 7% 2% 7%"
+            fontS="1em"
+            backcolor="#FBD56E"
             afbackcolor="#FFC107"
+            borderR="20px"
+            onClick={() => handleClick("LEFT")} // Call handleClick with "LEFT"
           >
             {buyText}
           </Button>
           <Button
-            backgroundcolor="white"
-            onClick={() => handleClick("RIGHT")}
+            margin="2% 5% 0% 5%"
+            padding="2% 7% 2% 7%"
+            fontS="1em"
+            backcolor="white"
             afbackcolor="#BBBBBB"
+            borderR="20px"
             border="1px solid #BBBBBB"
+            onClick={() => handleClick("RIGHT")} // Call handleClick with "RIGHT"
           >
             {notBuyText}
           </Button>

@@ -4,6 +4,7 @@ import LoanProposal from "../../../modal/LoanProposal";
 import ModalLoan from "../../../modal/Loan/ModalLoan";
 import { EmogiBox } from "../History";
 import AddChildImg from "../../../assests/image/AddBox.png";
+import Button from "../About/AboutButton";
 
 function LoanAdd() {
   const [open, setOpen] = React.useState(false);
@@ -13,17 +14,17 @@ function LoanAdd() {
   };
   return (
     <Container height="20%">
-      <button
+      <Button
+        width="90%"
+        height="90%"
+        backcolor="transparent"
+        display=""
+        justifyC=""
+        alignI=""
         onClick={handleOpen}
-        style={{
-          width: "90%",
-          height: "90%",
-          border: "none",
-          backgroundColor: "transparent",
-        }}
       >
         <EmogiBox backImg={AddChildImg} width="100%" height="100%" />
-      </button>
+      </Button>
       <ModalLoan
         useState_open={open}
         set_open={setOpen}
