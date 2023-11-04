@@ -7,9 +7,7 @@ import {
 import { Container } from "../components/Common/About/AboutContainer";
 import { TextBox } from "../components/Common/About/AboutText";
 //컴포넌트
-import BalanceCompo, {
-  Img_no,
-} from "../components/Common/Balance/BalanceCompo";
+import BalanceCompo from "../components/Common/Balance/BalanceCompo";
 import Quiz from "../components/Common/Quiz/Quiz";
 import Challenge from "../components/Children/Challenge";
 
@@ -20,7 +18,6 @@ import { useRecoilState } from "recoil";
 import { userAccountState, userDataState } from "../states/UserInfoState";
 // 함수
 import { useNavigate } from "react-router-dom";
-import axios, { AxiosResponse } from "axios";
 import api from "../apis/Api";
 import ChatbotLink from "../components/Common/Main/ChatbotLink";
 import api_ver2 from "../apis/ApiForMultiPart";
@@ -38,17 +35,9 @@ interface BalanceDataItem {
 }
 
 function ChildrenPage() {
-  const [userData, setUserData] = useRecoilState(userDataState);
+  const [userData] = useRecoilState(userDataState);
   const [userAccount, setUserAccount] = useRecoilState(userAccountState);
   const [balanceData, setBalanceData] = useState<BalanceDataItem[]>([]);
-
-  const navigate = useNavigate();
-  const goBank = () => {
-    navigate("/Bank");
-  };
-  const goMoneyPage = () => {
-    navigate("/MoneyPage");
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,8 +55,6 @@ function ChildrenPage() {
               // 필터링된 데이터가 없으면 빈 배열로 설정
               setBalanceData([]);
             }
-
-            console.log(firstRunningBalanceItem);
           })
           .catch((error) => {
             console.error("Error fetching balance data:", error);
@@ -135,7 +122,6 @@ function ChildrenPage() {
       </Container>
 
       {/* 통장잔고 컨테이너 */}
-      {/* <Container height="25%"></Container> */}
 
       {/*주요기능 컴포넌트 컨테이너*/}
       <Container height="50%">
