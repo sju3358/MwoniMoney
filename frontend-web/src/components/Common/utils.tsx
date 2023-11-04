@@ -12,3 +12,18 @@ export function dateFormat(origindate: string): string {
   const day = date.getDate().toString().padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
+
+export function getChildState(): string | null {
+  let childUuid: string | null = null;
+  const childStateString: string | null = localStorage.getItem("childState");
+
+  if (childStateString !== null) {
+    const childState = JSON.parse(childStateString);
+    childUuid = childState.childDataState.uuid;
+    console.log(childUuid);
+  } else {
+    console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
+  }
+
+  return childUuid;
+}

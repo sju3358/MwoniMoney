@@ -35,12 +35,14 @@ function Bank() {
   //childName
   const [selectedChild] = useRecoilState<childDataProps>(childDataState);
   let childName: string | null = null;
-  let childUuid: string | null = null;
   let score: number | null = null;
   let loanMemberType = "";
   const [userData] = useRecoilState(userDataState);
   const role = userData.memberRole;
   const userStateString: string | null = localStorage.getItem("userState");
+ 
+ 
+  let childUuid: string | null = null;
   const childStateString: string | null = localStorage.getItem("childState");
   //신용점수
 
