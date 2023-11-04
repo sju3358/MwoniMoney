@@ -44,13 +44,13 @@ export const SelectBox = styled.select`
 `;
 
 export const InputDateInfo = styled.input`
-  width: 100%;
   border: none;
-  border-bottom: 1px solid rgba(131, 129, 129, 0.851);
-  padding: 10px;
-  }
+  border-bottom: 1px solid black;
+  width: 95%;
+  height: 50%;
   &::before {
     content: attr(placeholder);
+    font-size: 1.3em;
     width: 100%;
     height: 100%;
   }
@@ -58,6 +58,10 @@ export const InputDateInfo = styled.input`
   &:valid::before,
   &:focus::before {
     display: none;
+  }
+  ,
+  &::placeholder {
+    font-weight: 700;
   }
 `;
 
