@@ -24,7 +24,6 @@ import api from "../../../apis/Api";
 import { useNavigate } from "react-router-dom";
 
 //repay
-// import LoanRepay from "./LoanRepay";
 import ModalPayLoan from "../../../modal/Loan/ModalPayLoan";
 
 export const ListBtn = styled.div`
@@ -41,7 +40,7 @@ interface Props {
 }
 function LoanList({ data }: Props) {
   const navigate = useNavigate();
-  const [userData, setUserData] = useRecoilState(userDataState);
+  const [userData] = useRecoilState(userDataState);
   const role = userData.memberRole;
 
   //자식의 memberLoanidx
@@ -88,12 +87,6 @@ function LoanList({ data }: Props) {
   };
 
   return (
-    // <Container
-    //   width="90%"
-    //   height="100%"
-    //   overflowy="hidden"
-    //   style={{ backgroundColor: "yellow", border: "1px solid red" }}
-    // >
     <WhiteBox1
       style={{ borderRadius: "15px", marginBottom: "20px" }}
       height="25%"
@@ -134,13 +127,6 @@ function LoanList({ data }: Props) {
                 </Text>
               </Category>
             )}
-            {/* {data.status === 0 && (
-              <Category backcolor="#fcdf92" width="90%" height="90%">
-                <Text fontsize="0.9rem" marginL="0%" fontweight="700">
-                  만료됨
-                </Text>
-              </Category>
-            )} */}
           </CategoryTag>
           <DeadLine>~ {dateFormat(data.deadline)}</DeadLine>
         </ListTitle>
@@ -205,7 +191,6 @@ function LoanList({ data }: Props) {
         )}
       </Container>
     </WhiteBox1>
-    // </Container>
   );
 }
 

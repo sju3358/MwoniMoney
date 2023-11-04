@@ -51,8 +51,7 @@ interface BankGraphProps {
   avgInterest: number;
 }
 
-function BankGraph({ avgInterest, creditScore, color }: BankGraphProps) {
-  const scroe = 50;
+function BankGraph({ avgInterest, creditScore }: BankGraphProps) {
   return (
     <WhiteBox1 flexDirection="column">
       <TextBox fontF="TheJamsil7Bold" height="20%">
@@ -65,12 +64,7 @@ function BankGraph({ avgInterest, creditScore, color }: BankGraphProps) {
       </Container>
       {/**금리, 신용점수 */}
       <Container height="25%">
-        <LoanImpo
-          title="대출금리"
-          // content={parseFloat(avgInterest.toFixed(2))}
-          content={avgInterest}
-          isloan={true}
-        />
+        <LoanImpo title="대출금리" content={avgInterest} isloan={true} />
         <LoanImpo title="신용점수" content={creditScore} isloan={false} />
       </Container>
     </WhiteBox1>
