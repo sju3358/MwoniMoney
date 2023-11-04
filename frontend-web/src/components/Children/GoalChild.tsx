@@ -3,29 +3,25 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 //component
-import { Container } from "../../components/Common/About/AboutContainer";
+import {
+  Container,
+  MainContainer,
+} from "../../components/Common/About/AboutContainer";
 import { WhiteBox } from "../../components/Common/About/AboutWhilteContainer";
-import { EmogiBox, ImgBox } from "../../components/Common/About/AboutEmogi";
+import { EmogiBox } from "../../components/Common/About/AboutEmogi";
 import { Text, TextBox } from "../../components/Common/About/AboutText";
 import Button from "../../components/Common/About/AboutButton";
 import History from "../../components/Common/History";
+// 외부 그래프import
 import { DemoLiquid } from "../../components/Common/About/AboutChart";
-import { userAccountState, userDataState } from "../../states/UserInfoState";
+// RecoilState
+import { userDataState } from "../../states/UserInfoState";
 import { useRecoilState } from "recoil";
 import { GoalCheckState, GoalMoneyState } from "../../states/GoalMoneyState";
 import { DetailReport } from "../../components/Common/GoalMoney/GoalMoneyStyle";
 //api
 import api from "../../apis/Api";
 import api_ver2 from "../../apis/ApiForMultiPart";
-
-const MainContainer = styled.div`
-  // border: 1px solid black;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  overflow: auto;
-  overflow-x: hidden; /* 가로 스크롤 제거 */
-`;
 
 interface TransactionType {
   id: number;
@@ -114,11 +110,7 @@ function GoalChild() {
   const deleteGoal = async () => {
     try {
       await api
-        .delete("v2/accounts/small-account", {
-          // headers: {
-          //   Authorization: "Bearer " + localStorage.getItem("token"),
-          // },
-        })
+        .delete("v2/accounts/small-account")
         .then(() => {
           setGoalCheck((prev) => ({
             ...prev,
@@ -135,7 +127,6 @@ function GoalChild() {
     }
   };
 
-  const name = userData.name;
   const role = userData.memberRole;
   const item = goalMoney.goalName;
   const money = goalMoney.goalMoney;
@@ -143,7 +134,6 @@ function GoalChild() {
   const img = goalMoney.image;
   const rate = goalMoney.saveRatio;
   const goalBalance = accountData?.remain || 0;
-  const num = money - goalBalance;
   const goalPoint = goalBalance / money;
   const check = goalCheck.goalState;
 

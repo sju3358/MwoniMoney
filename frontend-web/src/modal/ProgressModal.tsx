@@ -1,7 +1,5 @@
 import * as React from "react";
-import ModalBody from "../modal/ModalBtn1";
 import styled from "styled-components";
-// import ProgressBar from "../components/Common/Bank/ProgressBar";
 import { ProgressBar_V1 } from "../components/Common/Bank/ProgressBar";
 
 const ModalContainer = styled.div`
@@ -55,8 +53,6 @@ const ProgressBarContainer = styled.div`
 
 const BigText = styled.div`
   color: var(--text-color-active, #292929);
-
-  /* content/title/mid */
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
@@ -72,7 +68,7 @@ interface IntoBalanceResultProps {
 
 export default function balanceResult(props: IntoBalanceResultProps) {
   // 투표수가 많다고 노란색이 아니라 내가 선택한 쪽이 노란색
-  const myStatus = "1"; // 0이면 왼쪽, 1이면 오른쪽
+  const myStatus = "1";
   const leftCount = props.countOfLeftAnswer;
   const rightCount = props.countOfRightAnswer;
 
@@ -82,7 +78,7 @@ export default function balanceResult(props: IntoBalanceResultProps) {
       ? 50
       : (leftCount / (leftCount + rightCount)) * 100;
 
-  const frontWidth = `${frontPercent}%`; // "%"를 붙여주기
+  const frontWidth = `${frontPercent}%`;
 
   return (
     <ModalContainer>
@@ -91,7 +87,7 @@ export default function balanceResult(props: IntoBalanceResultProps) {
           <ProgressBar_V1
             front_width={frontWidth}
             back_height="50%"
-            back_width="80%" // 계산된 값을 전달
+            back_width="80%"
             front_height="100%"
             left_count={leftCount}
             right_count={rightCount}
@@ -107,14 +103,3 @@ export default function balanceResult(props: IntoBalanceResultProps) {
     </ModalContainer>
   );
 }
-
-// export default function ProgressModal() {
-//   return (
-//     <ModalBody
-//       modal_start_text="모달 띄우는 버튼에 적을 말"
-//       modal_title="어느 쪽이 많을까요?"
-//       modal_content={<Main />}
-//       modal_btn="닫기"
-//     />
-//   );
-// }

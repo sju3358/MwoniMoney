@@ -13,7 +13,7 @@ import { Container } from "../components/Common/About/AboutContainer";
 import { ChildCard, AddChild } from "../components/Common/Main/ChildCard";
 import GoalForMain from "../components/Common/GoalMoney/GoalMoneyForMain";
 import { useRecoilState } from "recoil";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import api from "../apis/Api";
 import {
   childDataState,
@@ -33,8 +33,6 @@ const getChild = (childUuid: string): Promise<AxiosResponse> => {
 
 function ParentsPage() {
   const [childData, setChildData] = useState<any[]>([]);
-
-  // Use the childDataState atom to manage selectedChild
   const [selectedChild, setSelectedChild] =
     useRecoilState<childDataProps>(childDataState);
 
@@ -44,7 +42,6 @@ function ParentsPage() {
       .then((response) => {
         setChildData(response.data);
 
-        // Set the selectedChild to the first child if available
         if (response.data.length > 0) {
           handleChildCardClick(response.data[0].uuid);
         }
@@ -78,7 +75,7 @@ function ParentsPage() {
 
     getChild(childUuid)
       .then((response) => {
-        setSelectedChild(response.data); // Use setSelectedChild to update the selectedChild state
+        setSelectedChild(response.data);
       })
       .catch((error) => {
         console.error("getChild 오류:", error);

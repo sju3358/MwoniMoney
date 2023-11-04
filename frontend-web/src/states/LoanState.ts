@@ -1,10 +1,4 @@
 import { atom } from "recoil";
-import { recoilPersist } from "recoil-persist";
-
-// const { persistAtom } = recoilPersist({
-//   key: "userUuidState",
-//   storage: localStorage,
-// });
 
 interface newLoanProps {
   borrowerUUID: string;
@@ -14,8 +8,6 @@ interface newLoanProps {
   amount: number; //대출금
   deadline: string; //상환날짜
   rate: number; //대출금리
-  // everykey: string; //매달,매주
-  // everyvalue: string; //string or number
 }
 
 //input에서 넣은 post용 데이터
@@ -30,7 +22,6 @@ export const newLoan = atom<newLoanProps>({
     deadline: "",
     rate: 0,
   },
-  // effects_UNSTABLE: [persistAtom],
 });
 
 export interface getLoan {
@@ -86,7 +77,7 @@ export const isRepayLoan = atom<boolean>({
   default: false,
 });
 
-//총데이터 
+//총데이터
 export const totalLoan = atom<number>({
   key: "totalLoan",
   default: 0,

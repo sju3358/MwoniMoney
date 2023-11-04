@@ -38,12 +38,6 @@ export const FooterimgBox = styled.div<FooterBoxProps>`
 `;
 
 function Footer() {
-  const [value, setValue] = React.useState("recents");
-
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
-
   return <FooterChild />;
 }
 

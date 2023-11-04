@@ -13,7 +13,6 @@ import { useRecoilState } from "recoil";
 import axios from "axios";
 import { userDataState } from "../../../states/UserInfoState";
 
-// Define the interface for a transaction
 interface Transaction {
   money: number;
   balance: number;
@@ -30,8 +29,7 @@ function MoneyChildPage() {
     return `${year}-${month}-${day}`;
   }
 
-  const [userData, setUserData] = useRecoilState(userDataState);
-  console.log("왜안들어옴?");
+  const [userData] = useRecoilState(userDataState);
   const child = userData.name;
   const [transactionData, setTransactionData] = useState<{
     finAccountTransactionDto2: Transaction[];
@@ -41,21 +39,17 @@ function MoneyChildPage() {
   const [category, setCategory] = useState("GENERAL");
 
   useEffect(() => {
-    // Define the request body
     const requestBody = {
       type: "GENERAL",
       finAccountType: "GENERAL",
     };
 
-    // Get the token from localStorage
     const token = localStorage.getItem("token");
 
-    // Define the headers with Authorization
     const headers = {
       Authorization: `Bearer ${token}`,
     };
 
-    // Make the axios request
     axios
       .post(
         "https://j9b310.p.ssafy.io/api/v2/accounts/transactions/parents",
@@ -63,29 +57,23 @@ function MoneyChildPage() {
         { headers }
       )
       .then((response) => {
-        // Handle the response data here
         console.log("Transaction data:", response.data);
         setTransactionData(response.data);
       })
       .catch((error) => {
-        // Handle any errors here
         console.error("Error fetching transaction data:", error);
       });
   }, []);
 
-  // Function to filter data based on the category
   const filterDataByCategory = (category: string) => {
     if (transactionData) {
       if (category === "GENERAL") {
-        // Show all transactions
         return transactionData.finAccountTransactionDto2;
       } else if (category === "INCOME") {
-        // Show transactions with positive money values
         return transactionData.finAccountTransactionDto2.filter(
           (transaction) => transaction.money > 0
         );
       } else if (category === "OUTCOME") {
-        // Show transactions with negative money values
         return transactionData.finAccountTransactionDto2.filter(
           (transaction) => transaction.money < 0
         );
@@ -94,7 +82,6 @@ function MoneyChildPage() {
     return [];
   };
 
-  // Function to handle category clicks
   const handleCategoryClick = (selectedCategory: string) => {
     setCategory(selectedCategory);
   };
@@ -139,8 +126,8 @@ function MoneyChildPage() {
           width="40%"
           title1="수입"
           title2="지출"
-          content1={`+ ${transactionData?.totalPlus || 0}원`} // Display totalPlus with a default value of 0
-          content2={`${transactionData?.totalMinus || 0}원`} // Display totalMinus with a default value of 0
+          content1={`+ ${transactionData?.totalPlus || 0}원`}
+          content2={`${transactionData?.totalMinus || 0}원`}
           backcolor1="#b9deb3"
           backcolor2="#ffa27e"
           fontsize1="1.3em"
@@ -182,11 +169,7 @@ function MoneyChildPage() {
               지출
             </Category>
           </Container>
-          <Container
-            // style={{ border: "1px solid red" }}
-            height="500px"
-            flexDirection="column"
-          >
+          <Container height="500px" flexDirection="column">
             {filterDataByCategory(category).map(
               (transaction: Transaction, index: number) => (
                 <MoneyTable
