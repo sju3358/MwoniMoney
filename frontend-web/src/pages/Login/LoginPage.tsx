@@ -57,10 +57,10 @@ function MyComponent() {
   };
 
   const handleGoogleLoginClick = () => {
-    console.log("GoogleLogin Ŭ����");
-    const socialName = "google"; 
+    console.log("GoogleLogin");
+    const socialName = "google";
     const kakaoURL = `${process.env.REACT_APP_SERVER_URL}/api/oauth2/authorization/${socialName}?redirect_uri=${process.env.REACT_APP_BASE_URL}/oauth/redirect`;
-    console.log("Kakao URL �ּ�: " + kakaoURL);
+    console.log("Kakao URL : " + kakaoURL);
     window.location.href = kakaoURL;
   };
 

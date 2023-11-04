@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Text } from "./AboutText";
 
 //recoil
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { isCategoryLoan, whichCategoryLoan } from "../../../states/LoanState";
 
 const CategoryContainer = styled.div`
@@ -77,9 +77,8 @@ function CategoryTags(props: CategoryTagsProps) {
   const { content1, content2, content3 } = props;
 
   //버튼 동작
-  const [isCategoryState, setisCategoryState] = useRecoilState(isCategoryLoan);
-  const [whichCategoryState, setwhichCategoryState] =
-    useRecoilState(whichCategoryLoan);
+  const setisCategoryState = useSetRecoilState(isCategoryLoan);
+  const setwhichCategoryState = useSetRecoilState(whichCategoryLoan);
   //선택된 버튼 비활
   const [activeTag, setActiveTag] = useState("GENERAL");
 
