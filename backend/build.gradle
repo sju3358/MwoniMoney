@@ -39,6 +39,8 @@ dependencies {
 
     // MariaDB
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
+    // 이거 추가하니까 왜 됨?
+    implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
 
     // Redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'

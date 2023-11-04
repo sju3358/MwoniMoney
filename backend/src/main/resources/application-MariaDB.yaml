@@ -1,6 +1,6 @@
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://j9b310.p.ssafy.io:50000/mwonimoneydb
+    url: jdbc:mariadb://ec2-54-180-1-198.ap-northeast-2.compute.amazonaws.com:3306/mwonimoneydb
     username: wannabe
     password: i9b310p_kplyjc
