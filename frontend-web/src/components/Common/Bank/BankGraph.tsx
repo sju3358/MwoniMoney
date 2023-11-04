@@ -60,7 +60,6 @@ function BankGraph({ avgInterest, creditScore }: BankGraphProps) {
       {/*그래프*/}
       <Container height="55%" overflowy="hidden">
         <GaugeChart value={creditScore} />
-        {/* Pass creditScore as a prop */}
       </Container>
       {/**금리, 신용점수 */}
       <Container height="25%">

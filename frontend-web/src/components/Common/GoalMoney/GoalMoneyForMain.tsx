@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { WhiteBox } from "../About/AboutWhilteContainer";
 import { useNavigate } from "react-router-dom";
 import { ImgBox, Img } from "../About/AboutEmogi";

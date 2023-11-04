@@ -58,7 +58,6 @@ const BpCheckedIcon = styled(BpIcon)({
   },
 });
 
-// Inspired by blueprintjs
 function BpRadio(props: RadioProps) {
   return (
     <Radio
@@ -74,7 +73,6 @@ function BpRadio(props: RadioProps) {
 export default function RoleSelect() {
   const [selectedValue, setSelectedValue] = useState("");
   const [userData, setUserData] = useRecoilState(userDataState);
-  const [userCheck, setUserCheck] = useRecoilState(userCheckState);
 
   const navigate = useNavigate();
 
