@@ -36,7 +36,6 @@ export const TextMentBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // align-items: baseline;
 `;
 
 export const Text = styled.div`
@@ -73,7 +72,7 @@ export const Emoji = styled.div`
 }
 
 interface AllowanceProps {
-  height: string; // 'String' -> 'string'
+  height: string;
 }
 
 export const AllowanveContainer = styled.div<AllowanceProps>`
@@ -85,7 +84,6 @@ export const AllowanveContainer = styled.div<AllowanceProps>`
   justify-content: center;
   align-items: center;
   margin-bottom: 5%;
-  //
 `;
 
 {

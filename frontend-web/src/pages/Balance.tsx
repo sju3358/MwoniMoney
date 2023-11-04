@@ -15,18 +15,16 @@ import { Img } from "../components/Common/About/AboutEmogi";
 import { useNavigate } from "react-router-dom"; // useNavigate 추가
 
 // 모달
-import ProgressModal from "../modal/ProgressModal";
 import IntoBalanceResult from "../components/Common/Main/IntoBalanceResult";
 
 // 이미지
-import LeftArrow from "../assests/image/main/LeftArrow.png";
 import Chat from "../assests/image/main/Chat.png";
 
 const ListContainer = styled.div`
+  // border: 1px solid black;
   display: flex;
   flex-direction: column;
   align-items: center;
-  // border: 1px solid black;
 `;
 
 const ImgContainer = styled.div`
@@ -54,7 +52,7 @@ interface BalanceDataItem {
 }
 
 console.warn = console.error = () => {};
-// or IIFE
+
 (() => {
   console.warn = console.error = () => {};
 })();

@@ -28,7 +28,6 @@ import {
 import { totalChallenge } from "../../states/ChallengeState";
 
 function Challenge() {
-  //값 어떻게 가져올지 생각하기!!
   let ChildUuid: string | null = null;
   const childStateString: string | null = localStorage.getItem("childState");
 
@@ -45,11 +44,8 @@ function Challenge() {
     useRecoilState(isProposeChallenge);
   const [isButtonState, setIsButtonState] = useRecoilState(isButtonChallenge);
   //카테고리 버튼
-  const [isCategoryState, setisCategoryState] =
-    useRecoilState(isCategoryChallenge);
-  const [whichCategoryState, setwhichCategoryState] = useRecoilState(
-    whichCategoryChallenge
-  );
+  const [isCategoryState] = useRecoilState(isCategoryChallenge);
+  const [whichCategoryState] = useRecoilState(whichCategoryChallenge);
 
   let status_value: number;
   if (isCategoryState) {

@@ -35,9 +35,9 @@ function DetailReport(props: DetailReportProp) {
 }
 
 const InputInfo = styled.input`
+  // border: 1px solid red;
   background-color: transparent;
   border: none;
-  // border: 1px solid red;
   border-bottom: 1px solid #969696;
   width: 85%;
   height: 50px;

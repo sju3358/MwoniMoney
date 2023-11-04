@@ -29,7 +29,6 @@ export const ModalBack = styled.div<ModalBackPops>`
   position: absolute;
   top: 15%;
   left: 7%;
-  // transform: translate(-50%, 50%);
   width: 80%;
   height: ${(props) => (props.height ? props.height : "50%")};
   background-color: #ffffff;
@@ -115,7 +114,6 @@ const ModalChildrenChallenge: React.FC<ModalProps> = ({
   useState_open,
   set_open,
 }) => {
-  // console.log(useState_open + "455654");
   const [newChallengeData, setNewChallengeData] = useRecoilState(newChallenge);
   const [isProposeState, setisProposeState] =
     useRecoilState(isProposeChallenge);
@@ -160,7 +158,6 @@ const ModalChildrenChallenge: React.FC<ModalProps> = ({
         // 성공적으로 요청이 완료된 경우 처리할 로직
         console.log("POST 요청 성공:", response.data);
         set_open(false);
-        console.log("onclick_Close");
         handleClearNewChallenge();
         setisProposeState(true);
       })

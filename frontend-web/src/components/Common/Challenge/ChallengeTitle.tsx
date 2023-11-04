@@ -2,9 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Emoji } from "../Main/MainStyle";
 import Vitory from "../../../assests/image/Victory.png";
-/**
- * recoil
- */
+// recoil
 import { userDataState } from "../../../states/UserInfoState";
 import { useRecoilState } from "recoil";
 
@@ -35,7 +33,7 @@ const TitleBox = styled.div<TitleProps>`
 `;
 
 function ChallengeTitle() {
-  const [userData, setUserData] = useRecoilState(userDataState);
+  const [userData] = useRecoilState(userDataState);
   const role = userData.memberRole;
 
   let name: string | null = null;

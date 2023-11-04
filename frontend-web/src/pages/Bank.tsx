@@ -33,13 +33,12 @@ import { MainContainer } from "../components/Common/Main/MainStyle";
 
 function Bank() {
   //childName
-  const [selectedChild, setSelectedChild] =
-    useRecoilState<childDataProps>(childDataState);
+  const [selectedChild] = useRecoilState<childDataProps>(childDataState);
   let childName: string | null = null;
   let childUuid: string | null = null;
   let score: number | null = null;
   let loanMemberType = "";
-  const [userData, setUserData] = useRecoilState(userDataState);
+  const [userData] = useRecoilState(userDataState);
   const role = userData.memberRole;
   const userStateString: string | null = localStorage.getItem("userState");
   const childStateString: string | null = localStorage.getItem("childState");
@@ -74,9 +73,8 @@ function Bank() {
    */
   const [LoanData, setLoanData] = useRecoilState(LoanStore);
   //카테고리 버튼
-  const [isCategoryState, setisCategoryState] = useRecoilState(isCategoryLoan);
-  const [whichCategoryState, setwhichCategoryState] =
-    useRecoilState(whichCategoryLoan);
+  const [isCategoryState] = useRecoilState(isCategoryLoan);
+  const [whichCategoryState] = useRecoilState(whichCategoryLoan);
   const [isProposeState, setisProposeState] = useRecoilState(isProposeLoan);
   const [isRepayState, setisRepayState] = useRecoilState(isRepayLoan);
   const [isButtonState, setIsButtonState] = useRecoilState(isButtonLoan);
@@ -130,9 +128,6 @@ function Bank() {
         // 성공적으로 요청이 완료된 경우 처리할 로직
         console.log("GET 요청 성공:", response.data.content);
         setLoanData(response.data.content);
-        /**
-         *
-         */
         setisProposeState(false);
         setIsButtonState(false);
         setisRepayState(false);
@@ -153,12 +148,6 @@ function Bank() {
       });
   }, [isProposeState, isButtonState, whichCategoryState, isRepayState]);
 
-  // Container
-  // style={{ overflow: "auto" }}
-  // width="100%"
-  // height="100%"
-  // flexDirection="column"
-
   return (
     <MainContainer>
       {/* Title */}
@@ -166,7 +155,6 @@ function Bank() {
         <TextBox fontF="TheJamsil7Bold" marginL="9%">
           현재 {childName}님은
         </TextBox>
-        {/* <TextBox>{moneyFormat(totalData.totalBalance)}만큼의</TextBox> */}
         <TextBox fontF="TheJamsil7Bold" marginL="9%">
           {moneyFormat(totalData.totalBalance)}만큼의
         </TextBox>
@@ -199,16 +187,12 @@ function Bank() {
       <Container height="10%">
         <CategoryTag content1="모두" content2="대출중" content3="제안대기" />
       </Container>
-      {/* LoanModal */}
-      {/* LoanList */}
       <Container height="80%">
         <Container
           height="100%"
           flexDirection="column"
           justifyContent="flex-start"
-          // style={{ border: "1px solid blue" }}
           overflowy="auto"
-          // marginB="100%"
         >
           {role === "PARENT" && totalLoanData < 4 ? <LoanAdd /> : <></>}
           <>
@@ -240,7 +224,6 @@ function Bank() {
           </>
         </Container>
       </Container>
-      {/* </div> */}
     </MainContainer>
   );
 }

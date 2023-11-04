@@ -2,9 +2,7 @@ import React, { useEffect } from "react";
 import jwt from "jwt-decode";
 import { useRecoilState } from "recoil";
 import { userDataState } from "../../states/UserInfoState";
-import axios, { AxiosResponse } from "axios";
 import api from "../../apis/Api";
-// import { number } from "yargs";
 import { userDataProps } from "../../states/UserInfoState";
 import { useNavigate } from "react-router";
 
@@ -13,7 +11,6 @@ interface JwtToken {
   sub: string;
   exp: number;
   auth: string;
-  // 다른 필드들도 필요한 경우 여기에 추가
 }
 
 function KakaoLoginRedirect() {
@@ -28,11 +25,7 @@ function KakaoLoginRedirect() {
     if (accessToken) {
       // JWT 토큰 디코딩
       const decodedToken = jwt<JwtToken>(accessToken);
-
       localStorage.setItem("token", accessToken);
-
-      // postRegister를 사용하여 데이터를 가져오기
-
       api
         .get("/v1/members")
         .then((response) => {
