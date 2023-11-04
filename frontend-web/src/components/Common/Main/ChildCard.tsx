@@ -6,6 +6,7 @@ import Childeyes from "../../../assests/image/main/Childeyes.png";
 import RegistChild from "../../../modal/ChildCreate";
 import { ModalBody3 } from "../../../modal/ModalImg";
 import AddChildImg from "../../../assests/image/main/Addchild.png";
+import Button from "../About/AboutButton";
 
 interface ChildProps {
   flex?: string | undefined;
@@ -48,18 +49,19 @@ function AddChild() {
   };
   return (
     <>
-      <button
+      <Button
+        display=""
+        justifyC=""
+        alignI=""
+        width="90%"
+        height="90%"
+        backcolor="transparent"
+        borderR="0px"
+        margin="3% 0% 0% 0%"
         onClick={handleOpen}
-        style={{
-          width: "90%",
-          height: "90%",
-          border: "none",
-          marginTop: "3%",
-          backgroundColor: "transparent",
-        }}
       >
         <EmogiBox backImg={AddChildImg} width="100%" height="100%" />
-      </button>
+      </Button>
       <ModalBody3
         useState_open={open}
         set_open={setOpen}

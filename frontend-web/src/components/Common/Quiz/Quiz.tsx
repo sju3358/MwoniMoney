@@ -7,6 +7,7 @@ import { TextBox } from "../About/AboutText";
 import Pencil from "../../../assests/image/main/Pencil.png";
 import api from "../../../apis/Api";
 import { EmogiBox } from "../History";
+import Button from "../About/AboutButton";
 
 export const TextContainer = styled.div`
   width: 100%;
@@ -67,12 +68,6 @@ const ExampleNumber = styled.span`
 const ExampleText = styled.div`
   width: 100%;
   font-size: 0.85rem;
-`;
-
-const ExampleBtn = styled.button`
-  border: 0;
-  width: 100%;
-  background-color: transparent;
 `;
 
 const getQuizes = (): Promise<any> => {
@@ -162,30 +157,38 @@ export default function Quiz() {
               >
                 {quizes[currentQuestionIndex].question}
               </TextBox>
-              <ExampleBtn onClick={() => handleOptionClick(0)}>
+              <Button
+                display=""
+                justifyC=""
+                alignI=""
+                height="auto"
+                backcolor="transparent"
+                borderR="0px"
+                onClick={() => handleOptionClick(0)}
+              >
                 <ExampleText>
                   <ExampleNumber>1</ExampleNumber>
                   {quizes[currentQuestionIndex].option1}
                 </ExampleText>
-              </ExampleBtn>
-              <ExampleBtn onClick={() => handleOptionClick(1)}>
+              </Button>
+              <Button onClick={() => handleOptionClick(1)}>
                 <ExampleText>
                   <ExampleNumber>2</ExampleNumber>
                   {quizes[currentQuestionIndex].option2}
                 </ExampleText>
-              </ExampleBtn>
-              <ExampleBtn onClick={() => handleOptionClick(2)}>
+              </Button>
+              <Button onClick={() => handleOptionClick(2)}>
                 <ExampleText>
                   <ExampleNumber>3</ExampleNumber>
                   {quizes[currentQuestionIndex].option3}
                 </ExampleText>
-              </ExampleBtn>
-              <ExampleBtn onClick={() => handleOptionClick(3)}>
+              </Button>
+              <Button onClick={() => handleOptionClick(3)}>
                 <ExampleText>
                   <ExampleNumber>4</ExampleNumber>
                   {quizes[currentQuestionIndex].option4}
                 </ExampleText>
-              </ExampleBtn>
+              </Button>
             </div>
           )}
         </WhiteBox_V1>

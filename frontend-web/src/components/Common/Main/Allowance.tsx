@@ -8,6 +8,8 @@ import { Text } from "../About/AboutText";
 import { useRecoilState } from "recoil";
 import { allowanceMoney } from "../../../states/AllowanceState";
 import { isAllowanceMoney } from "../../../states/AllowanceState";
+import Button from "../About/AboutButton";
+
 //axios
 import api from "../../../apis/Api";
 // Input 상자
@@ -28,24 +30,6 @@ const BtnContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center; /* 수직 가운데 정렬 */
-`;
-
-const Btn = styled.button`
-  border: none;
-  background-color: #fbd56e;
-  border-radius: 12px;
-  width: 95%;
-  height: 70%;
-  font-size: 1.5em;
-  font-weight: bold;
-  display: flex;
-  font-family: TheJamsil7Bold;
-  justify-content: center; /* 수평 가운데 정렬 */
-  align-items: center; /* 수직 가운데 정렬 */
-  &:active {
-    background-color: #ffc107;
-    transform: translate(0em, 0.2em);
-  }
 `;
 
 function Allowance() {
@@ -140,7 +124,16 @@ function Allowance() {
       </InputContainer>
       <AllowanceCategory al="regular" />
       <BtnContainer>
-        <Btn onClick={handleSubmit}>용돈주기</Btn>
+        <Button
+          borderR="12px"
+          width="95%"
+          height="70%"
+          fontS="1.5em"
+          afbackcolor="#ffc107"
+          onClick={handleSubmit}
+        >
+          용돈주기
+        </Button>
       </BtnContainer>
     </WhiteBox>
   );
