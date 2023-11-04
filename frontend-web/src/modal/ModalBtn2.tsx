@@ -23,7 +23,6 @@ export const ModalBack = styled.div<ModalBackPops>`
   position: absolute;
   top: 15%;
   left: 7%;
-  // transform: translate(-50%, 50%);
   width: 80%;
   height: ${(props) => (props.height ? props.height : "50%")};
   background-color: #ffffff;
@@ -97,15 +96,12 @@ const ModalBody1: React.FC<ModalProps> = ({
   modal_btn2,
   content_justify,
   content_align,
-  btn_justify,
 }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
-    console.log(open);
   };
-  console.log(open);
   return (
     <>
       <Button onClick={handleOpen}>{modal_start_text}</Button>
