@@ -4,20 +4,18 @@ import Item from "../../assests/image/Item.png";
 import { Text, TextBox } from "../Common/About/AboutText";
 import { Img, ImgBox } from "../../components/Common/About/AboutEmogi";
 import { Container } from "../Common/About/AboutContainer";
-import { json, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userAccountState } from "../../states/UserInfoState";
 import { GoalImgCheckState, GoalMoneyState } from "../../states/GoalMoneyState";
 import { Btn, InputList } from "../Common/GoalMoney/GoalMoneyStyle";
 import GoalModal from "../../modal/GoalMoney/GoalModal";
 import { ModalState } from "../../states/ModalState";
-// import api from "../../apis/Api";
 import api_ver2 from "../../apis/ApiForMultiPart";
 
 export default function CreatGoal() {
-  const [inputValue, setInputValue] = useState("");
-  const [userAccount, setUserAccount] = useRecoilState(userAccountState);
-  const [goalMoney, setGoalMoney] = useRecoilState(GoalMoneyState);
+  const [userAccount] = useRecoilState(userAccountState);
+  const [goalMoney] = useRecoilState(GoalMoneyState);
   const [open, setOpen] = useRecoilState(ModalState);
   const [goalImg, setgoalImg] = useRecoilState(GoalImgCheckState);
 
@@ -38,8 +36,6 @@ export default function CreatGoal() {
     setOpen(true);
   };
 
-  console.log(goalMoney);
-
   // axios 날리는
   const handleAxios = () => {
     const jsonData = {
@@ -47,15 +43,12 @@ export default function CreatGoal() {
       goalMoney: goalMoney.goalMoney,
       saveRatio: goalMoney.saveRatio,
     };
-    // console.log(jsonData);
-    // console.log(goalMoney.goalName);
 
     const formData = new FormData();
     formData.append(
       "info",
       new Blob([JSON.stringify(jsonData)], { type: "application/json" })
     );
-    // console.log(formData.get("info"));
     // 이미지를 Recoil 상태에서 가져오기
     const image = goalMoney.image;
     // 이미지를 Blob으로 변환
@@ -64,18 +57,8 @@ export default function CreatGoal() {
     // FormData에 추가
     formData.append("image", blob, "img.jpg");
 
-    console.log(formData);
-    // console.log(formData.get("image"));
-
     api_ver2
-      .post(
-        "v1/accounts/small-account",
-        formData
-        // headers: {
-        // "Contest-Type": "multipart/form-data",
-        // Authorization: "Bearer " + localStorage.getItem("token"),
-        // },
-      )
+      .post("v1/accounts/small-account", formData)
       .then((response) => {
         alert("짜금통을 생성했습니다.");
         navigate("/GoalMoney");
@@ -85,9 +68,6 @@ export default function CreatGoal() {
         alert("짜금통 생성에 실패했습니다.");
       });
   };
-  // 출력문
-  // console.log(goalMoney);
-  // console.log(open);
 
   return (
     <Container height="100vh" flexDirection="column">
