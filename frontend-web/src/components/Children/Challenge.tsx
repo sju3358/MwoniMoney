@@ -43,11 +43,8 @@ function Challenge(props: ChallengeProps) {
 
   const extramemberUuid_value = "none";
   //카테고리 버튼
-  const [isCategoryState, setisCategoryState] =
-    useRecoilState(isCategoryChallenge);
-  const [whichCategoryState, setwhichCategoryState] = useRecoilState(
-    whichCategoryChallenge
-  );
+  const [isCategoryState] = useRecoilState(isCategoryChallenge);
+  const [whichCategoryState] = useRecoilState(whichCategoryChallenge);
 
   let status_value: number;
   if (isCategoryState) {
