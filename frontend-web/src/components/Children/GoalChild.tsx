@@ -10,7 +10,7 @@ import {
 import { WhiteBox } from "../../components/Common/About/AboutWhilteContainer";
 import { EmogiBox } from "../../components/Common/About/AboutEmogi";
 import { Text, TextBox } from "../../components/Common/About/AboutText";
-import { Btn } from "../../components/Common/About/AboutButton";
+import Button from "../../components/Common/About/AboutButton";
 import History from "../../components/Common/History";
 // 외부 그래프import
 import { DemoLiquid } from "../../components/Common/About/AboutChart";
@@ -249,14 +249,14 @@ function GoalChild() {
       </Container>
       {role === "CHILD" && check == true && (
         <Container height="10%">
-          <Btn
+          <Button
             backcolor="rgba(255, 255, 255, 0.50)"
             width="90%"
             height="70%"
             onClick={deleteGoal}
           >
             해제
-          </Btn>
+          </Button>
         </Container>
       )}
     </MainContainer>
