@@ -46,7 +46,6 @@ function GoGoalMoney() {
     };
     fetchData();
   }, []);
-  const [childData, setChildData] = useState<any[]>([]);
 
   let ChildName: string | null = null;
   const childStateString: string | null = localStorage.getItem("childState");
@@ -54,7 +53,6 @@ function GoGoalMoney() {
   if (childStateString !== null) {
     const childState = JSON.parse(childStateString);
     ChildName = childState.childDataState.name;
-    // console.log(ChildName);
   } else {
     console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
   }

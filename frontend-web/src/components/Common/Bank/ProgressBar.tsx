@@ -69,7 +69,6 @@ function ProgressBar(props: ProgressBarProps) {
   const {
     back_width,
     back_height,
-    front_width,
     front_height,
     back_color,
     front_color,
