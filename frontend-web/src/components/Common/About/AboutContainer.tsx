@@ -38,3 +38,12 @@ export const Container = styled.div<ContainerProps>`
   margin-top: ${(props) => props.marginT};
   margin-bottom: ${(props) => props.marginB};
 `;
+
+export const MainContainer = styled.div`
+  // border: 1px solid black;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+  overflow-x: hidden; /* 가로 스크롤 제거 */
+`;

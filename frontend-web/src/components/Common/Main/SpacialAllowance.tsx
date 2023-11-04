@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { WhiteBox } from "../About/WhiteBox";
 import AllowanceCategory from "./AllowanceCategory";
-import AllowanceText from "./AllowanceText";
 import AllowanceInput from "./AllowanceInput";
 import { useRecoilState } from "recoil";
 import { specialMoney, isSpecialMoney } from "../../../states/AllowanceState";
@@ -51,12 +50,6 @@ const Btn = styled.div`
     transform: translate(0em, 0.2em);
   }
 `;
-// height="50%"
-// type="number"
-// value={selectedDate}
-// name="selectedDate"
-// placeholder="날짜 선택하기"
-// onChange={handleDateChange}
 
 function SpacialAllowance() {
   const childStateString: string | null = localStorage.getItem("childState");
@@ -71,7 +64,7 @@ function SpacialAllowance() {
   }
   const [specialAllowance, setSpecialAllowance] = useState(0);
 
-  const [SpecialMoneyData, setSpecialMoneyData] = useRecoilState(specialMoney);
+  const [SpecialMoneyData] = useRecoilState(specialMoney);
   const [IsSpecialMoney, setIsSpecialMoney] = useRecoilState(isSpecialMoney);
 
   const handleSpecialMoneyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,7 +89,7 @@ function SpacialAllowance() {
       .post(`/v1/members/reward`, postData)
       .then((response) => {
         console.log("POST 요청 성공:", response.data);
-        clearPostData(); //전송 후 clear
+        clearPostData();
       })
       .catch((error) => {
         if (error.response) {
@@ -116,10 +109,6 @@ function SpacialAllowance() {
 
   return (
     <WhiteBox>
-      {/* <AllowanceText
-        text1={"특별용돈"}
-        text2={"퀴즈로 얻을 수 있는 용돈으로 얼마까지 줄까요?"}
-      /> */}
       <Text fontsize="1.8em" fontF="TheJamsil7Bold" marginL="5%">
         특별용돈
       </Text>
@@ -127,7 +116,6 @@ function SpacialAllowance() {
         퀴즈로 얻을 수 있는 용돈으로
       </Text>
       <Text style={{ margin: "3% 0% 0% 5%" }}>얼마까지 줄까요?</Text>
-      {/* 40% */}
       <InputContainer>
         <AllowanceInput
           value={specialAllowance}

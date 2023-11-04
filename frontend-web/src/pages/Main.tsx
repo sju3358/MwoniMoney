@@ -7,13 +7,13 @@ import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 
 function Main(): JSX.Element {
-  const [userData, setUserData] = useRecoilState(userDataState);
+  const [userData] = useRecoilState(userDataState);
 
   useEffect(() => {
     if (window.ReactNativeWebView && userData.uuid) {
       window.ReactNativeWebView.postMessage(
         JSON.stringify({
-          type: 'userUUID',
+          type: "userUUID",
           code: userData.uuid,
         })
       );

@@ -21,8 +21,8 @@ const InputTag = styled.input`
 
 interface AllowanceInputProps {
   height: string;
-  type: string; // 타입 추가
-  placeholder: string; // 플레이스홀더 추가
+  type: string; 
+  placeholder: string;
   value: any;
   name: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

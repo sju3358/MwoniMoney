@@ -73,7 +73,7 @@ export default function CustomizedAccordions() {
         <AccordionDetails>
           <Typography>
             우선 자녀를 회원가입시킨 후 부모 메인페이지에서 QR발급에 들어가세요.
-            그 후 자녀 핸드폰으로 큐알을 찍으면 상호 연결됩니다.
+            그 후 자녀 핸드폰으로 QR을 찍으면 상호 연결됩니다.
           </Typography>
         </AccordionDetails>
       </Accordion>

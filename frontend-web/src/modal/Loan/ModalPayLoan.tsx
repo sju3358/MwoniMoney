@@ -6,15 +6,11 @@ import { Text } from "../../components/Common/About/AboutText";
 
 //recoil
 import { useRecoilState } from "recoil";
-import { payLoan } from "../../states/LoanState";
 
 import { isRepayLoan } from "../../states/LoanState";
 
 //axios
-import api from "../../apis/Api";
 import api_ver2 from "../../apis/ApiForMultiPart";
-
-import { moneyFormat } from "../../components/Common/utils";
 
 interface ModalBackPops {
   height?: string;
@@ -34,7 +30,6 @@ export const ModalBack = styled.div<ModalBackPops>`
   position: absolute;
   top: 15%;
   left: 7%;
-  // transform: translate(-50%, 50%);
   width: 80%;
   height: ${(props) => (props.height ? props.height : "50%")};
   background-color: #ffffff;
@@ -101,11 +96,8 @@ interface ModalProps {
   loanidx: number;
   balance: number;
   modal_title: string;
-  //   modal_content: React.ReactNode;
   modal_btn1: string;
   modal_btn2: string;
-  //   content_justify?: string;
-  //   content_align?: string;
   btn_justify?: string;
   useState_open: boolean;
   set_open: (val: boolean) => void;
@@ -143,11 +135,8 @@ const ModalPayLoan: React.FC<ModalProps> = ({
   loanidx,
   balance,
   modal_title,
-  //   modal_content,
   modal_btn1,
   modal_btn2,
-  //   content_justify,
-  //   content_align,
   useState_open,
   set_open,
 }) => {
@@ -158,7 +147,6 @@ const ModalPayLoan: React.FC<ModalProps> = ({
    * 제출
    */
   const [pay, setPay] = useState(0);
-  //   const [payLoanData, setpayLoanData] = useRecoilState(payLoan);
   const [isRepayState, setIsRepayState] = useRecoilState(isRepayLoan);
 
   const handleSubmit = () => {
@@ -186,31 +174,6 @@ const ModalPayLoan: React.FC<ModalProps> = ({
       .catch((error) => {
         console.log(error);
       });
-
-    // .post("v1/members/small-account", formData, {
-    //     // headers: {
-    //     // "Contest-Type": "multipart/form-data",
-    //     // Authorization: "Bearer " + localStorage.getItem("token"),
-    //     // },
-    //   })
-    //   .then((response) => {
-    //     alert("짜금통을 생성했습니다.");
-    //     navigate("/GoalMoney");
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //     alert("짜금통 생성에 실패했습니다.");
-    //   });
-    // api
-    //   .patch(`/v1/loans/repay/${loanidx}`, { payment: pay })
-    //   .then((response) => {
-    //     console.log("자식 대출 거절");
-    //     setIsRepayState(true);
-    //     handleClearNewLoan();
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   };
 
   /**
@@ -245,9 +208,7 @@ const ModalPayLoan: React.FC<ModalProps> = ({
       <ModalContainer>
         <ModalBack>
           <ModalTopBottom>{modal_title}</ModalTopBottom>
-          {/* <ModalContent justify={content_justify} align={content_align}>
-            {modal_content}
-          </ModalContent> */}
+
           <ContentBox>
             <Text>부모님에게 갚을 돈</Text>
             <InputDiv style={{ flexDirection: "column" }}>
@@ -259,8 +220,6 @@ const ModalPayLoan: React.FC<ModalProps> = ({
                 onChange={handleChangeState}
               ></InputInfo>
             </InputDiv>
-            {/* <div>확인용</div>
-            <span>{pay}</span> */}
           </ContentBox>
           <ModalTopBottom justify="space-around">
             <ModalBtn af_back_color="#FFC107" onClick={handleSubmit}>

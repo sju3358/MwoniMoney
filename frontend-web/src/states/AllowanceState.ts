@@ -1,5 +1,4 @@
 import { atom } from "recoil";
-import { recoilPersist } from "recoil-persist";
 
 //정기용돈
 export const allowanceMoney = atom<number>({

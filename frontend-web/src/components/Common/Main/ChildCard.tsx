@@ -35,7 +35,7 @@ export const Child = styled.div<ChildProps>`
 
 interface ChildCardProps {
   childName: string;
-  onClick: () => void; // onClick 속성 추가
+  onClick: () => void;
 }
 
 function AddChild() {
@@ -64,7 +64,7 @@ function AddChild() {
         useState_open={open}
         set_open={setOpen}
         modal_title="자녀 등록하기"
-        modal_content={<RegistChild />} /**테그 넣는 방법*/
+        modal_content={<RegistChild />}
         modal_btn1="생성"
         modal_btn2="취소"
         btn_justify="space-around"
@@ -77,7 +77,7 @@ function AddChild() {
 function ChildCard({ childName, onClick }: ChildCardProps) {
   // 클릭 이벤트 핸들러
   const handleClick = () => {
-    onClick(); // 클릭 시 onClick 함수 호출
+    onClick();
   };
   return (
     <Child onClick={handleClick}>
@@ -93,7 +93,7 @@ function ChildCard({ childName, onClick }: ChildCardProps) {
         fontw="bold"
         fonts="1.2em"
       >
-        {childName} {/* Props로 받은 childName을 여기에 사용 */}
+        {childName}
       </Container>
     </Child>
   );

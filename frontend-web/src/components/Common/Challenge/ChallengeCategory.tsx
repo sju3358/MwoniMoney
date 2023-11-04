@@ -26,8 +26,6 @@ interface CategoryProps {
 }
 
 export const Category = styled.div<CategoryProps>`
-  // 그림자
-  // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   width: ${(props) => props.width};
   height: 60%;
   border-top-left-radius: 20% 40%;
@@ -48,16 +46,10 @@ interface CategoryBtnProps {
   isActive: boolean;
 }
 export const CategoryBtn = styled.button<CategoryBtnProps>`
-  // 그림자
-  // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   border: ${(props) => (props.isActive ? "none" : "1px solid #BBBBBB")};
   width: ${(props) => props.width};
   height: 60%;
   border-radius: 50px;
-  // border-top-left-radius: 20% 40%;
-  // border-top-right-radius: 20% 40%;
-  // border-bottom-left-radius: 20% 40%;
-  // border-bottom-right-radius: 20% 40%;
   background-color: ${(props) => (props.isActive ? props.backcolor : "white")};
   margin-right: 5%;
   display: flex;

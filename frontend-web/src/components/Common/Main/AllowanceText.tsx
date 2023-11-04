@@ -37,7 +37,6 @@ interface TextProps {
 }
 
 function AllowanceText({ text1, text2 }: TextProps) {
-  // Props로 text1과 text2를 받아옵니다.
   return (
     <TextContainer>
       <TextBox1>{text1}</TextBox1>
