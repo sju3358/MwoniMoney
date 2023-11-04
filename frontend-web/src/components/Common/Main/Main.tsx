@@ -30,8 +30,8 @@ export const TextMentBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // align-items: baseline;
 `;
+
 interface TextProps {
   color?: string | null;
   fontsize?: string | null;
@@ -62,7 +62,6 @@ export const TextEmojiBox = styled.div`
 
 interface EmogiProps {
   url: string;
-  // size: string;
   width: string;
   height: string;
 }
@@ -81,7 +80,7 @@ export const Emoji = styled.div<EmogiProps>`
 }
 
 interface BalanceProps {
-  height: string; // 'String' -> 'string'
+  height: string;
 }
 
 export const BalanceContainer = styled.div<BalanceProps>`
@@ -90,7 +89,6 @@ export const BalanceContainer = styled.div<BalanceProps>`
   height: ${(props) => props.height};
   box-sizing: border-box;
   display: flex;
-  // margin-top: 3%;
 `;
 
 {
@@ -98,7 +96,7 @@ export const BalanceContainer = styled.div<BalanceProps>`
 }
 
 interface QuizProps {
-  height: string; // 'String' -> 'string'
+  height: string;
 }
 
 export const QuizContainer = styled.div<QuizProps>`
@@ -116,7 +114,7 @@ export const QuizContainer = styled.div<QuizProps>`
 }
 
 interface ChallengeProps {
-  height: string; // 'String' -> 'string'
+  height: string;
 }
 
 export const ChallengeContainer = styled.div<ChallengeProps>`
