@@ -6,11 +6,8 @@ import { userDataState } from "../states/UserInfoState";
 import { useRecoilState } from "recoil";
 
 function GoalMoney(): JSX.Element {
-  const [userData, setUserData] = useRecoilState(userDataState);
-  console.log(userData);
-
+  const [userData] = useRecoilState(userDataState);
   const role = userData.memberRole;
-  console.log(role);
 
   switch (role) {
     case "PARENT":

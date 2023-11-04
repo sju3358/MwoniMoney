@@ -15,7 +15,6 @@ import SendIcon from "@mui/icons-material/Send";
 import axios from "axios"; // axios 라이브러리를 임포트
 import { userDataState } from "../states/UserInfoState";
 import { useRecoilState } from "recoil";
-import api from "../apis/Api";
 import FooterChild from "../components/Layout/footerChild";
 
 interface Message {
@@ -25,7 +24,7 @@ interface Message {
 }
 
 const App: React.FC = () => {
-  const [userData, setUserData] = useRecoilState(userDataState);
+  const [userData] = useRecoilState(userDataState);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false); // 로딩 상태 추가

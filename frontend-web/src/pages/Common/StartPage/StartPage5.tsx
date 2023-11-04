@@ -2,24 +2,23 @@ import React from "react";
 import styled from "styled-components";
 
 const Background = styled.div`
-  /* �ΰ� �̹��� ��Ÿ�� ���� */
-  width: 100vw; /* ȭ�� �ʺ� �°� �����̳� ũ�� ���� */
-  height: 100vh; /* ȭ�� ���̿� �°� �����̳� ũ�� ���� */
+  width: 100vw;
+  height: 100vh;
   background-image: url(${process.env
     .PUBLIC_URL}/images/StartPage1/background5.png);
   background-size: 100% 100%;
-  background-repeat: no-repeat; /* �̹��� �ݺ� ���� */
+  background-repeat: no-repeat;
 `;
 
 const LogoBox = styled.div`
-  width: 100vw; /* ȭ�� �ʺ� �°� �����̳� ũ�� ���� */
-  height: 80vh; /* ȭ�� ���̿� �°� �����̳� ũ�� ���� */
   // border: 1px solid black;
+  width: 100vw;
+  height: 80vh;
 `;
 const ButtonBox = styled.div`
-  width: 100vw; /* ȭ�� �ʺ� �°� �����̳� ũ�� ���� */
-  height: 20vh; /* ȭ�� ���̿� �°� �����̳� ũ�� ���� */
   // border: 1px solid black;
+  width: 100vw;
+  height: 20vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,10 +26,8 @@ const ButtonBox = styled.div`
 
 const StartButton = styled.div`
   // border:1px solid  black;
-  /* īī�� �α��� �̹��� ��Ÿ�� ���� */
-  width: 80%; /* ���� �ʺ� ȭ�� �ʺ��� 41.11%�� ���� */
-  height: 30%; /* ���̸� ȭ�� ������ 6.41%�� ���� */
-  // background-color :green;
+  width: 80%;
+  height: 30%;
   background-image: url(${process.env.PUBLIC_URL}/images/StartPage1/start.png);
   background-size: 100% 100%;
 `;
@@ -38,7 +35,7 @@ const StartButton = styled.div`
 function MyComponent() {
   return (
     <Background>
-      <LogoBox></LogoBox>
+      <LogoBox />
       <ButtonBox>
         <StartButton />
       </ButtonBox>

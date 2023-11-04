@@ -21,7 +21,6 @@ export const ModalBack = styled.div<ModalBackPops>`
   position: absolute;
   top: 15%;
   left: 7%;
-  // transform: translate(-50%, 50%);
   width: 80%;
   height: ${(props) => (props.height ? props.height : "50%")};
   background-color: #ffffff;
@@ -149,19 +148,16 @@ const ModalBody2: React.FC<ModalProps> = ({
   modal_title,
   modal_content,
   modal_btn1,
-  modal_btn2,
   content_justify,
   content_align,
   useState_open,
   set_open,
 }) => {
-  // console.log(useState_open + "455654");
-
   const handleClose = () => {
     set_open(false);
-    console.log("onclick_Close");
+    // console.log("onclick_Close");
   };
-  console.log(useState_open);
+  // console.log(useState_open);
 
   return (
     <Modal

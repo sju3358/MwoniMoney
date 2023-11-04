@@ -1,42 +1,22 @@
 import React from "react";
-import styled from "styled-components";
-import AddBox from "../../../assests/image/AddBox.png";
 import AddChildImg from "../../../assests/image/AddBox.png";
 import CreateChallenge from "../../../modal/Challenge/ChallengeCreate";
-import { ModalBody3 } from "../../../modal/ModalImg";
 import { EmogiBox } from "../History";
 import { Container } from "../About/AboutContainer";
 import ModalChildrenChallenge from "../../../modal/Challenge/ModalChildrenChallenge";
 import ModalParentChallenge from "../../../modal/Challenge/ModalParentChallenge";
 import Button from "../About/AboutButton";
-//
 import { userDataState } from "../../../states/UserInfoState";
 import { useRecoilState } from "recoil";
 
-const AddContainer = styled.button`
-  width: 100%;
-  height: 12%;
-  box-sizing: border-box;
-  border: none;
-`;
-const Add = styled.div`
-  // border: 1px solid red;
-  width: 90%;
-  height: 80%;
-  background-image: url(${AddBox});
-  background-size: 100% 100%;
-`;
-
 function ChallengeAdd() {
-  const [userData, setUserData] = useRecoilState(userDataState);
+  const [userData] = useRecoilState(userDataState);
   const role = userData.memberRole;
 
   const [open, setOpen] = React.useState(false);
-  // console.log(open + "33");
   const handleOpen = (e: any) => {
     e.preventDefault();
     setOpen(true);
-    // console.log(open + "111");
   };
   return (
     <Container height="10%">

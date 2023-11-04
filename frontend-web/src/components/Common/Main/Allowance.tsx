@@ -2,22 +2,18 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { WhiteBox } from "../About/WhiteBox";
 import AllowanceCategory from "./AllowanceCategory";
-import AllowanceText from "./AllowanceText";
 import AllowanceInput from "./AllowanceInput";
 import { Text } from "../About/AboutText";
-//
+//Recoil
 import { useRecoilState } from "recoil";
 import { allowanceMoney } from "../../../states/AllowanceState";
 import { isAllowanceMoney } from "../../../states/AllowanceState";
-import { SpanText } from "../About/AboutText";
 import Button from "../About/AboutButton";
 
 //axios
 import api from "../../../apis/Api";
-
-/*input 상자 */
+// Input 상자
 const InputContainer = styled.div`
-  // background-color: green;
   // border: 1px solid black;
   box-sizing: border-box;
   width: 100%;
@@ -50,8 +46,7 @@ function Allowance() {
 
   const [selectedDate, setSelectedDate] = useState(1);
   const [money, setMoney] = useState(0);
-  const [allowanceMoneyData, setAllowanceMoneyData] =
-    useRecoilState(allowanceMoney);
+  const [allowanceMoneyData] = useRecoilState(allowanceMoney);
   const [IsAllowanceMoney, setIsAllowanceMoney] =
     useRecoilState(isAllowanceMoney);
 
@@ -104,15 +99,10 @@ function Allowance() {
 
   return (
     <WhiteBox>
-      {/* <AllowanceText
-        text1={"정기용돈"}
-        text2={"정기 용돈으로 언제 얼마를 줄까요?"}
-      /> */}
       <Text fontF="TheJamsil7Bold" fontsize="1.8em" marginL="5%">
         정기용돈
       </Text>
       <InputContainer>
-        {/* 60% */}
         <Text style={{ margin: "5% 0% 0% 5%" }}>언제 송금하실건가요?</Text>
         <AllowanceInput
           height="40%"

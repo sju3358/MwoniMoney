@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import axios from "axios"; // Import axios for making HTTP requests
+import axios from "axios";
 import { WhiteBox1 } from "../About/AboutWhilteContainer";
 import { Container } from "../About/AboutContainer";
 import { TextBox } from "../About/AboutText";
 import Pencil from "../../../assests/image/main/Pencil.png";
-import DownArrow from "../../../assests/image/quiz/DownArrow.png";
-import UpArrow from "../../../assests/image/quiz/UpArrow.png";
-import O from "../../../assests/image/quiz/O.png";
-import X from "../../../assests/image/quiz/X.png";
-import None from "../../../assests/image/quiz/None.png";
-import Correct from "../../../assests/image/quiz/Correct.png";
-import Error from "../../../assests/image/quiz/Error.png";
 import api from "../../../apis/Api";
 import { EmogiBox } from "../History";
 import Button from "../About/AboutButton";
@@ -67,26 +60,6 @@ const WhiteBox_V1 = styled(WhiteBox1)<WhiteBox_V1_Props>`
   margin-bottom: 5%;
 `;
 
-interface BodyProps {
-  isdisplay: string;
-}
-
-const Body = styled.div<BodyProps>`
-  display: ${(props) => props.isdisplay};
-`;
-
-const ExampleContainer = styled.div`
-  border: 1px solid blue;
-  width: 100%;
-`;
-
-const ExampleBox = styled.div`
-  border: 1px solid red;
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-`;
-
 const ExampleNumber = styled.span`
   font-size: 0.85rem;
   padding-right: 2%;
@@ -97,31 +70,12 @@ const ExampleText = styled.div`
   font-size: 0.85rem;
 `;
 
-interface ImgProps {
-  width: string;
-  height: string;
-}
-
-const Img = styled.img<ImgProps>`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  padding: 1%;
-`;
-
-const ImgBox = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  padding: 2%;
-  align-items: center;
-`;
-
 const getQuizes = (): Promise<any> => {
   return api.get(`/v1/quizes`, {});
 };
 
 export default function Quiz() {
-  const [isButton, setIsButton] = useState("none");
+  const [isButton] = useState("none");
   const [quizes, setQuizes] = useState<any[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
@@ -130,7 +84,6 @@ export default function Quiz() {
       try {
         const response = await getQuizes();
         setQuizes(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching quizes:", error);
       }
@@ -139,27 +92,17 @@ export default function Quiz() {
     fetchQuizes();
   }, []);
 
-  const handleButtonClick = () => {
-    if (currentQuestionIndex < quizes.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
-  };
-
   const handleOptionClick = async (optionIndex: number) => {
     if (currentQuestionIndex < quizes.length) {
       const quizIdx = quizes[currentQuestionIndex].id;
-      const answer = optionIndex + 1; // Add 1 to match your answer numbering
-
+      const answer = optionIndex + 1;
       try {
-        // Get the token from localStorage
         const token = localStorage.getItem("token");
 
-        // Define the headers with Authorization
         const headers = {
           Authorization: `Bearer ${token}`,
         };
 
-        // Send a POST request to the specified URL with quizIdx and answer, including headers
         await axios.post(
           "https://j9b310.p.ssafy.io/api/v1/quizes",
           {
@@ -169,7 +112,6 @@ export default function Quiz() {
           { headers }
         );
 
-        // Move to the next question
         setCurrentQuestionIndex(currentQuestionIndex + 1);
       } catch (error) {
         console.error("Error sending POST request:", error);
@@ -211,7 +153,7 @@ export default function Quiz() {
                 fontSize="1em"
                 marginL="0%"
                 fontWeight="normal"
-                style={{ margin: "5%", textAlign: "left" }} // Add textAlign: "left"
+                style={{ margin: "5%", textAlign: "left" }}
               >
                 {quizes[currentQuestionIndex].question}
               </TextBox>

@@ -50,14 +50,12 @@ function AllowanceCategory({ al }: categoryProps) {
   const [IsSpecialMoney, setIsSpecialMoney] = useRecoilState(isSpecialMoney);
 
   const handleChangeMoneyR = (data: number) => {
-    console.log("alR이 뭐야?", al);
     setIsAllowanceMoney(true);
     setAllowanceMoneyData(data);
     console.log(allowanceMoneyData);
   };
 
   const handleChangeMoneyS = (data: number) => {
-    console.log("alS이 뭐야?", al);
     setIsSpecialMoney(true);
     setSpecialMoneyData(data);
     console.log(SpecialMoneyData);

@@ -1,17 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import Newspaper from "../../../assests/image/main/Newspaper.png";
-import LeftArrow from "../../../assests/image/main/LeftArrow.png";
 import { WhiteBox1 } from "../About/AboutWhilteContainer";
 import News from "../../../modal/Quiz/News";
 import { TextBox } from "../About/AboutText";
 import { Container } from "../About/AboutContainer";
 import { EmogiBox } from "../About/AboutEmogi";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import api from "../../../apis/Api";
-import { useNavigate } from "react-router-dom"; // useNavigate 추가
-import { Routes, Route } from "react-router-dom"; // Routes와 Route 추가
 import Button from "../About/AboutButton";
+import { useNavigate } from "react-router-dom";
 
 interface ImgProps {
   width?: string | null;
@@ -53,7 +51,7 @@ interface BalanceCompoProps {
   news: string;
   countOfLeftAnswer?: number;
   countOfRightAnswer?: number;
-  balanceIdx: number; // Add balanceIdx prop
+  balanceIdx: number;
 }
 
 const patchAnswer = (
@@ -61,28 +59,27 @@ const patchAnswer = (
   selectAnswer: string
 ): Promise<AxiosResponse> => {
   return api.patch(`/v1/balances/${balanceIdx}/answer`, {
-    selectAnswer: selectAnswer, // Pass selectAnswer in the request body
+    selectAnswer: selectAnswer,
   });
 };
 
 function BalanceCompo({
   showText = true,
-  showImg = true,
   questionText,
   buyText,
   notBuyText,
   news,
   balanceIdx,
 }: BalanceCompoProps) {
-  const navigate = useNavigate(); // useNavigate 훅 사용
+  const navigate = useNavigate();
 
   const handleClick = (selectAnswer: string) => {
-    patchAnswer(balanceIdx, selectAnswer); // Call patchAnswer with balanceIdx and selectAnswer
-    window.alert("답변이 선택되었습니다!!"); // Show an alert message
+    patchAnswer(balanceIdx, selectAnswer);
+    window.alert("답변이 선택되었습니다!!");
   };
 
   const navigateClick = () => {
-    navigate("/balance"); // 클릭 시 '/balance'로 이동
+    navigate("/balance");
   };
 
   return (

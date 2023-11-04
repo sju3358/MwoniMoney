@@ -13,7 +13,6 @@ function ParentsLayout() {
           paddingTop: "10vh",
           overflowX: "hidden",
           overflowY: "auto",
-          // border: "2px solid orange",
         }}
       >
         <Outlet />
