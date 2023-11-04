@@ -20,7 +20,6 @@ export function getChildState(): string | null {
   if (childStateString !== null) {
     const childState = JSON.parse(childStateString);
     childUuid = childState.childDataState.uuid;
-    console.log(childUuid);
   } else {
     console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
   }

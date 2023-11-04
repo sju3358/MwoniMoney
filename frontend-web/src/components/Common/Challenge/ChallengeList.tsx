@@ -113,10 +113,7 @@ function ChallengeList({ data, ismain }: Props) {
   //챌린지 리스트의 버튼이 클릭되어있는지
   const setIsButtonState = useSetRecoilState(isButtonChallenge);
 
-  let ChildUuid: string | null = null;
-  getChildState();
-
-  const patchData = { toUUID: ChildUuid };
+  const patchData = { toUUID: getChildState() };
   const handleAccept = () => {
     api
       .patch(`/v1/challenges/${memberChallengeIdx}/accept`)

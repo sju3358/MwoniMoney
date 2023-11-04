@@ -29,9 +29,6 @@ import { totalChallenge } from "../../states/ChallengeState";
 import { getChildState } from "../Common/utils";
 
 function Challenge() {
-  let ChildUuid: string | null = null;
-  getChildState();
-
   const [ChallengeData, setChallengeData] = useRecoilState(ChallengeStore);
   const [isProposeState, setisProposeState] =
     useRecoilState(isProposeChallenge);
@@ -55,7 +52,9 @@ function Challenge() {
 
   useEffect(() => {
     api
-      .get(`/v1/challenges?status=${status_value}&extramemberUuid=${ChildUuid}`)
+      .get(
+        `/v1/challenges?status=${status_value}&extramemberUuid=${getChildState()}`
+      )
       .then((response) => {
         // 성공적으로 요청이 완료된 경우 처리할 로직
         console.log("GET 요청 성공:", response.data);

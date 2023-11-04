@@ -34,9 +34,6 @@ const BtnContainer = styled.div`
 `;
 
 function Allowance() {
-  let childUuid: string | null = null;
-  getChildState();
-
   const [selectedDate, setSelectedDate] = useState(1);
   const [money, setMoney] = useState(0);
   const [allowanceMoneyData] = useRecoilState(allowanceMoney);
@@ -68,7 +65,10 @@ function Allowance() {
     };
     //axios
     api
-      .patch(`/v1/members/regularAllowance?childUUID=${childUuid}`, patchData)
+      .patch(
+        `/v1/members/regularAllowance?childUUID=${getChildState()}`,
+        patchData
+      )
       .then((response) => {
         console.log("PATCH 요청 성공:", response.data);
         clearPatchData(); //전송 후 clear

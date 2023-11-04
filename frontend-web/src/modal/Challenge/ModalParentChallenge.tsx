@@ -124,8 +124,6 @@ const ModalParentChallenge: React.FC<ModalProps> = ({
   /**
    * 자식 uuid
    */
-  let ChildUuid: string | null = null;
-  getChildState();
 
   const handleSubmit = () => {
     if (newChallengeData.category.length < 1) {
@@ -150,7 +148,7 @@ const ModalParentChallenge: React.FC<ModalProps> = ({
     }
     // NewChallengeData에 uuid랑 status설정하기
     const PostData = {
-      childUuid: ChildUuid,
+      childUuid: getChildState(),
       title: newChallengeData.title,
       category: newChallengeData.category,
       memo: newChallengeData.memo,
