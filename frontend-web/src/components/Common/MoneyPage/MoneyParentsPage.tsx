@@ -11,7 +11,6 @@ import Outcome from "../../../assests/image/MoneyPage/MoneyBag.png";
 import Income from "../../../assests/image/MoneyPage/OutCome.png";
 import { useRecoilState } from "recoil";
 import axios from "axios";
-import { userDataState } from "../../../states/UserInfoState";
 import { childDataState, childDataProps } from "../../../states/ChildInfoState";
 
 // Define the interface for a transaction

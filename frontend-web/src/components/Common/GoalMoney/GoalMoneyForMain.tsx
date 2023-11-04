@@ -12,16 +12,12 @@ function GoalForMain() {
   // 자녀 정보 받아오기
   let ChildName: string | null = null;
   let GoalName: string | null = null;
-  let GoalRemain: number | null = null;
-  let GoalImage: any | null = null;
   const childStateString: string | null = localStorage.getItem("childState");
 
   if (childStateString !== null) {
     const childState = JSON.parse(childStateString);
     ChildName = childState.childDataState.name;
     GoalName = childState.childDataState.goalName;
-    GoalRemain = childState.childDataState.remain;
-    GoalImage = childState.childDataState.imageFilename;
   } else {
     console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
   }

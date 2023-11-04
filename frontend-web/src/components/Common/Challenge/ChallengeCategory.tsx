@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Text } from "../About/AboutText";
 
 //recoil
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import {
   isCategoryChallenge,
   whichCategoryChallenge,
@@ -59,11 +59,8 @@ export const CategoryTag = styled.button<CategoryBtnProps>`
 `;
 
 function ChallengeCategory() {
-  const [isCategoryState, setisCategoryState] =
-    useRecoilState(isCategoryChallenge);
-  const [whichCategoryState, setwhichCategoryState] = useRecoilState(
-    whichCategoryChallenge
-  );
+  const setisCategoryState = useSetRecoilState(isCategoryChallenge);
+  const setwhichCategoryState = useSetRecoilState(whichCategoryChallenge);
   //선택된 버튼 비활
   const [activeButton, setActiveButton] = useState("all");
 

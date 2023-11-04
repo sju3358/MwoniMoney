@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   allowanceMoney,
   isAllowanceMoney,
@@ -43,11 +43,10 @@ interface categoryProps {
 function AllowanceCategory({ al }: categoryProps) {
   const [allowanceMoneyData, setAllowanceMoneyData] =
     useRecoilState(allowanceMoney);
-  const [IsAllowanceMoney, setIsAllowanceMoney] =
-    useRecoilState(isAllowanceMoney);
+  const setIsAllowanceMoney = useSetRecoilState(isAllowanceMoney);
 
   const [SpecialMoneyData, setSpecialMoneyData] = useRecoilState(specialMoney);
-  const [IsSpecialMoney, setIsSpecialMoney] = useRecoilState(isSpecialMoney);
+  const setIsSpecialMoney = useSetRecoilState(isSpecialMoney);
 
   const handleChangeMoneyR = (data: number) => {
     setIsAllowanceMoney(true);

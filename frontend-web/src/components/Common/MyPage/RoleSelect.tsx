@@ -5,7 +5,7 @@ import Radio, { RadioProps } from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
-import { userCheckState, userDataState } from "../../../states/UserInfoState";
+import { userDataState } from "../../../states/UserInfoState";
 import { Container } from "../About/AboutContainer";
 import { useRecoilState } from "recoil";
 import { ModalBtn } from "../../../modal/ModalBtn1";
