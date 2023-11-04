@@ -76,7 +76,6 @@ function MypageCompo() {
     setInputValue(e.target.value);
   };
   const saveAccount = () => {
-    console.log(inputValue);
     api.post("v1/accounts", inputValue).then((response) => {
       console.log(response);
       setUserAccount(response.data);
@@ -85,11 +84,10 @@ function MypageCompo() {
   };
   const account = userAccount.account;
   const status = userAccount.status;
-  const name = userData.name; // api연결시 자녀1 이름으로 매핑
+  const name = userData.name;
   const birth = userData.birthday;
   const email = userData.email;
-  // console.log("account");
-  // console.log(account);
+
   return (
     <MainContainer>
       {/* 페이지 제목 & 이미지 */}

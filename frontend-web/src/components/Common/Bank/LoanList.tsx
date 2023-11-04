@@ -79,7 +79,7 @@ function LoanList({ data }: Props) {
       });
   };
 
-  /////// Repay모달
+// Repay모달
   const [open, setOpen] = React.useState(false);
   const handleOpen = (e: any) => {
     e.preventDefault();

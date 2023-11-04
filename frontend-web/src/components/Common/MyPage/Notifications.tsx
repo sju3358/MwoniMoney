@@ -83,23 +83,6 @@ function Notifications() {
               color="primary"
             />
           </TextBox>
-          {/* <TextBox
-            height="20%"
-            fontSize="1em"
-            fontWeight="normal"
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            정기 용돈
-            <Switch
-              checked={checked.allowanceChecked}
-              onChange={handleChange("allowanceChecked")}
-              color="primary"
-            />
-          </TextBox> */}
         </Container>
       </WhiteBox1>
     </Container>

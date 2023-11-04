@@ -230,7 +230,6 @@ function ChallengeList({ data, ismain }: Props) {
           <Text fontsize="1.5rem" marginL="0%" fontweight="bold">
             {data.memo}
           </Text>
-          {/* <Title>{data.memo}</Title> */}
           <CategoryTag style={{ height: "60%" }}>
             {data.status === 0 && (
               <Category backcolor="#fcdf92" width="80%">
