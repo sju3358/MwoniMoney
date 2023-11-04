@@ -4,7 +4,6 @@ import { Container } from "../components/Common/About/AboutContainer";
 import { TextBox, Text } from "../components/Common/About/AboutText";
 import { Img } from "../components/Common/About/AboutEmogi";
 import RightArrow from "../assests/image/main/RightArrow.png";
-import { MainContainer } from "../components/Common/Main/Main";
 import { Link } from "react-router-dom";
 import QuestionU from "../assests/image/faq/QuestionU.png";
 import QuestionB from "../assests/image/faq/QuestionB.png";
