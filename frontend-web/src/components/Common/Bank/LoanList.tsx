@@ -160,13 +160,14 @@ function LoanList({ data }: Props) {
             {data.status === "APPROVAL" && (
               <>
                 <Button
-                  content="돈 갚기"
                   width="40%"
                   fontS="1.2em"
                   height="60%"
-                  click={handleOpen}
+                  onClick={handleOpen}
                   afbackcolor="#FFC107"
-                />
+                >
+                  돈 갚기
+                </Button>
                 <ModalPayLoan
                   loanidx={LoanIdx}
                   balance={data.balance}
@@ -182,23 +183,25 @@ function LoanList({ data }: Props) {
             {data.status === "WATING" && (
               <ListBtn>
                 <Button
-                  content="수락"
                   width="45%"
                   fontS="1.2em"
                   height="70%"
-                  click={handleAccept}
+                  onClick={handleAccept}
                   afbackcolor="#FFC107"
-                />
+                >
+                  수락
+                </Button>
                 <Button
                   backcolor="#white"
-                  content="거절"
                   width="45%"
                   fontS="1.2em"
                   height="70%"
-                  click={handleReject}
+                  onClick={handleReject}
                   bordercolor="1px solid  #BBBBBB"
                   afbackcolor="#BBBBBB"
-                />
+                >
+                  거절
+                </Button>
               </ListBtn>
             )}
           </>

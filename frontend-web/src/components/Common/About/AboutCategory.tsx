@@ -43,12 +43,12 @@ export const Category = styled.div<CategoryProps>`
   font-weight: bold;
 `;
 
-interface CategoryBtnProps {
+interface CategoryTagProps {
   backcolor: string;
   width: string;
   isActive: boolean;
 }
-export const CategoryBtn = styled.button<CategoryBtnProps>`
+export const CategoryTag = styled.div<CategoryTagProps>`
   // 그림자
   // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   border: ${(props) => (props.isActive ? "none" : "1px solid #BBBBBB")};
@@ -67,13 +67,13 @@ export const CategoryBtn = styled.button<CategoryBtnProps>`
   font-weight: bold;
 `;
 
-interface CategoryTagProps {
+interface CategoryTagsProps {
   content1: string;
   content2: string;
   content3: string;
 }
 
-function CategoryTag(props: CategoryTagProps) {
+function CategoryTags(props: CategoryTagsProps) {
   const { content1, content2, content3 } = props;
 
   //버튼 동작
@@ -81,11 +81,11 @@ function CategoryTag(props: CategoryTagProps) {
   const [whichCategoryState, setwhichCategoryState] =
     useRecoilState(whichCategoryLoan);
   //선택된 버튼 비활
-  const [activeButton, setActiveButton] = useState("GENERAL");
+  const [activeTag, setActiveTag] = useState("GENERAL");
 
   const handleSearch = (searchString: string) => {
     setisCategoryState(true);
-    setActiveButton(searchString);
+    setActiveTag(searchString);
 
     let status;
     switch (searchString) {
@@ -109,38 +109,38 @@ function CategoryTag(props: CategoryTagProps) {
 
   return (
     <CategoryContainer>
-      <CategoryBtn
+      <CategoryTag
         backcolor="#ffffff"
         width="20%"
-        isActive={activeButton === "GENERAL"}
+        isActive={activeTag === "GENERAL"}
         onClick={() => handleSearch("GENERAL")}
       >
         <Text marginL="0%" fontsize="0.85rem">
           {content1}
         </Text>
-      </CategoryBtn>
-      <CategoryBtn
+      </CategoryTag>
+      <CategoryTag
         width="20%"
-        isActive={activeButton === "APPROVAL"}
+        isActive={activeTag === "APPROVAL"}
         onClick={() => handleSearch("APPROVAL")}
         backcolor="#fcdf92"
       >
         <Text marginL="0%" fontsize="0.85rem">
           {content2}
         </Text>
-      </CategoryBtn>
-      <CategoryBtn
+      </CategoryTag>
+      <CategoryTag
         width="20%"
-        isActive={activeButton === "WATING"}
+        isActive={activeTag === "WATING"}
         onClick={() => handleSearch("WATING")}
         backcolor="#d1d1d1"
       >
         <Text marginL="0%" fontsize="0.85rem">
           {content3}
         </Text>
-      </CategoryBtn>
+      </CategoryTag>
     </CategoryContainer>
   );
 }
 
-export default CategoryTag;
+export default CategoryTags;

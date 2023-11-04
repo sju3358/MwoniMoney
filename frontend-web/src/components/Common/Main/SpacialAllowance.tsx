@@ -7,6 +7,7 @@ import AllowanceInput from "./AllowanceInput";
 import { useRecoilState } from "recoil";
 import { specialMoney, isSpecialMoney } from "../../../states/AllowanceState";
 import { Text } from "../About/AboutText";
+import Button from "../About/AboutButton";
 
 //axios
 import api from "../../../apis/Api";
@@ -36,21 +37,6 @@ const BtnContainer = styled.div`
   align-items: center;
 `;
 
-const Btn = styled.div`
-  background-color: #fbd56e;
-  border-radius: 12px;
-  width: 95%;
-  height: 70%;
-  font-size: 1.5em;
-  font-weight: bold;
-  display: flex;
-  justify-content: center; /* 수평 가운데 정렬 */
-  align-items: center; /* 수직 가운데 정렬 */
-  &:active {
-    background-color: #ffc107;
-    transform: translate(0em, 0.2em);
-  }
-`;
 // height="50%"
 // type="number"
 // value={selectedDate}
@@ -140,7 +126,16 @@ function SpacialAllowance() {
       </InputContainer>
       <AllowanceCategory al="special" />
       <BtnContainer>
-        <Btn onClick={handleSubmit}>충전하기</Btn>
+        <Button
+          width="95%"
+          height="70%"
+          fontS="1.5em"
+          borderR="12px"
+          afbackcolor="#ffc107"
+          onClick={handleSubmit}
+        >
+          충전하기
+        </Button>
       </BtnContainer>
     </WhiteBox>
   );

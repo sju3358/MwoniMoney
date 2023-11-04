@@ -20,6 +20,8 @@ import { dateFormat } from "../utils";
 import { moneyFormat } from "../utils";
 import { style } from "@mui/system";
 
+import Button from "../About/AboutButton";
+
 export const ChallengeListContainer = styled.div`
   // border: 1px solid red;
   width: 100%;
@@ -102,30 +104,6 @@ export const ListBtn = styled.div`
   align-items: center;
 `;
 
-interface BtnProps {
-  backcolor: string;
-  afbackcolor: string;
-  border?: string;
-}
-
-const ChallengeBtn = styled.div<BtnProps>`
-  // 그림자
-  // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
-  width: 35%;
-  height: 100%;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  font-weight: bold;
-  border: ${(props) => (props.border ? props.border : "none")};
-  background-color: ${(props) => props.backcolor};
-  &:active {
-    background-color: ${(props) => props.afbackcolor};
-    transform: translate(0em, 0.2em);
-  }
-}
-`;
 interface Props {
   data: getChallenge;
   ismain?: string | null;
@@ -316,44 +294,59 @@ function ChallengeList({ data, ismain }: Props) {
                 data.status === 4 ||
                 data.status === 5) && (
                 <ListBtn style={{ justifyContent: "flex-end" }}>
-                  <ChallengeBtn
+                  <Button
+                    width="35%"
+                    height="100%"
+                    borderR="20px"
+                    justifyC="space-around"
                     afbackcolor="#BBBBBB"
                     backcolor="white"
                     border="1px solid #BBBBBB"
                     onClick={handleDelete}
                   >
                     삭제
-                  </ChallengeBtn>
+                  </Button>
                 </ListBtn>
               )}
               {data.status === 1 && (
                 <ListBtn style={{ justifyContent: "flex-end" }}>
-                  <ChallengeBtn
+                  <Button
+                    width="35%"
+                    height="100%"
+                    borderR="20px"
+                    justifyC="space-around"
                     afbackcolor="#FFC107"
                     backcolor="#fbd56e"
                     onClick={handleComplete}
                   >
                     완료
-                  </ChallengeBtn>
+                  </Button>
                 </ListBtn>
               )}
               {data.status === 2 && (
                 <ListBtn>
-                  <ChallengeBtn
+                  <Button
+                    width="35%"
+                    height="100%"
+                    borderR="20px"
+                    justifyC="space-around"
                     afbackcolor="#FFC107"
                     backcolor="#fbd56e"
                     onClick={handleAccept}
                   >
                     수락
-                  </ChallengeBtn>
-                  <ChallengeBtn
+                  </Button>
+                  <Button
+                    width="35%"
+                    height="100%"
+                    borderR="20px"
+                    justifyC="space-around"
                     afbackcolor="#BBBBBB"
-                    backcolor="white"
                     border="1px solid #BBBBBB"
                     onClick={handleReject}
                   >
                     거절
-                  </ChallengeBtn>
+                  </Button>
                 </ListBtn>
               )}
             </>
@@ -361,13 +354,17 @@ function ChallengeList({ data, ismain }: Props) {
             //CHILD
             <ListBtn style={{ justifyContent: "flex-end" }}>
               {data.status === 0 && (
-                <ChallengeBtn
+                <Button
+                  width="35%"
+                  height="100%"
+                  borderR="20px"
+                  justifyC="space-around"
                   afbackcolor="#FFC107"
                   backcolor="#fbd56e"
                   onClick={handleComplete}
                 >
                   완료
-                </ChallengeBtn>
+                </Button>
               )}
             </ListBtn>
           )}

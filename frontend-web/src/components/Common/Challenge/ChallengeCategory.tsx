@@ -47,7 +47,7 @@ interface CategoryBtnProps {
   width: string;
   isActive: boolean;
 }
-export const CategoryBtn = styled.button<CategoryBtnProps>`
+export const CategoryTag = styled.button<CategoryBtnProps>`
   // 그림자
   // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   border: ${(props) => (props.isActive ? "none" : "1px solid #BBBBBB")};
@@ -100,7 +100,7 @@ function ChallengeCategory() {
   };
   return (
     <CategoryContainer>
-      <CategoryBtn
+      <CategoryTag
         backcolor="#ffffff"
         width="20%"
         isActive={activeButton === "all"}
@@ -109,8 +109,8 @@ function ChallengeCategory() {
         <Text marginL="0%" fontsize="0.85rem">
           모두
         </Text>
-      </CategoryBtn>
-      <CategoryBtn
+      </CategoryTag>
+      <CategoryTag
         backcolor="#fcdf92"
         width="20%"
         isActive={activeButton === "ing"}
@@ -119,8 +119,8 @@ function ChallengeCategory() {
         <Text marginL="0%" fontsize="0.85rem">
           진행중
         </Text>
-      </CategoryBtn>
-      <CategoryBtn
+      </CategoryTag>
+      <CategoryTag
         backcolor="#d1d1d1"
         width="20%"
         isActive={activeButton === "propose"}
@@ -129,7 +129,7 @@ function ChallengeCategory() {
         <Text marginL="0%" fontsize="0.85rem">
           제안대기
         </Text>
-      </CategoryBtn>
+      </CategoryTag>
     </CategoryContainer>
   );
 }
