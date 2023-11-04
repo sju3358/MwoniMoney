@@ -3,6 +3,7 @@ import { Img } from "../About/AboutEmogi";
 import { ModalBody2, ModalBody3 } from "../../../modal/ModalImg";
 import BalanceResult from "../../../modal/ProgressModal";
 import LeftArrow from "../../../assests/image/main/LeftArrow.png";
+import Button from "../About/AboutButton";
 
 interface IntoBalanceResultProps {
   news: string;
@@ -20,20 +21,19 @@ function IntoBalanceResult(props: IntoBalanceResultProps) {
 
   return (
     <>
-      <button
+      <Button
+        display=""
+        justifyC=""
+        alignI=""
+        width="5%"
+        height="100%"
+        backcolor="transparent"
+        borderR="0px"
         onClick={handleOpen}
-        style={{
-          backgroundColor: "transparent",
-          width: "5%",
-          height: "100%",
-          border: "none",
-          padding: "0%",
-          margin: "0%",
-        }}
       >
         {/* 아래 부분이 모달을 열기 위한 버튼 */}
         <Img src={LeftArrow} width="100%" height="100%" />
-      </button>
+      </Button>
       {/* 모달 컴포넌트 */}
       <ModalBody2
         useState_open={open}

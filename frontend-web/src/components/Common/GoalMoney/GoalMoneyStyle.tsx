@@ -4,6 +4,7 @@ import { Container } from "../About/AboutContainer";
 import { Text, TextBox } from "../About/AboutText";
 import { useRecoilState } from "recoil";
 import { GoalCheckState, GoalMoneyState } from "../../../states/GoalMoneyState";
+import Button from "../About/AboutButton";
 
 interface DetailReportProp {
   title: string;
@@ -47,25 +48,25 @@ const InputInfo = styled.input`
   padding-left: 5%;
 `;
 
-interface BtnProps {
-  width?: string;
-  height?: string;
-  backcolor?: string;
-  fontSize?: string;
-}
+// interface BtnProps {
+//   width?: string;
+//   height?: string;
+//   backcolor?: string;
+//   fontSize?: string;
+// }
 
-const Btn = styled.button<BtnProps>`
-  width: ${(props) => (props.width ? props.width : "100%")};
-  height: ${(props) => (props.height ? props.height : "70%")};
-  font-size: ${(props) => (props.fontSize ? props.fontSize : "1.7em")};
-  background-color: ${(props) =>
-    props.backcolor ? props.backcolor : "#fbd56e"};
-  border-radius: 10px;
-  font-weight: bold;
-  margin: 5%;
-  border: 0;
-  padding: 5px;
-`;
+// const Btn = styled.button<BtnProps>`
+//   width: ${(props) => (props.width ? props.width : "100%")};
+//   height: ${(props) => (props.height ? props.height : "70%")};
+//   font-size: ${(props) => (props.fontSize ? props.fontSize : "1.7em")};
+//   background-color: ${(props) =>
+//     props.backcolor ? props.backcolor : "#fbd56e"};
+//   border-radius: 10px;
+//   font-weight: bold;
+//   margin: 5%;
+//   border: 0;
+//   padding: 5px;
+// `;
 
 interface InputListProps {
   title: string;
@@ -110,13 +111,22 @@ function InputList(props: InputListProps) {
           />
         </Container>
         <Container height="100%" width="25%">
-          <Btn fontSize="1.2em" onClick={HandleSave}>
+          <Button
+            display=""
+            justifyC=""
+            alignI=""
+            margin="5%"
+            padding="5px"
+            height="70%"
+            fontS="1.2em"
+            onClick={HandleSave}
+          >
             저장
-          </Btn>
+          </Button>
         </Container>
       </Container>
     </Container>
   );
 }
 
-export { DetailReport, InputList, Btn };
+export { DetailReport, InputList };

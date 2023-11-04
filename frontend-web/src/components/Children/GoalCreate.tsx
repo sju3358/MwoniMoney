@@ -8,11 +8,12 @@ import { json, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userAccountState } from "../../states/UserInfoState";
 import { GoalImgCheckState, GoalMoneyState } from "../../states/GoalMoneyState";
-import { Btn, InputList } from "../Common/GoalMoney/GoalMoneyStyle";
+import { InputList } from "../Common/GoalMoney/GoalMoneyStyle";
 import GoalModal from "../../modal/GoalMoney/GoalModal";
 import { ModalState } from "../../states/ModalState";
 // import api from "../../apis/Api";
 import api_ver2 from "../../apis/ApiForMultiPart";
+import Button from "../Common/About/AboutButton";
 
 export default function CreatGoal() {
   const [inputValue, setInputValue] = useState("");
@@ -178,10 +179,29 @@ export default function CreatGoal() {
       </Container>
       {/* 버튼 : axios 작동함 */}
       <Container height="10%" overflowy="hidden">
-        <Btn onClick={handleAxios}>생성</Btn>
-        <Btn backcolor="#ffffff" onClick={handleClose}>
+        <Button
+          display=""
+          justifyC=""
+          alignI=""
+          margin="5%"
+          padding="5px"
+          height="70%"
+          onClick={handleAxios}
+        >
+          생성
+        </Button>
+        <Button
+          display=""
+          justifyC=""
+          alignI=""
+          margin="5%"
+          padding="5px"
+          height="70%"
+          backcolor="#ffffff"
+          onClick={handleClose}
+        >
           취소
-        </Btn>
+        </Button>
       </Container>
     </Container>
   );
