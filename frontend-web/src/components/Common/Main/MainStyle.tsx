@@ -40,7 +40,6 @@ export const TextEmojiBox = styled.div<TextEmojiBoxProps>`
 
 interface EmogiProps {
   url: string;
-  // size: string;
   width: string;
   height: string;
   emogi_margin?: string;
@@ -54,7 +53,3 @@ export const Emoji = styled.div<EmogiProps>`
   background-image: url(${(props) => props.url});
   background-size: 100% 100%;
 `;
-
-{
-  /* 용돈 넣는 칸 */
-}

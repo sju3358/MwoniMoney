@@ -29,7 +29,6 @@ export const ModalBack = styled.div<ModalBackPops>`
   position: absolute;
   top: 15%;
   left: 7%;
-  // transform: translate(-50%, 50%);
   width: 80%;
   height: ${(props) => (props.height ? props.height : "50%")};
   background-color: #ffffff;
@@ -140,14 +139,7 @@ const ModalLoan: React.FC<ModalProps> = ({
       alert("마감기한이 없습니다.");
       return;
     }
-    // if (newLoanData.everykey.length < 1) {
-    //   alert("매달, 매주를 선택해주세요");
-    //   return;
-    // }
-    // if (newLoanData.everyvalue.length < 1) {
-    //   alert("날을 선택해주세요");
-    //   return;
-    // }
+
     if (newLoanData.rate < 0.1) {
       alert("대출금리를 0.1보다 크게 선택해주세요");
       return;

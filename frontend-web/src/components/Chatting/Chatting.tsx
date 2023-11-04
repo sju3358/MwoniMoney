@@ -12,7 +12,6 @@ import { Container } from "../Common/About/AboutContainer";
 
 export default function Chatting({ balanceGameIdx = 1 }) {
   const memberInfo = useRecoilValue(userDataState);
-
   const memberUUID = memberInfo.uuid;
   const memberNickname = memberInfo.nickname;
 

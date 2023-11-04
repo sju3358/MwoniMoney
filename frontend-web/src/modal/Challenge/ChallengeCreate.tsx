@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
 import { useRecoilState } from "recoil";
 import { newChallenge } from "../../states/ChallengeState";
 
@@ -48,7 +47,6 @@ export const InputNumberInfo = styled.input`
   ,
   &:valid::before,
   &:focus::before {
-    // content: attr(placeholder);
     display: none;
   }
   ,
@@ -77,8 +75,8 @@ export const InputDateInfo = styled.input`
 `;
 
 export const SelectBox = styled.select`
-  border: none;
   // border: 1px solid rgba(131, 129, 129, 0.851);
+  border: none;
   border-bottom: 1px solid black;
   width: 100%;
   height: 50%;
@@ -194,15 +192,6 @@ function CreateChallenge() {
           required
         />
       </InputDiv>
-
-      {/* <>
-        <div>확인용</div>
-        <span>{newChallengeData.category}</span>
-        <span>{newChallengeData.title}</span>
-        <span>{newChallengeData.memo}</span>
-        <span>{newChallengeData.reward}</span>
-        <span>{newChallengeData.endTime}</span>
-      </> */}
     </ContentBox>
   );
 }

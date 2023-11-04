@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import LogoA from "./Logo.png";
 import headerArrow from "../../assests/image/HeaderArrow.png";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const HeaderBody = styled.div`
   // border: 1px solid black;
@@ -52,23 +52,6 @@ const HeaderNameBox = styled.div<profileBoxProps>`
   // border: 1px solid black;
   width: 75%;
   height: 70%;
-`;
-const HeaderArrow = styled.div`
-  // border: 1px solid black;
-  width: 25%;
-  height: 25%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 5%;
-`;
-
-const HeaderArrowBox = styled.div`
-  width: 55%;
-  height: 55%;
-  background-image: url(${headerArrow});
-  background-size: 100% 100%;
-  cursor: pointer;
 `;
 
 function Header() {

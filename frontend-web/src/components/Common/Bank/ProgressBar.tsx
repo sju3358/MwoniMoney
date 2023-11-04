@@ -69,7 +69,6 @@ function ProgressBar(props: ProgressBarProps) {
   const {
     back_width,
     back_height,
-    front_width,
     front_height,
     back_color,
     front_color,
@@ -97,8 +96,8 @@ function ProgressBar_V1(props: ProgressBarProps) {
     front_height,
     back_color,
     front_color,
-    left_count, //왼쪽 투표 수
-    right_count, //오른쪽 투표 수
+    left_count,
+    right_count,
     front_percent,
     my_status,
   } = props;

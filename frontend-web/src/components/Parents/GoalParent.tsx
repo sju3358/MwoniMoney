@@ -1,9 +1,8 @@
 //React
 import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { GoalMoneyState, GoalCheckState } from "../../states/GoalMoneyState";
-import { userDataState, userAccountState } from "../../states/UserInfoState";
+import { userAccountState } from "../../states/UserInfoState";
 import { DemoLiquid } from "../Common/About/AboutChart";
 import { TextBox, Text } from "../Common/About/AboutText";
 import { WhiteBox } from "../Common/About/AboutWhilteContainer";
@@ -21,22 +20,13 @@ const MainContainer = styled.div`
 `;
 
 function GoalParent() {
-  const [goalMoney, setGoalMoney] = useRecoilState(GoalMoneyState);
-  const [goalCheck, setGoalCheck] = useRecoilState(GoalCheckState);
-  const [userAccout, setUserAccount] = useRecoilState(userAccountState);
-  //Navigation
-  // const navigate = useNavigate();
-
-  // get 받아서 다시 recoil에 넣기
-  // useEffect(() => {});
-
+  const [goalMoney] = useRecoilState(GoalMoneyState);
+  const [userAccout] = useRecoilState(userAccountState);
   const money = goalMoney.goalMoney;
-  const goalBalance = userAccout.remain; //지금까지 모은 금액
+  const goalBalance = userAccout.remain;
   const goalPoint = goalBalance / money;
 
   // localState child값 불어오기
-  const [childData, setChildData] = useState<any[]>([]);
-
   let ChildName: string | null = null;
   let GoalName: string | null = null;
   let GoalRemain: number | null = null;
@@ -49,7 +39,6 @@ function GoalParent() {
     GoalName = childState.childDataState.goalName;
     GoalRemain = childState.childDataState.remain;
     GoalImage = childState.childDataState.imageFilename;
-    // console.log(ChildName);
   } else {
     console.error("로컬 스토리지에서 'childState' 값을 찾을 수 없습니다.");
   }
@@ -132,7 +121,6 @@ function GoalParent() {
               </TextBox>
             </Container>
             <Container width="90%" height="90%" align="center">
-              {/* <Chart value={score} color="#e60eb0" /> */}
               <DemoLiquid percent={goalPoint} />
             </Container>
           </Container>
@@ -143,7 +131,3 @@ function GoalParent() {
 }
 
 export default GoalParent;
-
-// function useRecoilState(userDataState: any): [any, any] {
-//   throw new Error("Function not implemented.");
-// }
