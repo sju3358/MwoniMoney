@@ -301,7 +301,7 @@
 
 ## :boy: 팀원
 
-| [Tech](https://github.com/taekto) | [Rocky](https://github.com/sju3358) | [Light](https://github.com/yunsbob) | [Izzy](https://github.com/izzy80) | [J](https://github.com/freedomDobby) | [Silver](https://github.com/) |
+| [Tech](https://github.com/taekto) | [Rocky](https://github.com/sju3358) | [Light](https://github.com/yunsbob) | [Izzy](https://github.com/izzy80) | [J](https://github.com/freedomDobby) | [Silver](https://github.com/chi980) |
 | :------------------------------------: | :----------------------------------: | :------------------------------------: | :----------------------------------------: | :-------------------------------------: | :-------------------------------------: |
 |      ![Tech](./image/Tech.png)       |     ![Rocky](./image/Rocky.png)      |      ![Light](./image/Light.png)       |        ![Izzy](./image/Izzy.png)         |       ![J](./image/J.png)       |       ![Silver](./image/Silver.png)       |
 |  팀장<br>Front-end<br>Back-end  |         BE Lead          |         Back-end<br>Security          |      Back-end<br>Front-end<br>Design       |      FE Lead<br>Design       |           BackEnd<br>Infra<br>Design           |
@@ -403,7 +403,9 @@
 
 
 **_Silver(최미은)_**
-
+> 어린이를 위한 금융 교육 플랫폼을 개발하며 다양한 경험을 쌓을 수 있어서 좋았습니다.  
+> 디자인부터 백엔드 개발, 배포를 하면서 프로젝트의 처음부터 끝까지 참여할 수 있어 전체적인 프로세스를 이해하는데 도움이 되었습니다.  
+> 특히 Jenkins를 활용한 CI, CD구축을 통해 지속적인 통합과 배포에 대한 깊이 이해할 수 있었습니다. 
 
 
 <br/>
