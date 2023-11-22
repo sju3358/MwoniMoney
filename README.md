@@ -301,7 +301,7 @@
 
 ## :boy: 팀원
 
-| [Tech](https://github.com/taekto) | [Rocky](https://github.com/sju3358) | [Light](https://github.com/w12456422) | [Izzy](https://github.com/izzy80) | [J](https://github.com/wonjunchun) | [Silver](https://github.com/Fizioo0102) |
+| [Tech](https://github.com/taekto) | [Rocky](https://github.com/sju3358) | [Light](https://github.com/yunsbob) | [Izzy](https://github.com/izzy80) | [J](https://github.com/freedomDobby) | [Silver](https://github.com/) |
 | :------------------------------------: | :----------------------------------: | :------------------------------------: | :----------------------------------------: | :-------------------------------------: | :-------------------------------------: |
 |      ![Tech](./image/Tech.png)       |     ![Rocky](./image/Rocky.png)      |      ![Light](./image/Light.png)       |        ![Izzy](./image/Izzy.png)         |       ![J](./image/J.png)       |       ![Silver](./image/Silver.png)       |
 |  팀장<br>Front-end<br>Back-end  |         BE Lead          |         Back-end<br>Security          |      Back-end<br>Front-end<br>Design       |      FE Lead<br>Design       |           BackEnd<br>Infra<br>Design           |
